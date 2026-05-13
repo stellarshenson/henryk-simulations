@@ -258,32 +258,282 @@ def plot_corridor_overhead(
     *,
     out_path: Path | None = None,
 ) -> plt.Figure:
-    """Overhead schematic of the corridor with both bodies at phase 0."""
-    fig, ax = plt.subplots(figsize=(8, 4))
-    w = geometry.corridor_width
-    lat = geometry.corridor_lateral
-    # corridor walls (top and bottom)
-    ax.fill_between([0, w], lat / 2, lat / 2 + 0.05, color="#37474f")
-    ax.fill_between([0, w], -lat / 2 - 0.05, -lat / 2, color="#37474f")
-    # apartment door at x=0
-    ax.plot([0, 0], [-0.45, 0.45], color="#1565c0", linewidth=5)
-    ax.text(-0.1, 0, "apartment\ndoor", ha="right", va="center", fontsize=9, color="#1565c0")
-    # elevator door at x=w
-    ax.plot([w, w], [-0.45, 0.45], color="#b71c1c", linewidth=5)
-    ax.text(w + 0.05, 0, "elevator\ndoor", ha="left", va="center", fontsize=9, color="#b71c1c")
-    # bodies (initial positions per phase 1 start)
-    h = mpatches.Circle((0.35, 0.0), 0.25, color="#5c8da7", label=f"Andrew ({bodies.h_mass} kg)")
-    m = mpatches.Circle((0.15, 0.0), 0.22, color="#c45a3a", label=f"Victoria ({bodies.m_mass} kg)")
-    ax.add_patch(h)
-    ax.add_patch(m)
-    ax.text(0.35, 0.45, "H", ha="center", fontsize=9)
-    ax.text(0.15, 0.45, "M", ha="center", fontsize=9)
-    ax.set_xlim(-0.5, w + 0.5)
-    ax.set_ylim(-lat / 2 - 0.2, lat / 2 + 0.4)
+    """Overhead schematic of the corrected two-segment corridor with actors and props.
+
+    Layout convention matches references/incident/geometry.md:
+    - Corridor runs W (left) to E (right)
+    - Apartment door on N wall (top) of segment 2; elevator door on S wall
+      (bottom) of segment 2, slightly west of the apartment door
+    - Segment 1 is the narrower entrance to the west
+    - V at apt door W envelope facing S; A pressed flat against elevator
+      door facing N; Cecilia in segment 1 facing E
+    - [Box] briefcase at E edge of elevator door; [Str] stroller in segment
+      2 NW; D apartment-door panel swung W
+    """
+    fig, ax = plt.subplots(figsize=(11, 5.5))
+
+    # Geometry (metres). Segment 1 is the western entrance (1.8 m long,
+    # narrower); segment 2 is the wider eastern section containing the doors.
+    # Segment 2 is at least 2x segment 1's length so Andrew/Victoria have room
+    # to manoeuvre and the door swing + briefcase fit naturally.
+    seg1_w = 1.8
+    seg2_w = 6.0
+    seg1_height = 1.2  # narrower (south-side aligned with segment 2)
+    seg2_height = 2.4  # wider (extends further north)
+    seg2_x0 = seg1_w
+    total_w = seg1_w + seg2_w
+
+    # N wall of segment 2 = y = seg2_height / 2
+    # S wall = y = -seg2_height / 2
+    # Segment 1 N wall = y = +seg1_height / 2
+    n_seg2 = seg2_height / 2
+    s_seg2 = -seg2_height / 2
+    n_seg1 = seg1_height / 2
+
+    # Walls (drawn as thick lines)
+    wall_kw = {"color": "#37474f", "linewidth": 3.0}
+    # Segment 1 walls
+    ax.plot([0, seg2_x0], [n_seg1, n_seg1], **wall_kw)  # N wall seg1
+    ax.plot([0, total_w], [s_seg2, s_seg2], **wall_kw)  # S wall (both segs)
+    ax.plot([0, 0], [s_seg2, n_seg1], **wall_kw)  # W end wall
+    # Segment 2 north wall (with apartment door gap)
+    apt_door_x = seg2_x0 + 2.0  # apt door centred 2.0 m into segment 2
+    apt_door_w = 1.0  # 1 m wide
+    ax.plot([seg2_x0, apt_door_x - apt_door_w / 2], [n_seg2, n_seg2], **wall_kw)
+    ax.plot([apt_door_x + apt_door_w / 2, total_w], [n_seg2, n_seg2], **wall_kw)
+    # Segment transition wall (north step from seg1 to seg2)
+    ax.plot([seg2_x0, seg2_x0], [n_seg1, n_seg2], **wall_kw)
+    # E end wall
+    ax.plot([total_w, total_w], [s_seg2, n_seg2], **wall_kw)
+
+    # Apartment door (on N wall) - hinged at the EAST edge of the doorway and
+    # swung outward such that the panel ends up east of the opening. V stands
+    # inside the door envelope on the W side, opposite the hinge.
+    apt_door_hinge_x = apt_door_x + apt_door_w / 2
+    door_swing_angle = 70  # degrees from +x; panel tip ends up SE of the hinge
+    angle_rad = np.deg2rad(door_swing_angle)
+    door_panel_tip = (
+        apt_door_hinge_x + apt_door_w * np.cos(angle_rad),
+        n_seg2 - apt_door_w * np.sin(angle_rad),
+    )
+    door_panel = mpatches.Polygon(
+        [
+            (apt_door_hinge_x, n_seg2),
+            (apt_door_hinge_x - 0.05, n_seg2 - 0.05),
+            (door_panel_tip[0] - 0.05, door_panel_tip[1] - 0.05),
+            (door_panel_tip[0], door_panel_tip[1]),
+        ],
+        closed=True,
+        color="#1565c0",
+        alpha=0.7,
+    )
+    ax.add_patch(door_panel)
+    ax.text(
+        apt_door_x,
+        n_seg2 + 0.15,
+        "apartment door (hinge E, swings out E)",
+        ha="center",
+        fontsize=8,
+        color="#1565c0",
+    )
+
+    # Elevator door (on S wall) - slightly west of the apartment door, on the
+    # south side. The elevator door is visualised as a wide opening with the
+    # door panel slid into the wall.
+    elev_door_x = seg2_x0 + 1.3  # elevator door centred slightly west of apt
+    elev_door_w = 1.2  # wider than the apt door
+    ax.plot(
+        [elev_door_x - elev_door_w / 2, elev_door_x + elev_door_w / 2],
+        [s_seg2, s_seg2],
+        color="#b71c1c",
+        linewidth=6,
+    )
+    ax.text(
+        elev_door_x,
+        s_seg2 - 0.25,
+        "elevator door",
+        ha="center",
+        fontsize=8,
+        color="#b71c1c",
+    )
+
+    # Actors -----------------------------------------------------------------
+    # V (Victoria): at apartment door W envelope (opposite the E hinge),
+    # facing S (downward)
+    v_xy = (apt_door_x - apt_door_w / 2 + 0.18, n_seg2 - 0.18)
+    v_circle = mpatches.Circle(
+        v_xy, 0.18, color="#c45a3a", label=f"V Victoria ({bodies.m_mass:.0f} kg)"
+    )
+    ax.add_patch(v_circle)
+    ax.annotate(
+        "",
+        xy=(v_xy[0], v_xy[1] - 0.45),
+        xytext=v_xy,
+        arrowprops={"arrowstyle": "->", "color": "#c45a3a", "lw": 2.2},
+    )
+    ax.text(
+        v_xy[0] - 0.05,
+        v_xy[1] + 0.05,
+        "V",
+        ha="center",
+        fontweight="bold",
+        color="white",
+        fontsize=10,
+    )
+
+    # A (Andrew): pressed flat against the elevator door, facing N (upward)
+    a_xy = (elev_door_x, s_seg2 + 0.22)
+    a_circle = mpatches.Circle(
+        a_xy, 0.20, color="#5c8da7", label=f"A Andrew ({bodies.h_mass:.0f} kg)"
+    )
+    ax.add_patch(a_circle)
+    ax.annotate(
+        "",
+        xy=(a_xy[0], a_xy[1] + 0.55),
+        xytext=a_xy,
+        arrowprops={"arrowstyle": "->", "color": "#5c8da7", "lw": 2.2},
+    )
+    ax.text(
+        a_xy[0], a_xy[1] + 0.02, "A", ha="center", fontweight="bold", color="white", fontsize=11
+    )
+
+    # Cecilia: in segment 1, facing E (rightward)
+    c_xy = (0.5, 0.0)
+    c_circle = mpatches.Circle(c_xy, 0.15, color="#5b8d5b", label="C Cecilia (court curator)")
+    ax.add_patch(c_circle)
+    ax.annotate(
+        "",
+        xy=(c_xy[0] + 0.55, c_xy[1]),
+        xytext=c_xy,
+        arrowprops={"arrowstyle": "->", "color": "#5b8d5b", "lw": 2.0},
+    )
+    ax.text(
+        c_xy[0], c_xy[1] + 0.02, "C", ha="center", fontweight="bold", color="white", fontsize=10
+    )
+
+    # Props ------------------------------------------------------------------
+    # [Box] briefcase straddles the east edge of the elevator door (half on the
+    # door panel, half past the door frame on the wall)
+    box_w, box_h = 0.50, 0.30
+    box_x = elev_door_x + elev_door_w / 2 - box_w / 2  # centred on east edge
+    box_y = s_seg2 + 0.05
+    briefcase = mpatches.Rectangle(
+        (box_x, box_y),
+        box_w,
+        box_h,
+        color="#9e9e9e",
+        edgecolor="#37474f",
+        linewidth=1.2,
+        label="[Box] aluminium briefcase",
+    )
+    ax.add_patch(briefcase)
+    ax.text(
+        box_x + box_w / 2,
+        box_y + box_h / 2,
+        "[Box]",
+        ha="center",
+        va="center",
+        fontsize=7,
+        color="#37474f",
+    )
+
+    # [Str] stroller in segment 2 NW
+    str_x, str_y = seg2_x0 + 0.3, n_seg2 - 0.6
+    stroller = mpatches.Rectangle(
+        (str_x, str_y),
+        0.45,
+        0.35,
+        color="#fff59d",
+        edgecolor="#a98e00",
+        linewidth=1.2,
+        label="[Str] baby stroller",
+    )
+    ax.add_patch(stroller)
+    ax.text(
+        str_x + 0.22, str_y + 0.17, "[Str]", ha="center", va="center", fontsize=7, color="#7a6700"
+    )
+
+    # Segment labels
+    ax.text(
+        seg2_x0 / 2,
+        s_seg2 + 0.15,
+        "segment 1\n(entrance)",
+        ha="center",
+        fontsize=8,
+        color="#37474f",
+        alpha=0.7,
+    )
+    ax.text(
+        seg2_x0 + seg2_w / 2 + 0.5,
+        s_seg2 + 0.18,
+        "segment 2",
+        ha="center",
+        fontsize=8,
+        color="#37474f",
+        alpha=0.7,
+    )
+
+    # Cardinal directions compass (top-right corner inset)
+    compass_x, compass_y = total_w + 0.25, n_seg2 - 0.2
+    ax.annotate(
+        "N",
+        xy=(compass_x, compass_y + 0.3),
+        ha="center",
+        fontsize=10,
+        fontweight="bold",
+        color="#37474f",
+    )
+    ax.annotate(
+        "S",
+        xy=(compass_x, compass_y - 0.5),
+        ha="center",
+        fontsize=10,
+        fontweight="bold",
+        color="#37474f",
+    )
+    ax.annotate(
+        "W",
+        xy=(compass_x - 0.3, compass_y - 0.1),
+        ha="center",
+        fontsize=10,
+        fontweight="bold",
+        color="#37474f",
+    )
+    ax.annotate(
+        "E",
+        xy=(compass_x + 0.3, compass_y - 0.1),
+        ha="center",
+        fontsize=10,
+        fontweight="bold",
+        color="#37474f",
+    )
+
+    # Distance annotation: 2 m N-S throw distance between doors
+    ax.annotate(
+        "",
+        xy=(apt_door_x + 1.2, s_seg2 + 0.05),
+        xytext=(apt_door_x + 1.2, n_seg2 - 0.05),
+        arrowprops={"arrowstyle": "<->", "color": "#6a1b9a", "lw": 1.0},
+    )
+    ax.text(
+        apt_door_x + 1.4,
+        0,
+        "~2 m\n(N-S throw\ndistance)",
+        fontsize=8,
+        color="#6a1b9a",
+        va="center",
+    )
+
+    ax.set_xlim(-0.4, total_w + 1.0)
+    ax.set_ylim(s_seg2 - 0.6, n_seg2 + 0.6)
     ax.set_aspect("equal")
-    ax.set_xlabel("x (m), apartment-door to elevator-door axis")
-    ax.set_title(f"Corridor geometry, top view ({w:.1f} m wide)")
-    ax.legend(loc="lower right", fontsize=8)
+    ax.set_xlabel("W ← x (m) → E")
+    ax.set_ylabel("S ← y (m) → N")
+    ax.set_title(
+        "Corridor geometry at the contested moment (top view, corrected per references/incident/geometry.md)"
+    )
+    ax.legend(loc="upper left", fontsize=8, framealpha=0.9)
+    ax.grid(linestyle=":", alpha=0.3)
     fig.tight_layout()
     if out_path is not None:
         fig.savefig(out_path, dpi=140, bbox_inches="tight")
