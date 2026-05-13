@@ -148,22 +148,24 @@ The recording contains none of these. The witness reports no bang. By the time t
 
 Here is the side-by-side I find hardest to read with a straight face:
 
-| Predicted observable | Documented finding |
-|---|---|
-| Widespread back haematoma over torso contact area | Single right-shoulder bruise only |
-| Rib fracture(s), 1-13 (1.6-1.9 kN at 4.3 m/s produces 4-13 in the literature) | None |
-| Costo-vertebral / costo-transverse ligament damage | None |
-| Pulmonary contusion / breathing impairment (AIS 3-4) | No breathing complaint |
-| Restricted thoracic mobility post-impact | Full mobility on exam |
-| Collapse / inability to coordinate | Scream started when witness turned back |
-| Audio clipping spike at impact moment | Absent |
-| 6-24 Hz panel ringing in recording | Absent |
-| Witness acoustic reaction to ~126 dB peak | No reaction; witness reports no bang |
-| Victim observed back-against-door post-impact | Witness reports victim leaning **front-first** against me, sliding **front-first**, crawling forward |
+Status legend: ✅ predicted observable matches documented finding &nbsp; ❌ predicted observable absent or contradicted &nbsp; ⚠️ partial or temporally decoupled &nbsp; ❓ pending direct verification
+
+| Predicted observable | Documented finding | Status | Author comment |
+|---|---|---|---|
+| Widespread back haematoma over torso contact area | Single right-shoulder bruise only | ❌ | A back-first 18 kN impact would leave a contact-area-shaped contusion, not a 5-10 cm point bruise on one shoulder |
+| Rib fracture(s), 1-13 (1.6-1.9 kN at 4.3 m/s produces 4-13 in the literature) | None | ❌ | 18 kN is ~10× the lateral-thorax force that produces 4-13 rib fx; zero is anomalous |
+| Costo-vertebral / costo-transverse ligament damage | None | ❌ | Rear-torso experimental loads of 6.9-10.5 kN produce these; we compute ~2× that |
+| Pulmonary contusion / breathing impairment (AIS 3-4) | No breathing complaint | ❌ | AIS 3-4 thoracic load at 18 kN would predict acute breathing pain |
+| Restricted thoracic mobility post-impact | Full mobility on exam | ❌ | Whole-body 26 g deceleration would leave residual stiffness, guarding |
+| Collapse / inability to coordinate | Scream started when witness turned back | ⚠️ | Scream timing is temporally decoupled from the alleged impact - a scream prompted by being seen, not by being injured |
+| Audio clipping spike at impact moment | Absent (waveform inspected) | ❌ | Predicted 124 dB at the phone mic exceeds the ~120 dB consumer-mic clip ceiling |
+| 6-24 Hz panel ringing in recording | Absent (spectral analysis pending) | ❓ | 70 kg whole-body impact should excite fundamental panel modes; absence is the second forensic test |
+| Witness acoustic reaction to ~126 dB peak | No reaction; witness reports no bang | ❌ | Direct line-of-sight observer at 126 dB would react audibly and visibly |
+| Victim observed back-against-door post-impact | Witness reports victim leaning **front-first** against me, sliding **front-first**, crawling forward | ❌ | Front-first contact and front-first slide are geometrically inconsistent with the back-first throw |
 
 ![Predicted vs documented - 0 of 10 match](images/06-predicted-vs-documented.svg)
 
-Of ten predicted observables, zero match. Seven are absent or directly contradicted. One is temporally decoupled. Two are pending direct audio spectral analysis. The single right-shoulder bruise is geometrically and energetically inconsistent with a back-first whole-torso impact at 18 kN.
+Of ten predicted observables: **0 ✅ match**, **8 ❌ absent or contradicted**, **1 ⚠️ temporally decoupled**, **1 ❓ pending direct spectral analysis**. The single right-shoulder bruise is geometrically and energetically inconsistent with a back-first whole-torso impact at 18 kN.
 
 One more thing about that bruise. The defendant's position is that it was **self-inflicted** by the alleged victim after the visit, to seed a corroborating mark in the medical record. The defendant has chosen not to dispute the bruise's origin directly. The argument above runs on physics, not on contested medical interpretation. The mechanical impossibility of producing a single localised shoulder bruise from the alleged whole-torso back-first impact at 18 kN is enough, on its own, to falsify the verbatim claim. Newton was kind enough to do the talking.
 

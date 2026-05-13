@@ -163,7 +163,7 @@
        font-family="Cambria, Georgia, serif"
        font-size="36"
        font-weight="700"
-       class="fg-1"
+       fill="#5cc8e0"
        text-anchor="middle"
        font-style="italic"
        id="text9">F = m · a</text>
