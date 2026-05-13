@@ -276,51 +276,55 @@ def plot_corridor_overhead(
     # narrower); segment 2 is the wider eastern section containing the doors.
     # Segment 2 is at least 2x segment 1's length so Andrew/Victoria have room
     # to manoeuvre and the door swing + briefcase fit naturally.
+    # The elbow (step in the wall) is on the SOUTH side: both segments share
+    # the same N wall; segment 2's S wall is further south than segment 1's.
     seg1_w = 1.8
     seg2_w = 6.0
-    seg1_height = 1.2  # narrower (south-side aligned with segment 2)
-    seg2_height = 2.4  # wider (extends further north)
+    seg1_height = 1.2  # narrower in N-S extent
+    seg2_height = 2.4  # wider (extends further south)
     seg2_x0 = seg1_w
     total_w = seg1_w + seg2_w
 
-    # N wall of segment 2 = y = seg2_height / 2
-    # S wall = y = -seg2_height / 2
-    # Segment 1 N wall = y = +seg1_height / 2
-    n_seg2 = seg2_height / 2
-    s_seg2 = -seg2_height / 2
-    n_seg1 = seg1_height / 2
+    # Both segments share the N wall at y = +seg2_height/2.
+    # Segment 1 S wall is less south; segment 2 S wall is further south.
+    n_wall = seg2_height / 2
+    s_seg1 = n_wall - seg1_height  # less negative (less south)
+    s_seg2 = -seg2_height / 2  # more negative (further south)
 
     # Walls (drawn as thick lines)
     wall_kw = {"color": "#37474f", "linewidth": 3.0}
-    # Segment 1 walls
-    ax.plot([0, seg2_x0], [n_seg1, n_seg1], **wall_kw)  # N wall seg1
-    ax.plot([0, total_w], [s_seg2, s_seg2], **wall_kw)  # S wall (both segs)
-    ax.plot([0, 0], [s_seg2, n_seg1], **wall_kw)  # W end wall
-    # Segment 2 north wall (with apartment door gap)
     apt_door_x = seg2_x0 + 2.0  # apt door centred 2.0 m into segment 2
     apt_door_w = 1.0  # 1 m wide
-    ax.plot([seg2_x0, apt_door_x - apt_door_w / 2], [n_seg2, n_seg2], **wall_kw)
-    ax.plot([apt_door_x + apt_door_w / 2, total_w], [n_seg2, n_seg2], **wall_kw)
-    # Segment transition wall (north step from seg1 to seg2)
-    ax.plot([seg2_x0, seg2_x0], [n_seg1, n_seg2], **wall_kw)
+    # N wall of segment 2 (with apartment-door gap)
+    ax.plot([0, apt_door_x - apt_door_w / 2], [n_wall, n_wall], **wall_kw)
+    ax.plot([apt_door_x + apt_door_w / 2, total_w], [n_wall, n_wall], **wall_kw)
+    # Segment 1 S wall (less south)
+    ax.plot([0, seg2_x0], [s_seg1, s_seg1], **wall_kw)
+    # Segment 2 S wall (further south)
+    ax.plot([seg2_x0, total_w], [s_seg2, s_seg2], **wall_kw)
+    # S elbow (step down from segment 1 south wall to segment 2 south wall)
+    ax.plot([seg2_x0, seg2_x0], [s_seg1, s_seg2], **wall_kw)
+    # W end wall
+    ax.plot([0, 0], [s_seg1, n_wall], **wall_kw)
     # E end wall
-    ax.plot([total_w, total_w], [s_seg2, n_seg2], **wall_kw)
+    ax.plot([total_w, total_w], [s_seg2, n_wall], **wall_kw)
 
-    # Apartment door (on N wall) - hinged at the EAST edge of the doorway and
-    # swung outward such that the panel ends up east of the opening. V stands
-    # inside the door envelope on the W side, opposite the hinge.
-    apt_door_hinge_x = apt_door_x + apt_door_w / 2
-    door_swing_angle = 70  # degrees from +x; panel tip ends up SE of the hinge
+    # Apartment door (on N wall) - hinged at the WEST edge of the doorway,
+    # swings out into the corridor with the panel ending up south-east of the
+    # hinge. When open, the door's face looks W (the side that faced the
+    # corridor when closed now faces west).
+    apt_door_hinge_x = apt_door_x - apt_door_w / 2
+    door_swing_angle = 30  # degrees from +x; only partly open (panel tip slightly SE of hinge)
     angle_rad = np.deg2rad(door_swing_angle)
     door_panel_tip = (
         apt_door_hinge_x + apt_door_w * np.cos(angle_rad),
-        n_seg2 - apt_door_w * np.sin(angle_rad),
+        n_wall - apt_door_w * np.sin(angle_rad),
     )
     door_panel = mpatches.Polygon(
         [
-            (apt_door_hinge_x, n_seg2),
-            (apt_door_hinge_x - 0.05, n_seg2 - 0.05),
-            (door_panel_tip[0] - 0.05, door_panel_tip[1] - 0.05),
+            (apt_door_hinge_x, n_wall),
+            (apt_door_hinge_x + 0.05, n_wall - 0.05),
+            (door_panel_tip[0] + 0.05, door_panel_tip[1] - 0.05),
             (door_panel_tip[0], door_panel_tip[1]),
         ],
         closed=True,
@@ -330,8 +334,8 @@ def plot_corridor_overhead(
     ax.add_patch(door_panel)
     ax.text(
         apt_door_x,
-        n_seg2 + 0.15,
-        "apartment door (hinge E, swings out E)",
+        n_wall + 0.15,
+        "apartment door (hinge W, swings out E; face looks W)",
         ha="center",
         fontsize=8,
         color="#1565c0",
@@ -360,7 +364,7 @@ def plot_corridor_overhead(
     # Actors -----------------------------------------------------------------
     # V (Victoria): at apartment door W envelope (opposite the E hinge),
     # facing S (downward)
-    v_xy = (apt_door_x - apt_door_w / 2 + 0.18, n_seg2 - 0.18)
+    v_xy = (apt_door_x - apt_door_w / 2 + 0.18, n_wall - 0.18)
     v_circle = mpatches.Circle(
         v_xy, 0.18, color="#c45a3a", label=f"V Victoria ({bodies.m_mass:.0f} kg)"
     )
@@ -438,7 +442,7 @@ def plot_corridor_overhead(
     )
 
     # [Str] stroller in segment 2 NW
-    str_x, str_y = seg2_x0 + 0.3, n_seg2 - 0.6
+    str_x, str_y = seg2_x0 + 0.3, n_wall - 0.6
     stroller = mpatches.Rectangle(
         (str_x, str_y),
         0.45,
@@ -474,7 +478,7 @@ def plot_corridor_overhead(
     )
 
     # Cardinal directions compass (top-right corner inset)
-    compass_x, compass_y = total_w + 0.25, n_seg2 - 0.2
+    compass_x, compass_y = total_w + 0.25, n_wall - 0.2
     ax.annotate(
         "N",
         xy=(compass_x, compass_y + 0.3),
@@ -512,7 +516,7 @@ def plot_corridor_overhead(
     ax.annotate(
         "",
         xy=(apt_door_x + 1.2, s_seg2 + 0.05),
-        xytext=(apt_door_x + 1.2, n_seg2 - 0.05),
+        xytext=(apt_door_x + 1.2, n_wall - 0.05),
         arrowprops={"arrowstyle": "<->", "color": "#6a1b9a", "lw": 1.0},
     )
     ax.text(
@@ -525,7 +529,7 @@ def plot_corridor_overhead(
     )
 
     ax.set_xlim(-0.4, total_w + 1.0)
-    ax.set_ylim(s_seg2 - 0.6, n_seg2 + 0.6)
+    ax.set_ylim(s_seg2 - 0.6, n_wall + 0.6)
     ax.set_aspect("equal")
     ax.set_xlabel("W ← x (m) → E")
     ax.set_ylabel("S ← y (m) → N")
