@@ -231,7 +231,7 @@ KINEMATICS_CODE = """\
 # Per-phase kinematics, passive vs small-resistance
 rows = []
 for resistance in ("passive", "small"):
-    results = compute_scenario(sc, resistance=resistance)
+    results = compute_scenario(sc, resistance=resistance, impact_stopping_distance=STOPPING_DISTANCE_M)
     for r in results:
         rows.append({
             "resistance": resistance,
@@ -260,23 +260,129 @@ results_df.head(20)
 """
 
 THROW_SANITY_CODE = """\
-# Headline numbers for each phase based on its time budget
-all_results = compute_scenario(sc, resistance="passive")
-hdr_table = Table(title="Phase headline kinematics (passive, per time budget)", show_header=True, header_style="bold")
-for col in ("phase", "duration (s)", "v_peak (m/s)", "a_peak (m/s^2, g)", "F_peak (N)", "KE (J)", "impulse (N s)", "omega_peak (rad/s)"):
-    hdr_table.add_column(col)
+# Full per-phase deconstruction: triangular-peak quantities + continuous-velocity
+# model + rotation kinematics + impact analysis (where applicable).
+all_results = compute_scenario(sc, resistance="passive", impact_stopping_distance=STOPPING_DISTANCE_M)
+
+# --- Continuous-velocity translation (v_start, v_end, a_avg, F_avg, impulse, KE) ---
+cv_table = Table(
+    title="Translation kinematics per phase (continuous-velocity model)",
+    show_header=True, header_style="bold",
+)
+for col in ("phase", "T (s)", "s (m)",
+            "v_start (m/s)", "v_end (m/s)",
+            "a_avg (m/s²)", "a_avg (g)",
+            "F_avg (N)",
+            "impulse (N·s)",
+            "KE_start (J)", "KE_end (J)", "work (J)"):
+    cv_table.add_column(col)
 for r in all_results:
-    hdr_table.add_row(
+    if r.kind != "translate":
+        cv_table.add_row(
+            r.phase_name, f"{r.duration:.2f}", "-",
+            f"{r.v_start:.2f}", f"{r.v_end:.2f}",
+            "-", "-", "-", "-", "-", "-", "-",
+        )
+        continue
+    cv_table.add_row(
         r.phase_name,
         f"{r.duration:.2f}",
-        f"{r.v_peak:.2f}" if r.v_peak else "-",
-        f"{r.a_peak:.2f} ({r.a_peak_g:.2f}g)" if r.a_peak else "-",
-        f"{r.f_peak:.0f}" if r.f_peak else "-",
-        f"{r.kinetic_energy:.0f}" if r.kinetic_energy else "-",
-        f"{r.impulse:.0f}" if r.impulse else "-",
-        f"{r.omega_peak:.2f}" if r.omega_peak else "-",
+        f"{r.distance:.2f}",
+        f"{r.v_start:.2f}",
+        f"{r.v_end:.2f}",
+        f"{r.a_avg:+.2f}",
+        f"{r.a_avg / 9.80665:+.2f}",
+        f"{r.f_avg:.0f}",
+        f"{r.impulse_net:+.0f}",
+        f"{r.ke_start:.0f}",
+        f"{r.ke_end:.0f}",
+        f"{r.work_done:+.0f}",
     )
-console.print(hdr_table)
+console.print(cv_table)
+
+# --- Triangular-peak quantities (a_peak, F_peak, KE_at_peak) ---
+peak_table = Table(
+    title="Translation peaks per phase (triangular profile within phase)",
+    show_header=True, header_style="bold",
+)
+for col in ("phase", "v_peak (m/s)", "a_peak (m/s²)", "a_peak (g)",
+            "F_peak (N)", "KE_peak (J)", "impulse_accel (N·s)"):
+    peak_table.add_column(col)
+for r in all_results:
+    if not r.v_peak:
+        peak_table.add_row(r.phase_name, "-", "-", "-", "-", "-", "-")
+        continue
+    peak_table.add_row(
+        r.phase_name,
+        f"{r.v_peak:.2f}",
+        f"{r.a_peak:.2f}",
+        f"{r.a_peak_g:.2f}",
+        f"{r.f_peak:.0f}",
+        f"{r.kinetic_energy:.0f}",
+        f"{r.impulse:.0f}",
+    )
+console.print(peak_table)
+
+# --- Rotation kinematics ---
+rot_table = Table(
+    title="Rotation kinematics per phase",
+    show_header=True, header_style="bold",
+)
+for col in ("phase", "T (s)", "θ (deg)",
+            "ω_peak (rad/s)", "ω_peak (deg/s)",
+            "α_peak (rad/s²)",
+            "τ_peak (N·m)",
+            "L_peak (kg·m²/s)",
+            "rotational KE (J)"):
+    rot_table.add_column(col)
+for r in all_results:
+    if not r.omega_peak:
+        rot_table.add_row(r.phase_name, f"{r.duration:.2f}", "-", "-", "-", "-", "-", "-", "-")
+        continue
+    rot_table.add_row(
+        r.phase_name,
+        f"{r.duration:.2f}",
+        f"{r.angle * 180 / math.pi:.0f}",
+        f"{r.omega_peak:.2f}",
+        f"{r.omega_peak * 180 / math.pi:.0f}",
+        f"{r.alpha_peak:.2f}",
+        f"{r.torque_peak:.1f}",
+        f"{r.angular_momentum_peak:.2f}",
+        f"{r.rotational_ke:.1f}",
+    )
+console.print(rot_table)
+
+# --- Impact analysis (only for phases where an impact is computed) ---
+impacts = [r for r in all_results if r.impact is not None and r.impact.v_impact > 0]
+if impacts:
+    imp_table = Table(
+        title="Impact analysis (constant-decel over stopping distance)",
+        show_header=True, header_style="bold",
+    )
+    for col in ("phase", "v_impact (m/s)", "v_impact (km/h)",
+                "stopping d (cm)",
+                "KE_impact (J)",
+                "momentum (N·s)",
+                "a_impact (m/s²)", "a_impact (g)",
+                "F_impact (N)", "F_impact (kN)",
+                "t_stop (ms)"):
+        imp_table.add_column(col)
+    for r in impacts:
+        i = r.impact
+        imp_table.add_row(
+            r.phase_name,
+            f"{i.v_impact:.2f}",
+            f"{i.v_impact * 3.6:.1f}",
+            f"{i.stopping_distance * 100:.1f}",
+            f"{i.ke_impact:.0f}",
+            f"{i.momentum:.0f}",
+            f"{i.a_impact:.0f}",
+            f"{i.a_impact_g:.1f}",
+            f"{i.f_impact:.0f}",
+            f"{i.f_impact / 1000:.2f}",
+            f"{i.t_stop * 1000:.1f}",
+        )
+    console.print(imp_table)
 """
 
 ACTOR_EFFORT_CODE = """\
@@ -312,7 +418,7 @@ ref_df
 
 SCORING_CODE = """\
 # Score each phase against the most appropriate reference for each kinematic demand
-results_passive = compute_scenario(sc, resistance="passive")
+results_passive = compute_scenario(sc, resistance="passive", impact_stopping_distance=STOPPING_DISTANCE_M)
 
 # Map phase -> chosen references. A translate phase that also has a rotation
 # (Victoria's 360 deg yaw during the throw) is scored for both quantities.

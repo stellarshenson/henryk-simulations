@@ -108,7 +108,7 @@ Confidence: medium-high. The 3-phase decomposition follows the user's stated act
 
 ## Simulation outputs
 
-- `reports/figures/01-corridor-sim-passive.mp4` - PyBullet animation of the 3-phase trajectory with rigid capsule mannequins (181 frames, 60 fps)
+- `reports/figures/01-corridor-sim-passive.mp4` - PyBullet animation of the 3-phase trajectory with rigid capsule mannequins (~270 frames, 60 fps, ~4.5 s total). The first 3.0 s is the scored 3-phase window; the trailing 1.5 s is a decorative disengagement (V crouches and slides back through the apartment doorway) and is **not** counted in any kinematic phase or score
 - `reports/figures/01-corridor-sim-small.mp4` - identical trajectory with the small-resistance cooperation model in the analytical track
 - `reports/01-phase-kinematics.csv` - per-phase peak velocity, acceleration, force, impulse, kinetic energy, angular kinematics for both cooperation models
 - `reports/01-phase-scores.csv` - per-(phase, quantity) z-score, multiple-of-mean, verdict band, citation

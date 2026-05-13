@@ -115,10 +115,14 @@ def test_reach_phase_uses_arm_mass_default() -> None:
     assert math.isclose(r.reach_f_peak, 2 * 4.5 * expected_a, rel_tol=1e-9)
 
 
-def test_compute_scenario_returns_one_result_per_phase() -> None:
+def test_compute_scenario_returns_at_least_one_result_per_phase() -> None:
+    """Each phase emits 1 primary result, plus 1 secondary if `other_*` is set."""
     sc = default_scenario()
     res = compute_scenario(sc)
-    assert len(res) == len(sc.phases)
+    assert len(res) >= len(sc.phases)
+    # swap-back has secondary motion for V, so we expect one extra entry
+    swap_back_results = [r for r in res if r.phase_name.startswith("swap-back")]
+    assert len(swap_back_results) == 2  # primary (A rotation) + secondary (V translate + rotate)
     assert all(isinstance(r, PhaseResult) for r in res)
 
 

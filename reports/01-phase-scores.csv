@@ -7,3 +7,6 @@ swap-throw,peak force,61.6,N,"two-arm peak push, standing",800.0,200.0,-3.69,0.0
 swap-throw,kinetic energy,6.776,J,"overhand throw KE budget, 5 kg object",160.0,80.0,-1.92,0.04,plausible
 swap-throw,peak yaw angular velocity,6.283,rad/s,standing pivot yaw angular velocity,3.5,1.0,2.78,1.8,implausible
 swap-back,peak yaw angular velocity,6.283,rad/s,standing pivot yaw angular velocity,3.5,1.0,2.78,1.8,implausible
+swap-back/M,peak acceleration,1.6,m/s^2,"sprint acceleration, recreational",3.0,0.8,-1.75,0.53,plausible
+swap-back/M,peak force,112.0,N,"two-arm peak push, standing",800.0,200.0,-3.44,0.14,plausible
+swap-back/M,peak yaw angular velocity,6.283,rad/s,standing pivot yaw angular velocity,3.5,1.0,2.78,1.8,implausible

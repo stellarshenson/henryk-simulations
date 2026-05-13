@@ -69,6 +69,10 @@ Verdicts:
 - peak yaw angular velocity (A, voluntary standing pivot): z = 2.78 - **implausible**
 - peak yaw angular velocity (V, imposed rotation): z = 2.78 - **implausible**
 
+## Post-event disengagement (visual only, NOT a scored phase)
+
+After the 3 s contested window, the MP4 renders an additional ~1.5 s of decorative aftermath: Victoria crouches forward and slides back through the apartment doorway, exiting the corridor. Andrew remains at the elevator door with his back to it. This trailing animation is rendering-only - it is **not** added to the Scenario's phase list, does not appear in the kinematic tables, and does not contribute to any plausibility score. It is included only because the verbatim claim ends with "and then she fell"; depicting that aftermath in the same clip makes the timeline more readable. The full MP4 therefore runs ~4.5 s while the kinematic analysis covers only the first 3.0 s.
+
 ## Aggregate verdict
 
 | Demand | Value | Verdict |

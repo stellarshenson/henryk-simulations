@@ -113,8 +113,9 @@ def _build_kinematic_traj(scenario: Scenario, fps: int = FPS) -> dict:
             h_x[slc_after] = h_target
         elif phase.name == "swap-back":
             # Positions swap back: A advances to elevator wall (back to it,
-            # CoM x=1.86); V steps left (-> x=1.50, well clear of wall).
-            v_target = 1.50
+            # CoM x=1.86); V steps back 40 cm (-> x=1.46, ending in front of
+            # A so the witness later sees V standing in front of A).
+            v_target = 1.46
             h_target = 1.86
             v_dx = v_target - m_x[slc][0]
             h_dx = h_target - h_x[slc][0]
@@ -262,8 +263,12 @@ def _build_mannequin(
     return uid
 
 
-def _build_corridor(geometry) -> list[int]:
-    """Floor, two side walls, apartment door, elevator door."""
+def _build_corridor(geometry) -> tuple[list[int], int]:
+    """Floor, two side walls, apartment door, elevator door.
+
+    Returns `(all_body_ids, elevator_wall_id)` - the elevator wall id is
+    used by the caller to flash the wall colour at the impact moment.
+    """
     ids: list[int] = []
     w = geometry.corridor_width
     lat = geometry.corridor_lateral
@@ -273,14 +278,15 @@ def _build_corridor(geometry) -> list[int]:
     plane = p.loadURDF("plane.urdf")
     ids.append(plane)
 
-    # apartment door wall (at x = -0.05)
+    # apartment door wall (at x = -0.05). Translucent so the disengagement
+    # phase (V sliding back through the doorway) is visible.
     wall_a = p.createMultiBody(
         baseMass=0,
         baseCollisionShapeIndex=p.createCollisionShape(
             p.GEOM_BOX, halfExtents=[0.05, lat / 2, h / 2]
         ),
         baseVisualShapeIndex=p.createVisualShape(
-            p.GEOM_BOX, halfExtents=[0.05, lat / 2, h / 2], rgbaColor=[0.1, 0.4, 0.8, 1.0]
+            p.GEOM_BOX, halfExtents=[0.05, lat / 2, h / 2], rgbaColor=[0.1, 0.4, 0.8, 0.45]
         ),
         basePosition=[-0.05, 0, h / 2],
     )
@@ -315,7 +321,7 @@ def _build_corridor(geometry) -> list[int]:
     )
     ids.append(side_r)
 
-    return ids
+    return ids, wall_e
 
 
 # ---------------------------------------------------------------------------
@@ -331,8 +337,16 @@ def run_simulation(
     fps: int = FPS,
     width: int = 480,
     height: int = 320,
+    disengagement_duration: float = 1.5,
 ) -> SimResult:
-    """Run the corridor simulation and write an MP4 to `out_mp4`."""
+    """Run the corridor simulation and write an MP4 to `out_mp4`.
+
+    The MP4 contains the scenario's analytical phases followed by an optional
+    `disengagement_duration` seconds of visual-only post-event animation: V
+    crouches to the floor and slides back out through the apartment doorway.
+    This trailing segment is rendering only - it is NOT part of the
+    kinematic scoring and adds no phases to the Scenario.
+    """
     import imageio.v3 as iio
 
     out_mp4 = Path(out_mp4)
@@ -345,7 +359,7 @@ def run_simulation(
         p.setGravity(0, 0, 0)
         p.setTimeStep(1.0 / fps)
 
-        _build_corridor(scenario.geometry)
+        _, elevator_wall = _build_corridor(scenario.geometry)
 
         # Build two rigid capsule mannequins
         h = _build_mannequin(
@@ -378,20 +392,7 @@ def run_simulation(
         # Resistance is captured only in the analytical track; visuals are identical.
         _ = resistance
 
-        frames: list[np.ndarray] = []
-        for k in range(n_frames):
-            # H pose
-            h_yaw = traj["h_yaw"][k]
-            h_orn = p.getQuaternionFromEuler([0, 0, h_yaw])
-            p.resetBasePositionAndOrientation(h, traj["h_pos"][k].tolist(), h_orn)
-            # M pose
-            m_yaw = traj["m_yaw"][k]
-            m_orn = p.getQuaternionFromEuler([0, 0, m_yaw])
-            p.resetBasePositionAndOrientation(m, traj["m_pos"][k].tolist(), m_orn)
-
-            p.stepSimulation()
-
-            # Capture frame
+        def capture_frame() -> np.ndarray:
             img = p.getCameraImage(
                 width,
                 height,
@@ -401,15 +402,86 @@ def run_simulation(
                 flags=p.ER_NO_SEGMENTATION_MASK,
             )
             rgba = np.array(img[2], dtype=np.uint8).reshape(height, width, 4)
-            frames.append(rgba[:, :, :3])
+            return rgba[:, :, :3]
 
+        # Detect impact frame: V's CoM reaches the elevator wall threshold
+        # (x = corridor_width - torso_radius = 1.86). After that frame the
+        # elevator wall flashes white-hot for a few frames then fades back
+        # to its baseline red over ~0.3 s.
+        impact_x = scenario.geometry.corridor_width - 0.14
+        impact_frame: int | None = None
+        for k in range(n_frames):
+            if traj["m_pos"][k, 0] >= impact_x - 1e-6:
+                impact_frame = k
+                break
+        wall_baseline_rgba = [0.8, 0.15, 0.15, 1.0]
+        wall_flash_rgba = [1.0, 0.95, 0.4, 1.0]  # bright yellow-white
+        flash_decay_frames = int(round(0.30 * fps))
+
+        def wall_color_at(frame_idx: int) -> list[float]:
+            if impact_frame is None or frame_idx < impact_frame:
+                return wall_baseline_rgba
+            delta = frame_idx - impact_frame
+            if delta >= flash_decay_frames:
+                return wall_baseline_rgba
+            # Linear interpolation from flash -> baseline
+            f = 1.0 - delta / flash_decay_frames
+            return [
+                wall_baseline_rgba[i] + (wall_flash_rgba[i] - wall_baseline_rgba[i]) * f
+                for i in range(4)
+            ]
+
+        frames: list[np.ndarray] = []
+        for k in range(n_frames):
+            h_yaw = traj["h_yaw"][k]
+            h_orn = p.getQuaternionFromEuler([0, 0, h_yaw])
+            p.resetBasePositionAndOrientation(h, traj["h_pos"][k].tolist(), h_orn)
+            m_yaw = traj["m_yaw"][k]
+            m_orn = p.getQuaternionFromEuler([0, 0, m_yaw])
+            p.resetBasePositionAndOrientation(m, traj["m_pos"][k].tolist(), m_orn)
+            p.changeVisualShape(elevator_wall, -1, rgbaColor=wall_color_at(k))
+            p.stepSimulation()
+            frames.append(capture_frame())
+
+        # ---- Disengagement (visual only, not counted in any phase) ----
+        # V crouches (pelvis z lowers, body pitches forward) and slides back
+        # along -x through the (translucent) apartment door. A holds his end
+        # pose (back to elevator). Duration is decorative - it does not feed
+        # back into the analytical kinematics or the Scenario.
+        n_dis = int(round(disengagement_duration * fps))
+        if n_dis > 0:
+            v_x_start = traj["m_pos"][-1, 0]
+            v_yaw_end = traj["m_yaw"][-1]
+            h_pos_end = traj["h_pos"][-1].tolist()
+            h_yaw_end = traj["h_yaw"][-1]
+            h_orn_end = p.getQuaternionFromEuler([0, 0, h_yaw_end])
+
+            v_x_end = -0.5  # past the apartment door
+            v_z_start = traj["m_pos"][-1, 2]
+            v_z_end = 0.32  # crouched / on the floor
+
+            for k in range(n_dis):
+                u = (k + 1) / n_dis
+                # Smooth ease (sin^2) so the slide is not perfectly linear
+                eased = 0.5 - 0.5 * np.cos(np.pi * u)
+                v_x = v_x_start + (v_x_end - v_x_start) * eased
+                v_z = v_z_start + (v_z_end - v_z_start) * min(1.0, eased * 1.6)
+                pitch = np.deg2rad(70) * min(1.0, eased * 1.6)  # tip forward
+                v_orn = p.getQuaternionFromEuler([0, -pitch, v_yaw_end])
+                p.resetBasePositionAndOrientation(m, [v_x, 0.0, v_z], v_orn)
+                # A holds the end pose
+                p.resetBasePositionAndOrientation(h, h_pos_end, h_orn_end)
+                p.stepSimulation()
+                frames.append(capture_frame())
+
+        total_frames = len(frames)
         # Encode MP4
         iio.imwrite(out_mp4, frames, fps=fps, codec="libx264", macro_block_size=1)
 
         return SimResult(
             out_mp4=out_mp4,
-            n_frames=n_frames,
-            duration_s=scenario.total_time,
+            n_frames=total_frames,
+            duration_s=scenario.total_time + (disengagement_duration if n_dis > 0 else 0),
             resistance=resistance,
             t=traj["times"],
             h_pos=traj["h_pos"],

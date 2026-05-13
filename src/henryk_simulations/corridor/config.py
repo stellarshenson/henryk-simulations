@@ -62,6 +62,11 @@ class Phase:
     rotation: float = 0.0
     reach: float = 0.0
     overlaps_with: int | None = None
+    # Optional secondary motion: the other body's translation/rotation
+    # within the same phase. Used e.g. for swap-back where V also
+    # translates and rotates while A is the primary actor.
+    other_translation: float = 0.0
+    other_rotation: float = 0.0
 
 
 @dataclass(frozen=True)
@@ -169,7 +174,15 @@ def default_scenario(
             translation=0.22,
             rotation=math.pi,
         ),
-        Phase("swap-back", durations["swap-back"], "rotate", "H", rotation=math.pi),
+        Phase(
+            "swap-back",
+            durations["swap-back"],
+            "rotate",
+            "H",
+            rotation=math.pi,
+            other_translation=0.40,  # V steps back 40 cm to end up in front of A
+            other_rotation=math.pi,  # V rotates 180 deg to keep facing A
+        ),
     )
     return Scenario(
         total_time=sum(durations.values()),

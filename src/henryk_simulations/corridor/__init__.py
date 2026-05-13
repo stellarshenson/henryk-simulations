@@ -21,7 +21,9 @@ from henryk_simulations.corridor.config import (
     default_scenario,
 )
 from henryk_simulations.corridor.kinematics import (
+    ImpactResult,
     PhaseResult,
+    compute_impact,
     compute_phase_kinematics,
     compute_scenario,
 )
@@ -40,6 +42,7 @@ __all__ = [
     "DEFAULT_PHASE_DURATIONS",
     "Bodies",
     "Geometry",
+    "ImpactResult",
     "Phase",
     "PhaseResult",
     "PlausibilityScore",
@@ -47,6 +50,7 @@ __all__ = [
     "ReferenceLibrary",
     "Scenario",
     "Verdict",
+    "compute_impact",
     "compute_phase_kinematics",
     "compute_scenario",
     "default_library",
