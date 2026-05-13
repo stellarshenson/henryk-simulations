@@ -3,6 +3,8 @@
 !/data/external/
 /data/external/*
 !/data/external/.gitkeep
+!/data/external/event_audio/
+!/data/external/event_audio/event_recording.m4a
 !/data/interim/
 /data/interim/*
 !/data/interim/.gitkeep

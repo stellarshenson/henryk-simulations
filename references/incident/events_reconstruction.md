@@ -61,7 +61,7 @@ If $D_{\min}(q^\star) \gg R$ (the lower-bound demand greatly exceeds population 
 ## Inputs
 
 - **Geometry**: see `geometry.md` for corridor topology, actor positions, props ([Box] briefcase, [Str] stroller, D apartment-door swing).
-- **Audio recording**: full audio of the visit and the contested moment is preserved as the source for `testimony_3rd_party.md` and for Victoria's verbatim live exclamations in `testimony_victim.md`.
+- **Audio recording**: full audio of the visit and the contested moment, tracked in the repo at [`../../data/external/event_audio/event_recording.m4a`](../../data/external/event_audio/event_recording.m4a). This is the source for `testimony_3rd_party.md` and for Victoria's verbatim live exclamations in `testimony_victim.md`.
 - **Testimonies**: victim, third-party (court social curator), and Victoria's inconsistency log.
 
 ## Stages

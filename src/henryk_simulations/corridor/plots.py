@@ -10,10 +10,16 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
+from henryk_simulations.corridor.acoustics import (
+    AcousticPrediction,
+    REF_SOUNDS as DEFAULT_REF_SOUNDS,
+)
 from henryk_simulations.corridor.config import Scenario
 from henryk_simulations.corridor.kinematics import G, PhaseResult
 from henryk_simulations.corridor.plausibility import PlausibilityScore, Verdict
 from henryk_simulations.corridor.references import Reference
+
+SKILL_MPL_PALETTE = ["#3498DB", "#E74C3C", "#2ECC71"]  # primary / secondary / tertiary
 
 VERDICT_COLORS = {
     Verdict.PLAUSIBLE: "#3a8a3a",
@@ -857,11 +863,91 @@ def plot_acceleration_over_time(
     return fig
 
 
+def plot_audio_signature(
+    prediction: AcousticPrediction,
+    *,
+    ref_sounds: list[tuple[int, str]] | None = None,
+    clip_threshold_db: float = 120.0,
+    palette: list[str] | None = None,
+    out_path: Path | None = None,
+) -> plt.Figure:
+    """SPL band chart per listener distance with reference-sound markers.
+
+    Each listener (from `prediction.listeners`) gets a horizontal band spanning
+    the SPL range across the radiation-efficiency bracket, with the typical
+    value marked as a dot. Reference SPL benchmarks (gunshot, jackhammer,
+    conversation, ...) are drawn as vertical tick lines, and the phone-mic
+    clipping region above `clip_threshold_db` is shaded.
+    """
+    refs    = ref_sounds if ref_sounds is not None else DEFAULT_REF_SOUNDS
+    palette = palette    if palette    is not None else SKILL_MPL_PALETTE
+
+    fig, ax = plt.subplots(figsize=(12, 4.0))
+
+    # Reference benchmarks
+    for db, txt in refs:
+        ax.axvline(db, color="gray", alpha=0.35, linewidth=0.8)
+        ax.text(
+            db, 1.02, f"{db} dB\n{txt}",
+            ha="center", va="bottom", fontsize=7,
+            transform=ax.get_xaxis_transform(),
+        )
+
+    # Clipping danger zone
+    ax.axvspan(clip_threshold_db, 200, ymin=0, ymax=1,
+               color=SKILL_MPL_PALETTE[1], alpha=0.07, zorder=0)
+    ax.text(
+        clip_threshold_db + 1, len(prediction.listeners) - 0.2,
+        f"phone mic clips above ~{clip_threshold_db:.0f} dB SPL",
+        color=SKILL_MPL_PALETTE[1], fontsize=9, fontweight="bold", va="top",
+    )
+
+    # Per-listener bands
+    for y, (listener_label, _r) in enumerate(prediction.listeners):
+        color = palette[y % len(palette)]
+        spls = list(prediction.spl_grid[listener_label].values())
+        spl_low, spl_high = min(spls), max(spls)
+        # Typical value: middle of the configured eta range
+        typical_label = list(prediction.eta_range)[len(prediction.eta_range) // 2]
+        spl_typical = prediction.spl_grid[listener_label][typical_label]
+
+        ax.barh(
+            y, spl_high - spl_low, left=spl_low, height=0.55,
+            color=color, alpha=0.5, edgecolor=color, linewidth=2,
+        )
+        ax.plot(spl_typical, y, "o", color="black", markersize=8, zorder=5)
+        ax.text(
+            spl_low - 1.5, y, listener_label,
+            ha="right", va="center", fontsize=10, fontweight="bold",
+        )
+        ax.text(
+            spl_high + 1.5, y, f"{spl_low:.0f} - {spl_high:.0f} dB SPL",
+            ha="left", va="center", fontsize=9,
+        )
+
+    ax.set_yticks([])
+    ax.set_xlim(50, 175)
+    ax.set_ylim(-0.5, len(prediction.listeners) + 0.0)
+    ax.set_xlabel("Sound pressure level (dB SPL re 20 µPa)")
+    ax.set_title(
+        "Predicted peak SPL of the elevator-door impact vs reference sounds",
+        fontsize=12, fontweight="bold",
+    )
+    for side in ("top", "right", "left"):
+        ax.spines[side].set_visible(False)
+    fig.tight_layout()
+    if out_path is not None:
+        fig.savefig(out_path, dpi=120, bbox_inches="tight")
+    return fig
+
+
 __all__ = [
     "PHASE_PALETTE",
+    "SKILL_MPL_PALETTE",
     "VERDICT_COLORS",
     "plot_acceleration_over_time",
     "plot_arm_conflict",
+    "plot_audio_signature",
     "plot_corridor_overhead",
     "plot_force_over_time",
     "plot_impulse_over_time",

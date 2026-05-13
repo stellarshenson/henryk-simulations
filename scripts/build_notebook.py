@@ -19,7 +19,7 @@ OUT = Path(__file__).parents[1] / "notebooks" / "01-kj-corridor-kinematics.ipynb
 HEADER_MD = """\
 # Corridor Two-Body Kinematic Plausibility Simulation
 
-Author: Andrew Jelen<br>
+Author: Stellars Henson<br>
 Approach: 3-phase analytical decomposition of the contested two-body movement sequence in a 2 m corridor over 3 s, comparing the per-phase kinematic demands against published biomechanical reference distributions with 95% confidence intervals.
 
 ## Events reconstruction (3 phases over 3 s)

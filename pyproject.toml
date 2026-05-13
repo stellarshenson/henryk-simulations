@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "henryk_simulations"
-version = "0.1.0"
+version = "0.8.7"
 description = "Project to simulate number of different events"
 authors = [
-    { name = "Andrew Jelen" },
+    { name = "Stellars Henson" },
 ]
 license = "MIT"
 readme = "README.md"
