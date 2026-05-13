@@ -62,12 +62,13 @@ def _build_kinematic_traj(scenario: Scenario, fps: int = FPS) -> dict:
     total_steps = int(round(scenario.total_time * fps)) + 1
     times = np.linspace(0, scenario.total_time, total_steps)
 
-    # Initial positions per the corridor diagram |V .. A|:
-    # V (Victoria) at apartment doorway x=0.1, A (Andrew) near elevator at x=1.7.
-    h_x = np.full_like(times, 1.7)
+    # A has already approached V before the timer starts: both stand near the
+    # apartment door, A in front of V. Both face toward the elevator (+x);
+    # V looks at A who is ahead of her. V's rotation tracks A throughout.
+    h_x = np.full_like(times, 0.5)
     m_x = np.full_like(times, 0.1)
-    h_yaw = np.full_like(times, np.pi)  # facing -x (back to elevator? - no, facing V)
-    m_yaw = np.zeros_like(times)  # facing +x toward Andrew / elevator
+    h_yaw = np.zeros_like(times)  # A faces +x toward the elevator
+    m_yaw = np.zeros_like(times)  # V faces +x toward A who is in front of her
 
     phase_starts = scenario.phase_starts
     # For each phase, fill the appropriate slice; subsequent phases inherit the
@@ -81,21 +82,29 @@ def _build_kinematic_traj(scenario: Scenario, fps: int = FPS) -> dict:
             continue
         local_t = phase.duration
         if phase.name == "pull-throw":
-            # V crosses the corridor from apartment door to elevator door (2 m).
-            # A makes space - steps to V's left so V ends pinned at the wall.
+            # A moves backward toward the elevator (x=0.5 -> x=1.7) while
+            # pulling V along (x=0.1 -> x=2.0). Both travel; V ends pinned at
+            # the elevator door. A is just to V's left at end of phase
+            # (positions just swapped via A traversing to V's other side).
             v_offset = _triangle_profile(phase.translation, local_t, n)
             m_start = m_x[slc][0]
             m_x[slc] = m_start + v_offset
             m_x[slc_after] = m_start + phase.translation
-            # H moves from x=1.7 to x=1.7 (only minor lateral adjustment is
-            # ignored on the linear axis); the rotation handles his pose.
+
+            h_dx = 1.7 - h_x[slc][0]
+            h_offset = _triangle_profile(h_dx, local_t, n)
+            h_start = h_x[slc][0]
+            h_x[slc] = h_start + h_offset
+            h_x[slc_after] = h_start + h_dx
         elif phase.name == "reverse":
             # Positions swap so A ends at the elevator door (x=2.0) and V
             # ends to A's left at x=1.5. Both translate during this phase.
             v_target = 1.5
             h_target = 2.0
-            v_offset = _triangle_profile(v_target - m_x[slc][0], local_t, n)
-            h_offset = _triangle_profile(h_target - h_x[slc][0], local_t, n)
+            v_dx = v_target - m_x[slc][0]
+            h_dx = h_target - h_x[slc][0]
+            v_offset = _triangle_profile(abs(v_dx), local_t, n) * np.sign(v_dx)
+            h_offset = _triangle_profile(abs(h_dx), local_t, n) * np.sign(h_dx)
             m_x[slc] = m_x[slc][0] + v_offset
             m_x[slc_after] = v_target
             h_x[slc] = h_x[slc][0] + h_offset
@@ -110,33 +119,27 @@ def _build_kinematic_traj(scenario: Scenario, fps: int = FPS) -> dict:
                 start_x = h_x[slc][0]
                 h_x[slc] = start_x + offset
                 h_x[slc_after] = start_x + phase.translation
+        # Rotation handling: V always rotates 180 deg per phase tracking A's
+        # position (positions swap once per phase, flipping A's bearing
+        # relative to V). H rotates only during phase 2.
         if phase.rotation > 0:
-            if phase.kind == "rotate":
-                # Single sweep through the full rotation angle
-                offset = _triangle_profile(phase.rotation, local_t, n)
-            elif phase.kind == "translate" and phase.name in ("throw", "pull-throw"):
-                # Victoria rotates 180 deg back-first, then 180 deg back to facing.
-                # Two sweeps: +pi then -pi, total angular distance = phase.rotation.
-                half = phase.rotation / 2
-                first = _triangle_profile(half, local_t / 2, max(1, n // 2))
-                second = half - _triangle_profile(half, local_t / 2, n - len(first))
-                offset = np.concatenate([first, second])
-                if len(offset) != n:
-                    # Pad/trim to match the slice length defensively
-                    if len(offset) < n:
-                        offset = np.concatenate([offset, np.full(n - len(offset), offset[-1])])
-                    else:
-                        offset = offset[:n]
-            else:
-                offset = None
-            if offset is not None and phase.body == "H":
+            offset = _triangle_profile(phase.rotation, local_t, n)
+            if phase.body == "H":
                 start_yaw = h_yaw[slc][0]
                 h_yaw[slc] = start_yaw + offset
                 h_yaw[slc_after] = start_yaw + offset[-1]
-            elif offset is not None and phase.body == "M":
+            elif phase.body == "M":
                 start_yaw = m_yaw[slc][0]
                 m_yaw[slc] = start_yaw + offset
                 m_yaw[slc_after] = start_yaw + offset[-1]
+
+        # V also tracks A in every phase regardless of `body` (V's facing
+        # follows A's relative bearing as positions swap).
+        if phase.name in ("pull-throw", "reverse"):
+            v_offset = _triangle_profile(np.pi, local_t, n)
+            v_start = m_yaw[slc][0]
+            m_yaw[slc] = v_start + v_offset
+            m_yaw[slc_after] = v_start + np.pi
 
     # Lift bodies to floor + half-height
     z = 1.0  # humanoid pelvis above floor

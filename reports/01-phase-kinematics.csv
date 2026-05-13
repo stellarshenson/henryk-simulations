@@ -1,5 +1,5 @@
 resistance,phase,kind,body,mass_kg,duration_s,distance_m,v_peak_m_s,a_peak_m_s2,a_peak_g,f_peak_N,f_resist_N,impulse_N_s,ke_J,omega_peak_rad_s,alpha_peak_rad_s2,torque_peak_Nm,rot_ke_J,reach_v_peak_m_s,reach_f_peak_N
-passive,pull-throw,translate,M,70.0,1.5,2.0,2.667,3.556,0.363,248.9,0.0,186.7,248.9,8.378,11.17,15.6,49.1,0.0,0.0
+passive,pull-throw,translate,M,70.0,1.5,2.0,2.667,3.556,0.363,248.9,0.0,186.7,248.9,4.189,5.585,7.8,12.3,0.0,0.0
 passive,reverse,rotate,H,90.0,1.5,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,4.189,5.585,10.1,15.8,0.0,0.0
-small,pull-throw,translate,M,70.0,1.5,2.0,2.667,3.556,0.363,504.8,255.9,186.7,248.9,8.378,11.17,15.6,49.1,0.0,0.0
+small,pull-throw,translate,M,70.0,1.5,2.0,2.667,3.556,0.363,504.8,255.9,186.7,248.9,4.189,5.585,7.8,12.3,0.0,0.0
 small,reverse,rotate,H,90.0,1.5,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,4.189,5.585,10.1,15.8,0.0,0.0

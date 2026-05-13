@@ -100,28 +100,32 @@ class Scenario:
 def default_scenario() -> Scenario:
     """Minimal 2-phase decomposition mapped directly to the verbatim claim.
 
-    Corridor layout: apartment door at x=0, elevator door at x=2. Victoria
-    starts at the apartment doorway, Andrew in the corridor near the elevator.
+    Corridor layout: apartment door at x=0, elevator door at x=2. Before the
+    timer starts, Andrew has approached Victoria and is standing in front of
+    her at the apartment door. The timer starts when Andrew begins moving
+    backward toward the elevator while pulling Victoria along. Victoria faces
+    Andrew continuously - her facing direction follows him.
 
-      t=0   |V .. A|       (initial)
-      t=1.5 | .. AV *|     (after pull-throw, V impacts elevator)
-      t=3.0 | .. VA |      (after reverse, A's back to elevator)
+      pre-timer    |V A .. |       (A has approached V; both near apt door)
+      t=0          |V A .. |       (timer starts)
+      t=1.5        | .. AV*|       (A moved back to elevator, V dragged across,
+                                    V's back impacts elevator on the swap)
+      t=3.0        | .. VA |       (positions swap back; A at elevator with back to it)
 
-    'Pull' and 'swap and throw' are explicitly described as mixed in the claim
-    framing, so they collapse into a single 'pull-throw' phase. The 'reverse'
-    phase swaps positions back so Andrew ends with his back to the elevator.
-    Each phase gets half the 3 s budget, the most charitable allocation.
+    'Pull' and 'swap-and-throw' are explicitly described as mixed in the
+    framing, so they collapse into a single 'pull-throw' phase. Victoria's
+    facing direction tracks Andrew throughout, so the rotation splits
+    evenly: 180 deg during phase 1 (Andrew traverses from V's front to V's
+    side as positions swap) and 180 deg during phase 2 (Andrew traverses to
+    V's other side as positions swap back).
 
-    1. Pull-throw (V translates 2.0 m + rotates 360 deg)  1.5 s
-    2. Reverse    (A rotates 180 deg + positions swap)    1.5 s
-
-    Victoria's 360 deg rotation in phase 1 has her back impact the elevator
-    door (180 deg) then her front face Andrew again (another 180 deg).
+    1. Pull-throw (V translates 2.0 m + rotates 180 deg)  1.5 s
+    2. Reverse    (H rotates 180 deg + V rotates 180 deg + swap)  1.5 s
     """
     import math
 
     phases = (
-        Phase("pull-throw", 1.5, "translate", "M", translation=2.0, rotation=2 * math.pi),
+        Phase("pull-throw", 1.5, "translate", "M", translation=2.0, rotation=math.pi),
         Phase("reverse", 1.5, "rotate", "H", rotation=math.pi),
     )
     return Scenario(
