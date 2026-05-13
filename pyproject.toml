@@ -1,0 +1,66 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "henryk_simulations"
+version = "0.1.0"
+description = "Project to simulate number of different events"
+authors = [
+    { name = "Andrew Jelen" },
+]
+license = "MIT"
+readme = "README.md"
+requires-python = "~=3.11.0"
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+
+dependencies = [
+    "loguru",
+    "tqdm",
+    "typer",
+    "python-dotenv",
+    "botocore",
+    "numpy",
+    "scipy",
+    "matplotlib",
+    "pandas",
+    "rich",
+    "seaborn",
+    "pybullet",
+    "imageio[ffmpeg]",
+]
+
+[project.optional-dependencies]
+dev = [
+    "build",
+    "ipykernel",
+    "ipython",
+    "nbdime",
+    "pip",
+    "pytest",
+    "pytest-cov",
+    "ruff",
+    "awscli",
+]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["henryk_simulations*"]
+exclude = ["tests*"]
+
+[tool.ruff]
+line-length = 99
+src = ["src/henryk_simulations"]
+include = ["pyproject.toml", "src/henryk_simulations/**/*.py"]
+
+[tool.ruff.lint]
+extend-select = ["I"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["henryk_simulations"]
+force-sort-within-sections = true

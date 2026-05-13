@@ -1,0 +1,8 @@
+phase,quantity,required,units,ref,ref_mean,ref_sd,z,x_mean,verdict
+pull-out,peak acceleration,5.556,m/s^2,"sprint acceleration, recreational",3.0,0.8,3.19,1.85,extreme
+pull-out,peak force,388.889,N,"two-arm peak push, standing",800.0,200.0,-2.06,0.49,plausible
+throw,peak acceleration,8.0,m/s^2,"sprint acceleration, recreational",3.0,0.8,6.25,2.67,extreme
+throw,peak force,560.0,N,"two-arm peak push, standing",800.0,200.0,-1.2,0.7,plausible
+throw,kinetic energy,560.0,J,"overhand throw KE budget, 5 kg object",160.0,80.0,5.0,3.5,extreme
+throw,peak yaw angular velocity,12.566,rad/s,standing pivot yaw angular velocity,3.5,1.0,9.07,3.59,extreme
+reverse,peak yaw angular velocity,4.488,rad/s,standing pivot yaw angular velocity,3.5,1.0,0.99,1.28,plausible
