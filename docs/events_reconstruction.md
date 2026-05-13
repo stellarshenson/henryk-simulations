@@ -155,6 +155,30 @@ The decisive findings are concentrated in:
 - **All three rotation rates** at z=2.78 (360°/s yaw imposed in 1.0 s windows). A's own rotation is voluntary but at twice the population-mean pivot rate; V's two rotations are imposed by Andrew's arm contact while she is also being translated and impacted, with no biomechanical precedent in the cited literature.
 - **Impact force 15.75 kN** at the elevator door is in the rib-fracture range documented by the experimental thoracic-impact literature (see `docs/impact_analysis.md` for citations).
 
+## Geometric inconsistency in Victoria's later account
+
+Victoria's later legal filings introduce a detail not present in the immediate accounts: Andrew is said to have approached Victoria from her **left side**, exploiting her partial left-eye blind spot. This claim is geometrically incompatible with the physical layout that the same accounts describe.
+
+The corridor layout:
+
+```
+apartment door (west)  |V    ..    A|  elevator door (east)
+```
+
+Victoria stands in or just outside the apartment doorway. The elevator door is on the **east** side of the corridor, opposite the apartment door. Andrew is described as being in the corridor in front of Victoria, between her and the elevator.
+
+The two facing-direction options for Victoria when Andrew "approaches" her:
+
+1. **Victoria faces east** (out of the apartment, into the corridor): her left is **north** (one side wall), her right is **south** (other side wall). Andrew, being in the corridor in front of her, is to her east (her front), not to her left. For Andrew to be on Victoria's left he would have to be on the north side - against the north corridor wall - which is not where the accounts place him. Additionally, a push from her left (north) propels her south (toward the south side wall), not east toward the elevator door.
+
+2. **Victoria faces west** (back to corridor, looking into the apartment): her left is **south**, her right is **north**. Andrew is behind her. He is not to her left.
+
+Neither orientation places Andrew on Victoria's left while also being consistent with (a) his described position in the corridor between Victoria and the elevator and (b) a trajectory that would propel Victoria's back into the elevator door (east, ~2 m away).
+
+For the "attack from the left" claim to be geometrically possible Victoria would have to be standing parallel to the corridor axis - facing one of the side walls (north or south) with her left pointing toward the apartment side and her right pointing toward the elevator side. This is an unusual stance for someone in a doorway answering an outside visitor. It also disagrees with the third-party observation that Victoria walked the toy into the corridor and asked Cecilia to step aside - actions naturally performed facing into the corridor (east), with the elevator door to Victoria's *front-right*, not to her right.
+
+In summary: the geometric set-up that allows a left-side attack to terminate at the elevator door is at odds with the natural standing orientation at the apartment doorway implied by Victoria's other reported actions in the same encounter. The "from her left side" detail therefore introduces an additional constraint that the rest of the account does not satisfy.
+
 ## What this analysis does not establish
 
 - Whether the alleged motion actually occurred (only kinematic plausibility under the most charitable cooperation model)
