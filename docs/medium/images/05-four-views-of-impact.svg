@@ -1,0 +1,185 @@
+<!--
+  05-four-views-of-impact.svg
+  Shows: four impact metrics (force, peak-g, kinetic energy, velocity) for the same
+         3-second corridor incident, arranged as a 2x2 card grid around a central
+         unifying anchor labelled "the impact". Each card carries one numeric value,
+         an AIS-band severity chip (CRITICAL / SERIOUS / MODERATE), and a literature
+         source line. Bottom caption explains why the velocity verdict reads softer
+         than the outcome-side load metrics for a rigid steel-door target.
+  Intent: visual teaching point - the four metrics are not independent verdicts,
+          they are four views of the same physical event.
+  Theme:  Stellars-Tech (cyan primary #0096d1, orange accent-2 #da8230). Severity
+          chips use dedicated classes sev-critical / sev-serious / sev-moderate so
+          they do not collide with accent-1 / accent-2 semantics. Dual-theme via
+          prefers-color-scheme.
+-->
+
+<!-- === GRID ===
+  viewBox:        800 x 520
+  Margins:        L=20  R=20  T=12  B=12
+  Header band:    y=12..48   (TITLE letter-spaced + subtitle)
+  Top row cards:  y=58..228  (h=170)
+  Centre band:    y=240..276 (h=36, pill anchored on horizontal midline 258)
+  Bottom row:     y=288..458 (h=170)
+  Bottom caption: y=472..506 (thin rule at 474, two centred lines below)
+  Columns:        col-L x=20..390 (w=370)   col-R x=410..780 (w=370)
+  Gutter:         20px horizontal between cards, 60px vertical between rows
+  Card corner radius: r=3 (flat top, rounded bottom per stellars-tech swatch)
+  Accent bar:     h=5 opacity=0.6 flush to card top
+  Vertical rhythm inside card (offset from card-top):
+    +0   accent bar
+    +24  small ALL-CAPS quantity label (font-size 10)
+    +52  body context line 1 (font-size 10, fg-3)
+    +66  body context line 2 (font-size 10, fg-3)
+    +80  body context line 3 (font-size 10, fg-3)
+    +112 large value text (font-size 32, accent-1, anchor=middle, x=card-mid)
+    +128 unit / subline (font-size 10, fg-3, anchor=middle)
+    +145 AIS chip (h=20 w=180 rx=10 centred on card-mid, y=card_top+137)
+    +174 source citation (font-size 9, fg-4, anchor=middle, italic)
+=== -->
+
+<!-- === LAYOUT TOPOLOGY ===
+  v-stack:  header > grid-row-top > centre-anchor > grid-row-bottom > bottom-caption
+  grid:     card-tl (force)   | card-tr (peak-g)
+            card-bl (energy)  | card-br (velocity)
+  hub:      centre-anchor connected to each card's inner corner by a thin
+            non-directional guide line (mode=straight, arrow=none). Lines
+            radiate diagonally; they communicate "same event, four facets",
+            not flow direction.
+  z-order:  background (none, transparent) > guide-lines > cards (path + accent
+            bar) > centre-pill > text content > AIS chips > on-fill chip text
+=== -->
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" preserveAspectRatio="xMidYMid meet">
+  <style>
+    .fg-1 { fill: #1a5a6e; }
+    .fg-2 { fill: #24697e; }
+    .fg-3 { fill: #236a74; }
+    .fg-4 { fill: #2b7680; }
+    .accent-1 { fill: #005f7a; }
+    .accent-2 { fill: #7a4a15; }
+    .sev-critical { fill: #b8431a; }
+    .sev-serious  { fill: #7a4a15; }
+    .sev-moderate { fill: #7a5e1a; }
+    .on-fill { fill: #f5f7fa; }
+    @media (prefers-color-scheme: dark) {
+      .fg-1 { fill: #b8e4f0; }
+      .fg-2 { fill: #8fd4e6; }
+      .fg-3 { fill: #5aafc5; }
+      .fg-4 { fill: #4099b3; }
+      .accent-1 { fill: #5cc8e0; }
+      .accent-2 { fill: #d4a04a; }
+      .sev-critical { fill: #ff7a4a; }
+      .sev-serious  { fill: #d4a04a; }
+      .sev-moderate { fill: #e6c46a; }
+      .on-fill { fill: #0a1a24; }
+    }
+  </style>
+
+  <!-- Transparent backplate (per standard) -->
+  <rect x="0" y="0" width="800" height="520" fill="transparent"/>
+
+  <!-- ============================================================ -->
+  <!-- Layer: header                                                 -->
+  <!-- ============================================================ -->
+  <g id="header">
+    <text x="400" y="26" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" class="fg-2" text-anchor="middle" letter-spacing="2">FOUR VIEWS OF THE SAME IMPACT</text>
+    <text x="400" y="44" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-4" text-anchor="middle">one 3-second corridor event, four metrics that all describe the same physics</text>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- Layer: connectors - thin guides from centre pill to each card -->
+  <!-- ============================================================ -->
+  <g id="guide-lines">
+    <!-- centre upper-left -> top-left card bottom-right corner -->
+    <path d="M321.96,242.58 L378.27,230.51" fill="none" stroke="#0096d1" stroke-width="1" opacity="0.5" stroke-linecap="round"/>
+    <!-- centre upper-right -> top-right card bottom-left corner -->
+    <path d="M478.04,242.58 L421.73,230.51" fill="none" stroke="#0096d1" stroke-width="1" opacity="0.5" stroke-linecap="round"/>
+    <!-- centre lower-left -> bottom-left card top-right corner -->
+    <path d="M321.96,273.42 L378.27,285.49" fill="none" stroke="#0096d1" stroke-width="1" opacity="0.5" stroke-linecap="round"/>
+    <!-- centre lower-right -> bottom-right card top-left corner -->
+    <path d="M478.04,273.42 L421.73,285.49" fill="none" stroke="#0096d1" stroke-width="1" opacity="0.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- Layer: nodes - four metric cards                              -->
+  <!-- ============================================================ -->
+
+  <!-- Card 1: top-left - IMPACT FORCE -->
+  <g id="card-force">
+    <path d="M20,58 H390 V225 Q390,228 387,228 H23 Q20,228 20,225 Z" fill="#0096d1" fill-opacity="0.04" stroke="#0096d1" stroke-width="1"/>
+    <rect x="20" y="58" width="370" height="5" fill="#0096d1" opacity="0.6"/>
+    <text x="36" y="82" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="600" class="accent-1" letter-spacing="2">IMPACT FORCE</text>
+    <text x="36" y="110" font-family="Segoe UI, Arial, sans-serif" font-size="10" class="fg-3">Sustained load on the rib cage at peak</text>
+    <text x="36" y="124" font-family="Segoe UI, Arial, sans-serif" font-size="10" class="fg-3">contact, computed from change in momentum</text>
+    <text x="36" y="138" font-family="Segoe UI, Arial, sans-serif" font-size="10" class="fg-3">over the 18 ms collision window</text>
+    <text x="205" y="178" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700" class="accent-1" text-anchor="middle">18.06 kN</text>
+    <text x="205" y="194" font-family="Segoe UI, Arial, sans-serif" font-size="10" class="fg-3" text-anchor="middle">peak rib-cage load</text>
+    <rect x="115" y="203" width="180" height="20" rx="10" class="sev-critical"/>
+    <text x="205" y="217" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" class="on-fill" text-anchor="middle" letter-spacing="2">CRITICAL  AIS 5+</text>
+    <text x="205" y="244" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-4" text-anchor="middle" font-style="italic">Viano 1989 - blunt thoracic injury thresholds</text>
+  </g>
+
+  <!-- Card 2: top-right - PEAK DECELERATION -->
+  <g id="card-peakg">
+    <path d="M410,58 H780 V225 Q780,228 777,228 H413 Q410,228 410,225 Z" fill="#0096d1" fill-opacity="0.04" stroke="#0096d1" stroke-width="1"/>
+    <rect x="410" y="58" width="370" height="5" fill="#0096d1" opacity="0.6"/>
+    <text x="426" y="82" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="600" class="accent-1" letter-spacing="2">PEAK DECELERATION</text>
+    <text x="426" y="110" font-family="Segoe UI, Arial, sans-serif" font-size="10" class="fg-3">G-load experienced by the chest at the</text>
+    <text x="426" y="124" font-family="Segoe UI, Arial, sans-serif" font-size="10" class="fg-3">instant of contact, in multiples of</text>
+    <text x="426" y="138" font-family="Segoe UI, Arial, sans-serif" font-size="10" class="fg-3">standard gravity</text>
+    <text x="595" y="178" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700" class="accent-1" text-anchor="middle">26.3 g</text>
+    <text x="595" y="194" font-family="Segoe UI, Arial, sans-serif" font-size="10" class="fg-3" text-anchor="middle">peak chest deceleration</text>
+    <rect x="505" y="203" width="180" height="20" rx="10" class="sev-serious"/>
+    <text x="595" y="217" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" class="on-fill" text-anchor="middle" letter-spacing="2">SERIOUS  AIS 3 - 4</text>
+    <text x="595" y="244" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-4" text-anchor="middle" font-style="italic">Stapp 1971 / Eiband 1959 - human tolerance</text>
+  </g>
+
+  <!-- Card 3: bottom-left - IMPACT KINETIC ENERGY -->
+  <g id="card-energy">
+    <path d="M20,288 H390 V455 Q390,458 387,458 H23 Q20,458 20,455 Z" fill="#0096d1" fill-opacity="0.04" stroke="#0096d1" stroke-width="1"/>
+    <rect x="20" y="288" width="370" height="5" fill="#0096d1" opacity="0.6"/>
+    <text x="36" y="312" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="600" class="accent-1" letter-spacing="2">IMPACT KINETIC ENERGY</text>
+    <text x="36" y="340" font-family="Segoe UI, Arial, sans-serif" font-size="10" class="fg-3">Translational energy carried into the door</text>
+    <text x="36" y="354" font-family="Segoe UI, Arial, sans-serif" font-size="10" class="fg-3">at the moment of impact, one-half mass</text>
+    <text x="36" y="368" font-family="Segoe UI, Arial, sans-serif" font-size="10" class="fg-3">times velocity squared</text>
+    <text x="205" y="408" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700" class="accent-1" text-anchor="middle">361 J</text>
+    <text x="205" y="424" font-family="Segoe UI, Arial, sans-serif" font-size="10" class="fg-3" text-anchor="middle">delivered to the rib cage</text>
+    <rect x="115" y="433" width="180" height="20" rx="10" class="sev-serious"/>
+    <text x="205" y="447" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" class="on-fill" text-anchor="middle" letter-spacing="2">SERIOUS  rib-fracture band</text>
+    <text x="205" y="474" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-4" text-anchor="middle" font-style="italic">Sturdivan 2004 - blunt-impact KE thresholds</text>
+  </g>
+
+  <!-- Card 4: bottom-right - IMPACT VELOCITY -->
+  <g id="card-velocity">
+    <path d="M410,288 H780 V455 Q780,458 777,458 H413 Q410,458 410,455 Z" fill="#0096d1" fill-opacity="0.04" stroke="#0096d1" stroke-width="1"/>
+    <rect x="410" y="288" width="370" height="5" fill="#0096d1" opacity="0.6"/>
+    <text x="426" y="312" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="600" class="accent-1" letter-spacing="2">IMPACT VELOCITY</text>
+    <text x="426" y="340" font-family="Segoe UI, Arial, sans-serif" font-size="10" class="fg-3">Centre-of-mass speed at the instant the</text>
+    <text x="426" y="354" font-family="Segoe UI, Arial, sans-serif" font-size="10" class="fg-3">body contacts the door, the input that</text>
+    <text x="426" y="368" font-family="Segoe UI, Arial, sans-serif" font-size="10" class="fg-3">drives every other metric</text>
+    <text x="595" y="408" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700" class="accent-1" text-anchor="middle">11.6 kph</text>
+    <text x="595" y="424" font-family="Segoe UI, Arial, sans-serif" font-size="10" class="fg-3" text-anchor="middle">closing speed at contact</text>
+    <rect x="505" y="433" width="180" height="20" rx="10" class="sev-moderate"/>
+    <text x="595" y="447" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" class="on-fill" text-anchor="middle" letter-spacing="2">MODERATE  soft-target bias</text>
+    <text x="595" y="474" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-4" text-anchor="middle" font-style="italic">Viano &amp; Lau 1985 - velocity injury criteria</text>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- Layer: centre anchor pill - unifying caption                  -->
+  <!-- ============================================================ -->
+  <g id="centre-anchor">
+    <rect x="320" y="240" width="160" height="36" rx="18" fill="#0096d1" fill-opacity="0.10" stroke="#0096d1" stroke-width="1"/>
+    <text x="400" y="256" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="600" class="accent-1" text-anchor="middle" letter-spacing="2">THE IMPACT</text>
+    <text x="400" y="270" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-3" text-anchor="middle">one event, four metrics</text>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- Layer: callouts - bottom explanatory caption                  -->
+  <!-- ============================================================ -->
+  <g id="bottom-caption">
+    <line x1="40" y1="490" x2="760" y2="490" stroke="#0096d1" stroke-width="0.5" opacity="0.3"/>
+    <text x="400" y="504" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-3" text-anchor="middle">Velocity reads moderate only because the published bands assume a soft target. For a rigid steel door, force, g-load and kinetic energy are the load-bearing verdicts.</text>
+  </g>
+
+</svg>

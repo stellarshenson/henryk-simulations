@@ -1,0 +1,256 @@
+<!--
+  06-predicted-vs-documented.svg
+  Shows: 5 forensic observables (rows). Each row is a predicted-physics card (cyan, left)
+         paired with a documented-record card (orange, right), separated by a centred ✗ glyph.
+         Title strip at top, summary tally card at bottom.
+  Intent: visualise the systematic mismatch between physics-predicted observables and the
+          documented record - 0 of 10 match.
+  Theme: Stellars-Tech (dark variant primary). accent-1=cyan=predicted, accent-2=orange=documented.
+
+  === GRID ===
+    viewBox: 800 x 550
+    All coordinates snap to 5px grid.
+
+    ~~~ TITLE STRIP ~~~
+    Title baseline:    y=25  (16pt 700 .fg-1 anchor middle x=400)
+    Subtitle baseline: y=45  (10pt 600 .fg-3 anchor middle x=400 letter-spacing 1.5)
+    Hairline divider:  y=55  (x1=20 x2=780 stroke #0096d1 width 0.5 opacity 0.3)
+
+    ~~~ ROW BAND ~~~
+    Row top y: [70, 155, 240, 325, 410]
+    Row height: 70; row gap: 15
+    Last row bottom: 480
+
+    Cyan (predicted) card: x=20 w=360 ends x=380; accent bar h=5 fill #0096d1 opacity 0.6
+    Orange (documented) card: x=420 w=360 ends x=780; accent bar h=5 fill #da8230 opacity 0.6
+
+    Per-card baselines (relative to row_top):
+      tag       row_top + 20  (8pt 600, .accent-1 or .accent-2, letter-spacing 1.5)
+      title L1  row_top + 35  (11pt 700, .fg-1)
+      title L2  row_top + 50  (11pt 700, .fg-1)
+      detail    row_top + 65  (8.5pt, .fg-3)
+
+    Middle glyph column (centre x=400):
+      ✗ glyph:     y = row_top + 45  (22pt 700, .accent-2, text-anchor middle)
+      MISMATCH:    y = row_top + 60  (6pt 600, .accent-2, text-anchor middle, letter-spacing 1.2)
+
+    ~~~ SUMMARY CARD ~~~
+    Summary card: x=20 y=495 width=760 height=50 r=3
+      accent bar: rect x=20 y=495 width=760 height=4 fill #0096d1 opacity 0.5
+      Headline baseline: y=515 (9pt 600 .fg-3 anchor middle x=400 letter-spacing 1.2)
+      Tally row baseline: y=535 (count 11pt 700, label 9pt regular)
+        slot left-anchors at x = 125, 265, 465, 630
+
+  === COLOUR MAP (light primary; dark via @media) ===
+    fg-1 #1a5a6e  | dark #b8e4f0  (titles)
+    fg-2 #24697e  | dark #8fd4e6  (card body emphasis)
+    fg-3 #236a74  | dark #5aafc5  (detail / sublabel)
+    fg-4 #2b7680  | dark #4099b3  (tertiary)
+    accent-1 #005f7a | dark #5cc8e0 (predicted/cyan label tone)
+    accent-2 #7a4a15 | dark #d4a04a (documented/orange label tone, mismatch marker)
+    raw brand: cyan #0096d1 (accent bars + card fills/strokes)
+               orange #da8230 (accent bars + card fills/strokes)
+-->
+<!-- === LAYOUT TOPOLOGY ===
+  v-stack: header, row-1, row-2, row-3, row-4, row-5, card-summary
+=== -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 550" preserveAspectRatio="xMidYMid meet">
+  <style>
+    .fg-1 { fill: #1a5a6e; }
+    .fg-2 { fill: #24697e; }
+    .fg-3 { fill: #236a74; }
+    .fg-4 { fill: #2b7680; }
+    .accent-1 { fill: #005f7a; }
+    .accent-2 { fill: #7a4a15; }
+    @media (prefers-color-scheme: dark) {
+      .fg-1 { fill: #b8e4f0; }
+      .fg-2 { fill: #8fd4e6; }
+      .fg-3 { fill: #5aafc5; }
+      .fg-4 { fill: #4099b3; }
+      .accent-1 { fill: #5cc8e0; }
+      .accent-2 { fill: #d4a04a; }
+    }
+  </style>
+
+  <!-- ============================================================ -->
+  <!-- HEADER STRIP                                                 -->
+  <!-- ============================================================ -->
+  <g id="header">
+    <text x="400" y="25" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" class="fg-1" text-anchor="middle">Predicted vs. Documented</text>
+    <text x="400" y="45" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="600" class="fg-3" text-anchor="middle" letter-spacing="1.5">0 OF 10 FORENSIC OBSERVABLES MATCH</text>
+    <line x1="20" y1="55" x2="780" y2="55" stroke="#0096d1" stroke-width="0.5" opacity="0.3"/>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- ROW 1 (y=70)                                                 -->
+  <!-- ============================================================ -->
+  <g id="row-1">
+    <g id="card-predicted-1">
+      <rect class="card" x="20" y="70" width="343" height="70" fill="none" stroke="none"/>
+      <path d="M20,70 H363 V137 Q363,140 360,140 H23 Q20,140 20,137 Z" fill="#0096d1" fill-opacity="0.05"/>
+      <path d="M20,70 H363 V137 Q363,140 360,140 H23 Q20,140 20,137 Z" fill="none" stroke="#0096d1" stroke-width="1"/>
+      <rect x="20" y="70" width="343" height="5" fill="#0096d1" opacity="0.7"/>
+    </g>
+    <g id="card-documented-1">
+      <rect class="card" x="437" y="70" width="343" height="70" fill="none" stroke="none"/>
+      <path d="M437,70 H780 V137 Q780,140 777,140 H440 Q437,140 437,137 Z" fill="#da8230" fill-opacity="0.05"/>
+      <path d="M437,70 H780 V137 Q780,140 777,140 H440 Q437,140 437,137 Z" fill="none" stroke="#da8230" stroke-width="1.2"/>
+      <rect x="437" y="70" width="343" height="5" fill="#da8230" opacity="0.7"/>
+    </g>
+    <!-- Content: predicted-1 -->
+    <text x="35" y="90" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" class="accent-1" letter-spacing="1.5">PREDICTED</text>
+    <text x="35" y="105" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-1">Widespread back haematoma</text>
+    <text x="35" y="120" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-1">over torso contact area</text>
+    <text x="35" y="135" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" class="fg-3">Body pressed against door surface</text>
+    <!-- Content: documented-1 -->
+    <text x="452" y="90" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" class="accent-2" letter-spacing="1.5">DOCUMENTED</text>
+    <text x="452" y="105" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-1">Single right-shoulder bruise</text>
+    <text x="452" y="120" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-1">only</text>
+    <text x="452" y="135" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" class="fg-3">No other torso bruising in record</text>
+    <!-- Mid glyph row 1 -->
+    <text x="400" y="115" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" class="accent-2" text-anchor="middle">✗</text>
+    <text x="400" y="130" font-family="Segoe UI, Arial, sans-serif" font-size="6" font-weight="600" class="accent-2" text-anchor="middle" letter-spacing="1.2">MISMATCH</text>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- ROW 2 (y=155)                                                -->
+  <!-- ============================================================ -->
+  <g id="row-2">
+    <g id="card-predicted-2">
+      <rect class="card" x="20" y="155" width="343" height="70" fill="none" stroke="none"/>
+      <path d="M20,155 H363 V222 Q363,225 360,225 H23 Q20,225 20,222 Z" fill="#0096d1" fill-opacity="0.05"/>
+      <path d="M20,155 H363 V222 Q363,225 360,225 H23 Q20,225 20,222 Z" fill="none" stroke="#0096d1" stroke-width="1"/>
+      <rect x="20" y="155" width="343" height="5" fill="#0096d1" opacity="0.7"/>
+    </g>
+    <g id="card-documented-2">
+      <rect class="card" x="437" y="155" width="343" height="70" fill="none" stroke="none"/>
+      <path d="M437,155 H780 V222 Q780,225 777,225 H440 Q437,225 437,222 Z" fill="#da8230" fill-opacity="0.05"/>
+      <path d="M437,155 H780 V222 Q780,225 777,225 H440 Q437,225 437,222 Z" fill="none" stroke="#da8230" stroke-width="1.2"/>
+      <rect x="437" y="155" width="343" height="5" fill="#da8230" opacity="0.7"/>
+    </g>
+    <text x="35" y="175" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" class="accent-1" letter-spacing="1.5">PREDICTED</text>
+    <text x="35" y="190" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-1">Rib fracture(s) expected</text>
+    <text x="35" y="205" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-1">at 18 kN impact load</text>
+    <text x="35" y="220" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" class="fg-3">1 to 13 fractures plausible range</text>
+    <text x="452" y="175" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" class="accent-2" letter-spacing="1.5">DOCUMENTED</text>
+    <text x="452" y="190" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-1">No rib fractures</text>
+    <text x="452" y="205" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-1">in medical record</text>
+    <text x="452" y="220" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" class="fg-3">Complete absence on examination</text>
+    <text x="400" y="200" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" class="accent-2" text-anchor="middle">✗</text>
+    <text x="400" y="215" font-family="Segoe UI, Arial, sans-serif" font-size="6" font-weight="600" class="accent-2" text-anchor="middle" letter-spacing="1.2">MISMATCH</text>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- ROW 3 (y=240)                                                -->
+  <!-- ============================================================ -->
+  <g id="row-3">
+    <g id="card-predicted-3">
+      <rect class="card" x="20" y="240" width="343" height="70" fill="none" stroke="none"/>
+      <path d="M20,240 H363 V307 Q363,310 360,310 H23 Q20,310 20,307 Z" fill="#0096d1" fill-opacity="0.05"/>
+      <path d="M20,240 H363 V307 Q363,310 360,310 H23 Q20,310 20,307 Z" fill="none" stroke="#0096d1" stroke-width="1"/>
+      <rect x="20" y="240" width="343" height="5" fill="#0096d1" opacity="0.7"/>
+    </g>
+    <g id="card-documented-3">
+      <rect class="card" x="437" y="240" width="343" height="70" fill="none" stroke="none"/>
+      <path d="M437,240 H780 V307 Q780,310 777,310 H440 Q437,310 437,307 Z" fill="#da8230" fill-opacity="0.05"/>
+      <path d="M437,240 H780 V307 Q780,310 777,310 H440 Q437,310 437,307 Z" fill="none" stroke="#da8230" stroke-width="1.2"/>
+      <rect x="437" y="240" width="343" height="5" fill="#da8230" opacity="0.7"/>
+    </g>
+    <text x="35" y="260" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" class="accent-1" letter-spacing="1.5">PREDICTED</text>
+    <text x="35" y="275" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-1">Audio clipping spike</text>
+    <text x="35" y="290" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-1">at impact (~124 dB SPL)</text>
+    <text x="35" y="305" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" class="fg-3">Recorder must saturate at peak</text>
+    <text x="452" y="260" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" class="accent-2" letter-spacing="1.5">DOCUMENTED</text>
+    <text x="452" y="275" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-1">No clipping spike</text>
+    <text x="452" y="290" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-1">in audio recording</text>
+    <text x="452" y="305" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" class="fg-3">Clean waveform across the event</text>
+    <text x="400" y="285" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" class="accent-2" text-anchor="middle">✗</text>
+    <text x="400" y="300" font-family="Segoe UI, Arial, sans-serif" font-size="6" font-weight="600" class="accent-2" text-anchor="middle" letter-spacing="1.2">MISMATCH</text>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- ROW 4 (y=325)                                                -->
+  <!-- ============================================================ -->
+  <g id="row-4">
+    <g id="card-predicted-4">
+      <rect class="card" x="20" y="325" width="343" height="70" fill="none" stroke="none"/>
+      <path d="M20,325 H363 V392 Q363,395 360,395 H23 Q20,395 20,392 Z" fill="#0096d1" fill-opacity="0.05"/>
+      <path d="M20,325 H363 V392 Q363,395 360,395 H23 Q20,395 20,392 Z" fill="none" stroke="#0096d1" stroke-width="1"/>
+      <rect x="20" y="325" width="343" height="5" fill="#0096d1" opacity="0.7"/>
+    </g>
+    <g id="card-documented-4">
+      <rect class="card" x="437" y="325" width="343" height="70" fill="none" stroke="none"/>
+      <path d="M437,325 H780 V392 Q780,395 777,395 H440 Q437,395 437,392 Z" fill="#da8230" fill-opacity="0.05"/>
+      <path d="M437,325 H780 V392 Q780,395 777,395 H440 Q437,395 437,392 Z" fill="none" stroke="#da8230" stroke-width="1.2"/>
+      <rect x="437" y="325" width="343" height="5" fill="#da8230" opacity="0.7"/>
+    </g>
+    <text x="35" y="345" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" class="accent-1" letter-spacing="1.5">PREDICTED</text>
+    <text x="35" y="360" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-1">Witness reaction</text>
+    <text x="35" y="375" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-1">to ~126 dB peak</text>
+    <text x="35" y="390" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" class="fg-3">Jackhammer at 1 m distance</text>
+    <text x="452" y="345" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" class="accent-2" letter-spacing="1.5">DOCUMENTED</text>
+    <text x="452" y="360" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-1">No reaction;</text>
+    <text x="452" y="375" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-1">witness reports no bang</text>
+    <text x="452" y="390" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" class="fg-3">No acoustic event noted in account</text>
+    <text x="400" y="370" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" class="accent-2" text-anchor="middle">✗</text>
+    <text x="400" y="385" font-family="Segoe UI, Arial, sans-serif" font-size="6" font-weight="600" class="accent-2" text-anchor="middle" letter-spacing="1.2">MISMATCH</text>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- ROW 5 (y=410)                                                -->
+  <!-- ============================================================ -->
+  <g id="row-5">
+    <g id="card-predicted-5">
+      <rect class="card" x="20" y="410" width="343" height="70" fill="none" stroke="none"/>
+      <path d="M20,410 H363 V477 Q363,480 360,480 H23 Q20,480 20,477 Z" fill="#0096d1" fill-opacity="0.05"/>
+      <path d="M20,410 H363 V477 Q363,480 360,480 H23 Q20,480 20,477 Z" fill="none" stroke="#0096d1" stroke-width="1"/>
+      <rect x="20" y="410" width="343" height="5" fill="#0096d1" opacity="0.7"/>
+    </g>
+    <g id="card-documented-5">
+      <rect class="card" x="437" y="410" width="343" height="70" fill="none" stroke="none"/>
+      <path d="M437,410 H780 V477 Q780,480 777,480 H440 Q437,480 437,477 Z" fill="#da8230" fill-opacity="0.05"/>
+      <path d="M437,410 H780 V477 Q780,480 777,480 H440 Q437,480 437,477 Z" fill="none" stroke="#da8230" stroke-width="1.2"/>
+      <rect x="437" y="410" width="343" height="5" fill="#da8230" opacity="0.7"/>
+    </g>
+    <text x="35" y="430" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" class="accent-1" letter-spacing="1.5">PREDICTED</text>
+    <text x="35" y="445" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-1">V back-first against door</text>
+    <text x="35" y="460" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-1">after impact</text>
+    <text x="35" y="475" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" class="fg-3">Body orientation set by throw direction</text>
+    <text x="452" y="430" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" class="accent-2" letter-spacing="1.5">DOCUMENTED</text>
+    <text x="452" y="445" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-1">Leaning, sliding, crawling</text>
+    <text x="452" y="460" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-1">all front-first</text>
+    <text x="452" y="475" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" class="fg-3">Witness reports forward orientation</text>
+    <text x="400" y="455" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" class="accent-2" text-anchor="middle">✗</text>
+    <text x="400" y="470" font-family="Segoe UI, Arial, sans-serif" font-size="6" font-weight="600" class="accent-2" text-anchor="middle" letter-spacing="1.2">MISMATCH</text>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- SUMMARY CARD (y=495, h=40, full-width)                       -->
+  <!-- ============================================================ -->
+  <g id="card-summary">
+    <rect class="card" x="20" y="495" width="760" height="50" fill="none" stroke="none"/>
+    <path d="M20,495 H780 V542 Q780,545 777,545 H23 Q20,545 20,542 Z" fill="#0096d1" fill-opacity="0.05"/>
+    <path d="M20,495 H780 V542 Q780,545 777,545 H23 Q20,545 20,542 Z" fill="none" stroke="#0096d1" stroke-width="1"/>
+    <rect x="20" y="495" width="760" height="4" fill="#0096d1" opacity="0.5"/>
+    <!-- Headline -->
+    <text x="400" y="515" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="600" class="fg-3" text-anchor="middle" letter-spacing="1.2">FULL TALLY ACROSS 10 OBSERVABLES</text>
+    <!-- Tally slots: 4 evenly distributed -->
+    <!-- Slot 1: 0 ✓ match -->
+    <text x="125" y="535" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="accent-1" text-anchor="end">0</text>
+    <text x="130" y="535" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="accent-1">✓</text>
+    <text x="145" y="535" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-2">match</text>
+    <!-- Slot 2: 7 ✗ absent/contradicted -->
+    <text x="265" y="535" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="accent-2" text-anchor="end">7</text>
+    <text x="270" y="535" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="accent-2">✗</text>
+    <text x="285" y="535" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-2">absent or contradicted</text>
+    <!-- Slot 3: 1 ⚠ temporally decoupled -->
+    <text x="465" y="535" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="accent-2" text-anchor="end">1</text>
+    <text x="470" y="535" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="accent-2">⚠</text>
+    <text x="485" y="535" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-2">temporally decoupled</text>
+    <!-- Slot 4: 2 ❓ pending audio -->
+    <text x="630" y="535" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="accent-1" text-anchor="end">2</text>
+    <text x="635" y="535" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="accent-1">❓</text>
+    <text x="650" y="535" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-2">pending audio analysis</text>
+  </g>
+
+</svg>

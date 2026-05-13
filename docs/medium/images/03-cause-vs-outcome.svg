@@ -1,0 +1,224 @@
+<!--
+  03-cause-vs-outcome.svg - Soft target vs rigid target impact comparison
+  Shows: two side-by-side panels (soft cyan / rigid orange) with identical 3.21 m/s
+  impact velocity, contrasting stopping distance (10cm vs 2cm), peak g (5 vs 26.3),
+  and peak force (3.6 kN vs 18.06 kN). Central equation strip a = v^2 / 2d and F = m*a.
+  Verdict bands beneath each panel call out severity.
+  Intent: teaching figure for "The 3-second throw" article - same incoming velocity,
+  different stopping distance, force multiplies by 5.
+  Theme: Stellars-Tech dark variant. accent-1 cyan = soft target,
+  accent-2 orange = rigid target / verdict.
+-->
+
+<!-- === GRID ===
+  viewBox: 800 x 445
+  Grid step: 5px (text + structural anchors snap to multiples of 5)
+  Outer margins: 20 left/right, 10 top, 10 bottom
+
+  Horizontal columns (5px aligned):
+    left-panel:   x=20..345  w=325
+    centre-strip: x=350..450 w=100
+    right-panel:  x=455..780 w=325
+
+  Vertical rhythm:
+    title-strip:    y=25
+    subtitle:       y=45
+    panel-top:      y=60 (accent bar flush, 5px tall)
+    panel-header:   y=60..95   (badge + title)
+    stat-block:     y=100..295 (4 stat rows, 45px each)
+       row-1 (velocity):  label y=115, value y=135, divider y=145
+       row-2 (distance):  label y=160, value y=180, divider y=190
+       row-3 (peak g):    label y=205, value y=225, divider y=235
+       row-4 (force):     label y=250, value y=270, footnote y=285
+    panel-bottom:   y=305
+    cross-arrow:    y=315
+    verdict-band:   y=325..390
+    footer-note:    y=415, y=435
+
+  Centre equation strip:
+    eq line-1 (a = v^2 / 2d):  y=145 centre 400
+    eq line-2 (F = m * a):     y=185 centre 400
+    callout "× 5":             y=270 centre 400 (large)
+    "force":                   y=285 centre 400
+
+  Stat row anatomy (inside each panel):
+    label x: panel_x + 15
+    value x: panel_x + w - 15 (text-anchor end)
+    divider line: full panel inner width, stroke 0.5, opacity 0.2
+
+  Card shape: flat-top, rounded-bottom, r=3
+  Accent bar: 5px tall at panel top, opacity 0.6
+=== -->
+
+<!-- === LAYOUT TOPOLOGY ===
+  layers (v-order): background, nodes, connectors, content, callouts
+  h-stack inside nodes: card-soft, equation-strip, card-rigid
+  mirror: card-soft is mirror of card-rigid (axis x=400)
+  h-align tops: card-soft, card-rigid
+  h-align tops: verdict-soft, verdict-rigid (inside content layer)
+  connect: card-soft to card-rigid (straight horizontal, y=315, arrow forward, accent-2)
+=== -->
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 445">
+  <style>
+    .fg-1 { fill: #1a5a6e; }
+    .fg-2 { fill: #24697e; }
+    .fg-3 { fill: #236a74; }
+    .fg-4 { fill: #2b7680; }
+    .accent-1 { fill: #005f7a; }
+    .accent-2 { fill: #7a4a15; }
+    .accent-1-stroke { stroke: #005f7a; }
+    .accent-2-stroke { stroke: #7a4a15; }
+    .on-fill { fill: #f5fafc; }
+    @media (prefers-color-scheme: dark) {
+      .fg-1 { fill: #b8e4f0; }
+      .fg-2 { fill: #8fd4e6; }
+      .fg-3 { fill: #5aafc5; }
+      .fg-4 { fill: #4099b3; }
+      .accent-1 { fill: #5cc8e0; }
+      .accent-2 { fill: #d4a04a; }
+      .accent-1-stroke { stroke: #5cc8e0; }
+      .accent-2-stroke { stroke: #d4a04a; }
+      .on-fill { fill: #f5fafc; }
+    }
+  </style>
+
+  <g id="background">
+    <!-- Transparent canvas. No background fill; the SVG renders against whatever container holds it. -->
+  </g>
+
+  <g id="nodes">
+    <!-- Title strip -->
+    <text x="400" y="25" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-1" text-anchor="middle" letter-spacing="1">SAME VELOCITY, DIFFERENT TARGET, FIVE TIMES THE FORCE</text>
+    <text x="400" y="45" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-3" text-anchor="middle">Published velocity thresholds assume a compliant chest. A steel door is not compliant.</text>
+
+    <!-- ===== Left panel: SOFT TARGET (cyan, accent-1) ===== -->
+    <g id="card-soft">
+      <path d="M20,60 H345 V302 Q345,305 342,305 H23 Q20,305 20,302 Z" fill="#0096d1" fill-opacity="0.04" stroke="#0096d1" stroke-width="1"/>
+      <rect x="20" y="60" width="325" height="5" fill="#0096d1" opacity="0.6"/>
+
+      <!-- Header row -->
+      <text x="35" y="80" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" class="accent-1" letter-spacing="1.2">SOFT TARGET</text>
+      <text x="35" y="95" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-4">human chest / typical surface (Viano &amp; Lau)</text>
+
+      <!-- Icon: user-round (Lucide, ISC license) - body silhouette -->
+      <g transform="translate(310, 70) scale(0.667)" fill="none" stroke="#0096d1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.55">
+        <circle cx="12" cy="8" r="5"/>
+        <path d="M20 21a8 8 0 0 0-16 0"/>
+      </g>
+
+      <!-- Stat row 1: Impact velocity -->
+      <text x="35" y="115" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-3" letter-spacing="0.4">IMPACT VELOCITY</text>
+      <text x="330" y="135" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" class="fg-1" text-anchor="end">3.21 m/s</text>
+      <text x="35" y="135" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-4" font-style="italic">11.6 kph</text>
+
+      <!-- Stat row 2: Stopping distance -->
+      <text x="35" y="160" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-3" letter-spacing="0.4">STOPPING DISTANCE</text>
+      <text x="330" y="180" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" class="fg-1" text-anchor="end">10 cm</text>
+      <text x="35" y="180" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-4" font-style="italic">chest compliance</text>
+
+      <!-- Stat row 3: Peak g -->
+      <text x="35" y="205" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-3" letter-spacing="0.4">PEAK ACCELERATION</text>
+      <text x="330" y="225" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" class="fg-1" text-anchor="end">≈ 5 g</text>
+      <text x="35" y="225" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-4" font-style="italic">a = v² / (2d)</text>
+
+      <!-- Stat row 4: Peak force -->
+      <text x="35" y="250" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-3" letter-spacing="0.4">PEAK FORCE (90 kg)</text>
+      <text x="330" y="270" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" class="accent-1" text-anchor="end">3.6 kN</text>
+      <text x="35" y="270" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-4" font-style="italic">F = m · a</text>
+      <text x="330" y="290" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-4" text-anchor="end">about one body-weight × 4</text>
+    </g>
+
+    <!-- ===== Centre equation strip ===== -->
+    <g id="equation-strip">
+      <path d="M350,100 H450 V292 Q450,295 447,295 H353 Q350,295 350,292 Z" fill="#1a5a6e" fill-opacity="0.06" stroke="#1a5a6e" stroke-width="0.8" stroke-opacity="0.4"/>
+      <rect x="350" y="100" width="100" height="4" fill="#1a5a6e" opacity="0.25"/>
+
+      <text x="400" y="120" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" class="fg-3" text-anchor="middle" letter-spacing="0.6">PHYSICS</text>
+
+      <!-- Equation 1: a = v² / (2d) -->
+      <text x="400" y="145" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" class="fg-1" text-anchor="middle">a = v² / 2d</text>
+      <text x="400" y="160" font-family="Segoe UI, Arial, sans-serif" font-size="7" class="fg-4" text-anchor="middle">halve d → double a</text>
+
+      <!-- Equation 2: F = m · a -->
+      <text x="400" y="185" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" class="fg-1" text-anchor="middle">F = m · a</text>
+      <text x="400" y="200" font-family="Segoe UI, Arial, sans-serif" font-size="7" class="fg-4" text-anchor="middle">same mass, same v</text>
+
+      <!-- Multiplier callout -->
+      <text x="400" y="245" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-3" text-anchor="middle" letter-spacing="0.5">10 cm → 2 cm</text>
+      <text x="400" y="268" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" class="accent-2" text-anchor="middle">× 5</text>
+      <text x="400" y="282" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="accent-2" text-anchor="middle" font-style="italic">force</text>
+    </g>
+
+    <!-- ===== Right panel: RIGID TARGET (orange, accent-2) ===== -->
+    <g id="card-rigid">
+      <path d="M455,60 H780 V302 Q780,305 777,305 H458 Q455,305 455,302 Z" fill="#da8230" fill-opacity="0.06" stroke="#da8230" stroke-width="1"/>
+      <rect x="455" y="60" width="325" height="5" fill="#da8230" opacity="0.7"/>
+
+      <!-- Header row -->
+      <text x="470" y="80" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" class="accent-2" letter-spacing="1.2">RIGID TARGET</text>
+      <text x="470" y="95" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-4">steel door · this case · deforms ≈ 2 cm</text>
+
+      <!-- Icon: door (Lucide, ISC license) - rigid target -->
+      <g transform="translate(745, 70) scale(0.667)" fill="none" stroke="#da8230" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.65">
+        <path d="M18 20V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v14"/>
+        <path d="M2 20h20"/>
+        <path d="M14 12v.01"/>
+      </g>
+
+      <!-- Stat row 1: Impact velocity -->
+      <text x="470" y="115" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-3" letter-spacing="0.4">IMPACT VELOCITY</text>
+      <text x="765" y="135" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" class="fg-1" text-anchor="end">3.21 m/s</text>
+      <text x="470" y="135" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-4" font-style="italic">11.6 kph (identical)</text>
+
+      <!-- Stat row 2: Stopping distance -->
+      <text x="470" y="160" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-3" letter-spacing="0.4">STOPPING DISTANCE</text>
+      <text x="765" y="180" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" class="accent-2" text-anchor="end">2 cm</text>
+      <text x="470" y="180" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-4" font-style="italic">door panel deflection</text>
+
+      <!-- Stat row 3: Peak g -->
+      <text x="470" y="205" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-3" letter-spacing="0.4">PEAK ACCELERATION</text>
+      <text x="765" y="225" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" class="accent-2" text-anchor="end">26.3 g</text>
+      <text x="470" y="225" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-4" font-style="italic">v² / (2 · 0.02) = 258 m/s²</text>
+
+      <!-- Stat row 4: Peak force -->
+      <text x="470" y="250" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-3" letter-spacing="0.4">PEAK FORCE (90 kg)</text>
+      <text x="765" y="270" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" class="accent-2" text-anchor="end">18.06 kN</text>
+      <text x="470" y="270" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-4" font-style="italic">F = m · a (rigid)</text>
+      <text x="765" y="290" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="accent-2" text-anchor="end">≈ 1.8 tonnes of impulse on the chest</text>
+    </g>
+  </g>
+
+  <g id="connectors">
+    <!-- Implication arrow inside equation strip: equations imply the multiplier. -->
+    <!-- straight connector via svg-infographics connector mode=straight from 400,210 to 400,232 direction=forward -->
+    <path d="M400.00,212.00 L400.00,226.00" fill="none" stroke="#da8230" stroke-width="1.4" opacity="0.65" stroke-linejoin="round" stroke-linecap="round"/>
+    <polygon points="400.00,232.00 404.00,226.00 396.00,226.00" fill="#da8230" opacity="0.85"/>
+  </g>
+
+  <g id="content">
+    <!-- ===== Verdict band: SOFT (cyan, low severity) ===== -->
+    <g id="verdict-soft">
+      <path d="M20,325 H345 V387 Q345,390 342,390 H23 Q20,390 20,387 Z" fill="#0096d1" fill-opacity="0.05" stroke="#0096d1" stroke-width="0.8" stroke-opacity="0.4"/>
+      <rect x="20" y="325" width="325" height="4" fill="#0096d1" opacity="0.5"/>
+      <text x="35" y="345" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="700" class="accent-1" letter-spacing="1">VERDICT</text>
+      <text x="35" y="365" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" class="fg-1">Moderate — bruising</text>
+      <text x="35" y="374" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-3">Below AIS 2 threshold · within typical contact-sport range</text>
+    </g>
+
+    <!-- ===== Verdict band: RIGID (orange, high severity) ===== -->
+    <g id="verdict-rigid">
+      <path d="M455,325 H780 V387 Q780,390 777,390 H458 Q455,390 455,387 Z" fill="#da8230" fill-opacity="0.10" stroke="#da8230" stroke-width="1.1" stroke-opacity="0.7"/>
+      <rect x="455" y="325" width="325" height="4" fill="#da8230" opacity="0.85"/>
+      <text x="470" y="345" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="700" class="accent-2" letter-spacing="1">VERDICT</text>
+      <text x="470" y="365" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" class="accent-2">AIS 5+ — critical · life-threatening</text>
+      <text x="470" y="374" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-3">Above pulmonary contusion and rib-cage failure thresholds (Viano &amp; Lau 1985)</text>
+    </g>
+  </g>
+
+  <g id="callouts">
+    <!-- Footer note -->
+    <text x="400" y="415" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-3" text-anchor="middle">Same body, same velocity. Stopping distance drives the entire outcome.</text>
+    <text x="400" y="435" font-family="Segoe UI, Arial, sans-serif" font-size="7" class="fg-4" text-anchor="middle" font-style="italic">v = 3.21 m/s · m = 90 kg · d_soft = 10 cm · d_rigid = 2 cm  ·  F_rigid / F_soft = (10/2) = 5</text>
+  </g>
+</svg>

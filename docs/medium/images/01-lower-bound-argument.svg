@@ -1,0 +1,196 @@
+<!--
+  01-lower-bound-argument.svg - ELBO-style lower-bound argument concept diagram
+  Shows: motion-space Ω containing M_true and the minimum-phase reconstruction q*,
+         the inequality D(M_true) >= D_min(q*) and corollary plaus(M_true) <= plaus(M_min),
+         and the resulting implication callout.
+  Intent: visualise the forensic methodology used by henryk-simulations - reconstruct a
+         lower bound on the difficulty / upper bound on the plausibility of the contested motion.
+  Theme: Stellars-Tech derived. accent-1 cyan #0096d1 = structural (Ω, inequality). accent-2 orange
+         #da8230 = verdict / implication (the takeaway pops).
+  Background: transparent root rect. Matches dark hero #0a1a24 when rendered on the article page.
+-->
+<!--
+=== GRID ===
+  viewBox: 800 x 360
+  Margin: 20px all sides
+  Title band:    y=12..36   (centred)
+  Card body:     y=60..300  (height 240, three cards same row)
+    Left card  "MOTION SPACE Ω":   x=20,  w=210  (anchor=accent-1)
+    Mid card   "INEQUALITY":       x=250, w=300  (anchor=accent-1, prominent)
+    Right card "IMPLICATION":      x=570, w=210  (anchor=accent-2 - the verdict)
+  Inter-card gap: 20px
+  Connectors centreline: y=180 (cards left-center / right-center anchors)
+  Footnote band: y=320..352  (VI analogy, dim cyan)
+  Card shape: flat top, rounded bottom r=3 per theme_swatch
+  Accent bar: height 5, opacity 0.6 per theme_swatch
+=== LAYOUT TOPOLOGY ===
+  h-flow: omega-card  c1  inequality-card  c2  implication-card
+  contain: omega-card > cloud-set, q-star-region, m-true-marker, set-labels
+  contain: inequality-card > inequality-formula, corollary-formula, captions
+  contain: implication-card > verdict-label, verdict-text
+  decorative: vi-footnote at bottom (analogy text)
+  c1: straight cyan, src=(230,180) tgt=(250,180), standoff 2  to  path M232,180 L238,180; head 248,180
+  c2: straight orange, src=(550,180) tgt=(570,180), standoff 2 to  path M552,180 L558,180; head 568,180
+=== -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 360" preserveAspectRatio="xMidYMid meet">
+  <style>
+    .fg-1 { fill: #1a5a6e; }
+    .fg-2 { fill: #24697e; }
+    .fg-3 { fill: #236a74; }
+    .fg-4 { fill: #2b7680; }
+    .accent-1 { fill: #005f7a; }
+    .accent-2 { fill: #7a4a15; }
+    .verdict { fill: #7a4a15; }
+    @media (prefers-color-scheme: dark) {
+      .fg-1 { fill: #b8e4f0; }
+      .fg-2 { fill: #8fd4e6; }
+      .fg-3 { fill: #5aafc5; }
+      .fg-4 { fill: #4099b3; }
+      .accent-1 { fill: #5cc8e0; }
+      .accent-2 { fill: #d4a04a; }
+      .verdict { fill: #d4a04a; }
+    }
+  </style>
+
+  <!-- === BACKGROUND LAYER === -->
+  <g id="background"></g>
+
+  <!-- === NODES LAYER === -->
+  <g id="nodes">
+
+    <!-- Title -->
+    <g id="header">
+      <text x="400" y="24" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" class="fg-1" text-anchor="middle" letter-spacing="1">LOWER-BOUND ARGUMENT (ELBO-STYLE)</text>
+      <text x="400" y="40" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-3" text-anchor="middle" font-style="italic">bound the contested motion from below using a tractable surrogate</text>
+    </g>
+
+    <!-- LEFT CARD: Motion space Ω -->
+    <g id="card-omega">
+      <path d="M20.0,60.0 H230.0 V297.0 Q230.0,300.0 227.0,300.0 H23.0 Q20.0,300.0 20.0,297.0 Z" fill="#0096d1" fill-opacity="0.04"/>
+      <path d="M20.0,60.0 H230.0 V297.0 Q230.0,300.0 227.0,300.0 H23.0 Q20.0,300.0 20.0,297.0 Z" fill="none" stroke="#0096d1" stroke-width="1"/>
+      <rect x="20.0" y="60.0" width="210.0" height="5" fill="#0096d1" opacity="0.6"/>
+    </g>
+
+    <!-- MIDDLE CARD: Inequality -->
+    <g id="card-inequality">
+      <path d="M250.0,60.0 H550.0 V297.0 Q550.0,300.0 547.0,300.0 H253.0 Q250.0,300.0 250.0,297.0 Z" fill="#0096d1" fill-opacity="0.04"/>
+      <path d="M250.0,60.0 H550.0 V297.0 Q550.0,300.0 547.0,300.0 H253.0 Q250.0,300.0 250.0,297.0 Z" fill="none" stroke="#0096d1" stroke-width="1"/>
+      <rect x="250.0" y="60.0" width="300.0" height="5" fill="#0096d1" opacity="0.6"/>
+    </g>
+
+    <!-- RIGHT CARD: Implication (orange accent for verdict) -->
+    <g id="card-implication">
+      <path d="M570.0,60.0 H780.0 V297.0 Q780.0,300.0 777.0,300.0 H573.0 Q570.0,300.0 570.0,297.0 Z" fill="#da8230" fill-opacity="0.04"/>
+      <path d="M570.0,60.0 H780.0 V297.0 Q780.0,300.0 777.0,300.0 H573.0 Q570.0,300.0 570.0,297.0 Z" fill="none" stroke="#da8230" stroke-width="1"/>
+      <rect x="570.0" y="60.0" width="210.0" height="5" fill="#da8230" opacity="0.6"/>
+    </g>
+  </g>
+
+  <!-- === CONNECTORS LAYER === -->
+  <g id="connectors">
+    <!-- C1: omega-card -> inequality-card (cyan, structural) -->
+    <path d="M232.00,180.00 L238.00,180.00" fill="none" stroke="#0096d1" stroke-width="1.2" opacity="0.4" stroke-linejoin="round" stroke-linecap="round"/>
+    <polygon points="248.00,180.00 238.00,175.00 238.00,185.00" fill="#0096d1" opacity="0.6"/>
+
+    <!-- C2: inequality-card -> implication-card (orange, verdict) -->
+    <path d="M552.00,180.00 L558.00,180.00" fill="none" stroke="#da8230" stroke-width="1.2" opacity="0.4" stroke-linejoin="round" stroke-linecap="round"/>
+    <polygon points="568.00,180.00 558.00,175.00 558.00,185.00" fill="#da8230" opacity="0.6"/>
+  </g>
+
+  <!-- === CONTENT LAYER === -->
+  <g id="content">
+
+    <!-- LEFT CARD content: Ω set with M_true and q* -->
+    <g id="omega-content">
+      <text x="125" y="82" class="accent-1" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" text-anchor="middle" letter-spacing="1">SETUP</text>
+      <text x="125" y="100" class="fg-1" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" text-anchor="middle">Motion space Ω</text>
+
+      <!-- Cloud (Ω set) - filled only, no stroke (avoids connector-path detection) -->
+      <path d="M69.00,210.00 C47.25,210.00 40.00,182.50 61.75,171.50 C61.75,133.00 76.25,127.50 90.75,138.50 C90.75,133.00 105.25,127.50 119.75,138.50 C119.75,133.00 134.25,127.50 148.75,138.50 C148.75,133.00 163.25,127.50 177.75,138.50 C177.75,133.00 192.25,127.50 206.75,138.50 C185.00,171.50 185.00,199.00 156.00,210.00 Z"
+            fill="#0096d1" fill-opacity="0.10"/>
+
+      <!-- q* highlighted region (known reconstruction; filled disc, no stroke) -->
+      <circle cx="92" cy="175" r="18" fill="#0096d1" fill-opacity="0.35"/>
+      <text x="92" y="179" class="fg-1" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" text-anchor="middle">q*</text>
+
+      <!-- M_true marker (opaque, unknown) -->
+      <circle cx="142" cy="172" r="3.5" fill="#da8230"/>
+      <text x="150" y="176" class="verdict" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700">M true</text>
+
+      <!-- Omega label inside cloud (top-right) -->
+      <text x="195" y="148" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" text-anchor="end" font-style="italic">Ω</text>
+
+      <!-- Legend strip below cloud -->
+      <circle cx="36" cy="240" r="4" fill="#0096d1" fill-opacity="0.45"/>
+      <text x="46" y="243" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="8">q*  known min-phase reconstruction</text>
+      <circle cx="36" cy="256" r="2.6" fill="#da8230"/>
+      <text x="46" y="259" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="8">M true unknown motion</text>
+
+      <!-- Caption -->
+      <text x="125" y="282" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="7" text-anchor="middle">true motion lives somewhere in Ω;</text>
+      <text x="125" y="292" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="7" text-anchor="middle">q* is the easiest motion we can construct</text>
+    </g>
+
+    <!-- MIDDLE CARD content: Inequality + corollary -->
+    <g id="inequality-content">
+      <text x="400" y="82" class="accent-1" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" text-anchor="middle" letter-spacing="1">THE INEQUALITY</text>
+
+      <!-- Primary inequality: difficulty (dy-relative subscripts, normal body font) -->
+      <text x="400" y="118" class="fg-1" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" text-anchor="middle">D(M<tspan dy="5" font-size="13" font-weight="600">true</tspan><tspan dy="-5" font-size="22" font-weight="700">) ≥ D</tspan><tspan dy="5" font-size="13" font-weight="600">min</tspan><tspan dy="-5" font-size="22" font-weight="700">(q*)</tspan></text>
+
+      <!-- Corollary inequality: plausibility (dy-relative subscripts) -->
+      <text x="400" y="202" class="fg-1" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" text-anchor="middle" id="_corollary_anchor">plaus(M<tspan dy="4" font-size="11" font-weight="600">true</tspan><tspan dy="-4" font-size="18" font-weight="700">) ≤ plaus(M</tspan><tspan dy="4" font-size="11" font-weight="600">min</tspan><tspan dy="-4" font-size="18" font-weight="700">)</tspan></text>
+
+      <text x="400" y="138" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="8" text-anchor="middle">true motion is at least as difficult as the minimum-phase reconstruction</text>
+
+      <text x="400" y="172" class="accent-1" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" text-anchor="middle" letter-spacing="1">COROLLARY</text>
+
+
+      <text x="400" y="222" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="8" text-anchor="middle">true motion is at most as plausible as the easiest path through Ω</text>
+
+      <!-- Notation legend -->
+      <text x="270" y="260" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="7.5">D(·)</text>
+      <text x="298" y="260" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="7.5">peak biomechanical demand</text>
+      <text x="270" y="274" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="7.5">plaus(·)</text>
+      <text x="308" y="274" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="7.5">prior over admissible motions</text>
+      <text x="270" y="288" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="7.5">q*</text>
+      <text x="298" y="288" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="7.5">minimum-phase reconstruction (known)</text>
+    </g>
+
+    <!-- RIGHT CARD content: Implication / verdict -->
+    <g id="implication-content">
+      <text x="675" y="82" class="accent-2" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" text-anchor="middle" letter-spacing="1">IMPLICATION</text>
+      <text x="675" y="100" class="fg-1" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" text-anchor="middle">Falsification by</text>
+      <text x="675" y="116" class="fg-1" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" text-anchor="middle">lower bound</text>
+
+      <!-- Verdict body (dy-relative subscript) -->
+      <text x="675" y="148" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">if the lower bound D<tspan dy="2" font-size="7" font-weight="600">min</tspan><tspan dy="-2" font-size="9"> fails</tspan></text>
+      <text x="675" y="160" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">the human-tolerance</text>
+      <text x="675" y="160" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">the human-tolerance</text>
+      <text x="675" y="172" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">reference threshold,</text>
+
+      <!-- Highlighted conclusion -->
+      <rect x="586" y="186" width="178" height="46" rx="3" fill="#da8230" fill-opacity="0.18"/>
+      <text x="675" y="204" class="verdict" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" text-anchor="middle">the true motion</text>
+      <text x="675" y="218" class="verdict" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" text-anchor="middle">fails it too.</text>
+
+      <!-- Footnote (dy-relative subscript) -->
+      <text x="675" y="252" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="7.5" text-anchor="middle">we never need to recover M<tspan dy="1.5" font-size="6" font-weight="600">true</tspan><tspan dy="-1.5" font-size="7.5"> &#8212;</tspan></text>
+      <text x="675" y="264" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="7.5" text-anchor="middle">the bound on q* is enough.</text>
+
+      <!-- Verdict tag -->
+      <rect x="618" y="278" width="114" height="14" rx="3" fill="#da8230" fill-opacity="0.28"/>
+      <text x="675" y="288" class="verdict" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="700" text-anchor="middle" letter-spacing="1">ONE-SIDED VERDICT</text>
+    </g>
+  </g>
+
+  <!-- === CALLOUTS LAYER === -->
+  <g id="callouts">
+    <!-- VI analogy footnote (anchors readers familiar with variational inference) -->
+    <text x="20" y="338" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="7.5" letter-spacing="1">VI ANALOGY</text>
+    <text x="92" y="338" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-style="italic">log p(x)  ≥  ℒ(q)</text>
+    <text x="200" y="338" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="8">same trick — bound an intractable quantity from below using a tractable surrogate.</text>
+    <text x="92" y="352" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="7.5">D(M_true) plays the role of log p(x);  D_min(q*) plays the role of the ELBO ℒ(q).</text>
+  </g>
+
+</svg>

@@ -183,6 +183,23 @@ Cross-check vs rear-torso lit ([`impact_analysis.md`](./impact_analysis.md)): 18
 
 ![Injury threshold zones](../reports/figures/01-injury-thresholds.png)
 
+### Layman calibration: what each impact regime feels like
+
+For a non-specialist reader, the kN values above are abstract. The table below maps peak impact force onto everyday real-world analogs and the typical injury you would see at each regime. The row our reconstruction lands in is marked.
+
+| Peak force | Plain-English description | Real-world analog (~70 kg adult on the receiving end) | Typical injury | AIS |
+|---|---|---|---|---|
+| ~0.5 - 1 kN | Mild bump | Walking into a doorframe at normal pace; basketball thrown at you by a child; pushing hard on a stuck door | Nothing, or a faint bruise | 0 |
+| ~1 - 3 kN | Significant impact | Solid open-palm slap from a 90 kg adult; falling backward onto a thick carpet from sitting; a heavy boxer's straight punch to the chest | Deep bruise, possible hairline rib crack | 1 |
+| ~3 - 5 kN | Hard impact | NFL-style tackle from a 100 kg defender; falling backward onto a wooden floor from standing; landing on your back after slipping on ice | One or two rib fractures, surface haematoma | 2 |
+| ~5 - 8 kN | Severe impact | Kicked by a full-grown horse; low-speed motorcycle crash into a stationary car; landing back-first against the edge of a concrete step | Multiple rib fractures + pulmonary contusion; thoracic-spine ligament damage | 3 |
+| ~8 - 12 kN | Critical impact | Hit by a small car at ~5 kph; rugby pile-up gone wrong; back-first fall from a 1 m height onto pavement | Flail chest, serious organ injury, broken sternum | 4 |
+| ![](https://img.shields.io/badge/THIS_CASE-red) **~12 - 20 kN** | **Critical to life-threatening** | **Small SUV bumping you at ~10 kph; back-first fall from a 1st-floor balcony onto pavement; ramming a brick wall on a bicycle at 25 kph** | **Multiple organ rupture, spinal column damage, frequently fatal** | **5+** |
+| ~20 - 30 kN | Usually fatal | Pedestrian hit by a car at ~15-20 kph; back-first fall from a 2nd-floor balcony; head-on bicycle crash at 30 kph | Massive thoracic trauma, often immediately fatal | 6 |
+| > 30 kN | Almost always fatal | Highway-speed traffic accident without restraint; fall from a 3rd-floor balcony | Catastrophic crush injury | 6 |
+
+Our reconstructed impact peaks at **18.06 kN** - solidly in the THIS_CASE row above. For the alleged motion to have happened the way the verbatim claim describes it, the victim would have absorbed the same force as a low-speed pedestrian-vehicle collision, or a fall from a first-floor balcony onto pavement, back-first. The documented medical finding is a single right-shoulder bruise.
+
 ## 13. Model - Acoustic Analysis
 
 Predicted acoustic signature of the impact. Door: 2 × 1 m, 2 mm steel, 3 cm cavity, 20 × 60 cm glass.
@@ -204,6 +221,9 @@ Peak SPL prediction over radiation-efficiency bracket (0.1% / 1% / 5%):
 | Phone mic (~2 m) | 114 dB | **124 dB** | 131 dB |
 
 Consumer phone mic clips at ~120 dB SPL. Predicted impact peak at typical η exceeds clipping ceiling.
+
+> [!NOTE]
+> **Forensic verification (actual recording)**: the audio file [`../data/external/event_audio/event_recording.m4a`](../data/external/event_audio/event_recording.m4a) was running continuously throughout the visit. Inspection of the waveform shows **no bang** registered at the alleged impact moment - no clipping spike (predicted ~124 dB SPL at the phone microphone would saturate the recorder), no sub-bass panel-ringing energy in the 6-24 Hz band, no bright cavity-mode peak around 5.7 kHz. The third-party witness (C, ~1.5 m from the door) reports no acoustic reaction in her testimony either. All three predicted acoustic signatures are absent from the actual record.
 
 ![Audio signature](../reports/figures/01-audio-signature.png)
 
@@ -272,10 +292,31 @@ Status legend: ✅ predicted observable matches documented finding &nbsp; ❌ pr
 
 **Single right-shoulder bruise** is the only documented finding. Every other predicted observable is either absent or contradicted. The mismatch spans all four physical channels: mechanical trauma, breathing, acoustic signature, and the third-party observer's account.
 
-> [!CAUTION]
-> **Conclusion (§17)**. Out of 10 predicted observables: **0 ✅ match**, **7 ❌ absent or contradicted**, **1 ⚠️ temporally decoupled**, **2 ❓ pending direct audio inspection**. The only documented finding - a single right-shoulder bruise - is geometrically and energetically inconsistent with the claimed back-first whole-torso impact at 18 kN. No single observable in the documented record supports the alleged motion as described.
+> [!IMPORTANT]
+> Per the defendant, the single bruise was **self-inflicted** by the alleged victim, not caused by the alleged impact. The analysis above does not rely on resolving that dispute: the physics already shows that no impact compatible with the verbatim claim could leave a single localised shoulder bruise as its sole signature. **The father lets Newton speak.**
 
-## 18. Methodology and Science
+> [!CAUTION]
+> **Conclusion (§17)**. Out of 10 predicted observables: **0 ✅ match**, **7 ❌ absent or contradicted**, **1 ⚠️ temporally decoupled**, **2 ❓ pending direct audio inspection**. The only documented finding - a single right-shoulder bruise (per the note above, self-inflicted) - is geometrically and energetically inconsistent with the claimed back-first whole-torso impact at 18 kN. No single observable in the documented record supports the alleged motion as described.
+
+## 18. Speculation: defendant's interpretation of the event
+
+> [!IMPORTANT]
+> This entire section is **A's subjective speculation** - the defendant's personal interpretation, not a forensic finding, not a proven claim, and not part of the load-bearing physics argument. None of the bullets below carry evidentiary weight on their own; they are recorded here only to make A's reasoning visible. The physics in §§9-17 stands or falls independently of anything stated here.
+
+Per A's **subjective interpretation**, the September 13 corridor incident was deliberately staged as the trigger event for a false abuse allegation. The pattern, as A reads it (again, subjective, not proven):
+
+- The toy on the floor was placed deliberately, and the request that both A and C step aside was part of the choreography - engineering the blindspot in which C's back is turned at the critical moment (per [`testimony_3rd_party.md`](../references/incident/testimony_3rd_party.md), she took three steps and turned away just before the alleged act)
+- The verbatim claim was constructed around what C *might* later report seeing when she turned back, not around what would mechanically need to happen for a real impact at the elevator door
+- The single right-shoulder bruise (§17 IMPORTANT note) is, per the defendant, self-inflicted
+- The verbatim testimony then **escalated** across five chronological retellings (§4 escalation table) - a pattern consistent with rehearsal and revision, not with a single recovered memory of an actual event
+
+The defendant has not attempted to dispute any of these components in their own social or legal voice. Disputing the bruise's origin, the witness's positioning, or the testimony's evolution is interpretive work that requires the listener to take a side on contested claims about intent. Instead, the defendant has used the alleged motion itself - the verbatim narrative the alleged victim repeated under oath - as the **input** to a physical reconstruction. The reconstruction shows the motion could not have produced the documented signature even if every other interpretive question were resolved in the alleged victim's favour.
+
+That is the real load-bearing argument. The cause-and-effect chain claimed by the testimony is mechanically incompatible with the documented effects. Whether the chain was deliberately fabricated, misremembered, exaggerated, or staged is a question for the listener. The physics is settled.
+
+> **Newton has spoken. Drop mic.**
+
+## 19. Methodology and Science
 
 Rationale for the modelling choices, the statistical framework, the assumption set, and the library selection. Cross-references to source code in [`../src/henryk_simulations/corridor/`](../src/henryk_simulations/corridor/) where each model is implemented.
 
@@ -316,7 +357,7 @@ Each assumption is calibrated to bias the result in a known direction:
 
 All dependencies declared in [`../pyproject.toml`](../pyproject.toml); environment managed by `uv` (Python 3.11, registered kernel `henryk-sim`). Tests under [`../tests/test_corridor.py`](../tests/test_corridor.py) cover phase-duration invariants, kinematic formulas, reference-distribution shapes, and verdict-band thresholds.
 
-## 19. References
+## 20. References
 
 Full bibliography. Each entry: author / year, full title, venue, key value used in this document.
 

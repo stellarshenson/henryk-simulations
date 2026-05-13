@@ -1,0 +1,367 @@
+<!--
+  08-staged-vs-physics.svg - Two-tier "interpretive vs mechanical" contrast for §18 Speculation
+  Shows: TOP (dim, low-saturation) row of 4 cards: the alleged staged components the defendant
+         would normally have to contest (scripted motion, on-site witness, self-inflicted bruise,
+         escalating testimony). Tagged "interpretive - not the load-bearing argument".
+         A small "INSTEAD" divider with a single downward orange arrow.
+         BOTTOM (vivid, full brand) row of 3 cards: the physics-only response (verbatim claim
+         into the model, lower-bound reconstruction, verdict of mechanical impossibility).
+         A saturated orange callout bar at the bottom: "NEWTON HAS SPOKEN."
+  Intent: rhetorical centrepiece for the speculation section - encode the article's load-bearing
+         argument structure (the defendant does not need to contest the interpretive claims;
+         physics alone forecloses the verbatim claim).
+  Theme: Stellars-Tech dark variant. TOP = #1a5a6e dim cyan + fg-4 greys (muted).
+                                     BOTTOM = #0096d1 accent-1 + #da8230 accent-2 (vivid).
+  Background: transparent root rect; reads against article dark hero (#0a1a24).
+-->
+<!--
+=== GRID ===
+  viewBox: 800 x 560
+  Outer margin: 20px left/right, 10 top, 16 bottom
+  All coordinates snap to 2px grid.
+
+  ~~~ HEADER STRIP (top tier label) ~~~
+  Eyebrow text:        y=24  (small caps 9pt 600 .fg-4 anchor middle x=400 letter-spacing 2.5)
+  Big title:           y=46  (14pt 700 .fg-3 anchor middle x=400)
+  Hairline divider:    y=56  (x1=180 x2=620 stroke #1a5a6e width 0.5 opacity 0.4)
+
+  ~~~ TOP TIER (alleged staging - 4 cards, dim) ~~~
+  Card row y=72..230  (h=158)
+  Card width 178, gap 16:
+    card-1 (scripted motion):   x=20   ends at x=198
+    card-2 (on-site witness):   x=214  ends at x=392
+    card-3 (self-inflicted):    x=408  ends at x=586
+    card-4 (escalating):        x=602  ends at x=780
+  Accent bar: rect y=72 h=5, fill #1a5a6e opacity 0.35 (muted)
+
+  Per-card vertical rhythm (anchored to card top y=72):
+    eyebrow tag           y=92    (8pt 600 .fg-4 letter-spacing 1.5 centered)
+    icon cluster          y=108..142   (h=34, centred, scale ~1.4 single Lucide ico-dim icon)
+    title L1              y=164   (10pt 700 .fg-3 centred)
+    title L2 (optional)   y=178   (10pt 700 .fg-3 centred)
+    description           y=200   (8pt 500 .fg-4 centred, single line)
+    sub-description       y=214   (8pt italic 500 .fg-4 centred)
+
+  Tier-1 footer tag (interpretive caveat strip):
+    y=246..258 - small grey pill centred under top tier
+    text y=255 (8pt 600 .fg-4 letter-spacing 1.5)
+
+  ~~~ MID DIVIDER (orange arrow + caveat text) ~~~
+  Arrow stem: x=400 y=265..285 (straight vertical, orange #da8230)
+  Caveat text strip:
+    line 1 y=275 - left: "the defendant does not need to contest any of the above"
+    (placed left of arrow, right-aligned) and right: "physics alone forecloses the claim"
+    (placed right of arrow, left-aligned) - both small caps 8pt 600 .accent-2
+
+  ~~~ BOTTOM TIER (physics response - 3 cards, vivid) ~~~
+  Header for bottom tier:
+    eyebrow y=305 above the card row inside negative space ... actually we'll put it as separate
+    above card row - skip and put eyebrow ABOVE card row:
+  bottom tier header: y=296 (eyebrow) and y=… - actually we want full header at top of bottom tier
+  Reorganise: place bottom-tier eyebrow y=296 (small caps 10pt .accent-1 centred)
+              card row y=304..480 (h=176)
+  Card width 240, gap 20:
+    card-A (claim->input):       x=20   ends at x=260
+    card-B (lower-bound):        x=280  ends at x=520
+    card-C (verdict):            x=540  ends at x=780
+  Accent bar: rect y=304 h=5, fill #0096d1 opacity 0.65 (vivid)
+              card-C gets a 60px orange right-edge segment on accent bar for emphasis
+
+  Per-card vertical rhythm (anchored to card top y=304):
+    eyebrow tag           y=326   (9pt 700 .accent-1 letter-spacing 2 centred)
+    icon cluster          y=344..394 (h=50, scale ~2.2 Lucide ico-cyan / ico-orange)
+    title L1              y=420   (13pt 800 .fg-1 centred)
+    title L2 (optional)   y=438   (13pt 800 .fg-1 centred)
+    description           y=460   (9pt 500 .fg-2 centred italic)
+
+  ~~~ NEWTON CALLOUT BAR ~~~
+  Bar: x=20 y=496 w=760 h=44 r=3 - vivid orange fill 0.18 + orange stroke 1.2
+  Headline text y=521 (18pt 800 .accent-2 letter-spacing 3 anchor middle)
+  Sub-tag text  y=535 (8pt 600 .accent-1 letter-spacing 2 anchor middle italic)
+
+  ~~~ COLOUR MAP (light primary; dark via @media) ~~~
+  fg-1 #1a5a6e | dark #b8e4f0   (bottom tier headlines)
+  fg-2 #24697e | dark #8fd4e6   (bottom tier body)
+  fg-3 #236a74 | dark #5aafc5   (top tier title, header)
+  fg-4 #2b7680 | dark #4099b3   (top tier muted body / sub)
+  accent-1 #005f7a | dark #5cc8e0  (bottom-tier eyebrow, cyan emphasis)
+  accent-2 #7a4a15 | dark #d4a04a  (orange emphasis, Newton callout text)
+  dim-cyan #1a5a6e | dark #4a7a86  (top-tier accents)
+  raw brand: cyan #0096d1, orange #da8230 (accent bars + strokes)
+=== -->
+<!--
+=== LAYOUT TOPOLOGY ===
+  v-stack (root): header-tier-1, tier-1-cards, callout-tier-1-caveat, header-tier-2, tier-2-cards, newton-bar
+  h-stack (tier-1-cards): card-scripted | card-witness | card-bruise | card-escalating
+  h-stack (tier-2-cards): card-input | card-lowerbound | card-verdict
+  hierarchy: tier-2 > tier-1 (saturation, weight, icon scale, accent strength)
+  connector: ONE forward-direction straight arrow from below tier-1 to above tier-2 (orange, muted)
+=== -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 560" preserveAspectRatio="xMidYMid meet">
+  <style>
+    .fg-1 { fill: #1a5a6e; }
+    .fg-2 { fill: #24697e; }
+    .fg-3 { fill: #236a74; }
+    .fg-4 { fill: #2b7680; }
+    .accent-1 { fill: #005f7a; }
+    .accent-2 { fill: #7a4a15; }
+    .dim-cyan { fill: #1a5a6e; }
+    .ico-dim { fill: none; stroke: #1a5a6e; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; opacity: 0.7; }
+    .ico-cyan { fill: none; stroke: #0096d1; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .ico-orange { fill: none; stroke: #da8230; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .ico-red { fill: none; stroke: #d44a2a; stroke-width: 2.0; stroke-linecap: round; stroke-linejoin: round; }
+    .divider-line { stroke: #1a5a6e; stroke-width: 0.5; opacity: 0.4; }
+    @media (prefers-color-scheme: dark) {
+      .fg-1 { fill: #b8e4f0; }
+      .fg-2 { fill: #8fd4e6; }
+      .fg-3 { fill: #5aafc5; }
+      .fg-4 { fill: #4099b3; }
+      .accent-1 { fill: #5cc8e0; }
+      .accent-2 { fill: #d4a04a; }
+      .dim-cyan { fill: #4a7a86; }
+      .ico-dim { stroke: #4a7a86; }
+      .ico-cyan { stroke: #5cc8e0; }
+      .ico-orange { stroke: #d4a04a; }
+      .ico-red { stroke: #e8704a; }
+      .divider-line { stroke: #4a7a86; opacity: 0.5; }
+    }
+  </style>
+
+  <!-- Transparent backplate -->
+  <rect x="0" y="0" width="800" height="560" fill="transparent"/>
+
+  <!-- === BACKGROUND LAYER === -->
+  <g id="background"></g>
+
+  <!-- === NODES LAYER === -->
+  <g id="nodes">
+
+    <!-- =================================================== -->
+    <!-- HEADER STRIP - top tier label                        -->
+    <!-- =================================================== -->
+    <g id="header-tier-1">
+      <text x="400" y="24" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="600" class="fg-4" text-anchor="middle" letter-spacing="2.5">INTERPRETIVE COMPONENTS  ·  NOT THE LOAD-BEARING ARGUMENT</text>
+      <text x="400" y="44" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" class="fg-3" text-anchor="middle">Alleged staged components (per defendant)</text>
+      <line x1="180" y1="58" x2="620" y2="58" class="divider-line"/>
+    </g>
+
+    <!-- =================================================== -->
+    <!-- TOP TIER CARDS (4x dim)                              -->
+    <!-- =================================================== -->
+    <g id="tier-1-cards">
+
+      <!-- Card 1: SCRIPTED MOTION -->
+      <g id="card-scripted">
+        <path d="M20.0,72.0 H198.0 V227.0 Q198.0,230.0 195.0,230.0 H23.0 Q20.0,230.0 20.0,227.0 Z" fill="#1a5a6e" fill-opacity="0.04" stroke="#3a8595" stroke-width="1.2"/>
+        <rect x="20" y="72" width="178" height="5" fill="#1a5a6e" opacity="0.35"/>
+      </g>
+
+      <!-- Card 2: ON-SITE WITNESS -->
+      <g id="card-witness">
+        <path d="M214.0,72.0 H392.0 V227.0 Q392.0,230.0 389.0,230.0 H217.0 Q214.0,230.0 214.0,227.0 Z" fill="#1a5a6e" fill-opacity="0.04" stroke="#3a8595" stroke-width="1.2"/>
+        <rect x="214" y="72" width="178" height="5" fill="#1a5a6e" opacity="0.35"/>
+      </g>
+
+      <!-- Card 3: SELF-INFLICTED BRUISE -->
+      <g id="card-bruise">
+        <path d="M408.0,72.0 H586.0 V227.0 Q586.0,230.0 583.0,230.0 H411.0 Q408.0,230.0 408.0,227.0 Z" fill="#1a5a6e" fill-opacity="0.04" stroke="#3a8595" stroke-width="1.2"/>
+        <rect x="408" y="72" width="178" height="5" fill="#1a5a6e" opacity="0.35"/>
+      </g>
+
+      <!-- Card 4: ESCALATING TESTIMONY -->
+      <g id="card-escalating">
+        <path d="M602.0,72.0 H780.0 V227.0 Q780.0,230.0 777.0,230.0 H605.0 Q602.0,230.0 602.0,227.0 Z" fill="#1a5a6e" fill-opacity="0.04" stroke="#3a8595" stroke-width="1.2"/>
+        <rect x="602" y="72" width="178" height="5" fill="#1a5a6e" opacity="0.35"/>
+      </g>
+
+    </g>
+
+    <!-- =================================================== -->
+    <!-- BOTTOM TIER HEADER                                   -->
+    <!-- =================================================== -->
+    <g id="header-tier-2">
+      <text x="400" y="298" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" class="accent-2" text-anchor="middle" letter-spacing="2.5">LOAD-BEARING ARGUMENT  ·  MECHANICAL, NOT INTERPRETIVE</text>
+    </g>
+
+    <!-- =================================================== -->
+    <!-- BOTTOM TIER CARDS (3x vivid)                         -->
+    <!-- =================================================== -->
+    <g id="tier-2-cards">
+
+      <!-- Card A: VERBATIM CLAIM -> INPUT -->
+      <g id="card-input">
+        <path d="M20.0,304.0 H260.0 V477.0 Q260.0,480.0 257.0,480.0 H23.0 Q20.0,480.0 20.0,477.0 Z" fill="#0096d1" fill-opacity="0.06" stroke="#0096d1" stroke-width="1.2"/>
+        <rect x="20" y="304" width="240" height="5" fill="#0096d1" opacity="0.65"/>
+      </g>
+
+      <!-- Card B: LOWER-BOUND RECONSTRUCTION -->
+      <g id="card-lowerbound">
+        <path d="M280.0,304.0 H520.0 V477.0 Q520.0,480.0 517.0,480.0 H283.0 Q280.0,480.0 280.0,477.0 Z" fill="#0096d1" fill-opacity="0.06" stroke="#0096d1" stroke-width="1.2"/>
+        <rect x="280" y="304" width="240" height="5" fill="#0096d1" opacity="0.65"/>
+      </g>
+
+      <!-- Card C: VERDICT - MECHANICAL IMPOSSIBILITY (orange accent strip on right) -->
+      <g id="card-verdict">
+        <path d="M540.0,304.0 H780.0 V477.0 Q780.0,480.0 777.0,480.0 H543.0 Q540.0,480.0 540.0,477.0 Z" fill="#da8230" fill-opacity="0.07" stroke="#a85c14" stroke-width="2"/>
+        <rect x="540" y="304" width="180" height="5" fill="#0096d1" opacity="0.65"/>
+        <rect x="720" y="304" width="60" height="5" fill="#da8230" opacity="0.85"/>
+      </g>
+
+    </g>
+
+    <!-- =================================================== -->
+    <!-- NEWTON CALLOUT BAR (saturated)                       -->
+    <!-- =================================================== -->
+    <g id="newton-bar">
+      <rect x="20" y="496" width="760" height="44" rx="3" fill="#da8230" fill-opacity="0.18" stroke="#a85c14" stroke-width="2" opacity="1"/>
+      <rect x="20" y="496" width="760" height="4" fill="#da8230" opacity="0.85"/>
+    </g>
+
+  </g>
+
+  <!-- === CONNECTORS LAYER === -->
+  <g id="connectors">
+    <!-- One downward arrow from tier-1 caveat to tier-2 header (orange, muted) -->
+    <!-- straight connector: len=48px start_angle=-90.0deg end_angle=90.0deg -->
+    <path d="M400.00,266.00 L400.00,282.00" fill="none" stroke="#da8230" stroke-width="1.6" opacity="0.85" stroke-linejoin="round" stroke-linecap="round"/>
+    <polygon points="400.00,290.00 405.50,280.00 394.50,280.00" fill="#da8230" opacity="0.95"/>
+  </g>
+
+  <!-- === CONTENT LAYER === -->
+  <g id="content">
+
+    <!-- =====================================================  -->
+    <!-- TIER-1 CARD CONTENT (dim, muted)                       -->
+    <!-- =====================================================  -->
+
+    <!-- Card 1: SCRIPTED MOTION -->
+    <g id="content-scripted">
+      <text x="109" y="94" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" class="fg-4" text-anchor="middle" letter-spacing="1.5">COMPONENT 1</text>
+      <!-- Icon: clapperboard (Lucide, ISC license) -->
+      <g id="icon-clapperboard" transform="translate(94, 108) scale(1.5)" class="ico-dim">
+        <path d="M20.2 6 3 11l-.9-2.4c-.3-1 .2-2.1 1.2-2.4l13.1-4c1-.3 2.1.2 2.4 1.2Z"/>
+        <path d="m6.2 5.3 3.1 3.9"/>
+        <path d="m12.4 3.4 3.1 4"/>
+        <path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/>
+      </g>
+      <text x="109" y="166" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-3" text-anchor="middle">Scripted</text>
+      <text x="109" y="180" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-3" text-anchor="middle">motion</text>
+      <text x="109" y="202" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="500" class="fg-4" text-anchor="middle">Verbatim claim tailored</text>
+      <text x="109" y="214" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-style="italic" class="fg-4" text-anchor="middle">to the on-site witness</text>
+    </g>
+
+    <!-- Card 2: ON-SITE WITNESS -->
+    <g id="content-witness">
+      <text x="303" y="94" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" class="fg-4" text-anchor="middle" letter-spacing="1.5">COMPONENT 2</text>
+      <!-- Icon: eye (Lucide, ISC license) -->
+      <g id="icon-eye" transform="translate(288, 108) scale(1.5)" class="ico-dim">
+        <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/>
+        <circle cx="12" cy="12" r="3"/>
+      </g>
+      <text x="303" y="166" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-3" text-anchor="middle">On-site</text>
+      <text x="303" y="180" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-3" text-anchor="middle">witness</text>
+      <text x="303" y="202" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="500" class="fg-4" text-anchor="middle">Court social curator</text>
+      <text x="303" y="214" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-style="italic" class="fg-4" text-anchor="middle">present by design</text>
+    </g>
+
+    <!-- Card 3: SELF-INFLICTED BRUISE -->
+    <g id="content-bruise">
+      <text x="497" y="94" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" class="fg-4" text-anchor="middle" letter-spacing="1.5">COMPONENT 3</text>
+      <!-- Icon: bandage (Lucide, ISC license) -->
+      <g id="icon-bandage" transform="translate(482, 108) scale(1.5)" class="ico-dim">
+        <path d="M10 10.01h.01"/>
+        <path d="M10 14.01h.01"/>
+        <path d="M14 10.01h.01"/>
+        <path d="M14 14.01h.01"/>
+        <path d="M18 6v11.5"/>
+        <path d="M6 6v12"/>
+        <rect x="2" y="6" width="20" height="12" rx="2"/>
+      </g>
+      <text x="497" y="166" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-3" text-anchor="middle">Self-inflicted</text>
+      <text x="497" y="180" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-3" text-anchor="middle">bruise</text>
+      <text x="497" y="202" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="500" class="fg-4" text-anchor="middle">Single shoulder mark</text>
+      <text x="497" y="214" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-style="italic" class="fg-4" text-anchor="middle">to seed the medical file</text>
+    </g>
+
+    <!-- Card 4: ESCALATING TESTIMONY -->
+    <g id="content-escalating">
+      <text x="691" y="94" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" class="fg-4" text-anchor="middle" letter-spacing="1.5">COMPONENT 4</text>
+      <!-- Icon: files / stacked papers (Lucide, ISC license) -->
+      <g id="icon-files" transform="translate(676, 108) scale(1.5)" class="ico-dim">
+        <path d="M15.5 2H8.6c-.4 0-.8.2-1.1.5-.3.3-.5.7-.5 1.1V14c0 .4.2.8.5 1.1.3.3.7.5 1.1.5h9.8c.4 0 .8-.2 1.1-.5.3-.3.5-.7.5-1.1V6.5z"/>
+        <path d="M3 7.6v12.8c0 .4.2.8.5 1.1.3.3.7.5 1.1.5h9.8"/>
+        <path d="M15 2v5h5"/>
+      </g>
+      <text x="691" y="166" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-3" text-anchor="middle">Escalating</text>
+      <text x="691" y="180" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-3" text-anchor="middle">testimony</text>
+      <text x="691" y="202" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="500" class="fg-4" text-anchor="middle">Five retellings, each one</text>
+      <text x="691" y="214" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-style="italic" class="fg-4" text-anchor="middle">heavier than the last</text>
+    </g>
+
+    <!-- =====================================================  -->
+    <!-- TIER-2 CARD CONTENT (vivid)                            -->
+    <!-- =====================================================  -->
+
+    <!-- Card A: VERBATIM CLAIM -> INPUT -->
+    <g id="content-input">
+      <text x="140" y="326" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" class="accent-1" text-anchor="middle" letter-spacing="2">STEP 1</text>
+      <!-- Icon: log-in / arrow-into-box (Lucide, ISC license) -->
+      <g id="icon-login" transform="translate(115, 344) scale(2.2)" class="ico-cyan">
+        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+        <polyline points="10 17 15 12 10 7"/>
+        <line x1="15" y1="12" x2="3" y2="12"/>
+      </g>
+      <text x="140" y="422" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="800" class="fg-1" text-anchor="middle">Verbatim claim</text>
+      <text x="140" y="438" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="800" class="fg-1" text-anchor="middle">into the model</text>
+      <text x="140" y="462" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-style="italic" class="fg-2" text-anchor="middle">Take the alleged motion as input.</text>
+    </g>
+
+    <!-- Card B: LOWER-BOUND RECONSTRUCTION -->
+    <g id="content-lowerbound">
+      <text x="400" y="326" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" class="accent-1" text-anchor="middle" letter-spacing="2">STEP 2</text>
+      <!-- Icon: function / sigma (Lucide, ISC license) -->
+      <g id="icon-sigma" transform="translate(375, 344) scale(2.2)" class="ico-cyan">
+        <path d="M18 7V5H6l6 7-6 7h12v-2"/>
+      </g>
+      <!-- Small subscript label rendered as plain ASCII inside tspan to avoid Unicode subscript font drift -->
+      <text x="400" y="404" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" class="accent-2" text-anchor="middle">v<tspan font-size="8" dy="3">min</tspan><tspan dy="-3"> ,  </tspan>a<tspan font-size="8" dy="3">min</tspan><tspan dy="-3"> ,  </tspan>p<tspan font-size="8" dy="3">min</tspan></text>
+      <text x="400" y="422" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="800" class="fg-1" text-anchor="middle">Lower-bound</text>
+      <text x="400" y="438" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="800" class="fg-1" text-anchor="middle">reconstruction</text>
+      <text x="400" y="462" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-style="italic" class="fg-2" text-anchor="middle">Minimum demand any compatible motion imposes.</text>
+    </g>
+
+    <!-- Card C: VERDICT - MECHANICAL IMPOSSIBILITY -->
+    <g id="content-verdict">
+      <text x="660" y="326" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" class="accent-2" text-anchor="middle" letter-spacing="2">VERDICT</text>
+      <!-- Icon: octagon with X (Lucide ban / octagon-x, ISC license), orange -->
+      <g id="icon-octagon-x" transform="translate(635, 344) scale(2.2)" class="ico-orange">
+        <path d="M7.86 2h8.28L22 7.86v8.28L16.14 22H7.86L2 16.14V7.86Z"/>
+        <line x1="15" y1="9" x2="9" y2="15"/>
+        <line x1="9" y1="9" x2="15" y2="15"/>
+      </g>
+      <text x="660" y="422" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="800" class="fg-1" text-anchor="middle">Mechanical</text>
+      <text x="660" y="438" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="800" class="accent-2" text-anchor="middle">impossibility</text>
+      <text x="660" y="462" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-style="italic" class="fg-2" text-anchor="middle">No compatible motion produces the record.</text>
+    </g>
+
+  </g>
+
+  <!-- === CALLOUTS LAYER === -->
+  <g id="callouts">
+
+    <!-- Tier-1 caveat callout: muted pill below the alleged-staging row,
+         annotating the entire tier as interpretive (not the load-bearing argument). -->
+    <g id="callout-tier-1-caveat">
+      <rect x="200" y="244" width="400" height="16" rx="3" fill="#1a5a6e" fill-opacity="0.14" stroke="#1a5a6e" stroke-width="0.8" opacity="0.85"/>
+      <text x="400" y="255" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="700" class="fg-3" text-anchor="middle" letter-spacing="1.8">INTERPRETIVE  ·  THE DEFENDANT NEED NOT CONTEST THESE</text>
+    </g>
+
+    <!-- Newton headline -->
+    <g id="callout-newton">
+      <text x="400" y="521" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="800" class="accent-2" text-anchor="middle" letter-spacing="3">NEWTON HAS SPOKEN.</text>
+      <text x="400" y="535" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" class="accent-1" text-anchor="middle" letter-spacing="2" font-style="italic">the interpretive layer is no longer the load-bearing argument</text>
+    </g>
+
+  </g>
+
+</svg>

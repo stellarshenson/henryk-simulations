@@ -1,0 +1,303 @@
+<!--
+  04-acoustic-pipeline.svg - Acoustic SPL derivation pipeline (impact -> phone-mic verdict)
+  Shows: 5-step left-to-right flow that derives predicted SPL from mechanical impact:
+    1. Impact work     W = (1/2) F.d -> 158 J
+    2. Radiated power  P_a = eta . W / t (eta in {0.1%, 1%, 5%}, t = 12.5 ms)
+    3. Free-field      I = P_a / (4 pi r^2), r = 2 m
+    4. SPL conversion  L_p = 10 . log10(I / I_ref), I_ref = 1e-12 W/m^2
+    5. Verdict         124 dB SPL at phone mic - exceeds ~120 dB consumer clipping ceiling
+  Steps 1-4 are accent-1 cyan cards. Step 5 is accent-2 orange (verdict card).
+  Connectors: straight horizontal arrows between adjacent cards (forward direction).
+  Two callouts on the verdict card: "exceeds clipping ceiling" (orange) and
+  "Forensic test: no clipping + no 6-24 Hz ringing -> impact didn't happen" (amber).
+  Decoration: door flexural-mode mini-spectrum strip in bottom-left corner
+  (6 Hz, 9.6 Hz, 23.5 Hz, 5717 Hz cavity).
+  Intent: companion figure for "the-3-second-throw-that-couldnt-happen.md" article,
+  showing the DERIVATION of the SPL chart (not duplicating reports/figures/01-audio-signature.png).
+  Theme: Stellars-Tech dark variant. accent-1 cyan = derivation, accent-2 orange = verdict.
+-->
+
+<!-- === GRID ===
+  viewBox: 880 x 430
+  Outer margins: 22 left/right, 12 top, 30 bottom (room for decoration strip)
+
+  Title row:
+    title:       y=22, text-anchor middle, fg-2 600
+    subtitle:    y=40, fg-3 small
+
+  Card row (5 cards, equal width and height):
+    card width:  148
+    card height: 220
+    card stride: 172 (148 + 24 gap)
+    card y:      72..292
+    card x:      22, 194, 366, 538, 710
+
+  Card internal rhythm (220 tall):
+    accent bar:   y=72..77 (height 5)
+    step badge:   y=92    (e.g., "STEP 1", 7pt accent-1, letter-spacing 1)
+    icon line:    y=104..124 (centered Lucide icon, 18x18 stroke 1.5)
+    title line:   y=146    (10pt fg-1 700, text-anchor middle)
+    formula line: y=170    (10pt accent-1 highlight, mono-ish bold)
+    subst line 1: y=192    (9pt fg-2)
+    subst line 2: y=210    (9pt fg-2)
+    result line:  y=236    (12pt accent-1/2 700)
+    caption:      y=264, y=278 (8pt fg-4, 2 lines max)
+
+  Step 5 (verdict) variant - same dims but accent-2 (orange):
+    larger result: "124 dB SPL" at y=232 (14pt accent-2 700)
+    sub-result:   "phone mic prediction" y=250 (8pt fg-3)
+
+  Connector channel:
+    centre-y:    182 (mid-card vertical)
+    each arrow:  card right edge -> next card left edge (straight, forward)
+    arrow 1:     from (170, 182) to (194, 182)
+    arrow 2:     from (342, 182) to (366, 182)
+    arrow 3:     from (514, 182) to (538, 182)
+    arrow 4:     from (686, 182) to (710, 182)
+
+  Callouts (anchored on step-5 verdict card):
+    A: "exceeds ~120 dB consumer-mic clipping" - orange,
+       anchor verdict result text, label placed above card (y=58 strip)
+    B: "Forensic test: recording with no clipping + no 6-24 Hz panel ringing
+       => impact did not happen" - amber, anchor verdict caption,
+       label placed below card (y=308 strip)
+
+  Decoration (door flexural-mode mini-spectrum):
+    bottom-left corner, x=22..330, y=320..380
+    label  y=330 "DOOR FLEXURAL MODES (PRE-CAVITY)" 7pt fg-3
+    base   y=372 (bar baseline)
+    bars   x positions log-scaled across 22..320:
+      6.0 Hz, 9.6 Hz, 14.5 Hz, 23.5 Hz, 5717 Hz (cavity, taller, accent-2)
+    bar w=4, heights 22, 28, 18, 14, 36
+    annotation "5717 Hz cavity" right of last bar y=370 7pt accent-2
+
+  Footer note (right side, below cards):
+    y=336..372, x=380..858  (3 lines, fg-4 7pt)
+    "Assumes radiation efficiency eta in 0.1%-5% (panel impact bracket)."
+    "Spreading: 1/r^2 from impact site to phone at ~2 m."
+    "I_ref = 1e-12 W/m^2 (standard auditory threshold)."
+
+  Z-order: background -> cards -> arrows -> text -> decoration -> callouts (top)
+=== -->
+
+<!-- === LAYOUT TOPOLOGY ===
+  h-flow: c1 -> c2 -> c3 -> c4 -> c5 (5 cards, 4 straight forward connectors)
+  emphasis: c5 is verdict (accent-2 orange), c1..c4 are derivation (accent-1 cyan)
+  callouts: 2 anchored on c5 (one above, one below)
+  decoration: independent mini-spectrum bottom-left, does not collide with footer note
+  contain: title-strip > title + subtitle (horizontal centre)
+  align: cards row equal width and equal height (148 x 220)
+  align: all card y-coords share top=72, bottom=292
+  align: all accent bars share y=72..77
+=== -->
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 430" width="100%">
+  <style>
+    .fg-1 { fill: #1a5a6e; }
+    .fg-2 { fill: #24697e; }
+    .fg-3 { fill: #236a74; }
+    .fg-4 { fill: #2b7680; }
+    .accent-1 { fill: #005f7a; }
+    .accent-2 { fill: #7a4a15; }
+    .accent-3 { fill: #7a4a15; }
+    .callout-hi { fill: #5a3008; }
+    @media (prefers-color-scheme: dark) {
+      .fg-1 { fill: #b8e4f0; }
+      .fg-2 { fill: #8fd4e6; }
+      .fg-3 { fill: #5aafc5; }
+      .fg-4 { fill: #4099b3; }
+      .accent-1 { fill: #5cc8e0; }
+      .accent-2 { fill: #da8230; }
+      .accent-3 { fill: #d4a04a; }
+      .callout-hi { fill: #f5cfa0; }
+    }
+  </style>
+
+  <!-- Title row -->
+  <g id="title-row">
+    <text x="440" y="22" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" class="fg-2" text-anchor="middle" letter-spacing="1.4">ACOUSTIC SIGNATURE - IMPACT TO PHONE MIC</text>
+    <text x="440" y="40" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-3" text-anchor="middle">5-step derivation of predicted SPL at r = 2 m from a 18.06 kN, 2 cm rigid impact</text>
+  </g>
+
+  <!-- ===== CARD 1: Impact work ===== -->
+  <g id="card-1-impact-work">
+    <path d="M22,72 H170 V289 Q170,292 167,292 H25 Q22,292 22,289 Z" fill="#0096d1" fill-opacity="0.05"/>
+    <path d="M22,72 H170 V289 Q170,292 167,292 H25 Q22,292 22,289 Z" fill="none" stroke="#0096d1" stroke-width="1"/>
+    <rect x="22" y="72" width="148" height="5" fill="#0096d1" opacity="0.6"/>
+    <text x="96" y="92" font-family="Segoe UI, Arial, sans-serif" font-size="7" font-weight="600" class="accent-1" text-anchor="middle" letter-spacing="1.4">STEP 1</text>
+    <!-- Lucide icon: zap (impact / kinetic energy) - ISC license, lucide.dev/icons/zap -->
+    <g transform="translate(87,103)" fill="none" stroke="#5cc8e0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="13,2 3,14 9,14 7,22 17,10 11,10 13,2"/>
+    </g>
+    <text x="96" y="146" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" class="fg-1" text-anchor="middle">Impact work</text>
+    <text x="96" y="170" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" class="accent-1" text-anchor="middle">W = &#189; F &#183; d</text>
+    <text x="96" y="192" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-2" text-anchor="middle">F = 18.06 kN</text>
+    <text x="96" y="208" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-2" text-anchor="middle">d = 0.02 m</text>
+    <text x="96" y="236" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" class="accent-1" text-anchor="middle">&#8776; 158 J</text>
+    <text x="96" y="266" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-4" text-anchor="middle">Mechanical work</text>
+    <text x="96" y="278" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-4" text-anchor="middle">absorbed at impact</text>
+  </g>
+
+  <!-- (Connector 1 moved to consolidated #connectors group at end) -->
+
+  <!-- ===== CARD 2: Radiated acoustic power ===== -->
+  <g id="card-2-radiated-power">
+    <path d="M194,72 H342 V289 Q342,292 339,292 H197 Q194,292 194,289 Z" fill="#0096d1" fill-opacity="0.05"/>
+    <path d="M194,72 H342 V289 Q342,292 339,292 H197 Q194,292 194,289 Z" fill="none" stroke="#0096d1" stroke-width="1"/>
+    <rect x="194" y="72" width="148" height="5" fill="#0096d1" opacity="0.6"/>
+    <text x="268" y="92" font-family="Segoe UI, Arial, sans-serif" font-size="7" font-weight="600" class="accent-1" text-anchor="middle" letter-spacing="1.4">STEP 2</text>
+    <!-- Lucide icon: volume-2 (speaker / radiated sound) - ISC license -->
+    <g transform="translate(259,103)" fill="none" stroke="#5cc8e0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="3,9 7,9 12,4 12,20 7,15 3,15 3,9" fill="none"/>
+      <path d="M15.54,8.46a5,5 0 0 1 0,7.07"/>
+      <path d="M18.07,4.93a10,10 0 0 1 0,14.14"/>
+    </g>
+    <text x="268" y="146" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" class="fg-1" text-anchor="middle">Radiated power</text>
+    <text x="268" y="170" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" class="accent-1" text-anchor="middle">P&#8336; = &#951; &#183; W / t</text>
+    <text x="268" y="192" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-2" text-anchor="middle">&#951; &#8712; {0.1%, 1%, 5%}</text>
+    <text x="268" y="208" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-2" text-anchor="middle">t = 12.5 ms</text>
+    <text x="268" y="236" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" class="accent-1" text-anchor="middle">12.6 - 632 W</text>
+    <text x="268" y="266" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-4" text-anchor="middle">Radiation efficiency &#951;</text>
+    <text x="268" y="278" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-4" text-anchor="middle">brackets panel coupling</text>
+  </g>
+
+  <!-- (Connector 2 moved to consolidated #connectors group at end) -->
+
+  <!-- ===== CARD 3: Free-field spreading ===== -->
+  <g id="card-3-spreading">
+    <path d="M366,72 H514 V289 Q514,292 511,292 H369 Q366,292 366,289 Z" fill="#0096d1" fill-opacity="0.05"/>
+    <path d="M366,72 H514 V289 Q514,292 511,292 H369 Q366,292 366,289 Z" fill="none" stroke="#0096d1" stroke-width="1"/>
+    <rect x="366" y="72" width="148" height="5" fill="#0096d1" opacity="0.6"/>
+    <text x="440" y="92" font-family="Segoe UI, Arial, sans-serif" font-size="7" font-weight="600" class="accent-1" text-anchor="middle" letter-spacing="1.4">STEP 3</text>
+    <!-- Icon: concentric rings (free-field spreading) - composed from lucide circle primitives -->
+    <g transform="translate(431,103)" fill="none" stroke="#5cc8e0" stroke-width="1.5" stroke-linecap="round">
+      <circle cx="9" cy="12" r="2"/>
+      <circle cx="9" cy="12" r="5" opacity="0.7"/>
+      <circle cx="9" cy="12" r="8" opacity="0.4"/>
+    </g>
+    <text x="440" y="146" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" class="fg-1" text-anchor="middle">Free-field spread</text>
+    <text x="440" y="170" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" class="accent-1" text-anchor="middle">I = P&#8336; / (4&#960;r&#178;)</text>
+    <text x="440" y="192" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-2" text-anchor="middle">r = 2 m</text>
+    <text x="440" y="208" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-2" text-anchor="middle">4&#960;r&#178; = 50.3 m&#178;</text>
+    <text x="440" y="236" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" class="accent-1" text-anchor="middle">0.25 - 12.6 W/m&#178;</text>
+    <text x="440" y="266" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-4" text-anchor="middle">Spherical 1/r&#178; falloff</text>
+    <text x="440" y="278" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-4" text-anchor="middle">to phone position</text>
+  </g>
+
+  <!-- (Connector 3 moved to consolidated #connectors group at end) -->
+
+  <!-- ===== CARD 4: SPL conversion ===== -->
+  <g id="card-4-spl-conversion">
+    <path d="M538,72 H686 V289 Q686,292 683,292 H541 Q538,292 538,289 Z" fill="#0096d1" fill-opacity="0.05"/>
+    <path d="M538,72 H686 V289 Q686,292 683,292 H541 Q538,292 538,289 Z" fill="none" stroke="#0096d1" stroke-width="1"/>
+    <rect x="538" y="72" width="148" height="5" fill="#0096d1" opacity="0.6"/>
+    <text x="612" y="92" font-family="Segoe UI, Arial, sans-serif" font-size="7" font-weight="600" class="accent-1" text-anchor="middle" letter-spacing="1.4">STEP 4</text>
+    <!-- Icon: gauge (dB meter) - lucide gauge, ISC license -->
+    <g transform="translate(603,103)" fill="none" stroke="#5cc8e0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12,14 L15,9"/>
+      <path d="M4.93,19.07a10,10 0 1 1 14.14,0" />
+    </g>
+    <text x="612" y="146" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" class="fg-1" text-anchor="middle">SPL conversion</text>
+    <text x="612" y="170" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" class="accent-1" text-anchor="middle">L&#8338; = 10&#183;log&#8321;&#8320;(I/I&#7523;&#8337;&#8332;)</text>
+    <text x="612" y="192" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-2" text-anchor="middle">I&#7523;&#8337;&#8332; = 10&#8315;&#185;&#178; W/m&#178;</text>
+    <text x="612" y="208" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-2" text-anchor="middle">logarithmic scale</text>
+    <text x="612" y="236" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" class="accent-1" text-anchor="middle">114 - 131 dB</text>
+    <text x="612" y="266" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-4" text-anchor="middle">Per &#951; bracket, at 2 m</text>
+    <text x="612" y="278" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-4" text-anchor="middle">free-field SPL</text>
+  </g>
+
+  <!-- (Connector 4 moved to consolidated #connectors group at end) -->
+
+  <!-- ===== CARD 5: Verdict (orange) ===== -->
+  <g id="card-5-verdict">
+    <path d="M710,72 H858 V289 Q858,292 855,292 H713 Q710,292 710,289 Z" fill="#da8230" fill-opacity="0.08"/>
+    <path d="M710,72 H858 V289 Q858,292 855,292 H713 Q710,292 710,289 Z" fill="none" stroke="#a85d10" stroke-width="1.5"/>
+    <rect x="710" y="72" width="148" height="5" fill="#da8230" opacity="0.75"/>
+    <text x="784" y="92" font-family="Segoe UI, Arial, sans-serif" font-size="7" font-weight="600" class="accent-2" text-anchor="middle" letter-spacing="1.4">VERDICT</text>
+    <!-- Icon: smartphone (phone mic) - lucide smartphone, ISC license -->
+    <g transform="translate(775,103)" fill="none" stroke="#da8230" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+      <circle cx="12" cy="18" r="0.6" fill="#da8230" stroke="none"/>
+    </g>
+    <text x="784" y="146" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" class="fg-1" text-anchor="middle">At phone mic</text>
+    <text x="784" y="170" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" class="accent-2" text-anchor="middle">typical &#951; &#8776; 1%</text>
+    <text x="784" y="192" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-2" text-anchor="middle">predicted SPL at r = 2 m</text>
+    <text x="784" y="232" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700" class="accent-2" text-anchor="middle">124 dB</text>
+    <text x="784" y="250" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="600" class="accent-2" text-anchor="middle">SPL</text>
+    <text x="784" y="270" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-4" text-anchor="middle">phone-mic prediction</text>
+    <text x="784" y="282" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-4" text-anchor="middle">for the 18.06 kN impact</text>
+  </g>
+
+  <!-- ===== Inter-card connectors (4 straight forward arrows, 4px standoff per side) ===== -->
+  <!-- Connector 1: card 1 -> card 2 (cyan) -->
+  <g class="connector" id="conn-1-2">
+    <path d="M174.00,182.00 L185.00,182.00" fill="none" stroke="#0096d1" stroke-width="1.2" opacity="0.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <polygon points="190.00,182.00 185.00,178.00 185.00,186.00" fill="#0096d1" opacity="0.6"/>
+  </g>
+  <!-- Connector 2: card 2 -> card 3 -->
+  <g class="connector" id="conn-2-3">
+    <path d="M346.00,182.00 L357.00,182.00" fill="none" stroke="#0096d1" stroke-width="1.2" opacity="0.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <polygon points="362.00,182.00 357.00,178.00 357.00,186.00" fill="#0096d1" opacity="0.6"/>
+  </g>
+  <!-- Connector 3: card 3 -> card 4 -->
+  <g class="connector" id="conn-3-4">
+    <path d="M518.00,182.00 L529.00,182.00" fill="none" stroke="#0096d1" stroke-width="1.2" opacity="0.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <polygon points="534.00,182.00 529.00,178.00 529.00,186.00" fill="#0096d1" opacity="0.6"/>
+  </g>
+  <!-- Connector 4: card 4 -> verdict card (orange, marks verdict transition) -->
+  <g class="connector" id="conn-4-5">
+    <path d="M690.00,182.00 L701.00,182.00" fill="none" stroke="#da8230" stroke-width="1.4" opacity="0.7" stroke-linejoin="round" stroke-linecap="round"/>
+    <polygon points="706.00,182.00 701.00,178.00 701.00,186.00" fill="#da8230" opacity="0.6"/>
+  </g>
+
+  <!-- ===== Callout A: exceeds clipping (above verdict card) ===== -->
+  <g id="callout-clipping">
+    <!-- Label box sits above the verdict card (x range matches card-5 728..858) -->
+    <rect x="710" y="46" width="148" height="22" rx="3" fill="#da8230" fill-opacity="0.18" stroke="#a85d10" stroke-width="1.4" opacity="0.95"/>
+    <text x="784" y="62" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" class="callout-hi" text-anchor="middle">&gt; 120 dB mic clipping limit</text>
+    <!-- Leader line from box bottom to verdict card top -->
+    <line x1="784" y1="68" x2="784" y2="71" stroke="#a85d10" stroke-width="1" opacity="0.85"/>
+  </g>
+
+  <!-- ===== Callout B: forensic test (right side, below verdict card) ===== -->
+  <g id="callout-forensic">
+    <!-- Label box on right column, fully outside any card bbox -->
+    <rect x="538" y="298" width="320" height="36" rx="3" fill="#d4a04a" fill-opacity="0.22" stroke="#b87020" stroke-width="1.8" opacity="0.95"/>
+    <text x="698" y="312" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="700" class="accent-3" text-anchor="middle" letter-spacing="1.2">FORENSIC TEST</text>
+    <text x="698" y="326" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-2" text-anchor="middle">no clipping + no 6-24 Hz panel ringing  &#8594;  impact did not happen</text>
+  </g>
+
+  <!-- ===== Decoration: door flexural-mode mini-spectrum (bottom-left corner) ===== -->
+  <g id="decoration-spectrum">
+    <text x="22" y="350" font-family="Segoe UI, Arial, sans-serif" font-size="7" font-weight="600" class="fg-3" letter-spacing="1.2">DOOR FLEXURAL MODES (PRE-CAVITY)</text>
+    <!-- Baseline -->
+    <line x1="22" y1="392" x2="330" y2="392" stroke="#1a5a6e" stroke-width="0.8" opacity="0.5"/>
+    <!-- Bars (heights tuned by visual weight; cavity tallest in orange) -->
+    <!-- 6.0 Hz   x=40 -->
+    <rect x="38" y="370" width="4" height="22" fill="#0096d1" opacity="0.55"/>
+    <text x="40" y="406" font-family="Segoe UI, Arial, sans-serif" font-size="6.5" class="fg-4" text-anchor="middle">6 Hz</text>
+    <!-- 9.6 Hz   x=82 -->
+    <rect x="80" y="364" width="4" height="28" fill="#0096d1" opacity="0.6"/>
+    <text x="82" y="406" font-family="Segoe UI, Arial, sans-serif" font-size="6.5" class="fg-4" text-anchor="middle">9.6 Hz</text>
+    <!-- 14.5 Hz  x=124 -->
+    <rect x="122" y="374" width="4" height="18" fill="#0096d1" opacity="0.5"/>
+    <text x="124" y="406" font-family="Segoe UI, Arial, sans-serif" font-size="6.5" class="fg-4" text-anchor="middle">14.5 Hz</text>
+    <!-- 23.5 Hz  x=166 -->
+    <rect x="164" y="378" width="4" height="14" fill="#0096d1" opacity="0.45"/>
+    <text x="166" y="406" font-family="Segoe UI, Arial, sans-serif" font-size="6.5" class="fg-4" text-anchor="middle">23.5 Hz</text>
+    <!-- 5717 Hz  cavity (tallest, orange) x=260 -->
+    <rect x="258" y="356" width="5" height="36" fill="#da8230" opacity="0.75"/>
+    <text x="260" y="406" font-family="Segoe UI, Arial, sans-serif" font-size="6.5" class="accent-2" text-anchor="middle">5717 Hz</text>
+    <text x="288" y="366" font-family="Segoe UI, Arial, sans-serif" font-size="7" class="accent-2">cavity peak</text>
+  </g>
+
+  <!-- ===== Footer assumptions note (centre column, below cards, left of callout) ===== -->
+  <g id="footer-notes">
+    <text x="346" y="350" font-family="Segoe UI, Arial, sans-serif" font-size="7" font-weight="600" class="fg-3" letter-spacing="1.2">ASSUMPTIONS</text>
+    <text x="346" y="370" font-family="Segoe UI, Arial, sans-serif" font-size="7" class="fg-4">&#951; bracket 0.1% - 5% (panel impact)</text>
+    <text x="346" y="386" font-family="Segoe UI, Arial, sans-serif" font-size="7" class="fg-4">spherical 1/r&#178; spread, r = 2 m</text>
+    <text x="346" y="402" font-family="Segoe UI, Arial, sans-serif" font-size="7" class="fg-4">I&#7523;&#8337;&#8332; = 10&#8315;&#185;&#178; W/m&#178; (audio reference)</text>
+  </g>
+
+</svg>
+

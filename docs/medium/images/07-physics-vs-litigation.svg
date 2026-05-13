@@ -1,0 +1,273 @@
+<!--
+  07-physics-vs-litigation.svg - Manifesto concept card for the article hero
+  Shows: side-by-side comparison of two responses to a false accusation -
+    LEFT  panel (dim, muted): "Most people - hire a lawyer / wait / pay / defend / hope"
+    RIGHT panel (vivid, focal): "Me - write a physics simulation / run the numbers / Newton testifies"
+    A small VS badge sits on the central divider. A unifying tagline ribbon sits below the cards.
+  Intent: rhetorical centerpiece for "the-3-second-throw-that-couldnt-happen.md" - encode the project
+    thesis (physics-as-defence) at a glance. Right panel deliberately dominates: brighter accent bar,
+    saturated accent-1/accent-2 colours, richer iconography. Left panel is fg-4 / dim cyan throughout.
+  Theme: Stellars-Tech dark variant. Left = #1a5a6e dim cyan + fg-4 greys.
+                                     Right = #0096d1 accent-1 + #da8230 accent-2.
+  Background: transparent root rect; reads against article dark hero (#0a1a24).
+-->
+<!--
+=== GRID ===
+  viewBox: 800 x 450
+  Outer margin: 20px left/right, 16 top, 16 bottom
+
+  Title strip:    y=12..36   (centred small caps)
+
+  Card row (h-stack mirror):
+    LEFT card  "MOST PEOPLE":   x=20,  w=375  (anchor = dim cyan, muted)
+    RIGHT card "ME":            x=405, w=375  (anchor = accent-1 cyan + accent-2 highlights)
+    Gap between cards: 10px (centre x=400)
+    Both cards: y=58..400 (h=342); flat-top, rounded-bottom r=3
+
+  Central VS badge (sits on the divider):
+    cx=400, cy=229, r=18 (outer ring), r=15 (inner fill)
+    Stem segments above (y=63..211) and below (y=247..395) with stroke-dasharray for divider rhythm
+
+  Per-card vertical rhythm (anchored to accent bar bottom y=63):
+    eyebrow header:        y=88     (small caps, font-size 9)
+    big header:            y=120    (font-size 28-30, hero)
+    icon cluster row:      y=152..210  (h=58 - 3 icons across, scale ~1.6)
+    verb sequence body:    y=234..312 (5 lines for left, 3 lines + accent for right)
+    cue strip:             y=336..372 (cost/time cue, 2 lines)
+    side-tag badge:        y=378..395 (small pill summarising approach)
+
+  Tagline ribbon:           y=410..432 (h=22, full width, centred italic text)
+
+  Card shape: flat-top, rounded-bottom, r=3 per theme_swatch
+  Accent bar: height 5, opacity 0.6; LEFT muted (opacity 0.35), RIGHT full (opacity 0.6) for hierarchy
+=== -->
+<!--
+=== LAYOUT TOPOLOGY ===
+  v-stack: title-strip, card-row, tagline-ribbon
+  h-stack (card-row): card-lawyer | vs-badge | card-physics (mirror axis x=400)
+  mirror: card-lawyer ~ card-physics (axis x=400, but right panel is visually dominant)
+
+  contain: card-lawyer  > eyebrow-l, header-l, icons-l (scale, gavel, briefcase), verbs-l, cue-l, tag-l
+  contain: card-physics > eyebrow-r, header-r, icons-r (code, atom, chart), verbs-r, cue-r, tag-r
+  contain: vs-badge     > outer ring, inner fill, "VS" text, top divider stem, bottom divider stem
+  contain: tagline-ribbon > unifying italic sentence
+
+  hierarchy: right > left (accent saturation, header weight, icon density, tag boldness)
+  no connectors: this is a manifesto/comparison card, not a flow diagram
+=== -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" preserveAspectRatio="xMidYMid meet">
+  <style>
+    .fg-1 { fill: #1a5a6e; }
+    .fg-2 { fill: #24697e; }
+    .fg-3 { fill: #236a74; }
+    .fg-4 { fill: #2b7680; }
+    .accent-1 { fill: #005f7a; }
+    .accent-2 { fill: #7a4a15; }
+    .dim-cyan { fill: #1a5a6e; }
+    .muted { fill: #6b7c83; }
+    .ico-dim { fill: none; stroke: #1a5a6e; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .ico-cyan { fill: none; stroke: #0096d1; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .ico-orange { fill: none; stroke: #da8230; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .divider-line { stroke: #4099b3; stroke-width: 1; opacity: 0.35; }
+    @media (prefers-color-scheme: dark) {
+      .fg-1 { fill: #b8e4f0; }
+      .fg-2 { fill: #8fd4e6; }
+      .fg-3 { fill: #5aafc5; }
+      .fg-4 { fill: #4099b3; }
+      .accent-1 { fill: #5cc8e0; }
+      .accent-2 { fill: #d4a04a; }
+      .dim-cyan { fill: #4a7a86; }
+      .muted { fill: #6b7c83; }
+      .ico-dim { stroke: #4a7a86; }
+      .ico-cyan { stroke: #5cc8e0; }
+      .ico-orange { stroke: #d4a04a; }
+      .divider-line { stroke: #5cc8e0; opacity: 0.45; }
+    }
+  </style>
+
+  <!-- Transparent backplate -->
+  <rect x="0" y="0" width="800" height="450" fill="transparent"/>
+
+  <!-- === BACKGROUND LAYER === -->
+  <g id="background"></g>
+
+  <!-- === NODES LAYER === -->
+  <g id="nodes">
+
+    <!-- Title strip (header band - small caps, centred) -->
+    <g id="header">
+      <text x="400" y="24" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="600" class="fg-3" text-anchor="middle" letter-spacing="3">TWO RESPONSES TO A FALSE ACCUSATION</text>
+      <line x1="180" y1="32" x2="620" y2="32" stroke="#5cc8e0" stroke-width="0.5" opacity="0.3"/>
+    </g>
+
+    <!-- LEFT CARD: Most people (dim cyan, muted) -->
+    <g id="card-lawyer">
+      <path d="M20.0,58.0 H395.0 V397.0 Q395.0,400.0 392.0,400.0 H23.0 Q20.0,400.0 20.0,397.0 Z" fill="#1a5a6e" fill-opacity="0.04"/>
+      <path d="M20.0,58.0 H395.0 V397.0 Q395.0,400.0 392.0,400.0 H23.0 Q20.0,400.0 20.0,397.0 Z" fill="none" stroke="#1a5a6e" stroke-width="1" opacity="0.55"/>
+      <rect x="20.0" y="58.0" width="375.0" height="5" fill="#1a5a6e" opacity="0.35"/>
+    </g>
+
+    <!-- RIGHT CARD: Me (accent-1 cyan, vivid) -->
+    <g id="card-physics">
+      <path d="M405.0,58.0 H780.0 V397.0 Q780.0,400.0 777.0,400.0 H408.0 Q405.0,400.0 405.0,397.0 Z" fill="#0096d1" fill-opacity="0.06"/>
+      <path d="M405.0,58.0 H780.0 V397.0 Q780.0,400.0 777.0,400.0 H408.0 Q405.0,400.0 405.0,397.0 Z" fill="none" stroke="#0096d1" stroke-width="1.2"/>
+      <!-- Accent bar with subtle two-tone (cyan main + orange highlight strip on the right edge) -->
+      <rect x="405.0" y="58.0" width="375.0" height="5" fill="#0096d1" opacity="0.6"/>
+      <rect x="700.0" y="58.0" width="80.0" height="5" fill="#da8230" opacity="0.55"/>
+    </g>
+
+    <!-- VS badge (sits on central divider) -->
+    <g id="vs-badge">
+      <!-- Top stem: from below title-strip down to top of badge -->
+      <line x1="400" y1="63" x2="400" y2="211" class="divider-line" stroke-dasharray="2,3"/>
+      <!-- Bottom stem: from bottom of badge down to bottom of card row -->
+      <line x1="400" y1="247" x2="400" y2="395" class="divider-line" stroke-dasharray="2,3"/>
+      <!-- Outer ring (cyan) -->
+      <circle cx="400" cy="229" r="18" fill="#0a1a24" fill-opacity="0.0"/>
+      <circle cx="400" cy="229" r="18" fill="none" stroke="#0096d1" stroke-width="1.2" opacity="0.8"/>
+      <!-- Inner fill (orange wedge) -->
+      <circle cx="400" cy="229" r="14" fill="#da8230" fill-opacity="0.12" stroke="#da8230" stroke-width="0.8" opacity="0.85"/>
+      <!-- "VS" text -->
+      <text x="400" y="233" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" class="accent-2" text-anchor="middle" letter-spacing="1">VS</text>
+    </g>
+
+    <!-- Tagline ribbon -->
+    <g id="tagline-ribbon">
+      <path d="M20.0,410.0 H780.0 V429.0 Q780.0,432.0 777.0,432.0 H23.0 Q20.0,432.0 20.0,429.0 Z" fill="#da8230" fill-opacity="0.08"/>
+      <path d="M20.0,410.0 H780.0 V429.0 Q780.0,432.0 777.0,432.0 H23.0 Q20.0,432.0 20.0,429.0 Z" fill="none" stroke="#da8230" stroke-width="1" opacity="0.7"/>
+    </g>
+  </g>
+
+  <!-- === CONNECTORS LAYER (empty - manifesto card uses no flow arrows) === -->
+  <g id="connectors"></g>
+
+  <!-- === CONTENT LAYER === -->
+  <g id="content">
+
+    <!-- =====================================================  -->
+    <!-- LEFT CARD content: THE CONVENTIONAL PATH (dim, muted)  -->
+    <!-- =====================================================  -->
+    <g id="lawyer-content">
+      <!-- Eyebrow -->
+      <text x="207.5" y="88" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="600" text-anchor="middle" letter-spacing="2">THE CONVENTIONAL PATH</text>
+
+      <!-- Big header -->
+      <text x="207.5" y="124" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="30" font-weight="700" text-anchor="middle" letter-spacing="0.5">Most people</text>
+
+      <!-- Icon cluster row: scale, gavel, briefcase (Lucide ISC, dimmed) -->
+      <g id="icons-lawyer">
+        <!-- Icon: scale (Lucide, ISC license) -->
+        <g id="icon-scale" transform="translate(78, 156) scale(2.0)">
+          <path d="M16 16l3-8 3 8c-2 1-4 1-6 0" class="ico-dim"/>
+          <path d="M2 16l3-8 3 8c-2 1-4 1-6 0" class="ico-dim"/>
+          <path d="M7 21h10" class="ico-dim"/>
+          <path d="M12 3v18" class="ico-dim"/>
+          <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" class="ico-dim"/>
+        </g>
+        <text x="100" y="216" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="8" text-anchor="middle">scales</text>
+
+        <!-- Icon: gavel (Lucide, ISC license) -->
+        <g id="icon-gavel" transform="translate(178, 156) scale(2.0)">
+          <path d="M14.5 6.5L18 3l3 3-3.5 3.5" class="ico-dim"/>
+          <path d="M3 21l8-8" class="ico-dim"/>
+          <path d="M5 19l4-4" class="ico-dim"/>
+          <path d="M9.5 9.5l5 5" class="ico-dim"/>
+          <path d="M13.5 5.5l5 5" class="ico-dim"/>
+          <path d="M16.5 2.5l5 5" class="ico-dim"/>
+          <line x1="2" y1="22" x2="11" y2="22" class="ico-dim"/>
+        </g>
+        <text x="200" y="216" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="8" text-anchor="middle">gavel</text>
+
+        <!-- Icon: briefcase (Lucide, ISC license) -->
+        <g id="icon-briefcase" transform="translate(278, 156) scale(2.0)">
+          <rect x="2" y="7" width="20" height="14" rx="2" class="ico-dim"/>
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" class="ico-dim"/>
+          <line x1="2" y1="13" x2="22" y2="13" class="ico-dim"/>
+        </g>
+        <text x="300" y="216" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="8" text-anchor="middle">retainer</text>
+      </g>
+
+      <!-- Verb sequence (5 lines, lowercase, period-separated for resignation) -->
+      <text x="207.5" y="248" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="500" text-anchor="middle">Hire a lawyer.</text>
+      <text x="207.5" y="266" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="500" text-anchor="middle">Wait.</text>
+      <text x="207.5" y="284" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="500" text-anchor="middle">Pay.</text>
+      <text x="207.5" y="302" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="500" text-anchor="middle">Defend.</text>
+      <text x="207.5" y="320" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="500" text-anchor="middle" font-style="italic">Hope.</text>
+
+      <!-- Cue strip (cost/time signal) -->
+      <line x1="50" y1="336" x2="365" y2="336" stroke="#4099b3" stroke-width="0.5" opacity="0.3"/>
+      <text x="207.5" y="354" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="9.5" font-weight="600" text-anchor="middle">Years.  Tens of thousands of zł.</text>
+      <text x="207.5" y="368" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="9.5" text-anchor="middle" font-style="italic">Outcome uncertain.</text>
+
+      <!-- Side tag -->
+      <rect x="120" y="378" width="175" height="14" rx="3" fill="#1a5a6e" fill-opacity="0.12" stroke="#1a5a6e" stroke-width="0.8" opacity="0.7"/>
+      <text x="207.5" y="388" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="700" text-anchor="middle" letter-spacing="1.5">DELEGATE THE DEFENCE</text>
+    </g>
+
+    <!-- =====================================================  -->
+    <!-- RIGHT CARD content: THE PHYSICS PATH (vivid, focal)    -->
+    <!-- =====================================================  -->
+    <g id="physics-content">
+      <!-- Eyebrow -->
+      <text x="592.5" y="88" class="accent-1" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" text-anchor="middle" letter-spacing="2">THE PHYSICS PATH</text>
+
+      <!-- Big header -->
+      <text x="592.5" y="124" class="fg-1" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="800" text-anchor="middle" letter-spacing="0.5">Me</text>
+
+      <!-- Icon cluster row: code-2, atom, chart-line (Lucide ISC, vivid cyan + orange) -->
+      <g id="icons-physics">
+        <!-- Icon: code-2 (Lucide, ISC license) -->
+        <g id="icon-code" transform="translate(463, 156) scale(2.0)">
+          <path d="M18 16l4-4-4-4" class="ico-cyan"/>
+          <path d="M6 8l-4 4 4 4" class="ico-cyan"/>
+          <path d="M14.5 4l-5 16" class="ico-cyan"/>
+        </g>
+        <text x="485" y="216" class="accent-1" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" text-anchor="middle">code</text>
+
+        <!-- Icon: atom (Lucide, ISC license) - the centrepiece icon, orange -->
+        <g id="icon-atom" transform="translate(563, 156) scale(2.0)">
+          <circle cx="12" cy="12" r="1" class="ico-orange"/>
+          <ellipse cx="12" cy="12" rx="11" ry="4.5" class="ico-orange"/>
+          <ellipse cx="12" cy="12" rx="11" ry="4.5" transform="rotate(60 12 12)" class="ico-orange"/>
+          <ellipse cx="12" cy="12" rx="11" ry="4.5" transform="rotate(120 12 12)" class="ico-orange"/>
+        </g>
+        <text x="585" y="216" class="accent-2" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="700" text-anchor="middle">physics</text>
+
+        <!-- Icon: chart-line / trending-up (Lucide, ISC license) -->
+        <g id="icon-chart" transform="translate(663, 156) scale(2.0)">
+          <path d="M3 3v18h18" class="ico-cyan"/>
+          <path d="M7 14l4-4 3 3 5-6" class="ico-cyan"/>
+          <circle cx="7" cy="14" r="0.8" class="ico-cyan"/>
+          <circle cx="11" cy="10" r="0.8" class="ico-cyan"/>
+          <circle cx="14" cy="13" r="0.8" class="ico-cyan"/>
+          <circle cx="19" cy="7" r="0.8" class="ico-cyan"/>
+        </g>
+        <text x="685" y="216" class="accent-1" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" text-anchor="middle">plot</text>
+      </g>
+
+      <!-- Verb sequence (3 lines, action-confident, no resignation) -->
+      <text x="592.5" y="252" class="fg-1" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" text-anchor="middle">Write a physics simulation.</text>
+      <text x="592.5" y="274" class="fg-1" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" text-anchor="middle">Run the numbers.</text>
+      <text x="592.5" y="300" class="accent-2" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="800" text-anchor="middle">Let Newton testify.</text>
+
+      <!-- Cue strip -->
+      <line x1="435" y1="336" x2="750" y2="336" stroke="#0096d1" stroke-width="0.5" opacity="0.45"/>
+      <text x="592.5" y="354" class="accent-1" font-family="Segoe UI, Arial, sans-serif" font-size="9.5" font-weight="600" text-anchor="middle">Three weekends.  ~600 lines of code.</text>
+      <text x="592.5" y="368" class="accent-2" font-family="Segoe UI, Arial, sans-serif" font-size="9.5" font-weight="700" text-anchor="middle">Numbers don't perjure themselves.</text>
+
+      <!-- Side tag -->
+      <rect x="492" y="378" width="201" height="14" rx="3" fill="#da8230" fill-opacity="0.20" stroke="#da8230" stroke-width="1" opacity="0.85"/>
+      <text x="592.5" y="388" class="accent-2" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="700" text-anchor="middle" letter-spacing="1.5">MECHANICALLY FALSIFY THE CLAIM</text>
+    </g>
+
+  </g>
+
+  <!-- === CALLOUTS LAYER === -->
+  <g id="callouts">
+    <!-- Tagline (centred italic on the orange ribbon) -->
+    <g id="callout-tagline">
+      <text x="400" y="425" class="accent-2" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" text-anchor="middle" font-style="italic">Two ways to respond to a false accusation. One of them doesn't get tired.</text>
+    </g>
+  </g>
+
+</svg>

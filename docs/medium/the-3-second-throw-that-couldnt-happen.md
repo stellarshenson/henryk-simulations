@@ -17,6 +17,8 @@ read_time: "10 min read"
 
 ---
 
+![Physics vs litigation](images/07-physics-vs-litigation.svg)
+
 ## When the laws of physics become your defence
 
 Most people who get falsely accused of something call a lawyer. I started a Python project.
@@ -61,6 +63,8 @@ The idea is this: decompose the accusation into the **smallest set of phases** t
 
 If that minimum is already extreme - if even the most charitable reconstruction demands superhuman acceleration or biomechanically-impossible forces - then any richer reconstruction, which would compress phases into shorter intervals, is strictly worse.
 
+![Lower-bound argument (ELBO-style)](images/01-lower-bound-argument.svg)
+
 The decomposition came out to three phases of one second each:
 
 | Phase | Duration | Translation | Rotation |
@@ -70,6 +74,8 @@ The decomposition came out to three phases of one second each:
 | swap-back | 1.0 s | A rotates 180°, V steps back 40 cm | 180° |
 
 ![Phase timeline](../../reports/figures/01-phase-timeline.png)
+
+![3-second time budget](images/02-time-budget-3s.svg)
 
 This is formally an **ELBO-style lower bound** on the required demand. The classical Evidence Lower BOund in variational inference gives a tractable surrogate that bounds an intractable target from one side. Here, $D_{\min}(q^\star)$ is the surrogate, and $D(M_\text{true}) \geq D_{\min}(q^\star)$ by construction. Plausibility goes the other way: $\mathrm{plaus}(M_\text{true}) \leq \mathrm{plaus}(M_\text{min})$. A violation at the lower bound is a violation at every richer decomposition.
 
@@ -101,6 +107,10 @@ Eighteen kilonewtons is the kind of load you get from a small SUV nudging a wall
 
 ![Injury threshold zones](../../reports/figures/01-injury-thresholds.png)
 
+![Same velocity, different target, five times the force](images/03-cause-vs-outcome.svg)
+
+![Four views of the same impact](images/05-four-views-of-impact.svg)
+
 You will notice an apparent contradiction in that figure. The impact velocity (11.6 kph) reads "moderate, bruising" while the force, acceleration, and kinetic energy all read "serious" or "critical". This is not a contradiction. The published velocity bands assume a **soft target** - chest deformation of 5-10 cm against a compliant surface. A steel door is not a compliant surface. The same 11.6 kph absorbed over 2 cm rigid instead of 10 cm soft multiplies the peak force by roughly five times. The four metrics are four views of the same impact. The velocity is the cause; the force, the g, and the deposited energy are the outcomes.
 
 ---
@@ -118,6 +128,8 @@ with flexural rigidity $D = Eh^3/(12(1-\nu^2))$ and areal density $\sigma = \rho
 That is the spectrum. The amplitude is the other half. Acoustic power $P_a = \eta W / t$, where $W$ is the impact work, $t$ is the contact time, and $\eta$ is the radiation efficiency. For a struck steel panel, $\eta$ typically falls between 0.001 (lossy mounting) and 0.05 (well-coupled). Intensity at the listener: $I = P_a / (4\pi r^2)$, and SPL: $L_p = 10\log_{10}(I/I_\text{ref})$.
 
 Across that radiation-efficiency bracket, here is what the predicted impact should sound like:
+
+![Acoustic prediction pipeline](images/04-acoustic-pipeline.svg)
 
 ![Predicted peak SPL](../../reports/figures/01-audio-signature.png)
 
@@ -149,7 +161,11 @@ Here is the side-by-side I find hardest to read with a straight face:
 | Witness acoustic reaction to ~126 dB peak | No reaction; witness reports no bang |
 | Victim observed back-against-door post-impact | Witness reports victim leaning **front-first** against me, sliding **front-first**, crawling forward |
 
+![Predicted vs documented - 0 of 10 match](images/06-predicted-vs-documented.svg)
+
 Of ten predicted observables, zero match. Seven are absent or directly contradicted. One is temporally decoupled. Two are pending direct audio spectral analysis. The single right-shoulder bruise is geometrically and energetically inconsistent with a back-first whole-torso impact at 18 kN.
+
+One more thing about that bruise. The defendant's position is that it was **self-inflicted** by the alleged victim after the visit, to seed a corroborating mark in the medical record. The defendant has chosen not to dispute the bruise's origin directly. The argument above runs on physics, not on contested medical interpretation. The mechanical impossibility of producing a single localised shoulder bruise from the alleged whole-torso back-first impact at 18 kN is enough, on its own, to falsify the verbatim claim. Newton was kind enough to do the talking.
 
 ---
 
@@ -191,4 +207,12 @@ I could not.
 
 ---
 
-*Stellars Henson is the author of [henryk-simulations](https://github.com/stellarshenson/henryk-simulations), a Python physics reconstruction toolkit for contested real-world events. He writes occasionally about the intersection of code and forensic reasoning.*
+## Argue with me. Please.
+
+This is a public repository, an executable notebook, and a single nested `PARAMS` dict. The whole pipeline takes about twelve seconds to re-run. If you think the physics is wrong, the methodology is wrong, the assumptions are uncharitable, or the conclusion is overstated, **break it open and tell me why**. Issues and pull requests on the repo. Alternative reconstructions, better stopping distances, different radiation efficiencies, alternative readings of the testimony - all welcome, all for the benefit of science.
+
+If you find a configuration that makes the impact plausible **and** consistent with a single localised shoulder bruise, I owe you a coffee. If you find one that also explains the witness reporting no acoustic event at 1.5 m from a steel door, I owe you two coffees and we publish a joint follow-up.
+
+---
+
+*Konrad Jelen is a data scientist and CTO specialising in AI solutions for manufacturing, finance and market research, and the alienated father of his son Henry.*
