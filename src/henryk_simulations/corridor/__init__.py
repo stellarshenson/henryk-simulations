@@ -13,6 +13,7 @@ Submodules:
 """
 
 from henryk_simulations.corridor.config import (
+    DEFAULT_PHASE_DURATIONS,
     Bodies,
     Geometry,
     Phase,
@@ -36,6 +37,7 @@ from henryk_simulations.corridor.references import (
 )
 
 __all__ = [
+    "DEFAULT_PHASE_DURATIONS",
     "Bodies",
     "Geometry",
     "Phase",

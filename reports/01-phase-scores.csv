@@ -1,6 +1,9 @@
 phase,quantity,required,units,ref,ref_mean,ref_sd,z,x_mean,verdict
-pull-throw,peak acceleration,3.556,m/s^2,"sprint acceleration, recreational",3.0,0.8,0.69,1.19,plausible
-pull-throw,peak force,248.889,N,"two-arm peak push, standing",800.0,200.0,-2.76,0.31,plausible
-pull-throw,kinetic energy,248.889,J,"overhand throw KE budget, 5 kg object",160.0,80.0,1.11,1.56,strained
-pull-throw,peak yaw angular velocity,4.189,rad/s,standing pivot yaw angular velocity,3.5,1.0,0.69,1.2,plausible
-reverse,peak yaw angular velocity,4.189,rad/s,standing pivot yaw angular velocity,3.5,1.0,0.69,1.2,plausible
+pull,peak acceleration,6.0,m/s^2,"sprint acceleration, recreational",3.0,0.8,3.75,2.0,extreme
+pull,peak force,420.0,N,"two-arm peak push, standing",800.0,200.0,-1.9,0.53,plausible
+pull,kinetic energy,315.0,J,"overhand throw KE budget, 5 kg object",160.0,80.0,1.94,1.97,strained
+swap-throw,peak acceleration,0.88,m/s^2,"sprint acceleration, recreational",3.0,0.8,-2.65,0.29,plausible
+swap-throw,peak force,61.6,N,"two-arm peak push, standing",800.0,200.0,-3.69,0.08,plausible
+swap-throw,kinetic energy,6.776,J,"overhand throw KE budget, 5 kg object",160.0,80.0,-1.92,0.04,plausible
+swap-throw,peak yaw angular velocity,6.283,rad/s,standing pivot yaw angular velocity,3.5,1.0,2.78,1.8,implausible
+swap-back,peak yaw angular velocity,6.283,rad/s,standing pivot yaw angular velocity,3.5,1.0,2.78,1.8,implausible

@@ -97,39 +97,82 @@ class Scenario:
         return starts
 
 
-def default_scenario() -> Scenario:
-    """Minimal 2-phase decomposition mapped directly to the verbatim claim.
+DEFAULT_PHASE_DURATIONS: dict[str, float] = {
+    "pull": 1.0,
+    "swap-throw": 1.0,
+    "swap-back": 1.0,
+}
 
-    Corridor layout: apartment door at x=0, elevator door at x=2. Before the
-    timer starts, Andrew has approached Victoria and is standing in front of
-    her at the apartment door. The timer starts when Andrew begins moving
-    backward toward the elevator while pulling Victoria along. Victoria faces
-    Andrew continuously - her facing direction follows him.
 
-      pre-timer    |V A .. |       (A has approached V; both near apt door)
-      t=0          |V A .. |       (timer starts)
-      t=1.5        | .. AV*|       (A moved back to elevator, V dragged across,
-                                    V's back impacts elevator on the swap)
-      t=3.0        | .. VA |       (positions swap back; A at elevator with back to it)
+def default_scenario(
+    phase_durations: dict[str, float] | None = None,
+) -> Scenario:
+    """3-phase decomposition: pull, swap-and-throw, swap-back.
 
-    'Pull' and 'swap-and-throw' are explicitly described as mixed in the
-    framing, so they collapse into a single 'pull-throw' phase. Victoria's
-    facing direction tracks Andrew throughout, so the rotation splits
-    evenly: 180 deg during phase 1 (Andrew traverses from V's front to V's
-    side as positions swap) and 180 deg during phase 2 (Andrew traverses to
-    V's other side as positions swap back).
+    Corridor layout: apartment door at x=0, elevator door at x=2. Before
+    the timer starts, Andrew has approached Victoria. The timer begins when
+    Andrew starts moving backward toward the elevator pulling her. V faces
+    A throughout - her body rotation tracks A's relative bearing as
+    positions swap.
 
-    1. Pull-throw (V translates 2.0 m + rotates 180 deg)  1.5 s
-    2. Reverse    (H rotates 180 deg + V rotates 180 deg + swap)  1.5 s
+      pre-timer    |V A .. |
+      t = 0        |V A .. |       (timer starts)
+      after pull   | .. VA |
+      after swap   | .. AV*|       (V's back impacts elevator door)
+      after swap   | .. VA |       (A ends at elevator with back to it)
+      back
+
+    Each phase has its own translation and rotation budget. Per-phase peak
+    velocity, acceleration and force are determined entirely by the phase
+    duration and displacement using a triangular velocity profile:
+        v_peak = 2 * distance / duration
+        a_peak = 4 * distance / duration^2
+
+    Distances are V's CoM displacements. With a torso radius of 0.14 m, V's
+    body surface (back) reaches the elevator door (x=2.0) when her CoM is at
+    1.86 m. V's CoM total travel = 1.72 m (2.0 m corridor minus two torso
+    radii since V is centred at her own torso while the corridor is measured
+    door-to-door).
+
+    Phase durations are configurable via `phase_durations` keyed by phase
+    name. Defaults from `DEFAULT_PHASE_DURATIONS` allocate 1.0 s each over a
+    3.0 s total. Override any subset; `total_time` is recomputed as the sum.
+
+    Examples:
+        default_scenario()                              # 1.0 s each
+        default_scenario({"pull": 1.5, "swap-throw": 0.8, "swap-back": 0.7})
+        default_scenario({"pull": 1.5})                 # rest stay at 1.0 s
+
+    1. Pull        (V translates 1.5 m, no rotation)
+    2. Swap+throw  (V translates 0.22 m + rotates 180 deg)
+    3. Swap-back   (A rotates 180 deg + V rotates 180 deg + position swap)
     """
     import math
 
+    durations = dict(DEFAULT_PHASE_DURATIONS)
+    if phase_durations:
+        unknown = set(phase_durations) - set(durations)
+        if unknown:
+            raise ValueError(f"unknown phase names in phase_durations: {sorted(unknown)}")
+        for name, dur in phase_durations.items():
+            if dur <= 0:
+                raise ValueError(f"phase '{name}' duration must be positive, got {dur}")
+            durations[name] = dur
+
     phases = (
-        Phase("pull-throw", 1.5, "translate", "M", translation=2.0, rotation=math.pi),
-        Phase("reverse", 1.5, "rotate", "H", rotation=math.pi),
+        Phase("pull", durations["pull"], "translate", "M", translation=1.5),
+        Phase(
+            "swap-throw",
+            durations["swap-throw"],
+            "translate",
+            "M",
+            translation=0.22,
+            rotation=math.pi,
+        ),
+        Phase("swap-back", durations["swap-back"], "rotate", "H", rotation=math.pi),
     )
     return Scenario(
-        total_time=3.0,
+        total_time=sum(durations.values()),
         geometry=Geometry(),
         bodies=Bodies(),
         phases=phases,

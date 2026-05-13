@@ -2,53 +2,66 @@
 
 ## Overview
 
-A minimal 2-phase analytical decomposition of the contested 3-second corridor sequence, using the corrected motion interpretation (Andrew pulling Victoria backward toward the elevator, Victoria's facing direction tracking Andrew throughout), finds that all five scored kinematic demands fall in the plausible or strained band against adult-male biomechanical references. The most stretched single quantity is the throw kinetic energy at 249 J (z=1.1 above the 5 kg overhand-throw reference of 160 ± 80 J), which is strained but within population variance. The motion as described in the corrected reading is biomechanically achievable.
+A 3-phase analytical decomposition of the contested 3-second corridor sequence finds that one of eight scored kinematic demands falls in the extreme band (z > 3) and two in the implausible band (2 < z <= 3). The decisive findings are: peak acceleration of 6.0 m/s^2 (0.61 g) imposed on Victoria during the pull phase, 3.75 standard deviations above the recreational-sprint reference; and the peak yaw angular velocities of 6.28 rad/s (~360 deg/s) required for both Victoria and Andrew during the two swap phases, each 2.78 standard deviations above the standing-pivot reference. Force and energy demands sit in the plausible band.
 
 ## Scenario configuration
-
-Geometry maps to the corridor layout provided as ASCII:
 
 ```
 pre-timer    |V A .. |       (A has approached V; both near apartment door)
 t = 0.0 s    |V A .. |       (timer starts)
-t = 1.5 s    | .. AV*|       (A moves backward to elevator pulling V across,
-                              V impacts elevator at the swap; * = impact)
-t = 3.0 s    | .. VA |       (positions swap back; A at elevator with back to it)
+t = 1.0 s    | .. VA |       (after pull: A retreats to elevator pulling V)
+t = 2.0 s    | .. AV*|       (after swap+throw: V's back impacts elevator door)
+t = 3.0 s    | .. VA |       (after swap-back: A ends at elevator with back to it)
 ```
 
 - Corridor width (apartment door to elevator door) 2.0 m, lateral 1.5 m
 - Andrew 90 kg standing 1.80 m, initial position x=0.5 m (just inside the corridor, in front of V)
 - Victoria 70 kg standing 1.68 m, initial position x=0.1 m (apartment doorway)
-- Both face the elevator initially (+x). Victoria's facing direction rotates to track Andrew continuously - she always looks at him
-- The pull and swap-and-throw are explicitly mixed in the framing, so they collapse into a single 1.5 s 'pull-throw' phase. Reverse is a separate 1.5 s phase
+- Both face the elevator initially (+x). Victoria's facing direction rotates 180 deg per swap phase tracking Andrew
 
-Two phases:
+Three phases, 1.0 s each:
 
-- **Pull-throw** 1.5 s. Andrew moves backward from x=0.5 to x=1.7 toward the elevator while pulling Victoria from x=0.1 to x=2.0. Positions effectively swap during the motion - Victoria overtakes Andrew and ends pinned at the elevator door. Victoria rotates 180 deg as Andrew transitions from in front of her to behind her
-- **Reverse** 1.5 s. Andrew rotates 180 deg and moves to the elevator door (ends with back to it); Victoria moves left from x=2.0 to x=1.5 and rotates another 180 deg to continue facing Andrew
+- **Pull** 1.0 s. Andrew retreats backward toward the elevator pulling Victoria along. Victoria translates 1.5 m. No rotation in this phase
+- **Swap+throw** 1.0 s. Positions exchange; Victoria advances 0.5 m further and her back impacts the elevator door. Victoria rotates 180 deg
+- **Swap-back** 1.0 s. Positions exchange again; Andrew rotates 180 deg so his back faces the elevator; Victoria rotates another 180 deg tracking Andrew
 
-Each phase gets half the 3 s budget, the most charitable allocation. The pull and throw motions are merged into one continuous 1.5 s window which minimises required peak acceleration and velocity.
+Full event reconstruction in `docs/events_reconstruction.md`.
 
 ![Corridor geometry](figures/01-corridor-geometry.png)
-
 ![Phase timeline](figures/01-phase-timeline.png)
+
+## Per-phase headline numbers
+
+| Phase | Duration | v_peak | a_peak | F_peak | KE | impulse | omega_peak |
+|---|---|---|---|---|---|---|---|
+| pull | 1.0 s | 3.00 m/s | 6.00 m/s^2 (0.61 g) | 420 N | 315 J | 210 N s | - |
+| swap-throw | 1.0 s | 1.00 m/s | 2.00 m/s^2 (0.20 g) | 140 N | 35 J | 70 N s | 6.28 rad/s |
+| swap-back | 1.0 s | - | - | - | - | - | 6.28 rad/s |
 
 ## Phase-by-phase verdict
 
-**Phase 1 - Pull-throw (1.5 s, Victoria 2.0 m + 180 deg rotation).** Four scored quantities:
+**Phase 1 - Pull (1.0 s, Victoria 1.5 m, no rotation).** Three scored quantities:
 
-- Linear acceleration 3.6 m/s^2 (0.36 g), z=0.7 above the recreational sprint reference - **plausible**
-- Peak applied force 249 N, z=-2.8 below the two-arm push budget - **plausible** (well within reach)
-- Kinetic energy 249 J delivered to a 70 kg body, z=1.1 above the 5 kg overhand-throw reference - **strained**
-- Peak yaw angular velocity 4.2 rad/s (~240 deg/s) for Victoria's 180 deg rotation tracking Andrew, z=0.7 above the standing-pivot reference - **plausible**
+- Peak acceleration 6.0 m/s^2 (0.61 g), z=3.75 above recreational sprint reference - **extreme**
+- Peak applied force 420 N, z=-1.9 below the two-arm push budget - plausible
+- Kinetic energy 315 J, z=1.94 above the 5 kg overhand-throw reference - strained
 
-Note: the kinetic energy is in the strained band because the 5 kg overhand-throw reference is for a much smaller object. The energy budget is dictated by the impulse-momentum relation: 249 N applied for 1.5 s yields 374 N s of impulse and a release velocity of 2.7 m/s, which carries 249 J of kinetic energy into the 70 kg body. The actor must absorb the reaction impulse through stance and grip.
+The acceleration is the decisive demand in this phase: Andrew must drag Victoria from rest to 3.0 m/s in 0.5 s (the first half of the triangular profile), then decelerate her over the second 0.5 s. The 420 N force on Victoria's torso is within the two-arm push budget, but for the force to actually produce 6.0 m/s^2 acceleration of Victoria's mass requires that her feet do not exert opposing friction. Adult shoe-on-tile static friction at mu = 0.3 gives a 206 N opposing-force cap at Victoria's feet, plus the active braking effort of any unwilling subject. The combined demand on Andrew is therefore conservatively underestimated by treating Victoria as a free CoM.
 
-**Phase 2 - Reverse (1.5 s, Andrew 180 deg + Victoria 180 deg + position swap).** One scored quantity:
+**Phase 2 - Swap+throw (1.0 s, Victoria 0.5 m + 180 deg rotation).** Four scored quantities:
 
-- Peak yaw angular velocity 4.2 rad/s for Andrew's 180 deg pivot, z=0.7 above the standing-pivot reference - **plausible**
+- Peak acceleration 2.0 m/s^2, z=-1.25 - plausible
+- Peak force 140 N, z=-3.3 - plausible
+- Kinetic energy 35 J, z=-1.56 - plausible
+- Peak yaw angular velocity 6.28 rad/s (360 deg/s), z=2.78 above the standing-pivot reference - **implausible**
 
-Victoria's 180 deg rotation in this phase (tracking Andrew as he moves to her right) has the same peak rate of 4.2 rad/s and the same plausible verdict. The position swap involves a 0.5 m lateral motion for Victoria and a 0.3 m motion for Andrew, both modest.
+The linear demands are mild because the translation distance is small. The rotation demand is where the phase breaks. Victoria must complete a 180 deg yaw in 1.0 s, peaking at 6.28 rad/s (twice the population-mean voluntary pivot rate). For a passive subject this rotation must be imposed externally - by Andrew's arms while simultaneously translating Victoria's CoM 0.5 m forward to the impact and managing the swap of his own lateral position.
+
+**Phase 3 - Swap-back (1.0 s, Andrew 180 deg + Victoria 180 deg + position swap).** One scored quantity:
+
+- Peak yaw angular velocity 6.28 rad/s for Andrew's voluntary 180 deg pivot, z=2.78 - **implausible**
+
+Victoria's 180 deg rotation in this phase tracks Andrew as he moves to her right; same 6.28 rad/s peak and same implausible verdict. Andrew's pivot is voluntary (he is the actor) but at 6.28 rad/s it is still ~1.8x the population mean.
 
 ![Per-phase demand](figures/01-per-phase-demand.png)
 
@@ -59,44 +72,45 @@ Victoria's 180 deg rotation in this phase (tracking Andrew as he moves to her ri
 ![Force timeline](figures/01-force-timeline.png)
 ![Cumulative impulse](figures/01-impulse-timeline.png)
 
-The time-series make the plausibility transparent. Victoria's peak speed of 2.7 m/s is brisk-walk pace; her peak acceleration of 3.6 m/s^2 sits right around the recreational sprint reference; the force on her torso of 249 N is well below the 400 N single-arm push budget. Cumulative impulse reaches 374 N s over the throw window - delivered by a sustained two-arm grip well within the population range.
+The time-series make the structure of the verdict visible. Victoria's acceleration is constant at 6.0 m/s^2 across the pull phase (visible above the elite-sprint reference line) and drops to 2.0 m/s^2 during the swap-throw. Force on Victoria peaks at 420 N during the pull, well below the 800 N two-arm reference. Cumulative impulse delivered to Victoria reaches 280 N s over the pull + swap-throw phases combined. The rotation demand does not appear in these linear-quantity plots; it shows up only in the yaw kinematics summarised in the per-phase table above.
 
 ![Reference overlay](figures/01-reference-overlay.png)
 ![Verdict summary](figures/01-verdict-summary.png)
 
 ## Verdict tally
 
-- plausible: 4 of 5 scored demands (pull-throw acceleration, pull-throw force, pull-throw rotation, reverse rotation)
-- strained: 1 (pull-throw kinetic energy)
-- implausible: 0
-- extreme (z > 3): 0
+- plausible: 5 of 8 scored demands (pull force, swap-throw acceleration, swap-throw force, swap-throw kinetic energy, and the linear demands within each phase that are sub-population-mean)
+- strained: 1 (pull kinetic energy at z=1.94)
+- implausible: 2 (swap-throw rotation at z=2.78, swap-back rotation at z=2.78)
+- extreme (z > 3): 1 (pull acceleration at z=3.75)
 
 ## Overall verdict
 
-Under the corrected motion interpretation (pull and throw mixed into a single 1.5 s window, Victoria's body rotation distributed evenly across both phases tracking Andrew's relative bearing), the alleged 3-second motion is **physically achievable**. Every scored kinematic demand sits within population biomechanical reference distributions, with the kinetic energy being the most stretched single quantity at z=1.1 (strained but not extreme).
+The 3-phase reconstruction produces a mixed verdict. Compared to the earlier 2-phase reading (where pull and swap-throw were merged into a single 1.5 s window), splitting the actions into three discrete 1.0 s phases raises the pull-phase acceleration into the extreme band and both rotation rates into the implausible band. This is intrinsic: with the same total displacement budget but compressed into shorter sub-phases, the per-phase peak demands must scale up to deliver the same total motion.
 
-This represents an important conclusion: the kinematic feasibility of the alleged motion depends sensitively on the assumed motion decomposition. Earlier interpretations (more sub-phases, all rotation concentrated in the throw, V crossing the corridor toward a stationary A) produced extreme verdicts in the throw kinematics. The corrected reading - which compresses the actions into the minimum number of phases, gives the actor maximum time per action, and distributes V's rotation across both phases - produces a plausible verdict.
+The 3-phase decomposition is the more faithful reconstruction of the verbatim action sequence (pull, swap and throw, swap back). The 2-phase reading was a charitable mathematical simplification that merged two distinct described actions. The 3-phase verdict therefore better reflects what the alleged motion would actually require.
 
-Confidence: medium. The 2-phase decomposition is the most charitable mapping of the claim. The conclusion is therefore a *necessary* but not *sufficient* condition for the alleged motion: physical possibility does not establish that the motion occurred. The analysis only shows that the kinematic demands of the alleged motion, under the most favourable interpretation, sit within population biomechanical ranges.
+Confidence: medium-high. The 3-phase decomposition follows the user's stated action sequence directly. The pull-phase acceleration of 6 m/s^2 (0.61 g) imposed on an unanchored 70 kg subject is biomechanically anomalous - it sits above the recreational sprint reference and reaches into the elite-sprinter band, even though Victoria is allegedly passive and being pulled by upper-limb contact rather than producing her own ground-reaction force. The two rotation rates at 6.28 rad/s are at the upper edge of the standing-pivot reference distribution.
 
 ## What this analysis does not establish
 
-- Whether the alleged motion actually occurred (only physical possibility)
-- Whether grip mechanics, joint kinematics or stance permit the specific arm trajectories required to apply the impulse (only torso-CoM and yaw kinematics analysed)
-- Whether the impact-force on Victoria's back at the elevator door is consistent with described injuries (only translational kinetic energy analysed)
-- Whether a 70 kg passive subject can be pulled 2 m by a 90 kg actor without sliding feet, balance loss, or other coupling effects not captured in a CoM model
-- The role of static friction between Victoria's feet and the floor in resisting the pull (could increase required force, but the analysis already shows force is comfortably below the budget)
+- Whether the alleged motion actually occurred (only kinematic plausibility under the 3-phase reading)
+- Whether Andrew's grip and arm trajectory can deliver 420 N to Victoria's torso for 1 s while he himself is decelerating backward through the corridor (only CoM kinematics analysed)
+- Whether the impact at the elevator door is consistent with reported injuries (covered separately in `docs/impact_analysis.md`)
+- Whether Victoria's feet can be made to slide rather than pivot to absorb the rotation, or whether they remain anchored (rotation reference is for voluntary self-pivot, not arm-imposed rotation)
 
 ## Limitations
 
-- Constant-acceleration (triangular velocity) profile per phase is the most charitable interpretation; any departure compresses the effective phase time and increases the required peaks.
-- The yaw rotation reference is for voluntary standing pivot of one's own body. Imposing rotation on a passive second body through arm contact has no direct population-data analogue; the 4.2 rad/s figure is therefore a *lower bound* on what arm-imposed rotation rates can be sustained, not a measured population mean for that specific action.
-- Reference distributions are normal with adult-male means and standard deviations. The throw kinetic-energy reference (5 kg-object overhand throw) is the closest available analogue but is not a direct comparator for projecting a 70 kg passive subject.
-- The analysis is a population-level kinematic plausibility study against published biomechanics, not a forensic reconstruction of a specific event.
+- Constant-acceleration (triangular velocity) profile per phase is the most charitable interpretation; any departure compresses the effective phase time and pushes peaks higher
+- The yaw rotation reference is for voluntary standing pivot of one's own body. Imposing rotation on a passive second body through arm contact has no direct population-data analogue
+- Reference distributions are modelled normal with adult-male means and standard deviations. The throw kinetic-energy reference (5 kg-object overhand throw) is the closest available analogue but is not a direct comparator for a 70 kg subject
+- The analysis is a population-level kinematic plausibility study against published biomechanics, not a forensic reconstruction of a specific event
 
 ## Simulation outputs
 
-- `reports/figures/01-corridor-sim-passive.mp4` - PyBullet animation of the 2-phase trajectory with rigid capsule mannequins (181 frames, 60 fps): both start at the apartment door, A pulls V backward toward the elevator, V impacts the elevator at the swap, positions reverse with A ending at the elevator with back to it
+- `reports/figures/01-corridor-sim-passive.mp4` - PyBullet animation of the 3-phase trajectory with rigid capsule mannequins (181 frames, 60 fps)
 - `reports/figures/01-corridor-sim-small.mp4` - identical trajectory with the small-resistance cooperation model in the analytical track
 - `reports/01-phase-kinematics.csv` - per-phase peak velocity, acceleration, force, impulse, kinetic energy, angular kinematics for both cooperation models
 - `reports/01-phase-scores.csv` - per-(phase, quantity) z-score, multiple-of-mean, verdict band, citation
+- `docs/events_reconstruction.md` - narrative event reconstruction
+- `docs/impact_analysis.md` - impact-force analysis at the elevator door

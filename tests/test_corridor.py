@@ -31,10 +31,10 @@ def test_default_scenario_durations_sum_to_total_time() -> None:
     assert math.isclose(seq, sc.total_time, abs_tol=1e-9)
 
 
-def test_default_scenario_has_two_phases() -> None:
+def test_default_scenario_has_three_phases() -> None:
     sc = default_scenario()
-    assert len(sc.phases) == 2
-    assert [p.name for p in sc.phases] == ["pull-throw", "reverse"]
+    assert len(sc.phases) == 3
+    assert [p.name for p in sc.phases] == ["pull", "swap-throw", "swap-back"]
 
 
 def test_phase_starts_are_monotonic_among_sequential() -> None:
@@ -79,13 +79,13 @@ def test_overlapping_phase_starts_at_host_tail() -> None:
 # ---------------------------------------------------------------------------
 
 
-def test_constant_accel_formulas_for_throw_phase() -> None:
-    """Triangular profile covering 2.0 m in 1.5 s (2-phase default pull-throw):
-    v_peak = 2*s/t = 2.667 m/s, a_peak = 4*s/t^2 = 3.556 m/s^2."""
-    phase = Phase("pull-throw", 1.50, "translate", "M", translation=2.0)
+def test_constant_accel_formulas_for_pull_phase() -> None:
+    """Triangular profile covering 1.5 m in 1.0 s (3-phase default pull):
+    v_peak = 2*s/t = 3.0 m/s, a_peak = 4*s/t^2 = 6.0 m/s^2 (0.61g)."""
+    phase = Phase("pull", 1.00, "translate", "M", translation=1.5)
     r = compute_phase_kinematics(phase, mass=70.0, yaw_inertia=1.4, resistance="passive")
-    assert math.isclose(r.v_peak, 2 * 2.0 / 1.5, rel_tol=1e-9)
-    assert math.isclose(r.a_peak, 4 * 2.0 / (1.5**2), rel_tol=1e-9)
+    assert math.isclose(r.v_peak, 2 * 1.5 / 1.0, rel_tol=1e-9)
+    assert math.isclose(r.a_peak, 4 * 1.5 / (1.0**2), rel_tol=1e-9)
     assert math.isclose(r.f_peak, 70.0 * r.a_peak, rel_tol=1e-9)
     assert r.kinetic_energy == pytest.approx(0.5 * 70.0 * r.v_peak**2)
 
@@ -99,11 +99,11 @@ def test_resistance_adds_friction_force_to_translate() -> None:
 
 
 def test_rotation_phase_torque_matches_inertia_times_alpha() -> None:
-    phase = Phase("reverse", 1.50, "rotate", "H", rotation=math.pi)
+    phase = Phase("swap-back", 1.00, "rotate", "H", rotation=math.pi)
     r = compute_phase_kinematics(phase, mass=90.0, yaw_inertia=1.8, resistance="passive")
-    assert math.isclose(r.alpha_peak, 4 * math.pi / (1.5**2), rel_tol=1e-9)
+    assert math.isclose(r.alpha_peak, 4 * math.pi / (1.0**2), rel_tol=1e-9)
     assert math.isclose(r.torque_peak, 1.8 * r.alpha_peak, rel_tol=1e-9)
-    assert math.isclose(r.omega_peak, 2 * math.pi / 1.5, rel_tol=1e-9)
+    assert math.isclose(r.omega_peak, 2 * math.pi / 1.0, rel_tol=1e-9)
 
 
 def test_reach_phase_uses_arm_mass_default() -> None:
@@ -123,13 +123,13 @@ def test_compute_scenario_returns_one_result_per_phase() -> None:
 
 
 def test_actor_effort_friction_cap() -> None:
-    phase = Phase("pull-throw", 1.50, "translate", "M", translation=2.0)
+    phase = Phase("pull", 1.00, "translate", "M", translation=1.5)
     r = compute_phase_kinematics(phase, mass=70.0, yaw_inertia=1.4)
     eff = actor_effort_for_translation(r, actor_mass=90.0)
     cap = 0.30 * 90.0 * G  # MU_RESIST * actor_mass * g
     assert math.isclose(eff["f_friction_cap_N"], cap, rel_tol=1e-9)
-    # 70 * 3.56 = 249 N required vs ~265 N cap - now plausibly within friction!
-    assert eff["feasible"] is True
+    # 70 * 6.0 = 420 N required vs ~265 N cap - now infeasible on friction
+    assert eff["feasible"] is False
 
 
 # ---------------------------------------------------------------------------

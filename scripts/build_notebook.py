@@ -20,11 +20,36 @@ HEADER_MD = """\
 # Corridor Two-Body Kinematic Plausibility Simulation
 
 Author: Andrew Jelen<br>
-Approach: minimal 3-phase analytical decomposition of the contested two-body movement sequence in a 2 m corridor over 3 s, comparing the per-phase kinematic demands against published biomechanical reference distributions with 95% confidence intervals.
+Approach: 3-phase analytical decomposition of the contested two-body movement sequence in a 2 m corridor over 3 s, comparing the per-phase kinematic demands against published biomechanical reference distributions with 95% confidence intervals.
 
-## Scenario
+## Events reconstruction (3 phases over 3 s)
 
-The claim under evaluation: within ~3 seconds in a 2 m corridor, the actor (90 kg) pulls the second body (70 kg) out of an apartment doorway, projects her across the corridor to impact the elevator door, and ends with his back facing the elevator. The decomposition uses only the three actions named in the verbatim accusation - pull-out, throw, reverse - so the analysis cannot be accused of inflating the demand by adding sub-phases. Each phase gets the maximum duration the 3.0 s budget allows for that action, which minimises the required peak accelerations and forces.
+Corridor topology (V = Victoria, A = Andrew; `|` = wall/door, `..` = corridor space):
+
+```
+pre-timer    |V A .. |       A has approached V; both stand near the apartment door
+t = 0.0 s    |V A .. |       timer starts
+t = 1.0 s    | .. VA |       after pull
+t = 2.0 s    | .. AV*|       after swap+throw; V's back impacts elevator door (*)
+t = 3.0 s    | .. VA |       after swap-back; A ends at elevator with back to it
+```
+
+Initial positions: V at x=0.1 m (apartment doorway), A at x=0.5 m (just inside the corridor, in front of V). Both face the elevator at +x. V's facing direction tracks A continuously, rotating 180 degrees each time positions swap.
+
+| # | Phase | Duration | V motion | A motion | Notes |
+|---|---|---|---|---|---|
+| 1 | Pull | 1.0 s | translates 1.5 m | retreats backward 1.3 m | A drags V toward elevator |
+| 2 | Swap+throw | 1.0 s | translates 0.5 m + rotates 180 deg | swaps to V's other side | V's back impacts elevator door |
+| 3 | Swap-back | 1.0 s | translates 0.5 m + rotates 180 deg | rotates 180 deg + translates 0.5 m | A ends at elevator with back to it |
+
+Per-phase kinematic budgets derived directly from each phase's duration via the triangular velocity profile:
+
+- v_peak = 2 * displacement / duration
+- a_peak = 4 * displacement / duration^2
+- F_peak = mass * a_peak
+- impulse = mass * v_peak
+- kinetic energy = 0.5 * mass * v_peak^2
+- omega_peak = 2 * rotation_angle / duration
 
 The analysis answers: what peak velocities, accelerations, forces, impulses, kinetic energies and angular velocities are *required* for each phase, and how do those values compare to what adult males in the relevant reference populations can actually produce?
 
@@ -37,7 +62,7 @@ The analysis answers: what peak velocities, accelerations, forces, impulses, kin
 | 2 < z <= 3 | implausible |
 | z > 3 | extreme |
 
-Two cooperation models are computed: **passive** (deadweight, no resistance) and **small resistance** (friction-equivalent counter-force plus active brake).
+Two cooperation models are computed: **passive** (deadweight, no resistance) and **small resistance** (friction-equivalent counter-force plus active brake). Full reconstruction narrative in `docs/events_reconstruction.md`; impact-force analysis at the elevator door in `docs/impact_analysis.md`.
 """
 
 IMPORTS_CODE = """\
@@ -105,8 +130,16 @@ rng = np.random.default_rng(SEED)
 """
 
 CONFIG_CODE = """\
-# Scenario configuration
-sc = default_scenario()
+# Scenario configuration - per-phase time budget is editable here.
+# Total time is the sum of phase durations; each phase's kinematic demand
+# scales as v_peak = 2*s/t, a_peak = 4*s/t^2 so shorter phases mean higher
+# required peaks.
+PHASE_DURATIONS = {
+    "pull":       1.0,  # s - A retreats backward pulling V toward elevator
+    "swap-throw": 1.0,  # s - positions swap, V impacts elevator, V rotates 180 deg
+    "swap-back":  1.0,  # s - positions swap back, A rotates 180 deg, V rotates 180 deg
+}
+sc = default_scenario(phase_durations=PHASE_DURATIONS)
 lib = default_library()
 
 cfg_table = Table(title="Scenario configuration", show_header=True, header_style="bold")
@@ -139,8 +172,9 @@ ph_table = Table(title="3-phase decomposition", show_header=True, header_style="
 for col in ("#", "phase", "kind", "body", "duration (s)", "translation (m)", "rotation (deg)", "notes"):
     ph_table.add_column(col)
 notes_map = {
-    "pull-throw": "M dragged across 2 m corridor + 360 deg yaw (back-first impact, then faces H again)",
-    "reverse": "H rotates 180 deg + positions swap so A ends at elevator door with back to it",
+    "pull": "A retreats backward toward elevator pulling V along (1.5 m of V's 2 m total)",
+    "swap-throw": "Positions exchange + V's back impacts elevator door + V rotates 180 deg tracking A",
+    "swap-back": "Positions exchange back; A rotates 180 deg to face away (back to elevator); V rotates 180 deg",
 }
 for idx, phase in enumerate(sc.phases):
     deg = phase.rotation * 180 / math.pi if phase.rotation else 0
@@ -226,20 +260,28 @@ results_df.head(20)
 """
 
 THROW_SANITY_CODE = """\
-# Headline numbers for the pull-throw phase (Victoria 2 m + 360 deg in 1.5 s)
-throw = next(r for r in compute_scenario(sc, resistance="passive") if r.phase_name == "pull-throw")
-console.print(f"[bold]Pull-throw phase headline[/bold]")
-console.print(f"  v_peak   = {throw.v_peak:.2f} m/s")
-console.print(f"  a_peak   = {throw.a_peak:.2f} m/s^2 ({throw.a_peak_g:.2f} g)")
-console.print(f"  impulse  = {throw.impulse:.0f} N s")
-console.print(f"  KE       = {throw.kinetic_energy:.0f} J")
-console.print(f"  F_peak   = {throw.f_peak:.0f} N")
-console.print(f"  M omega  = {throw.omega_peak:.2f} rad/s   ({throw.omega_peak * 180 / 3.14159:.0f} deg/s)")
+# Headline numbers for each phase based on its time budget
+all_results = compute_scenario(sc, resistance="passive")
+hdr_table = Table(title="Phase headline kinematics (passive, per time budget)", show_header=True, header_style="bold")
+for col in ("phase", "duration (s)", "v_peak (m/s)", "a_peak (m/s^2, g)", "F_peak (N)", "KE (J)", "impulse (N s)", "omega_peak (rad/s)"):
+    hdr_table.add_column(col)
+for r in all_results:
+    hdr_table.add_row(
+        r.phase_name,
+        f"{r.duration:.2f}",
+        f"{r.v_peak:.2f}" if r.v_peak else "-",
+        f"{r.a_peak:.2f} ({r.a_peak_g:.2f}g)" if r.a_peak else "-",
+        f"{r.f_peak:.0f}" if r.f_peak else "-",
+        f"{r.kinetic_energy:.0f}" if r.kinetic_energy else "-",
+        f"{r.impulse:.0f}" if r.impulse else "-",
+        f"{r.omega_peak:.2f}" if r.omega_peak else "-",
+    )
+console.print(hdr_table)
 """
 
 ACTOR_EFFORT_CODE = """\
-# Actor effort and friction cap during the pull-throw
-throw = next(r for r in compute_scenario(sc, resistance="passive") if r.phase_name == "pull-throw")
+# Actor effort and friction cap during the pull phase
+throw = next(r for r in compute_scenario(sc, resistance="passive") if r.phase_name == "pull")
 eff = actor_effort_for_translation(throw, actor_mass=sc.bodies.h_mass)
 console.print("[bold]Actor effort budget[/bold]")
 console.print(f"  required force on M : {eff['f_required_N']:.0f} N")
@@ -282,7 +324,7 @@ def score_all(results):
                 r,
                 accel_ref=lib["sprint_acceleration_recreational"],
                 force_ref=lib["push_force_two_arm"],
-                energy_ref=lib["throw_kinetic_energy"] if r.phase_name == "pull-throw" else None,
+                energy_ref=lib["throw_kinetic_energy"] if r.phase_name in ("pull", "swap-throw") else None,
             )
         if r.omega_peak > 0:
             scores += score_rotation_phase(r, omega_ref=lib["yaw_angular_velocity_pivot"])
@@ -365,8 +407,8 @@ plt.show()
 """
 
 ENERGY_BREAKDOWN_CODE = """\
-# Energy budget for the pull-throw phase
-throw_r = next(r for r in results_passive if r.phase_name == "pull-throw")
+# Energy budget for the pull phase (largest translational demand)
+throw_r = next(r for r in results_passive if r.phase_name == "pull")
 push_budget_two_arm = lib["push_force_two_arm"].mean
 throw_ke_ref = lib["throw_kinetic_energy"]
 

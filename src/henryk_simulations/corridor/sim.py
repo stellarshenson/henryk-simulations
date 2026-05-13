@@ -63,10 +63,11 @@ def _build_kinematic_traj(scenario: Scenario, fps: int = FPS) -> dict:
     times = np.linspace(0, scenario.total_time, total_steps)
 
     # A has already approached V before the timer starts: both stand near the
-    # apartment door, A in front of V. Both face toward the elevator (+x);
-    # V looks at A who is ahead of her. V's rotation tracks A throughout.
+    # apartment door, A in front of V. Both face toward the elevator (+x).
+    # V at x=0.14 so her back surface (radius 0.14) just clears the apartment
+    # door wall at x=0. A at x=0.5 is comfortably inside the corridor.
     h_x = np.full_like(times, 0.5)
-    m_x = np.full_like(times, 0.1)
+    m_x = np.full_like(times, 0.14)
     h_yaw = np.zeros_like(times)  # A faces +x toward the elevator
     m_yaw = np.zeros_like(times)  # V faces +x toward A who is in front of her
 
@@ -81,26 +82,40 @@ def _build_kinematic_traj(scenario: Scenario, fps: int = FPS) -> dict:
         if n < 2:
             continue
         local_t = phase.duration
-        if phase.name == "pull-throw":
-            # A moves backward toward the elevator (x=0.5 -> x=1.7) while
-            # pulling V along (x=0.1 -> x=2.0). Both travel; V ends pinned at
-            # the elevator door. A is just to V's left at end of phase
-            # (positions just swapped via A traversing to V's other side).
+        # Wall geometry: apt door at x=0 (front face), elevator door at x=2.0.
+        # Torso radius 0.14 means CoM must stay in [0.14, 1.86] to keep bodies
+        # surface-clear of the walls.
+        if phase.name == "pull":
+            # A retreats backward toward elevator pulling V along.
+            # V: 0.14 -> 1.64; A: 0.5 -> 1.64 (in front of V, just clear).
             v_offset = _triangle_profile(phase.translation, local_t, n)
             m_start = m_x[slc][0]
             m_x[slc] = m_start + v_offset
             m_x[slc_after] = m_start + phase.translation
 
-            h_dx = 1.7 - h_x[slc][0]
-            h_offset = _triangle_profile(h_dx, local_t, n)
-            h_start = h_x[slc][0]
-            h_x[slc] = h_start + h_offset
-            h_x[slc_after] = h_start + h_dx
-        elif phase.name == "reverse":
-            # Positions swap so A ends at the elevator door (x=2.0) and V
-            # ends to A's left at x=1.5. Both translate during this phase.
-            v_target = 1.5
-            h_target = 2.0
+            h_target = 1.64
+            h_dx = h_target - h_x[slc][0]
+            h_offset = _triangle_profile(abs(h_dx), local_t, n) * np.sign(h_dx)
+            h_x[slc] = h_x[slc][0] + h_offset
+            h_x[slc_after] = h_target
+        elif phase.name == "swap-throw":
+            # Positions swap: V advances to elevator wall (CoM x=1.86, back
+            # touching wall at x=2.0); A swaps to V's other side (-> x=1.50).
+            v_offset = _triangle_profile(phase.translation, local_t, n)
+            m_start = m_x[slc][0]
+            m_x[slc] = m_start + v_offset
+            m_x[slc_after] = m_start + phase.translation
+
+            h_target = 1.50
+            h_dx = h_target - h_x[slc][0]
+            h_offset = _triangle_profile(abs(h_dx), local_t, n) * np.sign(h_dx)
+            h_x[slc] = h_x[slc][0] + h_offset
+            h_x[slc_after] = h_target
+        elif phase.name == "swap-back":
+            # Positions swap back: A advances to elevator wall (back to it,
+            # CoM x=1.86); V steps left (-> x=1.50, well clear of wall).
+            v_target = 1.50
+            h_target = 1.86
             v_dx = v_target - m_x[slc][0]
             h_dx = h_target - h_x[slc][0]
             v_offset = _triangle_profile(abs(v_dx), local_t, n) * np.sign(v_dx)
@@ -133,9 +148,9 @@ def _build_kinematic_traj(scenario: Scenario, fps: int = FPS) -> dict:
                 m_yaw[slc] = start_yaw + offset
                 m_yaw[slc_after] = start_yaw + offset[-1]
 
-        # V also tracks A in every phase regardless of `body` (V's facing
-        # follows A's relative bearing as positions swap).
-        if phase.name in ("pull-throw", "reverse"):
+        # V's facing direction tracks A's relative bearing - she rotates
+        # 180 deg only during the swap phases (positions exchanging).
+        if phase.name in ("swap-throw", "swap-back"):
             v_offset = _triangle_profile(np.pi, local_t, n)
             v_start = m_yaw[slc][0]
             m_yaw[slc] = v_start + v_offset
