@@ -87,11 +87,11 @@ def plot_per_phase_demand(
     out_path: Path | None = None,
     title: str = "Per-phase kinematic demand (passive vs small-resistance)",
 ) -> plt.Figure:
-    """Grouped bar chart of per-phase peak values for passive and resistive runs."""
+    """Grouped bar chart of per-phase peak values (passive / no-resistance)."""
     fig, axes = plt.subplots(1, len(columns), figsize=(4.0 * len(columns), 4.5))
     if len(columns) == 1:
         axes = [axes]
-    palette = {"passive": "#5c8da7", "small": "#c45a3a"}
+    palette = {"passive": "#5c8da7"}
     for ax, col in zip(axes, columns):
         plot_df = results_df.copy()
         sns.barplot(

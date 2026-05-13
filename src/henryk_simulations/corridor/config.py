@@ -6,7 +6,9 @@ from dataclasses import dataclass
 from typing import Literal
 
 PhaseKind = Literal["translate", "rotate", "reach"]
-ResistanceModel = Literal["passive", "small"]
+# Only the worst-case no-resistance model is kept; small-resistance was a
+# strictly-friendlier variant for the actor and is no longer informative.
+ResistanceModel = Literal["passive"]
 
 
 @dataclass(frozen=True)

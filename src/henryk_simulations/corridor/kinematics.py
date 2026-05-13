@@ -156,9 +156,11 @@ def compute_phase_kinematics(
     if arm_mass is None:
         arm_mass = ARM_MASS_FRAC * mass
 
+    # Worst-case no-resistance: V is treated as deadweight, no friction or
+    # brake opposing the motion. The previously-supported "small" variant
+    # has been retired - it was strictly friendlier to the actor and not
+    # informative for the plausibility question.
     f_resist = 0.0
-    if resistance == "small" and phase.kind == "translate":
-        f_resist = MU_RESIST * mass * G + BRAKE_FORCE
 
     # Triangular-peak translation
     v_peak = a_peak = f_peak = impulse_triangular = ke = mom = 0.0

@@ -1,9 +1,5 @@
-resistance,phase,kind,body,mass_kg,duration_s,distance_m,v_peak_m_s,a_peak_m_s2,a_peak_g,f_peak_N,f_resist_N,impulse_N_s,ke_J,omega_peak_rad_s,alpha_peak_rad_s2,torque_peak_Nm,rot_ke_J,reach_v_peak_m_s,reach_f_peak_N
-passive,pull,translate,M,70.0,1.0,1.5,3.0,6.0,0.612,420.0,0.0,210.0,315.0,0.0,0.0,0.0,0.0,0.0,0.0
-passive,swap-throw,translate,M,70.0,1.0,0.22,0.44,0.88,0.09,61.6,0.0,30.8,6.8,6.283,12.566,17.6,27.6,0.0,0.0
-passive,swap-back,rotate,H,90.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,6.283,12.566,22.6,35.5,0.0,0.0
-passive,swap-back/M,translate,M,70.0,1.0,0.4,0.8,1.6,0.163,112.0,0.0,56.0,22.4,6.283,12.566,17.6,27.6,0.0,0.0
-small,pull,translate,M,70.0,1.0,1.5,3.0,6.0,0.612,675.9,255.9,210.0,315.0,0.0,0.0,0.0,0.0,0.0,0.0
-small,swap-throw,translate,M,70.0,1.0,0.22,0.44,0.88,0.09,317.5,255.9,30.8,6.8,6.283,12.566,17.6,27.6,0.0,0.0
-small,swap-back,rotate,H,90.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,6.283,12.566,22.6,35.5,0.0,0.0
-small,swap-back/M,translate,M,70.0,1.0,0.4,0.8,1.6,0.163,367.9,255.9,56.0,22.4,6.283,12.566,17.6,27.6,0.0,0.0
+phase,kind,body,mass_kg,duration_s,distance_m,v_start_m_s,v_end_m_s,v_peak_m_s,a_avg_m_s2,a_peak_m_s2,a_peak_g,f_avg_N,f_peak_N,impulse_net_N_s,ke_start_J,ke_end_J,ke_J,work_done_J,omega_peak_rad_s,alpha_peak_rad_s2,torque_peak_Nm,rot_ke_J
+pull,translate,M,70.0,1.0,1.5,0.0,3.0,3.0,3.0,6.0,0.612,210.0,420.0,210.0,0.0,315.0,315.0,315.0,0.0,0.0,0.0,0.0
+swap-throw,translate,M,70.0,1.0,0.22,3.0,0.0,0.44,-3.0,0.88,0.09,210.0,61.6,-210.0,315.0,0.0,6.8,-315.0,6.283,12.566,17.6,27.6
+swap-back,rotate,H,90.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,6.283,12.566,22.6,35.5
+swap-back/M,translate,M,70.0,1.0,0.4,0.0,0.8,0.8,0.8,1.6,0.163,56.0,112.0,56.0,0.0,22.4,22.4,22.4,6.283,12.566,17.6,27.6

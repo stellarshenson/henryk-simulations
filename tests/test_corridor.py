@@ -90,12 +90,12 @@ def test_constant_accel_formulas_for_pull_phase() -> None:
     assert r.kinetic_energy == pytest.approx(0.5 * 70.0 * r.v_peak**2)
 
 
-def test_resistance_adds_friction_force_to_translate() -> None:
+def test_passive_resistance_has_zero_resist_force() -> None:
+    """Only the worst-case passive (no-resistance) model is supported."""
     phase = Phase("throw", 0.70, "translate", "M", translation=2.0)
-    passive = compute_phase_kinematics(phase, mass=70.0, yaw_inertia=1.4, resistance="passive")
-    small = compute_phase_kinematics(phase, mass=70.0, yaw_inertia=1.4, resistance="small")
-    assert small.f_peak > passive.f_peak
-    assert small.f_resist > 0
+    r = compute_phase_kinematics(phase, mass=70.0, yaw_inertia=1.4, resistance="passive")
+    assert r.f_resist == 0.0
+    assert r.resistance_model == "passive"
 
 
 def test_rotation_phase_torque_matches_inertia_times_alpha() -> None:
