@@ -6,7 +6,7 @@ the cited sources; the SD reflects between-subject variation in the
 referenced population (typically adult untrained or recreationally
 active males unless noted).
 
-Citations resolved in references/biomechanics-sources.md.
+Citations resolved in docs/biomechanics-sources.md.
 """
 
 from __future__ import annotations

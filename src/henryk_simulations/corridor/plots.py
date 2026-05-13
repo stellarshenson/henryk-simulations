@@ -236,16 +236,24 @@ def plot_verdict_summary(
     ax.set_yticks(ys)
     ax.set_yticklabels(df["label"])
     ax.axvline(0, color="black", linewidth=0.8)
-    for x, label, c in [
+    # Stagger the σ-band annotations vertically so adjacent labels don't
+    # overlap, and place them in the headroom above the top data row.
+    for i, (x, label, c) in enumerate([
         (1, "1σ strained", VERDICT_COLORS[Verdict.STRAINED]),
         (2, "2σ implausible", VERDICT_COLORS[Verdict.IMPLAUSIBLE]),
         (3, "3σ extreme", VERDICT_COLORS[Verdict.EXTREME]),
-    ]:
+    ]):
         ax.axvline(x, color=c, linestyle="--", linewidth=0.8, alpha=0.7)
-        ax.text(x, len(df) - 0.5, label, color=c, fontsize=8, ha="left")
+        ax.text(
+            x + 0.04, len(df) + 0.15 + (i * 0.30), label,
+            color=c, fontsize=8, ha="left", va="bottom",
+        )
     ax.set_xlabel("z-score above reference mean")
-    ax.set_title("Plausibility z-scores (higher = harder to satisfy)")
+    ax.set_title("Plausibility z-scores (higher = harder to satisfy)", pad=14)
     ax.grid(axis="x", linestyle=":", alpha=0.5)
+    # Add room above the top data row so the 1σ/2σ/3σ legend labels don't
+    # overlap the row labels.
+    ax.set_ylim(-0.5, len(df) + 1.2)
 
     handles = [
         mpatches.Patch(color=VERDICT_COLORS[v], label=v.value)
@@ -276,7 +284,7 @@ def plot_corridor_overhead(
     - [Box] briefcase at E edge of elevator door; [Str] stroller in segment
       2 NW; D apartment-door panel swung W
     """
-    fig, ax = plt.subplots(figsize=(11, 5.5))
+    fig, ax = plt.subplots(figsize=(11, 5.8))
 
     # Geometry (metres). Segment 1 is the western entrance (1.8 m long,
     # narrower); segment 2 is the wider eastern section containing the doors.
@@ -550,12 +558,13 @@ def plot_corridor_overhead(
     )
 
     ax.set_xlim(-0.4, total_w + 1.0)
-    ax.set_ylim(s_seg2 - 0.6, n_wall + 0.6)
+    ax.set_ylim(s_seg2 - 0.6, n_wall + 1.1)  # extra headroom so the apt-door annotation clears the title
     ax.set_aspect("equal")
     ax.set_xlabel("W ← x (m) → E")
     ax.set_ylabel("S ← y (m) → N")
     ax.set_title(
-        "Corridor geometry at the contested moment (top view, corrected per references/incident/geometry.md)"
+        "Corridor geometry at the contested moment (top view, per references/incident/geometry.md)",
+        pad=14,
     )
     ax.legend(loc="upper left", fontsize=8, framealpha=0.9)
     ax.grid(linestyle=":", alpha=0.3)
@@ -631,19 +640,23 @@ def _draw_phase_bands(
     *,
     y_top: float,
 ) -> None:
-    """Shaded phase bands with inline phase labels."""
+    """Shaded phase bands with inline phase labels.
+
+    Labels sit at 90% of y_top, well above any data line given the 35%
+    headroom in _plot_quantity_over_time.
+    """
     for idx, (phase, start) in enumerate(zip(scenario.phases, scenario.phase_starts)):
         color = PHASE_PALETTE[idx % len(PHASE_PALETTE)]
         ax.axvspan(start, start + phase.duration, alpha=0.08, color=color, zorder=0)
         ax.text(
             start + phase.duration / 2,
-            y_top * 0.95,
+            y_top * 0.90,
             f"{idx + 1}. {phase.name}",
             ha="center",
             va="top",
             fontsize=9,
             color="#37474f",
-            bbox={"facecolor": "white", "edgecolor": "none", "alpha": 0.75, "pad": 1.5},
+            bbox={"facecolor": "white", "edgecolor": "none", "alpha": 0.85, "pad": 2.0},
         )
 
 
@@ -669,7 +682,9 @@ def _plot_quantity_over_time(
 
     data_max = max(np.max(h), np.max(m))
     visible_refs_max = max((rv for rv, _, _ in refs or [] if rv <= data_max * 2.5), default=0.0)
-    y_top = max(data_max, visible_refs_max) * 1.18
+    # Headroom: leave ~35% above data peak so phase-band labels don't intersect
+    # the data line.
+    y_top = max(data_max, visible_refs_max) * 1.35
     if y_top <= 0:
         y_top = 1.0
     _draw_phase_bands(ax, scenario, y_top=y_top)
@@ -882,22 +897,25 @@ def plot_audio_signature(
     refs    = ref_sounds if ref_sounds is not None else DEFAULT_REF_SOUNDS
     palette = palette    if palette    is not None else SKILL_MPL_PALETTE
 
-    fig, ax = plt.subplots(figsize=(12, 4.0))
+    fig, ax = plt.subplots(figsize=(12, 5.4))
 
-    # Reference benchmarks
+    # Reference benchmarks - vertical labels above the plot to avoid horizontal
+    # overlap between adjacent SPL ticks (120/130/140 are only 10 dB apart).
     for db, txt in refs:
-        ax.axvline(db, color="gray", alpha=0.35, linewidth=0.8)
+        ax.axvline(db, color="gray", alpha=0.35, linewidth=0.8, zorder=0)
         ax.text(
-            db, 1.02, f"{db} dB\n{txt}",
-            ha="center", va="bottom", fontsize=7,
+            db, 1.02, f"{db} dB  {txt}",
+            ha="left", va="center", fontsize=7,
+            rotation=90,
             transform=ax.get_xaxis_transform(),
+            color="dimgray",
         )
 
     # Clipping danger zone
     ax.axvspan(clip_threshold_db, 200, ymin=0, ymax=1,
                color=SKILL_MPL_PALETTE[1], alpha=0.07, zorder=0)
     ax.text(
-        clip_threshold_db + 1, len(prediction.listeners) - 0.2,
+        clip_threshold_db + 1, len(prediction.listeners) - 0.4,
         f"phone mic clips above ~{clip_threshold_db:.0f} dB SPL",
         color=SKILL_MPL_PALETTE[1], fontsize=9, fontweight="bold", va="top",
     )
@@ -927,15 +945,15 @@ def plot_audio_signature(
 
     ax.set_yticks([])
     ax.set_xlim(50, 175)
-    ax.set_ylim(-0.5, len(prediction.listeners) + 0.0)
+    ax.set_ylim(-0.5, len(prediction.listeners) - 0.2)
     ax.set_xlabel("Sound pressure level (dB SPL re 20 µPa)")
     ax.set_title(
         "Predicted peak SPL of the elevator-door impact vs reference sounds",
-        fontsize=12, fontweight="bold",
+        fontsize=12, fontweight="bold", pad=70,
     )
     for side in ("top", "right", "left"):
         ax.spines[side].set_visible(False)
-    fig.tight_layout()
+    fig.subplots_adjust(top=0.74, bottom=0.13, left=0.04, right=0.96)
     if out_path is not None:
         fig.savefig(out_path, dpi=120, bbox_inches="tight")
     return fig
