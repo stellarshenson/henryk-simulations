@@ -139,9 +139,8 @@ ph_table = Table(title="3-phase decomposition", show_header=True, header_style="
 for col in ("#", "phase", "kind", "body", "duration (s)", "translation (m)", "rotation (deg)", "notes"):
     ph_table.add_column(col)
 notes_map = {
-    "pull-out": "M extracted from apartment doorway",
-    "throw": "M projected across corridor + 360 deg total yaw (back impacts elevator, then faces H)",
-    "reverse": "H rotates 180 deg so back faces elevator",
+    "pull-throw": "M dragged across 2 m corridor + 360 deg yaw (back-first impact, then faces H again)",
+    "reverse": "H rotates 180 deg + positions swap so A ends at elevator door with back to it",
 }
 for idx, phase in enumerate(sc.phases):
     deg = phase.rotation * 180 / math.pi if phase.rotation else 0
@@ -227,19 +226,20 @@ results_df.head(20)
 """
 
 THROW_SANITY_CODE = """\
-# Sanity check against the framing numbers: throw 2m in 0.7s
-throw = next(r for r in compute_scenario(sc, resistance="passive") if r.phase_name == "throw")
-console.print(f"[bold]Throw phase headline[/bold]")
-console.print(f"  v_peak   = {throw.v_peak:.2f} m/s   (framing: ~5.7)")
-console.print(f"  a_peak   = {throw.a_peak:.2f} m/s^2 (framing: ~8.16) ~= {throw.a_peak_g:.2f} g")
-console.print(f"  impulse  = {throw.impulse:.0f} N s  (framing: ~399)")
-console.print(f"  KE       = {throw.kinetic_energy:.0f} J     (framing: ~1137)")
+# Headline numbers for the pull-throw phase (Victoria 2 m + 360 deg in 1.5 s)
+throw = next(r for r in compute_scenario(sc, resistance="passive") if r.phase_name == "pull-throw")
+console.print(f"[bold]Pull-throw phase headline[/bold]")
+console.print(f"  v_peak   = {throw.v_peak:.2f} m/s")
+console.print(f"  a_peak   = {throw.a_peak:.2f} m/s^2 ({throw.a_peak_g:.2f} g)")
+console.print(f"  impulse  = {throw.impulse:.0f} N s")
+console.print(f"  KE       = {throw.kinetic_energy:.0f} J")
 console.print(f"  F_peak   = {throw.f_peak:.0f} N")
+console.print(f"  M omega  = {throw.omega_peak:.2f} rad/s   ({throw.omega_peak * 180 / 3.14159:.0f} deg/s)")
 """
 
 ACTOR_EFFORT_CODE = """\
-# Actor effort and friction cap during the throw
-throw = next(r for r in compute_scenario(sc, resistance="passive") if r.phase_name == "throw")
+# Actor effort and friction cap during the pull-throw
+throw = next(r for r in compute_scenario(sc, resistance="passive") if r.phase_name == "pull-throw")
 eff = actor_effort_for_translation(throw, actor_mass=sc.bodies.h_mass)
 console.print("[bold]Actor effort budget[/bold]")
 console.print(f"  required force on M : {eff['f_required_N']:.0f} N")
@@ -282,7 +282,7 @@ def score_all(results):
                 r,
                 accel_ref=lib["sprint_acceleration_recreational"],
                 force_ref=lib["push_force_two_arm"],
-                energy_ref=lib["throw_kinetic_energy"] if r.phase_name == "throw" else None,
+                energy_ref=lib["throw_kinetic_energy"] if r.phase_name == "pull-throw" else None,
             )
         if r.omega_peak > 0:
             scores += score_rotation_phase(r, omega_ref=lib["yaw_angular_velocity_pivot"])
@@ -365,8 +365,8 @@ plt.show()
 """
 
 ENERGY_BREAKDOWN_CODE = """\
-# Energy budget: where does the kinetic energy come from?
-throw_r = next(r for r in results_passive if r.phase_name == "throw")
+# Energy budget for the pull-throw phase
+throw_r = next(r for r in results_passive if r.phase_name == "pull-throw")
 push_budget_two_arm = lib["push_force_two_arm"].mean
 throw_ke_ref = lib["throw_kinetic_energy"]
 

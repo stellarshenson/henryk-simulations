@@ -98,29 +98,31 @@ class Scenario:
 
 
 def default_scenario() -> Scenario:
-    """Minimal 3-phase decomposition mapped directly to the verbatim claim.
+    """Minimal 2-phase decomposition mapped directly to the verbatim claim.
 
-    The original accusation only references three actions: drag her out, throw
-    her at the elevator door, and reposition so the actor's back faces the
-    elevator. We avoid adding sub-phases that would inflate the demand peaks.
+    Corridor layout: apartment door at x=0, elevator door at x=2. Victoria
+    starts at the apartment doorway, Andrew in the corridor near the elevator.
 
-    1. Pull-out (Victoria pulled 0.5 m from doorway)   0.60 s
-    2. Throw    (Victoria projected 2.0 m to elevator) 1.00 s
-    3. Reverse  (Andrew 180 deg + 0.3 m reposition)  1.40 s
+      t=0   |V .. A|       (initial)
+      t=1.5 | .. AV *|     (after pull-throw, V impacts elevator)
+      t=3.0 | .. VA |      (after reverse, A's back to elevator)
 
-    Sequential sum = 3.0 s. Each phase gets the maximum duration the 3.0 s
-    budget allows for that action, so the per-phase peak accelerations are
-    the smallest values mathematically consistent with the claim.
+    'Pull' and 'swap and throw' are explicitly described as mixed in the claim
+    framing, so they collapse into a single 'pull-throw' phase. The 'reverse'
+    phase swaps positions back so Andrew ends with his back to the elevator.
+    Each phase gets half the 3 s budget, the most charitable allocation.
+
+    1. Pull-throw (V translates 2.0 m + rotates 360 deg)  1.5 s
+    2. Reverse    (A rotates 180 deg + positions swap)    1.5 s
+
+    Victoria's 360 deg rotation in phase 1 has her back impact the elevator
+    door (180 deg) then her front face Andrew again (another 180 deg).
     """
     import math
 
-    # Victoria rotates twice during the throw: 180 deg so her back impacts the
-    # elevator door, then a further 180 deg so she ends up facing Andrew again.
-    # Net rotation = 0, angular distance = 2 pi rad over 1.0 s.
     phases = (
-        Phase("pull-out", 0.60, "translate", "M", translation=0.5),
-        Phase("throw", 1.00, "translate", "M", translation=2.0, rotation=2 * math.pi),
-        Phase("reverse", 1.40, "rotate", "H", rotation=math.pi),
+        Phase("pull-throw", 1.5, "translate", "M", translation=2.0, rotation=2 * math.pi),
+        Phase("reverse", 1.5, "rotate", "H", rotation=math.pi),
     )
     return Scenario(
         total_time=3.0,

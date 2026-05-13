@@ -62,11 +62,12 @@ def _build_kinematic_traj(scenario: Scenario, fps: int = FPS) -> dict:
     total_steps = int(round(scenario.total_time * fps)) + 1
     times = np.linspace(0, scenario.total_time, total_steps)
 
-    # Initial positions: M at x=0.15 (apartment doorway), H at x=0.45
-    h_x = np.full_like(times, 0.45)
-    m_x = np.full_like(times, 0.15)
-    h_yaw = np.zeros_like(times)  # facing +x
-    m_yaw = np.full_like(times, np.pi)  # facing -x toward apartment initially
+    # Initial positions per the corridor diagram |V .. A|:
+    # V (Victoria) at apartment doorway x=0.1, A (Andrew) near elevator at x=1.7.
+    h_x = np.full_like(times, 1.7)
+    m_x = np.full_like(times, 0.1)
+    h_yaw = np.full_like(times, np.pi)  # facing -x (back to elevator? - no, facing V)
+    m_yaw = np.zeros_like(times)  # facing +x toward Andrew / elevator
 
     phase_starts = scenario.phase_starts
     # For each phase, fill the appropriate slice; subsequent phases inherit the
@@ -79,7 +80,27 @@ def _build_kinematic_traj(scenario: Scenario, fps: int = FPS) -> dict:
         if n < 2:
             continue
         local_t = phase.duration
-        if phase.kind == "translate" and phase.translation > 0:
+        if phase.name == "pull-throw":
+            # V crosses the corridor from apartment door to elevator door (2 m).
+            # A makes space - steps to V's left so V ends pinned at the wall.
+            v_offset = _triangle_profile(phase.translation, local_t, n)
+            m_start = m_x[slc][0]
+            m_x[slc] = m_start + v_offset
+            m_x[slc_after] = m_start + phase.translation
+            # H moves from x=1.7 to x=1.7 (only minor lateral adjustment is
+            # ignored on the linear axis); the rotation handles his pose.
+        elif phase.name == "reverse":
+            # Positions swap so A ends at the elevator door (x=2.0) and V
+            # ends to A's left at x=1.5. Both translate during this phase.
+            v_target = 1.5
+            h_target = 2.0
+            v_offset = _triangle_profile(v_target - m_x[slc][0], local_t, n)
+            h_offset = _triangle_profile(h_target - h_x[slc][0], local_t, n)
+            m_x[slc] = m_x[slc][0] + v_offset
+            m_x[slc_after] = v_target
+            h_x[slc] = h_x[slc][0] + h_offset
+            h_x[slc_after] = h_target
+        elif phase.kind == "translate" and phase.translation > 0:
             offset = _triangle_profile(phase.translation, local_t, n)
             if phase.body == "M":
                 start_x = m_x[slc][0]
@@ -93,7 +114,7 @@ def _build_kinematic_traj(scenario: Scenario, fps: int = FPS) -> dict:
             if phase.kind == "rotate":
                 # Single sweep through the full rotation angle
                 offset = _triangle_profile(phase.rotation, local_t, n)
-            elif phase.kind == "translate" and phase.name == "throw":
+            elif phase.kind == "translate" and phase.name in ("throw", "pull-throw"):
                 # Victoria rotates 180 deg back-first, then 180 deg back to facing.
                 # Two sweeps: +pi then -pi, total angular distance = phase.rotation.
                 half = phase.rotation / 2
