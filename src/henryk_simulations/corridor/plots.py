@@ -280,8 +280,8 @@ def plot_corridor_overhead(
     # the same N wall; segment 2's S wall is further south than segment 1's.
     seg1_w = 1.8
     seg2_w = 6.0
-    seg1_height = 1.2  # narrower in N-S extent
-    seg2_height = 2.4  # wider (extends further south)
+    seg1_height = 1.6  # corridor width N-S in segment 1
+    seg2_height = 2.0  # segment 2 only ~0.4 m deeper to the S (shallow elbow)
     seg2_x0 = seg1_w
     total_w = seg1_w + seg2_w
 
@@ -309,12 +309,12 @@ def plot_corridor_overhead(
     # E end wall
     ax.plot([total_w, total_w], [s_seg2, n_wall], **wall_kw)
 
-    # Apartment door (on N wall) - hinged at the WEST edge of the doorway,
-    # swings out into the corridor with the panel ending up south-east of the
-    # hinge. When open, the door's face looks W (the side that faced the
-    # corridor when closed now faces west).
-    apt_door_hinge_x = apt_door_x - apt_door_w / 2
-    door_swing_angle = 30  # degrees from +x; only partly open (panel tip slightly SE of hinge)
+    # Apartment door (on N wall) - hinged at the EAST edge of the doorway,
+    # swings into the corridor with the panel ending up south-west of the
+    # hinge. The free end of the open door rests near the corridor floor at
+    # the W edge of the original doorway opening.
+    apt_door_hinge_x = apt_door_x + apt_door_w / 2
+    door_swing_angle = 110  # measured from +x; panel mostly open, pointing SSW from E hinge
     angle_rad = np.deg2rad(door_swing_angle)
     door_panel_tip = (
         apt_door_hinge_x + apt_door_w * np.cos(angle_rad),
@@ -335,7 +335,7 @@ def plot_corridor_overhead(
     ax.text(
         apt_door_x,
         n_wall + 0.15,
-        "apartment door (hinge W, swings out E; face looks W)",
+        "apartment door (hinge E, swings into corridor; face looks W)",
         ha="center",
         fontsize=8,
         color="#1565c0",
@@ -364,7 +364,7 @@ def plot_corridor_overhead(
     # Actors -----------------------------------------------------------------
     # V (Victoria): at apartment door W envelope (opposite the E hinge),
     # facing S (downward)
-    v_xy = (apt_door_x - apt_door_w / 2 + 0.18, n_wall - 0.18)
+    v_xy = (apt_door_x - 0.15, n_wall - 0.18)
     v_circle = mpatches.Circle(
         v_xy, 0.18, color="#c45a3a", label=f"V Victoria ({bodies.m_mass:.0f} kg)"
     )
@@ -376,10 +376,11 @@ def plot_corridor_overhead(
         arrowprops={"arrowstyle": "->", "color": "#c45a3a", "lw": 2.2},
     )
     ax.text(
-        v_xy[0] - 0.05,
-        v_xy[1] + 0.05,
+        v_xy[0],
+        v_xy[1],
         "V",
         ha="center",
+        va="center",
         fontweight="bold",
         color="white",
         fontsize=10,
@@ -398,7 +399,14 @@ def plot_corridor_overhead(
         arrowprops={"arrowstyle": "->", "color": "#5c8da7", "lw": 2.2},
     )
     ax.text(
-        a_xy[0], a_xy[1] + 0.02, "A", ha="center", fontweight="bold", color="white", fontsize=11
+        a_xy[0],
+        a_xy[1],
+        "A",
+        ha="center",
+        va="center",
+        fontweight="bold",
+        color="white",
+        fontsize=11,
     )
 
     # Cecilia: in segment 1, facing E (rightward)
@@ -412,7 +420,14 @@ def plot_corridor_overhead(
         arrowprops={"arrowstyle": "->", "color": "#5b8d5b", "lw": 2.0},
     )
     ax.text(
-        c_xy[0], c_xy[1] + 0.02, "C", ha="center", fontweight="bold", color="white", fontsize=10
+        c_xy[0],
+        c_xy[1],
+        "C",
+        ha="center",
+        va="center",
+        fontweight="bold",
+        color="white",
+        fontsize=10,
     )
 
     # Props ------------------------------------------------------------------
