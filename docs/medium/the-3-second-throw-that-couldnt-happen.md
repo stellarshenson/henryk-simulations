@@ -167,6 +167,8 @@ Of ten predicted observables, zero match. Seven are absent or directly contradic
 
 One more thing about that bruise. The defendant's position is that it was **self-inflicted** by the alleged victim after the visit, to seed a corroborating mark in the medical record. The defendant has chosen not to dispute the bruise's origin directly. The argument above runs on physics, not on contested medical interpretation. The mechanical impossibility of producing a single localised shoulder bruise from the alleged whole-torso back-first impact at 18 kN is enough, on its own, to falsify the verbatim claim. Newton was kind enough to do the talking.
 
+![Staged narrative vs physics deconstruction](images/08-staged-vs-physics.svg)
+
 ---
 
 ## The takeaway
@@ -212,6 +214,8 @@ I could not.
 This is a public repository, an executable notebook, and a single nested `PARAMS` dict. The whole pipeline takes about twelve seconds to re-run. If you think the physics is wrong, the methodology is wrong, the assumptions are uncharitable, or the conclusion is overstated, **break it open and tell me why**. Issues and pull requests on the repo. Alternative reconstructions, better stopping distances, different radiation efficiencies, alternative readings of the testimony - all welcome, all for the benefit of science.
 
 If you find a configuration that makes the impact plausible **and** consistent with a single localised shoulder bruise, I owe you a coffee. If you find one that also explains the witness reporting no acoustic event at 1.5 m from a steel door, I owe you two coffees and we publish a joint follow-up.
+
+![Newton drops the mic](images/09-newton-drops-mic.svg)
 
 ---
 
