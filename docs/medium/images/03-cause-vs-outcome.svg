@@ -144,10 +144,12 @@
       <text x="400" y="185" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" class="fg-1" text-anchor="middle">F = m · a</text>
       <text x="400" y="200" font-family="Segoe UI, Arial, sans-serif" font-size="7" class="fg-4" text-anchor="middle">same mass, same v</text>
 
-      <!-- Multiplier callout -->
-      <text x="400" y="245" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-3" text-anchor="middle" letter-spacing="0.5">10 cm → 2 cm</text>
-      <text x="400" y="268" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" class="accent-2" text-anchor="middle">× 5</text>
-      <text x="400" y="282" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="accent-2" text-anchor="middle" font-style="italic">force</text>
+      <!-- Consequence: combining the two equations gives the inverse-d law -->
+      <line x1="370" y1="218" x2="430" y2="218" stroke="#1a5a6e" stroke-width="0.5" opacity="0.35"/>
+      <text x="400" y="234" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" class="fg-3" text-anchor="middle" letter-spacing="0.6">CONSEQUENCE</text>
+      <text x="400" y="262" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700" class="accent-2" text-anchor="middle" font-style="italic">F ∝ 1 / d</text>
+      <text x="400" y="278" font-family="Segoe UI, Arial, sans-serif" font-size="7.5" class="fg-4" text-anchor="middle">smaller stopping distance,</text>
+      <text x="400" y="288" font-family="Segoe UI, Arial, sans-serif" font-size="7.5" class="fg-4" text-anchor="middle">larger peak force</text>
     </g>
 
     <!-- ===== Right panel: RIGID TARGET (orange, accent-2) ===== -->
@@ -189,12 +191,7 @@
     </g>
   </g>
 
-  <g id="connectors">
-    <!-- Implication arrow inside equation strip: equations imply the multiplier. -->
-    <!-- straight connector via svg-infographics connector mode=straight from 400,210 to 400,232 direction=forward -->
-    <path d="M400.00,212.00 L400.00,226.00" fill="none" stroke="#da8230" stroke-width="1.4" opacity="0.65" stroke-linejoin="round" stroke-linecap="round"/>
-    <polygon points="400.00,232.00 404.00,226.00 396.00,226.00" fill="#da8230" opacity="0.85"/>
-  </g>
+  <g id="connectors"></g>
 
   <g id="content">
     <!-- ===== Verdict band: SOFT (cyan, low severity) ===== -->
@@ -219,6 +216,6 @@
   <g id="callouts">
     <!-- Footer note -->
     <text x="400" y="415" font-family="Segoe UI, Arial, sans-serif" font-size="8" class="fg-3" text-anchor="middle">Same body, same velocity. Stopping distance drives the entire outcome.</text>
-    <text x="400" y="435" font-family="Segoe UI, Arial, sans-serif" font-size="7" class="fg-4" text-anchor="middle" font-style="italic">v = 3.21 m/s · m = 90 kg · d_soft = 10 cm · d_rigid = 2 cm  ·  F_rigid / F_soft = (10/2) = 5</text>
+    <text x="400" y="435" font-family="Segoe UI, Arial, sans-serif" font-size="7" class="fg-4" text-anchor="middle" font-style="italic">v = 3.21 m/s · m = 90 kg · F = m v² / (2d)</text>
   </g>
 </svg>

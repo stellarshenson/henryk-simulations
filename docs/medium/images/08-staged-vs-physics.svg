@@ -180,7 +180,7 @@
     <!-- BOTTOM TIER HEADER                                   -->
     <!-- =================================================== -->
     <g id="header-tier-2">
-      <text x="400" y="298" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" class="accent-2" text-anchor="middle" letter-spacing="2.5">LOAD-BEARING ARGUMENT  ·  MECHANICAL, NOT INTERPRETIVE</text>
+      <text x="400" y="303" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" class="accent-2" text-anchor="middle" letter-spacing="2.5">LOAD-BEARING ARGUMENT  ·  MECHANICAL, NOT INTERPRETIVE</text>
     </g>
 
     <!-- =================================================== -->
@@ -190,21 +190,21 @@
 
       <!-- Card A: VERBATIM CLAIM -> INPUT -->
       <g id="card-input">
-        <path d="M20.0,304.0 H260.0 V477.0 Q260.0,480.0 257.0,480.0 H23.0 Q20.0,480.0 20.0,477.0 Z" fill="#0096d1" fill-opacity="0.06" stroke="#0096d1" stroke-width="1.2"/>
-        <rect x="20" y="304" width="240" height="5" fill="#0096d1" opacity="0.65"/>
+        <path d="M20.0,309.0 H260.0 V477.0 Q260.0,485.0 257.0,485.0 H23.0 Q20.0,485.0 20.0,482.0 Z" fill="#0096d1" fill-opacity="0.06" stroke="#0096d1" stroke-width="1.2"/>
+        <rect x="20" y="309" width="240" height="5" fill="#0096d1" opacity="0.65"/>
       </g>
 
       <!-- Card B: LOWER-BOUND RECONSTRUCTION -->
       <g id="card-lowerbound">
-        <path d="M280.0,304.0 H520.0 V477.0 Q520.0,480.0 517.0,480.0 H283.0 Q280.0,480.0 280.0,477.0 Z" fill="#0096d1" fill-opacity="0.06" stroke="#0096d1" stroke-width="1.2"/>
-        <rect x="280" y="304" width="240" height="5" fill="#0096d1" opacity="0.65"/>
+        <path d="M280.0,309.0 H520.0 V477.0 Q520.0,485.0 517.0,485.0 H283.0 Q280.0,485.0 280.0,482.0 Z" fill="#0096d1" fill-opacity="0.06" stroke="#0096d1" stroke-width="1.2"/>
+        <rect x="280" y="309" width="240" height="5" fill="#0096d1" opacity="0.65"/>
       </g>
 
       <!-- Card C: VERDICT - MECHANICAL IMPOSSIBILITY (orange accent strip on right) -->
       <g id="card-verdict">
-        <path d="M540.0,304.0 H780.0 V477.0 Q780.0,480.0 777.0,480.0 H543.0 Q540.0,480.0 540.0,477.0 Z" fill="#da8230" fill-opacity="0.07" stroke="#a85c14" stroke-width="2"/>
-        <rect x="540" y="304" width="180" height="5" fill="#0096d1" opacity="0.65"/>
-        <rect x="720" y="304" width="60" height="5" fill="#da8230" opacity="0.85"/>
+        <path d="M540.0,309.0 H780.0 V477.0 Q780.0,485.0 777.0,485.0 H543.0 Q540.0,485.0 540.0,482.0 Z" fill="#da8230" fill-opacity="0.07" stroke="#a85c14" stroke-width="2"/>
+        <rect x="540" y="309" width="180" height="5" fill="#0096d1" opacity="0.65"/>
+        <rect x="720" y="309" width="60" height="5" fill="#da8230" opacity="0.85"/>
       </g>
 
     </g>
@@ -213,8 +213,8 @@
     <!-- NEWTON CALLOUT BAR (saturated)                       -->
     <!-- =================================================== -->
     <g id="newton-bar">
-      <rect x="20" y="496" width="760" height="44" rx="3" fill="#da8230" fill-opacity="0.18" stroke="#a85c14" stroke-width="2" opacity="1"/>
-      <rect x="20" y="496" width="760" height="4" fill="#da8230" opacity="0.85"/>
+      <rect x="20" y="501" width="760" height="44" rx="3" fill="#da8230" fill-opacity="0.18" stroke="#a85c14" stroke-width="2" opacity="1"/>
+      <rect x="20" y="501" width="760" height="4" fill="#da8230" opacity="0.85"/>
     </g>
 
   </g>
@@ -223,8 +223,8 @@
   <g id="connectors">
     <!-- One downward arrow from tier-1 caveat to tier-2 header (orange, muted) -->
     <!-- straight connector: len=48px start_angle=-90.0deg end_angle=90.0deg -->
-    <path d="M400.00,266.00 L400.00,282.00" fill="none" stroke="#da8230" stroke-width="1.6" opacity="0.85" stroke-linejoin="round" stroke-linecap="round"/>
-    <polygon points="400.00,290.00 405.50,280.00 394.50,280.00" fill="#da8230" opacity="0.95"/>
+    <path d="M400.00,266.0 L400.00,282.0" fill="none" stroke="#da8230" stroke-width="1.6" opacity="0.85" stroke-linejoin="round" stroke-linecap="round"/>
+    <polygon points="400.00,290.0 405.50,280.0 394.50,280.0" fill="#da8230" opacity="0.95"/>
   </g>
 
   <!-- === CONTENT LAYER === -->
@@ -304,44 +304,44 @@
 
     <!-- Card A: VERBATIM CLAIM -> INPUT -->
     <g id="content-input">
-      <text x="140" y="326" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" class="accent-1" text-anchor="middle" letter-spacing="2">STEP 1</text>
+      <text x="140" y="331" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" class="accent-1" text-anchor="middle" letter-spacing="2">STEP 1</text>
       <!-- Icon: log-in / arrow-into-box (Lucide, ISC license) -->
       <g id="icon-login" transform="translate(115, 344) scale(2.2)" class="ico-cyan">
         <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
         <polyline points="10 17 15 12 10 7"/>
         <line x1="15" y1="12" x2="3" y2="12"/>
       </g>
-      <text x="140" y="422" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="800" class="fg-1" text-anchor="middle">Verbatim claim</text>
-      <text x="140" y="438" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="800" class="fg-1" text-anchor="middle">into the model</text>
-      <text x="140" y="462" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-style="italic" class="fg-2" text-anchor="middle">Take the alleged motion as input.</text>
+      <text x="140" y="427" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="800" class="fg-1" text-anchor="middle">Verbatim claim</text>
+      <text x="140" y="443" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="800" class="fg-1" text-anchor="middle">into the model</text>
+      <text x="140" y="467" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-style="italic" class="fg-2" text-anchor="middle">Take the alleged motion as input.</text>
     </g>
 
     <!-- Card B: LOWER-BOUND RECONSTRUCTION -->
     <g id="content-lowerbound">
-      <text x="400" y="326" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" class="accent-1" text-anchor="middle" letter-spacing="2">STEP 2</text>
+      <text x="400" y="331" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" class="accent-1" text-anchor="middle" letter-spacing="2">STEP 2</text>
       <!-- Icon: function / sigma (Lucide, ISC license) -->
       <g id="icon-sigma" transform="translate(375, 344) scale(2.2)" class="ico-cyan">
         <path d="M18 7V5H6l6 7-6 7h12v-2"/>
       </g>
       <!-- Small subscript label rendered as plain ASCII inside tspan to avoid Unicode subscript font drift -->
-      <text x="400" y="404" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" class="accent-2" text-anchor="middle">v<tspan font-size="8" dy="3">min</tspan><tspan dy="-3"> ,  </tspan>a<tspan font-size="8" dy="3">min</tspan><tspan dy="-3"> ,  </tspan>p<tspan font-size="8" dy="3">min</tspan></text>
-      <text x="400" y="422" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="800" class="fg-1" text-anchor="middle">Lower-bound</text>
-      <text x="400" y="438" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="800" class="fg-1" text-anchor="middle">reconstruction</text>
-      <text x="400" y="462" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-style="italic" class="fg-2" text-anchor="middle">Minimum demand any compatible motion imposes.</text>
+      <text x="400" y="409" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" class="accent-2" text-anchor="middle">v<tspan font-size="8" dy="3">min</tspan><tspan dy="-3"> ,  </tspan>a<tspan font-size="8" dy="3">min</tspan><tspan dy="-3"> ,  </tspan>p<tspan font-size="8" dy="3">min</tspan></text>
+      <text x="400" y="427" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="800" class="fg-1" text-anchor="middle">Lower-bound</text>
+      <text x="400" y="443" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="800" class="fg-1" text-anchor="middle">reconstruction</text>
+      <text x="400" y="467" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-style="italic" class="fg-2" text-anchor="middle">Minimum demand any compatible motion imposes.</text>
     </g>
 
     <!-- Card C: VERDICT - MECHANICAL IMPOSSIBILITY -->
     <g id="content-verdict">
-      <text x="660" y="326" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" class="accent-2" text-anchor="middle" letter-spacing="2">VERDICT</text>
+      <text x="660" y="331" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" class="accent-2" text-anchor="middle" letter-spacing="2">VERDICT</text>
       <!-- Icon: octagon with X (Lucide ban / octagon-x, ISC license), orange -->
       <g id="icon-octagon-x" transform="translate(635, 344) scale(2.2)" class="ico-orange">
         <path d="M7.86 2h8.28L22 7.86v8.28L16.14 22H7.86L2 16.14V7.86Z"/>
         <line x1="15" y1="9" x2="9" y2="15"/>
         <line x1="9" y1="9" x2="15" y2="15"/>
       </g>
-      <text x="660" y="422" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="800" class="fg-1" text-anchor="middle">Mechanical</text>
-      <text x="660" y="438" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="800" class="accent-2" text-anchor="middle">impossibility</text>
-      <text x="660" y="462" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-style="italic" class="fg-2" text-anchor="middle">No compatible motion produces the record.</text>
+      <text x="660" y="427" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="800" class="fg-1" text-anchor="middle">Mechanical</text>
+      <text x="660" y="443" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="800" class="accent-2" text-anchor="middle">impossibility</text>
+      <text x="660" y="467" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-style="italic" class="fg-2" text-anchor="middle">No compatible motion produces the record.</text>
     </g>
 
   </g>
@@ -358,8 +358,8 @@
 
     <!-- Newton headline -->
     <g id="callout-newton">
-      <text x="400" y="521" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="800" class="accent-2" text-anchor="middle" letter-spacing="3">NEWTON HAS SPOKEN.</text>
-      <text x="400" y="535" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" class="accent-1" text-anchor="middle" letter-spacing="2" font-style="italic">the interpretive layer is no longer the load-bearing argument</text>
+      <text x="400" y="526" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="800" class="accent-2" text-anchor="middle" letter-spacing="3">NEWTON HAS SPOKEN.</text>
+      <text x="400" y="540" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="600" class="accent-1" text-anchor="middle" letter-spacing="2" font-style="italic">the interpretive layer is no longer the load-bearing argument</text>
     </g>
 
   </g>

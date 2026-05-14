@@ -24,6 +24,16 @@ Forensic reconstruction of the contested 3 s corridor incident. Cross-references
 
 **Documented findings**. Single right-shoulder bruise on medical examination; no rib fracture, no breathing complaint, full thoracic mobility, no audio clipping spike, no steel-panel ringing in the recording, no acoustic reaction from the line-of-sight third-party observer (Cecilia).
 
+**The trinity**. Three load-bearing predictions of the lower-bound reconstruction, each absent from the record:
+
+**First, the force.** **18 kN** on the victim's back at contact - **~1.8 tonnes** pressing on the rib cage for 12 ms. The AIS 5+ critical / life-threatening band starts at 12 kN (Viano 1989; Cavanaugh 1989); 18 kN is ~2× the highest experimental rear-torso loads anyone has reported (6.9-10.5 kN, Kemper et al. 2014, which themselves produced rib fractures and costo-vertebral / costo-transverse joint injuries). Predicted: fractured ribs, pulmonary contusion, internal organ damage. Documented: single bruise on the right shoulder.
+
+**Second, the acceleration.** **6 m/s²** sustained through the pull-and-throw, on a 70 kg passive body. Olympic-sprinter pace, not what an unwarmed-up adult reaches at an apartment doorway with no run-up.
+
+**Third, the sound.** **~130 dB** at the phone microphone two metres away. The phone was on. The recording was running. The witness was 1.5 m away. None of them registers a bang.
+
+> **Three predictions. Three independent physical channels. Zero of them in the record.**
+
 > [!CAUTION]
 > **Key conclusion**. Every outcome-side observable predicted by the lower-bound physics is either absent from the documented record or directly contradicted by the third-party witness. The claimed motion is not consistent with the documented evidence across mechanical, medical, acoustic and observational channels simultaneously.
 

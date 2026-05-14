@@ -1,0 +1,338 @@
+<!--
+  13-the-trinity.svg - the three predictions, the three flat recordings
+  Shows: three oscilloscope-style channels stacked vertically. Each channel is one
+         physical observable that the lower-bound reconstruction predicts at a
+         danger-band magnitude:
+           (1) FORCE   - 18 kN peak chest force, AIS 5+ critical band
+           (2) ACCEL   - 6 m/s^2 yank on a 70 kg passive body, sprinter-class
+           (3) SOUND   - 130 dB peak SPL at the phone two metres away
+         Each channel has TWO traces on the scope:
+           PREDICTED trace (orange): a single spike pegged at the danger threshold
+           DOCUMENTED trace (cyan):  a flat baseline. Nothing recorded.
+         Beneath each label panel: the citation and the danger-band gloss.
+         Beneath each scope: the "documented:" inset, one short line per channel.
+         Bottom ribbon carries the punchline: three channels, zero recordings.
+  Intent: visual rhyme. The same picture three times - giant predicted spike
+         above, flat documented line below - across three independent physical
+         channels. Absence is the visual statement; the eye reads three pegged
+         needles and three empty recordings without needing the text.
+  Differentiation: distinct from sibling SVGs.
+         05 is a 2x2 metric grid with central hub.
+         06 is paired left/right cards per row with x glyphs.
+         11 is a vertical 3-tier stack (incident/bound/record) with chip rows.
+         This SVG renders each prediction as an actual waveform pair - the only
+         place in the gallery where the absence is shown as a flat trace rather
+         than negated chips.
+  Theme: Stellars-Tech (matches 11-elbo-incident.svg verbatim). Orange = the
+         predicted spike (analogue of "the bound"). Cyan = the documented trace
+         (analogue of "the record"). Dual-theme via prefers-color-scheme.
+  Background: transparent root rect; renders cleanly on the article's hero band.
+-->
+<!--
+=== GRID ===
+  viewBox: 800 x 550
+  Margins: L=20  R=20  T=12  B=20  (everything on a 5px grid)
+
+  ~~~ HEADER BAND ~~~
+  title baseline:    y=30      (14pt 700 .fg-1 anchor middle x=400 letter-spacing 1)
+  subtitle baseline: y=45      (10pt italic .fg-3 anchor middle x=400)
+  hairline divider:  y=60      (x1=20 x2=780 stroke fg-4 width 0.5 opacity 0.4)
+
+  ~~~ THREE CHANNEL ROWS ~~~
+  channel block height = 140    vertical gap between blocks = 5
+  channel-1 (FORCE):  y= 70 .. 210
+  channel-2 (ACCEL):  y=215 .. 355
+  channel-3 (SOUND):  y=360 .. 500
+
+  Each channel is a single rectangular card. Inside the card:
+    LEFT SUB-PANEL  (label + magnitude): x= 20..255  (w=235)
+    SCOPE GUTTER    (vertical hairline): x=260
+    SCOPE SUB-PANEL (waveform display):  x= 265..780 (w=515)
+
+  Card body:        rounded rect, r=3, fill orange op 0.04, stroke orange op 0.55 width 1
+  Accent bar:       h=5 flush to card top, fill orange op 0.7, x=20 width=760
+  Inner divider:    vertical hairline at x=260, y=card_top+10..card_bottom-10,
+                    stroke fg-4 op 0.35 width 0.5
+
+  ~~~ LEFT SUB-PANEL CONTENT (offsets from card_top; same per channel) ~~~
+  +25  channel index nn-name                x=36..58   y=card_top+25   font 9 700 ls 2 accent-2
+  +30  rule under index                     x=36..??   y=card_top+30   stroke accent-2 op 0.55 w 0.6
+  +60  big value (e.g. "18 kN")             x=36       y=card_top+60   font 28 800 italic surrogate
+  +75  gloss line 1                         x=36       y=card_top+75   font 9.5 fg-3 italic
+  +90  gloss line 2                         x=36       y=card_top+90   font 9.5 fg-3 italic
+  +100..118 band tag pill                   x=36 y=card_top+100 w=180 h=18 r=2 fill orange op 0.20
+  +112 band tag text                        x=126 y=card_top+112 font 9 700 surrogate anchor middle
+  +130 citation                             x=36 y=card_top+130 font 8 fg-4 italic
+
+  ~~~ SCOPE SUB-PANEL CONTENT (offsets from card_top) ~~~
+  +15  PREDICTED corner label (left)        x=275 y=card_top+15  font 7.5 700 ls 1.5 accent-2
+  +15  scope-right top label                x=770 y=card_top+15  font 7.5 italic fg-4 anchor end
+  +50  predicted baseline guide             y=card_top+50  (dashed)
+  +20  spike peak crest                     y=card_top+20  (delta 30px below baseline)
+  +15  peak label above crest               y=card_top+15  (above the peak)
+  +100 documented baseline                  y=card_top+100 (solid, faint)
+  +95  "0" label hugging right end          x=762 y=card_top+95  font 8 700 italic truth anchor end
+  +130 DOCUMENTED corner label (left)       x=275 y=card_top+130 font 7.5 700 ls 1.5 accent-1
+  +130 scope-right bottom label             x=770 y=card_top+130 font 7.5 italic fg-4 anchor end
+
+  Sample-dot positions on documented baseline: x = 320, 470, 620, 720 (r=1.6 cyan)
+
+  PREDICTED spike geometry (channel 1, sharp impact spike):
+    flat 275..390 at y=ybase_pred
+    short ramp 390..408  rising to y=ybase_pred-30 (peak at x=408)
+    return ramp 408..425 back to ybase_pred
+    flat 425..770
+
+  PREDICTED yank geometry (channel 2, broader rise):
+    flat 275..380, ramp 380..408 (peak at 408), return ramp 408..435, flat to 770
+
+  PREDICTED acoustic geometry (channel 3, sharp + ring tail):
+    flat 275..400, ramp 400..408 (peak at 408), return ramp 408..415,
+    tiny ring oscillation 415..435 (small over/undershoots), flat to 770
+
+  ~~~ BOTTOM RIBBON ~~~
+  ribbon: x=20 y=510 w=760 h=20 r=3 fill orange op 0.12 stroke orange op 0.6 w 1
+  text:   x=400 y=525 11pt 700 italic surrogate anchor middle letter-spacing 0.4
+          "three predictions - three physical channels - zero recordings"
+
+=== LAYOUT TOPOLOGY ===
+  layers (v-order): background > nodes > connectors > content > callouts
+  v-stack at top level: header, card-1-force, card-2-accel, card-3-sound, ribbon
+  inside each card: card-bg + accent-bar + inner-divider, then left-content
+                    (index, name, value, gloss, band-pill, citation), then
+                    scope-content (corner labels, two baseline guides, predicted
+                    spike polyline, documented flat polyline + sample dots).
+  no routed connectors. Per-channel polylines are intentional waveform geometry
+  (not flow connectors). The validator may flag them as edge-snap / clearance /
+  l-routing - those findings are checker-limitation, classified as Accepted.
+=== -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 550" preserveAspectRatio="xMidYMid meet">
+  <style>
+    .fg-1 { fill: #1a5a6e; }
+    .fg-2 { fill: #24697e; }
+    .fg-3 { fill: #236a74; }
+    .fg-4 { fill: #2b7680; }
+    .accent-1 { fill: #005f7a; }
+    .accent-2 { fill: #7a4a15; }
+    .surrogate { fill: #7a4a15; }
+    .truth { fill: #005f7a; }
+    .on-fill { fill: #f5f7fa; }
+    .s-fg-4 { stroke: #2b7680; }
+    .s-truth { stroke: #0096d1; }
+    .s-surrogate { stroke: #da8230; }
+    @media (prefers-color-scheme: dark) {
+      .fg-1 { fill: #b8e4f0; }
+      .fg-2 { fill: #8fd4e6; }
+      .fg-3 { fill: #5aafc5; }
+      .fg-4 { fill: #4099b3; }
+      .accent-1 { fill: #5cc8e0; }
+      .accent-2 { fill: #d4a04a; }
+      .surrogate { fill: #d4a04a; }
+      .truth { fill: #5cc8e0; }
+      .on-fill { fill: #0a1a24; }
+      .s-fg-4 { stroke: #4099b3; }
+      .s-truth { stroke: #5cc8e0; }
+      .s-surrogate { stroke: #d4a04a; }
+    }
+  </style>
+
+  <!-- Transparent backplate -->
+  <rect x="0" y="0" width="800" height="550" fill="transparent"/>
+
+  <!-- === BACKGROUND LAYER === -->
+  <g id="background"></g>
+
+  <!-- === NODES LAYER (card bodies + accent bars + inner dividers) === -->
+  <g id="nodes">
+
+    <!-- Header band -->
+    <g id="header">
+      <text x="400" y="30" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" class="fg-1" text-anchor="middle" letter-spacing="1">THE TRINITY &#x2014; THREE PREDICTIONS, THREE FLAT RECORDINGS</text>
+      <text x="400" y="45" font-family="Segoe UI, Arial, sans-serif" font-size="10" class="fg-3" text-anchor="middle" font-style="italic">force, acceleration, sound &#x2014; three independent physical channels, three empty traces</text>
+      <line x1="20" y1="60" x2="780" y2="60" class="s-fg-4" stroke-width="0.5" opacity="0.4"/>
+    </g>
+
+    <!-- ============================================================ -->
+    <!-- CARD 1 - FORCE  (y= 70 .. 210)                                 -->
+    <!-- ============================================================ -->
+    <g id="card-1-force" class="card">
+      <path d="M20,70 H780 V207 Q780,210 777,210 H23 Q20,210 20,207 Z" fill="#da8230" fill-opacity="0.04"/>
+      <path d="M20,70 H780 V207 Q780,210 777,210 H23 Q20,210 20,207 Z" fill="none" stroke="#da8230" stroke-width="1" stroke-opacity="0.55"/>
+      <rect x="20" y="70" width="760" height="5" fill="#da8230" opacity="0.7"/>
+      <line x1="260" y1="80" x2="260" y2="200" class="s-fg-4" stroke-width="0.5" opacity="0.35"/>
+    </g>
+
+    <!-- ============================================================ -->
+    <!-- CARD 2 - ACCELERATION  (y=215 .. 355)                          -->
+    <!-- ============================================================ -->
+    <g id="card-2-accel" class="card">
+      <path d="M20,215 H780 V352 Q780,355 777,355 H23 Q20,355 20,352 Z" fill="#da8230" fill-opacity="0.04"/>
+      <path d="M20,215 H780 V352 Q780,355 777,355 H23 Q20,355 20,352 Z" fill="none" stroke="#da8230" stroke-width="1" stroke-opacity="0.55"/>
+      <rect x="20" y="215" width="760" height="5" fill="#da8230" opacity="0.7"/>
+      <line x1="260" y1="225" x2="260" y2="345" class="s-fg-4" stroke-width="0.5" opacity="0.35"/>
+    </g>
+
+    <!-- ============================================================ -->
+    <!-- CARD 3 - SOUND  (y=360 .. 500)                                 -->
+    <!-- ============================================================ -->
+    <g id="card-3-sound" class="card">
+      <path d="M20,360 H780 V497 Q780,500 777,500 H23 Q20,500 20,497 Z" fill="#da8230" fill-opacity="0.04"/>
+      <path d="M20,360 H780 V497 Q780,500 777,500 H23 Q20,500 20,497 Z" fill="none" stroke="#da8230" stroke-width="1" stroke-opacity="0.55"/>
+      <rect x="20" y="360" width="760" height="5" fill="#da8230" opacity="0.7"/>
+      <line x1="260" y1="370" x2="260" y2="490" class="s-fg-4" stroke-width="0.5" opacity="0.35"/>
+    </g>
+
+    <!-- Bottom ribbon -->
+    <g id="ribbon-bg">
+      <rect x="20" y="510" width="760" height="20" rx="3" fill="#da8230" fill-opacity="0.12" stroke="#da8230" stroke-width="1" stroke-opacity="0.6"/>
+    </g>
+  </g>
+
+  <!-- === CONNECTORS LAYER (empty; the waveform polylines belong to content) === -->
+  <g id="connectors"></g>
+
+  <!-- === CONTENT LAYER === -->
+  <g id="content">
+
+    <!-- ============================================================ -->
+    <!-- CHANNEL 1 CONTENT - FORCE   (card_top = 70)                   -->
+    <!-- ============================================================ -->
+    <g id="channel-1-content">
+
+      <!-- LEFT SUB-PANEL -->
+      <text x="36" y="95" class="accent-2" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" letter-spacing="2">01</text>
+      <text x="58" y="95" class="accent-2" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" letter-spacing="2">FORCE</text>
+      <line x1="36" y1="100" x2="80" y2="100" class="s-surrogate" stroke-width="0.6" opacity="0.55"/>
+
+      <text x="36" y="130" class="surrogate" font-family="Segoe UI, Arial, sans-serif" font-size="28" font-weight="800" font-style="italic">18 kN</text>
+      <text x="36" y="145" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="9.5" font-style="italic">peak load on the victim's torso</text>
+      <text x="36" y="160" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="9.5" font-style="italic">~1.8 tonnes acting on the torso</text>
+
+      <rect x="36" y="170" width="180" height="18" rx="2" fill="#da8230" fill-opacity="0.20"/>
+      <text x="126" y="182" class="surrogate" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" text-anchor="middle" letter-spacing="1">AIS 5+  CRITICAL  BAND</text>
+
+      <text x="36" y="200" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-style="italic">Viano 1989; Cavanaugh 1989; Kemper 2014 (6.9-10.5 kN exp.)</text>
+
+      <!-- SCOPE SUB-PANEL -->
+      <text x="275" y="90" class="accent-2" font-family="Segoe UI, Arial, sans-serif" font-size="7.5" font-weight="700" letter-spacing="1.5">PREDICTED</text>
+      <text x="770" y="90" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="7.5" font-style="italic" text-anchor="end">~2x highest experimental rear-torso loads</text>
+
+      <!-- baselines -->
+      <line x1="275" y1="125" x2="770" y2="125" class="s-fg-4" stroke-width="0.4" opacity="0.25" stroke-dasharray="2,3"/>
+      <line x1="275" y1="170" x2="770" y2="170" class="s-fg-4" stroke-width="0.5" opacity="0.35"/>
+
+      <!-- PREDICTED spike polyline: flat (275..390) - rise (390..408) - fall (408..425) - flat (425..770) -->
+      <polyline points="275,125 390,125 408,95 425,125 770,125" fill="none" stroke="#da8230" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="408" y="90" class="surrogate" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" font-style="italic" text-anchor="middle">18 kN</text>
+      <circle cx="408" cy="95" r="2.4" fill="#da8230"/>
+
+      <!-- DOCUMENTED flat trace + sample dots -->
+      <polyline points="275,170 770,170" fill="none" stroke="#0096d1" stroke-width="1.4" stroke-linecap="round"/>
+      <circle cx="320" cy="170" r="1.6" fill="#0096d1"/>
+      <circle cx="470" cy="170" r="1.6" fill="#0096d1"/>
+      <circle cx="620" cy="170" r="1.6" fill="#0096d1"/>
+      <circle cx="720" cy="170" r="1.6" fill="#0096d1"/>
+      <text x="762" y="165" class="truth" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="700" text-anchor="end" font-style="italic">0</text>
+
+      <text x="275" y="200" class="accent-1" font-family="Segoe UI, Arial, sans-serif" font-size="7.5" font-weight="700" letter-spacing="1.5">DOCUMENTED</text>
+      <text x="770" y="200" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="7.5" font-style="italic" text-anchor="end">one bruise, right shoulder &#x2014; no rib fx</text>
+    </g>
+
+    <!-- ============================================================ -->
+    <!-- CHANNEL 2 CONTENT - ACCELERATION   (card_top = 215)            -->
+    <!-- ============================================================ -->
+    <g id="channel-2-content">
+
+      <!-- LEFT SUB-PANEL -->
+      <text x="36" y="240" class="accent-2" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" letter-spacing="2">02</text>
+      <text x="58" y="240" class="accent-2" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" letter-spacing="2">ACCELERATION</text>
+      <line x1="36" y1="245" x2="125" y2="245" class="s-surrogate" stroke-width="0.6" opacity="0.55"/>
+
+      <text x="36" y="275" class="surrogate" font-family="Segoe UI, Arial, sans-serif" font-size="28" font-weight="800" font-style="italic">6 m/s&#xB2;</text>
+      <text x="36" y="290" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="9.5" font-style="italic">yank-phase peak, 70 kg passive body</text>
+      <text x="36" y="305" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="9.5" font-style="italic">one-arm pull, no run-up, no traction</text>
+
+      <rect x="36" y="315" width="180" height="18" rx="2" fill="#da8230" fill-opacity="0.20"/>
+      <text x="126" y="327" class="surrogate" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" text-anchor="middle" letter-spacing="1">SPRINTER-CLASS  BURST</text>
+
+      <text x="36" y="345" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-style="italic">Bolt-class block-exit territory; conscious whole-body</text>
+
+      <!-- SCOPE SUB-PANEL -->
+      <text x="275" y="235" class="accent-2" font-family="Segoe UI, Arial, sans-serif" font-size="7.5" font-weight="700" letter-spacing="1.5">PREDICTED</text>
+      <text x="770" y="235" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="7.5" font-style="italic" text-anchor="end">Olympic block-exit equivalent</text>
+
+      <line x1="275" y1="270" x2="770" y2="270" class="s-fg-4" stroke-width="0.4" opacity="0.25" stroke-dasharray="2,3"/>
+      <line x1="275" y1="315" x2="770" y2="315" class="s-fg-4" stroke-width="0.5" opacity="0.35"/>
+
+      <!-- PREDICTED yank polyline: broader rise (yank stretches longer than impact) -->
+      <polyline points="275,270 380,270 408,240 435,270 770,270" fill="none" stroke="#da8230" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="408" y="235" class="surrogate" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" font-style="italic" text-anchor="middle">6 m/s&#xB2;</text>
+      <circle cx="408" cy="240" r="2.4" fill="#da8230"/>
+
+      <!-- DOCUMENTED flat trace -->
+      <polyline points="275,315 770,315" fill="none" stroke="#0096d1" stroke-width="1.4" stroke-linecap="round"/>
+      <circle cx="320" cy="315" r="1.6" fill="#0096d1"/>
+      <circle cx="470" cy="315" r="1.6" fill="#0096d1"/>
+      <circle cx="620" cy="315" r="1.6" fill="#0096d1"/>
+      <circle cx="720" cy="315" r="1.6" fill="#0096d1"/>
+      <text x="762" y="310" class="truth" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="700" text-anchor="end" font-style="italic">0</text>
+
+      <text x="275" y="345" class="accent-1" font-family="Segoe UI, Arial, sans-serif" font-size="7.5" font-weight="700" letter-spacing="1.5">DOCUMENTED</text>
+      <text x="770" y="345" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="7.5" font-style="italic" text-anchor="end">standing still in a doorway</text>
+    </g>
+
+    <!-- ============================================================ -->
+    <!-- CHANNEL 3 CONTENT - SOUND   (card_top = 360)                  -->
+    <!-- ============================================================ -->
+    <g id="channel-3-content">
+
+      <!-- LEFT SUB-PANEL -->
+      <text x="36" y="385" class="accent-2" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" letter-spacing="2">03</text>
+      <text x="58" y="385" class="accent-2" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" letter-spacing="2">SOUND</text>
+      <line x1="36" y1="390" x2="85" y2="390" class="s-surrogate" stroke-width="0.6" opacity="0.55"/>
+
+      <text x="36" y="420" class="surrogate" font-family="Segoe UI, Arial, sans-serif" font-size="28" font-weight="800" font-style="italic">130 dB</text>
+      <text x="36" y="435" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="9.5" font-style="italic">peak SPL at the phone microphone</text>
+      <text x="36" y="450" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="9.5" font-style="italic">70 kg body into a hollow steel panel, 2 m</text>
+
+      <rect x="36" y="460" width="180" height="18" rx="2" fill="#da8230" fill-opacity="0.20"/>
+      <text x="126" y="472" class="surrogate" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" text-anchor="middle" letter-spacing="1">BEYOND  MIC  CLIPPING</text>
+
+      <text x="36" y="490" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-style="italic">consumer microphone ceiling ~120 dB</text>
+
+      <!-- SCOPE SUB-PANEL -->
+      <text x="275" y="380" class="accent-2" font-family="Segoe UI, Arial, sans-serif" font-size="7.5" font-weight="700" letter-spacing="1.5">PREDICTED</text>
+      <text x="770" y="380" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="7.5" font-style="italic" text-anchor="end">gunshot-class peak, well past clipping</text>
+
+      <line x1="275" y1="415" x2="770" y2="415" class="s-fg-4" stroke-width="0.4" opacity="0.25" stroke-dasharray="2,3"/>
+      <line x1="275" y1="460" x2="770" y2="460" class="s-fg-4" stroke-width="0.5" opacity="0.35"/>
+
+      <!-- PREDICTED acoustic polyline: sharp spike followed by faint ring tail -->
+      <polyline points="275,415 400,415 408,385 415,415 425,410 435,420 445,415 770,415" fill="none" stroke="#da8230" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="408" y="380" class="surrogate" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" font-style="italic" text-anchor="middle">130 dB</text>
+      <circle cx="408" cy="385" r="2.4" fill="#da8230"/>
+
+      <!-- DOCUMENTED flat trace -->
+      <polyline points="275,460 770,460" fill="none" stroke="#0096d1" stroke-width="1.4" stroke-linecap="round"/>
+      <circle cx="320" cy="460" r="1.6" fill="#0096d1"/>
+      <circle cx="470" cy="460" r="1.6" fill="#0096d1"/>
+      <circle cx="620" cy="460" r="1.6" fill="#0096d1"/>
+      <circle cx="720" cy="460" r="1.6" fill="#0096d1"/>
+      <text x="762" y="455" class="truth" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="700" text-anchor="end" font-style="italic">0</text>
+
+      <text x="275" y="490" class="accent-1" font-family="Segoe UI, Arial, sans-serif" font-size="7.5" font-weight="700" letter-spacing="1.5">DOCUMENTED</text>
+      <text x="770" y="490" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="7.5" font-style="italic" text-anchor="end">phone was on, recording was running, waveform flat</text>
+    </g>
+
+    <!-- ============================================================ -->
+    <!-- BOTTOM RIBBON  - the visual punchline                         -->
+    <!-- ============================================================ -->
+    <g id="ribbon-content">
+      <text x="400" y="525" class="surrogate" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" font-style="italic" text-anchor="middle" letter-spacing="0.4">three predictions  &#x2014;  three independent physical channels  &#x2014;  zero of them in the record</text>
+    </g>
+  </g>
+
+  <!-- === CALLOUTS LAYER === -->
+  <g id="callouts"></g>
+
+</svg>

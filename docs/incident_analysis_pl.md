@@ -24,6 +24,16 @@ Rekonstrukcja kryminalistyczna spornego zdarzenia korytarzowego trwającego 3 s.
 
 **Udokumentowane ustalenia**. W badaniu lekarskim stwierdzono jedynie pojedynczy siniak na prawym barku; brak złamania żeber, brak dolegliwości oddechowych, pełna ruchomość klatki piersiowej, brak przesterowania ścieżki audio, brak dzwonienia stalowego panelu w nagraniu, brak akustycznej reakcji ze strony postronnego świadka znajdującego się w linii wzroku (Cecilia).
 
+**Trzy kluczowe liczby**. Trzy najważniejsze przewidywania rekonstrukcji dolnego ograniczenia - żadne z nich nie pojawia się w dokumentacji:
+
+**Po pierwsze, siła.** **18 kN** szczytowego obciążenia pleców ofiary w chwili kontaktu - **~1.8 tony** nacisku na klatkę piersiową przez 12 ms. Pasmo AIS 5+ - krytyczne / zagrażające życiu - zaczyna się od 12 kN (Viano 1989; Cavanaugh 1989); 18 kN to ~2× najwyższe eksperymentalne obciążenia tylno-tułowiowe, jakie ktokolwiek zarejestrował (6.9-10.5 kN, Kemper i in. 2014), które same powodowały złamania żeber oraz urazy stawów żebrowo-kręgowych / żebrowo-poprzecznych. Przewidywane: złamania żeber, stłuczenie płuca, uszkodzenie narządów wewnętrznych. Udokumentowane: pojedynczy siniak na prawym barku.
+
+**Po drugie, przyspieszenie.** **6 m/s²** utrzymywane przez fazę pociągnięcia i rzutu, na biernym ciele dorosłego 70 kg. Tempo olimpijskiego sprintera, a nie to, co nieprzygotowany dorosły osiąga przy drzwiach mieszkania bez rozbiegu.
+
+**Po trzecie, dźwięk.** **~130 dB** przy mikrofonie telefonu z odległości dwóch metrów. Telefon był włączony. Nagranie trwało. Świadek znajdowała się 1.5 m dalej. Żadne z nich nie rejestruje huku.
+
+> **Trzy przewidywania. Trzy niezależne kanały fizyczne. Żadnego z nich w dokumentacji.**
+
 > [!CAUTION]
 > **Kluczowy wniosek**. Każda obserwowalna wielkość po stronie skutku, przewidziana przez fizykę dolnego ograniczenia, jest albo nieobecna w udokumentowanym materiale dowodowym, albo wprost z nim sprzeczna. Zarzucany przebieg zdarzenia nie daje się jednocześnie pogodzić z udokumentowanym materiałem dowodowym w żadnym z czterech kanałów: mechanicznym, medycznym, akustycznym ani obserwacyjnym.
 

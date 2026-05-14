@@ -195,6 +195,24 @@ One more thing about that bruise. The defendant's position is that it was **self
 
 ---
 
+## The trinity
+
+![Three predicted spikes, three flat documented baselines](images/13-the-trinity.svg)
+
+Three load-bearing predictions. Watch them play out in the corridor.
+
+**First, the force.** **18 kilonewtons** on the victim's back at contact - **1.8 tonnes** pressing on the rib cage for 12 milliseconds. The AIS 5+ critical / life-threatening band starts at 12 kN (Viano 1989; Cavanaugh 1989); 18 kN is ~2× the highest experimental rear-torso loads anyone has reported (6.9-10.5 kN, Kemper et al. 2014, which themselves produced rib fractures and costo-vertebral joint injuries). Predicted: fractured ribs, pulmonary contusion, internal organ damage. Documented: one bruise on the right shoulder.
+
+**Second, the acceleration.** **6 m/s²** sustained through the pull-and-throw, on a 70 kg passive body. Olympic-sprinter pace. The actual setting: standing still in a doorway, one arm pulling a passive load.
+
+**Third, the sound.** **~130 dB** at the phone microphone two metres away. The phone was on. The recording was running. The witness was 1.5 m away. None of them registers a bang.
+
+> **Three predictions.**
+> **Three independent physical channels.**
+> **Zero of them in the record.**
+
+---
+
 ## The takeaway
 
 ![Where this test sits on the forensic spectrum](images/12-takeaway.svg)
