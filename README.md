@@ -4,8 +4,12 @@ Numerical and physics-based reconstructions of contested real-world events. Buil
 
 Current scene: **Mk1 - Corridor Attack Incident Reconstruction**.
 
+Most people, when falsely accused, hire a lawyer and wait. I wrote a physics simulation.
+
+![Most people hire a lawyer. I wrote a physics simulation.](docs/medium/images/07-physics-vs-litigation.svg)
+
 > [!IMPORTANT]
-> The event as described in the material **did not happen**. The father is currently using science, physics, simulation, geometry and statistics to prove to the half-witted court officials that the universe would need to switch off the laws of physics for the events to unfold the way the victim portrayed them.
+> The event as described by the victim **did not happen**. The father is currently using science, physics, simulation, geometry and statistics to prove to the half-witted court officials that the laws of physics would have to take an unscheduled coffee break for the events to unfold the way the victim portrayed them.
 >
 > The father and his son are the victims of **parental alienation**. The fabricated incident is one instrument in that wider pattern; the physics-based reconstruction in this repo is one of the means the father is using to push back against it.
 
@@ -17,7 +21,13 @@ Current scene: **Mk1 - Corridor Attack Incident Reconstruction**.
 > Click the thumbnail for the rendered simulation on YouTube.
 
 > [!TIP]
-> The narrative version of the story - same maths, more jokes - is on Medium: **[The 3-second throw that couldn't happen - a legal science story](https://pub.towardsai.net/the-3-second-throw-that-couldnt-happen-a-legal-science-story-8cd705a99fa1)** (Towards AI). The headline finding, in the article's own words: *the laws of physics would have to take an unscheduled coffee break for the events to unfold as described*.
+> The narrative version of the story is on Medium: **[The 3-second throw that couldn't happen - a legal science story](https://pub.towardsai.net/the-3-second-throw-that-couldnt-happen-a-legal-science-story-8cd705a99fa1)** (Towards AI).
+
+The core trick is to reconstruct the smallest possible motion that still admits the verbatim testimony. If even that lower bound exceeds what a body can do, every richer reading of the accusation exceeds it too.
+
+![Lower-bound argument (ELBO-style)](docs/medium/images/01-lower-bound-argument.svg)
+
+The setup the lower-bound reconstruction runs against: a two-segment corridor with the apartment door on the north wall and the elevator door on the south wall, plus the props and starting positions Victoria, Andrew and Cecilia were in at t=0.
 
 ![Corridor overhead geometry](reports/figures/01-corridor-geometry.png)
 
@@ -29,7 +39,7 @@ A father was accused of assault that allegedly happened in a hallway: pull the v
 
 **Was the course of events described by the victim plausible?**
 
-The answer is in the simulation. Have fun.
+The answer is in the simulation. Have fun. The reconstruction here cheats on the prosecution's behalf - the accusation gets the friendliest possible reading - and the accusation still fails the physics.
 
 ## Aim
 
@@ -104,6 +114,10 @@ Stress-test the contested 3 s claim against the laws of physics and against popu
 
 Configurable knobs (phase durations, stopping distance) live in the notebook config cell.
 
+What the lower bound predicts the impact would have produced, set against what the actual medical, acoustic and witness record shows - the gap between the two is the forensic equivalent of a KL divergence between model and reality.
+
+![Lower bound vs documented record - the forensic gap](docs/medium/images/11-elbo-incident.svg)
+
 ## Quick start
 
 ```bash
@@ -131,7 +145,7 @@ Other Makefile targets: `make build`, `make clean`, `make format`, `make help`.
 
 Minimum-phase decomposition with maximum time per phase gives the lowest physically achievable demand. If that lower bound already exceeds population biomechanical references, the true motion exceeds them by at least as much. Any richer reconstruction (throat-grab, defensive grab, left-side approach, strangulation attempt - all of which appear in later filings) compresses each remaining phase, pushes peak accelerations and angular velocities up, and makes the verdict strictly worse for the claim. See [`references/incident/events_reconstruction.md`](references/incident/events_reconstruction.md) for the formal lower-bound argument and the ELBO analogy.
 
-Or, in slightly less formal terms: two and a half years of contested family-court litigation, substantially clarified by twenty minutes of biomechanics.
+Crash reconstruction asks did this specific impact happen. This test asks the prior question: could this story have happened at all. Four years of contested family-court litigation, substantially clarified by twenty minutes of biomechanics.
 
 ## Status
 

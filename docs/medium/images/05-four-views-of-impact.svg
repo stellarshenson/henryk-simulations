@@ -115,8 +115,8 @@
     <text x="36" y="138" font-family="Segoe UI, Arial, sans-serif" font-size="10" class="fg-3">over the 18 ms collision window</text>
     <text x="205" y="178" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700" class="accent-1" text-anchor="middle">18.06 kN</text>
     <text x="205" y="194" font-family="Segoe UI, Arial, sans-serif" font-size="10" class="fg-3" text-anchor="middle">peak rib-cage load</text>
-    <rect x="115" y="203" width="180" height="20" rx="10" class="sev-critical"/>
-    <text x="205" y="217" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" class="on-fill" text-anchor="middle" letter-spacing="2">CRITICAL  AIS 5+</text>
+    <rect x="95" y="203" width="220" height="20" rx="10" class="sev-critical"/>
+    <text x="205" y="217" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" class="on-fill" text-anchor="middle" letter-spacing="1.4">CRITICAL  AIS 5+</text>
     <text x="205" y="244" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-4" text-anchor="middle" font-style="italic">Viano 1989 - blunt thoracic injury thresholds</text>
   </g>
 
@@ -130,8 +130,8 @@
     <text x="426" y="138" font-family="Segoe UI, Arial, sans-serif" font-size="10" class="fg-3">standard gravity</text>
     <text x="595" y="178" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700" class="accent-1" text-anchor="middle">26.3 g</text>
     <text x="595" y="194" font-family="Segoe UI, Arial, sans-serif" font-size="10" class="fg-3" text-anchor="middle">peak chest deceleration</text>
-    <rect x="505" y="203" width="180" height="20" rx="10" class="sev-serious"/>
-    <text x="595" y="217" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" class="on-fill" text-anchor="middle" letter-spacing="2">SERIOUS  AIS 3 - 4</text>
+    <rect x="485" y="203" width="220" height="20" rx="10" class="sev-serious"/>
+    <text x="595" y="217" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" class="on-fill" text-anchor="middle" letter-spacing="1.4">SERIOUS  AIS 3 - 4</text>
     <text x="595" y="244" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-4" text-anchor="middle" font-style="italic">Stapp 1971 / Eiband 1959 - human tolerance</text>
   </g>
 
@@ -145,8 +145,8 @@
     <text x="36" y="368" font-family="Segoe UI, Arial, sans-serif" font-size="10" class="fg-3">times velocity squared</text>
     <text x="205" y="408" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700" class="accent-1" text-anchor="middle">361 J</text>
     <text x="205" y="424" font-family="Segoe UI, Arial, sans-serif" font-size="10" class="fg-3" text-anchor="middle">delivered to the rib cage</text>
-    <rect x="115" y="433" width="180" height="20" rx="10" class="sev-serious"/>
-    <text x="205" y="447" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" class="on-fill" text-anchor="middle" letter-spacing="2">SERIOUS  rib-fracture band</text>
+    <rect x="95" y="433" width="220" height="20" rx="10" class="sev-serious"/>
+    <text x="205" y="447" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" class="on-fill" text-anchor="middle" letter-spacing="1.2">SERIOUS  rib-fracture band</text>
     <text x="205" y="474" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-4" text-anchor="middle" font-style="italic">Sturdivan 2004 - blunt-impact KE thresholds</text>
   </g>
 
@@ -160,8 +160,8 @@
     <text x="426" y="368" font-family="Segoe UI, Arial, sans-serif" font-size="10" class="fg-3">drives every other metric</text>
     <text x="595" y="408" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700" class="accent-1" text-anchor="middle">11.6 kph</text>
     <text x="595" y="424" font-family="Segoe UI, Arial, sans-serif" font-size="10" class="fg-3" text-anchor="middle">closing speed at contact</text>
-    <rect x="505" y="433" width="180" height="20" rx="10" class="sev-moderate"/>
-    <text x="595" y="447" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" class="on-fill" text-anchor="middle" letter-spacing="2">MODERATE  soft-target bias</text>
+    <rect x="485" y="433" width="220" height="20" rx="10" class="sev-moderate"/>
+    <text x="595" y="447" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" class="on-fill" text-anchor="middle" letter-spacing="1.2">MODERATE  soft-target bias</text>
     <text x="595" y="474" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-4" text-anchor="middle" font-style="italic">Viano &amp; Lau 1985 - velocity injury criteria</text>
   </g>
 

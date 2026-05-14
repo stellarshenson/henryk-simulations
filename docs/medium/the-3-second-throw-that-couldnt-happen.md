@@ -205,7 +205,7 @@ The maths is unsubtle. There are only a few free knobs - phase durations, stoppi
 
 What is novel, maybe, is that all of it now fits in a few hundred lines of Python in a repository anyone can clone. The lower-bound argument lives in `compute_scenario`. The injury threshold mapping is a dict literal. The acoustic prediction is one call to `predict_signature()` against a `DEFAULT_ELEVATOR_DOOR`. Every number in this article is reproducible by running one notebook.
 
-There is a serious version of this story and a less serious version. The serious version is that two and a half years of contested family-court litigation can be substantially clarified, if not resolved, by twenty minutes of biomechanics. The less serious version is the README of the project, which states the same finding in the form a friend would tell you at a bar.
+There is a serious version of this story and a less serious version. The serious version is that four years of contested family-court litigation can be substantially clarified, if not resolved, by twenty minutes of biomechanics. The less serious version is the README of the project, which states the same finding in the form a friend would tell you at a bar.
 
 Both versions agree on the headline: the laws of physics would have to take an unscheduled coffee break for the events to unfold as described.
 
