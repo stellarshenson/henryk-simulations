@@ -9,6 +9,8 @@ Forensic reconstruction of the contested 3 s corridor incident. Cross-references
 
 **The claim**. Victoria states Andrew pulled her ~1.5 m southward, threw her back-first into the elevator door, then swapped positions again, all within ~3 s.
 
+**Reconstruction approach**. The physics below follows Victoria's narrative verbatim, flattened to its most basic form: one phase per claimed action, the maximum time the 3 s budget allows for each, no additional gestures or constraints from her later, escalated retellings (throat-grab, defensive grabs, attempted strangulation, left-side approach). The events are allowed to unfold without any extra demands the later claims would have imposed. This minimum-viable reading is the most rigorous reading of the testimony against the actor: any richer or faster motion only increases the mechanical demand. The verdict is therefore a lower predictive bound - whatever the physics produces here, the verbatim claim demands at least this much.
+
 **The lower-bound physics**. Minimum-phase reconstruction (one phase per claimed action, maximum time per phase) yields the smallest demand any compatible motion can impose. Headline numbers:
 
 - Impact velocity: **3.21 m/s** (11.6 kph)

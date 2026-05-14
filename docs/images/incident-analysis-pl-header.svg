@@ -40,7 +40,7 @@
   <text x="40" y="42" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" class="fg-1">Analiza Zdarzenia</text>
 
   <!-- Subtitle with inline version -->
-  <text x="40" y="68" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="600" class="fg-2">Rekonstrukcja Kryminalistyczna Spornego Zdarzenia Korytarzowego<tspan class="fg-4" font-weight="400">  |  v14</tspan></text>
+  <text x="40" y="68" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="600" class="fg-2">Rekonstrukcja Kryminalistyczna Spornego Zdarzenia Korytarzowego<tspan class="fg-4" font-weight="400">  |  v15</tspan></text>
 
   <!-- Decorative motif: corridor + bodies + velocity vector + shockwave at door -->
   <g id="decorative-motif">

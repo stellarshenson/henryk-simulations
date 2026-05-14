@@ -1,13 +1,15 @@
 ![Analiza Zdarzenia](images/incident-analysis-pl-header.svg)
 
-Rekonstrukcja kryminalistyczna spornego zdarzenia korytarzowego trwającego 3 s. Powiązana z symulacją minimum faz w [`../notebooks/01-kj-corridor-kinematics.ipynb`](../notebooks/01-kj-corridor-kinematics.ipynb), zestawem zeznań w [`../references/incident/`](../references/incident/), literaturą biomechaniczną w [`./biomechanics-sources.md`](./biomechanics-sources.md) i [`./impact_analysis.md`](./impact_analysis.md) oraz wyrenderowaną symulacją w [rekonstrukcji na YouTube](https://youtu.be/V-ooOpqg4aU).
+Rekonstrukcja kryminalistyczna spornego zdarzenia korytarzowego trwającego 3 s. Powiązana z symulacją minimum faz w notebooku `01-kj-corridor-kinematics.ipynb`, kompletnym zestawem zeznań, literaturą biomechaniczną w `biomechanics-sources.md` i `impact_analysis.md` oraz wyrenderowaną symulacją w [rekonstrukcji na YouTube](https://youtu.be/V-ooOpqg4aU).
 
 ## 1. Streszczenie
 
 > [!IMPORTANT]
-> Zdarzenie opisane w zeznaniu Victoria **nie miało miejsca w sposób opisany w twierdzeniu**. Niniejszy dokument przedstawia podstawę kryminalistyczną: rekonstrukcję fizyki dolnej granicy, której przewidywane wyniki mechaniczne, medyczne, akustyczne i obserwacyjne są nieobecne w udokumentowanym materiale dowodowym lub stoją z nim w sprzeczności. Przeznaczony do celów dowodowych; imiona zanonimizowane w całym repozytorium.
+> Zdarzenie opisane w zeznaniu Victoria **nie miało miejsca w sposób opisany w twierdzeniu**. Niniejszy dokument przedstawia podstawę kryminalistyczną: rekonstrukcję fizyki dolnej granicy, której przewidywane wyniki mechaniczne, medyczne, akustyczne i obserwacyjne są nieobecne w udokumentowanym materiale dowodowym lub stoją z nim w sprzeczności. Przeznaczony do celów dowodowych; imiona w dokumencie zostały zanonimizowane.
 
 **Twierdzenie**. Victoria oświadcza, że Andrew pociągnął ją ~1.5 m na południe, rzucił tyłem w drzwi windy, a następnie ponownie zamienili się miejscami - wszystko w ciągu ~3 s.
+
+**Podejście rekonstrukcyjne**. Poniższa fizyka podąża wiernie za narracją Victoria, spłaszczoną do najprostszej możliwej formy: jedna faza na każde twierdzone działanie, maksymalny czas dopuszczalny przez budżet 3 s na każdą z nich, bez dodatkowych gestów ani ograniczeń z późniejszych, eskalujących przeróbek zeznania (chwyt za gardło, obronne złapania, próba uduszenia, podejście z lewej strony). Zdarzenia rozwijają się bez żadnych dodatkowych wymagań, jakie nałożyłyby późniejsze twierdzenia. To minimum-faz odczytanie jest najbardziej rygorystyczne wobec rzekomego sprawcy: każdy bogatszy lub szybszy ruch tylko zwiększa obciążenie mechaniczne. Werdykt jest zatem dolną granicą predyktywną - cokolwiek fizyka tutaj produkuje, dosłowne twierdzenie wymaga co najmniej tyle.
 
 **Fizyka dolnej granicy**. Rekonstrukcja minimum faz (jedna faza na każde twierdzenie, maksymalny czas na fazę) daje najmniejsze możliwe obciążenie, jakie może narzucić jakikolwiek ruch zgodny z twierdzeniem. Główne liczby:
 
@@ -23,23 +25,23 @@ Rekonstrukcja kryminalistyczna spornego zdarzenia korytarzowego trwającego 3 s.
 **Udokumentowane wyniki**. Pojedynczy siniak na prawym barku w badaniu lekarskim; brak złamania żeber, brak dolegliwości oddechowych, pełna ruchomość klatki piersiowej, brak skoku przesterowania audio, brak dzwonienia stalowego panelu w nagraniu, brak akustycznej reakcji postronnego świadka w linii wzroku (Cecilia).
 
 > [!CAUTION]
-> **Kluczowy wniosek**. Każdy obserwowalny wynik po stronie skutku, przewidywany przez fizykę dolnej granicy, jest albo nieobecny w udokumentowanym materiale dowodowym, albo wprost mu przeczy. Twierdzony ruch nie jest zgodny z udokumentowanymi dowodami jednocześnie w kanałach: mechanicznym, medycznym, akustycznym i obserwacyjnym.
+> **Kluczowy wniosek**. Każdy obserwowalny wynik po stronie skutku, przewidywany przez fizykę dolnej granicy, jest albo nieobecny w udokumentowanym materiale dowodowym, albo wprost mu przeczy. Rekonstruowany ruch nie jest zgodny z udokumentowanymi dowodami jednocześnie w kanałach: mechanicznym, medycznym, akustycznym i obserwacyjnym.
 
 ## 2. Opis Zdarzenia
 
-- Data: 13 września 2025; korytarz przy drzwiach mieszkania / drzwiach windy, drugie piętro
+- Data: 13 września 2025; korytarz przy drzwiach mieszkania / drzwiach windy, pierwsze piętro
 - Uczestnicy: Andrew (ojciec, 90 kg), Victoria (matka, 70 kg), Cecilia (społeczny kurator sądowy, świadek), dziecko
 - Całkowity czas trwania zdarzenia według twierdzenia: ~3 s
 - Twierdzenie Victoria (zsyntezowane): Andrew pociągnął Victoria na południe w kierunku windy, zamienili się miejscami, rzucił Victoria tyłem w drzwi windy, ponownie zamienili się miejscami, Victoria osunęła się na podłogę
-- Nagranie audio aktywne przez cały czas (`../data/external/event_audio/event_recording.m4a`)
+- Nagranie audio aktywne przez cały czas (`event_recording.m4a`)
 
 ## 3. Geometria
 
-Źródło: [`../references/incident/geometry.md`](../references/incident/geometry.md).
+Źródło: `geometry.md`.
 
 - Korytarz biegnie z W na E w dwóch segmentach; segment 1 wąski przy wejściu, segment 2 szerszy, zawiera oboje drzwi
 - Drzwi mieszkania na ścianie N segmentu 2, ~1 m szerokości (standard polski), otwierają się na W do korytarza
-- Drzwi windy na ścianie S segmentu 2, 2 m × 1 m, dwa stalowe panele 2 mm z szczeliną powietrzną 3 cm, okno szklane 20 × 60 cm
+- Drzwi windy na ścianie S segmentu 2, 2 m × 1 m, dwa stalowe panele 2 mm ze szczeliną powietrzną 3 cm, okno szklane 20 × 60 cm
 - Odległość rzutu N-S od drzwi mieszkania do drzwi windy: **~2 m**
 - Pozycja Andrew na starcie: plecami przyciśnięty płasko do drzwi windy (maksymalne cofnięcie), zwrócony na N
 - Pozycja Victoria na starcie: w zasięgu drzwi mieszkania po stronie W, zwrócona na S
@@ -50,7 +52,7 @@ Rekonstrukcja kryminalistyczna spornego zdarzenia korytarzowego trwającego 3 s.
 
 ## 4. Zeznania
 
-Źródła: [`testimony_victim.md`](../references/incident/testimony_victim.md), [`testimony_3rd_party.md`](../references/incident/testimony_3rd_party.md), [`testimony_victoria_inconsistencies.md`](../references/incident/testimony_victoria_inconsistencies.md).
+Źródła: `testimony_victim.md`, `testimony_3rd_party.md`, `testimony_victoria_inconsistencies.md`.
 
 Relacja Victoria eskaluje w pięciu chronologicznych przeróbkach:
 
@@ -66,7 +68,7 @@ Obserwacja Cecilia (segment 1, linia wzroku): poproszona o ustąpienie miejsca, 
 
 ## 5. Odniesienia Biomechaniczne
 
-Zwięzła tabela cytowań; pełna bibliografia w [`biomechanics-sources.md`](./biomechanics-sources.md) i [`impact_analysis.md`](./impact_analysis.md).
+Zwięzła tabela cytowań; pełna bibliografia w `biomechanics-sources.md` i `impact_analysis.md`.
 
 | Wielkość | μ ± σ | Źródło |
 |---|---|---|
@@ -92,9 +94,9 @@ Zwięzła tabela cytowań; pełna bibliografia w [`biomechanics-sources.md`](./b
 - Geometria: korytarz **2.0 m N-S** × 1.5 m boczny × 2.1 m wysokość drzwi
 - Budżet czasu: 3.0 s ocenianych + 1.5 s dekoracyjnego rozejścia
 - Wszystkie parametry w jednym zagnieżdżonym słowniku `PARAMS` w notebooku
-- Wyrenderowany MP4: [`../reports/figures/01-corridor-sim-passive.mp4`](../reports/figures/01-corridor-sim-passive.mp4); publiczny render: [Rekonstrukcja YouTube Mk1](https://youtu.be/V-ooOpqg4aU)
+- Wyrenderowany MP4: `01-corridor-sim-passive.mp4`; publiczny render: [Rekonstrukcja YouTube Mk1](https://youtu.be/V-ooOpqg4aU)
 
-**Dlaczego 2.0 m (korzystne dla obrony)**. Victoria i Andrew nie stali bezpośrednio naprzeciwko siebie w segmencie 2: Victoria stała przy drzwiach mieszkania (ściana N) po stronie zachodniej, Andrew przyciśnięty płasko do drzwi windy (ściana S) z przesunięciem W-E względem Victoria (zgodnie z [`../references/incident/geometry.md`](../references/incident/geometry.md)). Rzeczywiste przemieszczenie w linii prostej podczas rzekomej zamiany miejsc jest zatem **przekątną** $\sqrt{2.0^2 + \Delta_{EW}^2}$, ściśle większą niż 2.0 m. Przyjęcie 2.0 m jako zakładanej odległości rzutu jest konserwatywne dla obrony: dłuższa rzeczywista trasa w tym samym budżecie 3 s zwiększa wymaganą szczytową prędkość, przyspieszenie i siłę. Werdykt stanowi dolną granicę rzeczywistego zapotrzebowania.
+**Dlaczego 2.0 m (korzystne dla obrony)**. Victoria i Andrew nie stali bezpośrednio naprzeciwko siebie w segmencie 2: Victoria stała przy drzwiach mieszkania (ściana N) po stronie zachodniej, Andrew przyciśnięty płasko do drzwi windy (ściana S) z przesunięciem W-E względem Victoria (zgodnie z `geometry.md`). Rzeczywiste przemieszczenie w linii prostej podczas rzekomej zamiany miejsc jest zatem **przekątną** $\sqrt{2.0^2 + \Delta_{EW}^2}$, ściśle większą niż 2.0 m. Przyjęcie 2.0 m jako zakładanej odległości rzutu jest konserwatywne dla obrony: dłuższa rzeczywista trasa w tym samym budżecie 3 s zwiększa wymaganą szczytową prędkość, przyspieszenie i siłę. Werdykt stanowi dolną granicę rzeczywistego zapotrzebowania.
 
 ## 7. Symulacja - Założenia
 
@@ -114,9 +116,9 @@ Na fazę: $v_\text{start}, v_\text{end}, v_\text{peak}, a_\text{avg}, a_\text{pe
 
 Uderzenie: $v_\text{impact}, KE_\text{impact}$, pęd, $a_\text{impact}, F_\text{impact}, t_\text{stop}$.
 
-Dźwięk: mody giętne płyty (Kirchhoff), mod osiowy szczeliny, siatka SPL (3 odległości słuchacza × 3 sprawności promieniowania).
+Dźwięk: mody giętne płyty (Kirchhoff), mod osiowy wnęki, siatka SPL (3 odległości słuchacza × 3 sprawności promieniowania).
 
-Zapisane do [`../reports/01-phase-kinematics.csv`](../reports/01-phase-kinematics.csv), [`../reports/01-phase-scores.csv`](../reports/01-phase-scores.csv).
+Zapisane do `01-phase-kinematics.csv`, `01-phase-scores.csv`.
 
 ## 9. Symulacja - Minimum Faz
 
@@ -128,7 +130,7 @@ Trzy fazy po 1.0 s każda:
 | 2 | swap-throw | Victoria | 0.22 m S (resztkowe zamknięcie) | 180° |
 | 3 | swap-back | Andrew | - | 180° (Victoria cofa się 40 cm + 180°) |
 
-**Uzasadnienie**: najmniejszy zestaw dopuszczający dosłowne twierdzenie. Maksymalny czas trwania fazy -> minimalne wymagane szczyty -> dolna granica zapotrzebowania. Formalne wyprowadzenie w stylu ELBO w [`../references/incident/events_reconstruction.md`](../references/incident/events_reconstruction.md): $D(M_\text{true}) \geq D_\text{min}(q^\star)$, zatem $\mathrm{plaus}(M_\text{true}) \leq \mathrm{plaus}(M_\text{min})$.
+**Uzasadnienie**: najmniejszy zestaw dopuszczający dosłowne twierdzenie. Maksymalny czas trwania fazy -> minimalne wymagane szczyty -> dolna granica zapotrzebowania. Formalne wyprowadzenie w stylu ELBO w `events_reconstruction.md`: $D(M_\text{true}) \geq D_\text{min}(q^\star)$, zatem $\mathrm{plaus}(M_\text{true}) \leq \mathrm{plaus}(M_\text{min})$.
 
 **Podział odległości**. Szerokość korytarza od drzwi do drzwi wynosi **2.0 m** (prawda geometryczna, §3). Środek masy Victoria pokonuje łącznie **1.72 m**, ponieważ tułów Victoria ma promień ~0.14 m: zaczyna z plecami dotykającymi drzwi mieszkania (ŚM w odległości 0.14 m od ściany N) i kończy z plecami dotykającymi drzwi windy (ŚM w odległości 1.86 m). Notebook dzieli 1.72 m na **1.5 m podczas pull** + **0.22 m resztkowego zamknięcia podczas swap-throw**; 0.22 m nie jest nową odległością przyspieszenia, lecz geometrycznym "ogonem" do kontaktu z drzwiami.
 
@@ -203,7 +205,7 @@ Odwzorowanie obliczonego uderzenia na literaturę tępych urazów klatki piersio
 
 Prędkość jest klasyfikowana jako "umiarkowana", ponieważ opublikowane zakresy prędkość-uraz zakładają podatny cel, w którym klatka piersiowa odkształca się 5-10 cm przy podatnym podłożu (Viano & Lau 1985). Przy sztywnych stalowych drzwiach ciało musi pochłonąć niemal całe wyhamowanie w obrębie własnej podatności pre-yield (~2 cm, patrz uzasadnienie w §11), więc ta sama prędkość generuje 4-5× wyższą szczytową siłę i przeciążenie g. Wartości siły / g / KE są metrykami po stronie skutku, które już uwzględniają geometrię tego scenariusza.
 
-Weryfikacja krzyżowa z literaturą tylno-tułowiową ([`impact_analysis.md`](./impact_analysis.md)): 18 kN stanowi ~2× najwyższe odnotowane eksperymentalne obciążenia tylno-tułowiowe (6.9-10.5 kN), które same w sobie powodowały urazy żebrowo-kręgowe i złamania żeber. Zakres 1.6-1.9 kN bocznej klatki piersiowej powoduje 4-13 złamań żeber przy 15.5 km/h; nasze 11.6 km/h dostarcza ~10× większą siłę.
+Weryfikacja krzyżowa z literaturą tylno-tułowiową (`impact_analysis.md`): 18 kN stanowi ~2× najwyższe odnotowane eksperymentalne obciążenia tylno-tułowiowe (6.9-10.5 kN), które same w sobie powodowały urazy żebrowo-kręgowe i złamania żeber. Zakres 1.6-1.9 kN bocznej klatki piersiowej powoduje 4-13 złamań żeber przy 15.5 km/h; nasze 11.6 km/h dostarcza ~10× większą siłę.
 
 ![Strefy progów urazów](../reports/figures/01-injury-thresholds.png)
 
@@ -222,7 +224,7 @@ Dla czytelnika niebędącego specjalistą, wartości kN podane powyżej są abst
 |   | ~20 - 30 kN | Zwykle śmiertelne | Pieszy potrącony przez samochód przy ~15-20 km/h; upadek tyłem z balkonu drugiego piętra; czołowe zderzenie na rowerze przy 30 km/h | Masywny uraz klatki piersiowej, często natychmiast śmiertelny | 6 |
 |   | > 30 kN | Prawie zawsze śmiertelne | Wypadek drogowy z dużą prędkością bez pasów; upadek z balkonu trzeciego piętra | Katastrofalne zmiażdżenie | 6 |
 
-Nasze zrekonstruowane uderzenie osiąga szczyt **18.06 kN** - solidnie w wierszu THIS_CASE powyżej. Aby rzekomy ruch wydarzył się tak, jak opisuje dosłowne twierdzenie, ofiara musiałaby pochłonąć taką samą siłę jak przy niskopredkościowym zderzeniu pieszy-pojazd lub upadku z pierwszego piętra na chodnik - tyłem. Udokumentowanym wynikiem lekarskim jest pojedynczy siniak na prawym barku.
+Nasze zrekonstruowane uderzenie osiąga szczyt **18.06 kN** - solidnie w wierszu THIS_CASE powyżej. Aby rzekomy ruch wydarzył się tak, jak opisuje dosłowne twierdzenie, ofiara musiałaby pochłonąć taką samą siłę jak przy niskoprędkościowym zderzeniu pieszy-pojazd lub upadku z pierwszego piętra na chodnik - tyłem. Udokumentowanym wynikiem lekarskim jest pojedynczy siniak na prawym barku.
 
 ## 13. Model - Analiza Akustyczna
 
@@ -234,9 +236,9 @@ Mody giętne płyty (Kirchhoff, swobodnie podparte):
 |---|---|---|
 | Stalowy panel drzwi | 6 Hz | 6-24 Hz (sub-bas) |
 | Szyba okienna | 273 Hz | 273-1093 Hz (środkowe pasmo) |
-| Mod osiowy szczeliny (3 cm) | - | 5717 Hz (soprany) |
+| Mod osiowy wnęki (3 cm) | - | 5717 Hz (soprany) |
 
-Przewidywany szczyt SPL w nawiasie sprawności promieniowania (0.1% / 1% / 5%):
+Przewidywany szczyt SPL dla przedziału sprawności promieniowania (0.1% / 1% / 5%):
 
 | Słuchacz | Niskie η | Typowe η (1%) | Wysokie η |
 |---|---|---|---|
@@ -248,7 +250,7 @@ Mikrofon telefonu konsumenckiego ulega przesterowaniu przy ~120 dB SPL. Przewidy
 
 ### Kalibracja laika: jak głośne jest 124 dB
 
-Wartości SPL w decybelach są dla nie-specjalisty abstrakcyjne. Poniższa tabela mapuje szczytowy poziom dźwięku na codzienne analogi z życia realnego oraz odpowiadające im skutki dla słuchu i nagrania. Wiersz, w którym plasuje się nasza rekonstrukcja, jest oznaczony.
+Wartości SPL w decybelach są dla niespecjalisty abstrakcyjne. Poniższa tabela mapuje szczytowy poziom dźwięku na codzienne analogi z życia realnego oraz odpowiadające im skutki dla słuchu i nagrania. Wiersz, w którym plasuje się nasza rekonstrukcja, jest oznaczony.
 
 | Wybór | Szczytowe SPL | Opis potoczny | Analog z życia realnego (~2 m od źródła) | Skutek dla słuchu | Wpływ na mikrofon telefonu |
 |---|---|---|---|---|---|
@@ -264,13 +266,13 @@ Wartości SPL w decybelach są dla nie-specjalisty abstrakcyjne. Poniższa tabel
 Nasza rekonstrukcja przewiduje **~124 dB** przy mikrofonie telefonu - solidnie w wierszu TEN PRZYPADEK powyżej. Dla każdego mikrofonu telefonu konsumenckiego (pułap przesterowania ~120 dB SPL) tak głośny dźwięk pozostawia w nagraniu charakterystyczny, niemożliwy do przeoczenia ślad: nasycenie próbek, "trzaśnięcie", krótka cisza odzyskiwania. Inspekcja `event_recording.m4a` nie pokazuje takiego skoku w rzekomym momencie uderzenia.
 
 > [!NOTE]
-> **Weryfikacja kryminalistyczna (rzeczywiste nagranie)**: plik audio [`../data/external/event_audio/event_recording.m4a`](../data/external/event_audio/event_recording.m4a) działał nieprzerwanie przez cały czas wizyty. Inspekcja przebiegu fali pokazuje **brak huku** zarejestrowanego w rzekomym momencie uderzenia - brak skoku przesterowania (przewidywany ~124 dB SPL przy mikrofonie telefonu przesterowałby rejestrator), brak energii dźwięku dzwonienia panelu w paśmie sub-basowym 6-24 Hz, brak wyraźnego szczytu modu osiowego szczeliny wokół 5.7 kHz. Świadek postronny (Cecilia, ~1.5 m od drzwi) również nie zgłasza żadnej reakcji akustycznej w swoim zeznaniu. Wszystkie trzy przewidywane sygnatury akustyczne są nieobecne w rzeczywistym nagraniu.
+> **Weryfikacja kryminalistyczna (rzeczywiste nagranie)**: plik audio `event_recording.m4a` działał nieprzerwanie przez cały czas wizyty. Inspekcja przebiegu fali pokazuje **brak huku** zarejestrowanego w rzekomym momencie uderzenia - brak skoku przesterowania (przewidywany ~124 dB SPL przy mikrofonie telefonu przesterowałby rejestrator), brak energii dźwięku dzwonienia panelu w paśmie sub-basowym 6-24 Hz, brak wyraźnego szczytu modu osiowego wnęki wokół 5.7 kHz. Świadek postronny (Cecilia, ~1.5 m od drzwi) również nie zgłasza żadnej reakcji akustycznej w swoim zeznaniu. Wszystkie trzy przewidywane sygnatury akustyczne są nieobecne w rzeczywistym nagraniu.
 
 ![Sygnatura akustyczna](../reports/figures/01-audio-signature.png)
 
 ## 14. Analiza Zdarzenia Kontra Symulacja
 
-Rozwinięcie na poszczególne wielkości. Uwzględniono siły, przyspieszenia, energie kinetyczne, **popędy sił (kN·s)** i czasy kontaktu. Kolumna werdyktów używa kolorowych odznak do wizualnej klasyfikacji (patrz klucz kolorów w §15).
+Rozwinięcie według poszczególnych wielkości. Uwzględniono siły, przyspieszenia, energie kinetyczne, **popędy sił (kN·s)** i czasy kontaktu. Kolumna werdyktów używa kolorowych odznak do wizualnej klasyfikacji (patrz klucz kolorów w §15).
 
 | Element twierdzenia | Analog symulacji | Wielkość | Obliczona | Próg referencyjny | Werdykt |
 |---|---|---|---|---|---|
@@ -294,27 +296,27 @@ Rozwinięcie na poszczególne wielkości. Uwzględniono siły, przyspieszenia, e
 Klucz kolorów stosowany w §10, §12, §14:<br>
 <span style="color:green;font-weight:bold">WIARYGODNE</span> z ≤ 1 &nbsp; <span style="color:goldenrod;font-weight:bold">WYTĘŻONE</span> 1 < z ≤ 2 &nbsp; <span style="color:darkorange;font-weight:bold">NIEWIARYGODNE</span> 2 < z ≤ 3 &nbsp; <span style="color:red;font-weight:bold">SKRAJNE</span> z > 3 &nbsp; <span style="color:red;font-weight:bold">AIS 5+</span> zakres obciążeń krytycznych
 
-Ocena po stronie ruchu: 4 z 7 par (faza, wielkość) wiarygodne, 2 niewiarygodne, 1 ekstremalna.
+Ocena po stronie ruchu: 4 z 7 par (faza, wielkość) wiarygodne, 2 niewiarygodne, 1 skrajna.
 
 Ocena po stronie skutku: 3 z 4 wielkości uderzenia w zakresach poważnym / krytycznym / zagrażającym życiu.
 
-Argument dolnej granicy (formalny w [`events_reconstruction.md`](../references/incident/events_reconstruction.md)): obliczone zapotrzebowanie $D_\text{min}(q^\star)$ jest *minimum* wymaganym przez jakikolwiek ruch dopuszczający dosłowne twierdzenie. Prawdziwy twierdzony ruch jest ograniczony przez $D(M_\text{true}) \geq D_\text{min}(q^\star)$, zatem jego wiarygodność jest ograniczona $\mathrm{plaus}(M_\text{true}) \leq \mathrm{plaus}(M_\text{min})$.
+Argument dolnej granicy (formalny w `events_reconstruction.md`): obliczone zapotrzebowanie $D_\text{min}(q^\star)$ jest *minimum* wymaganym przez jakikolwiek ruch dopuszczający dosłowne twierdzenie. Prawdziwy twierdzony ruch jest ograniczony przez $D(M_\text{true}) \geq D_\text{min}(q^\star)$, zatem jego wiarygodność jest ograniczona $\mathrm{plaus}(M_\text{true}) \leq \mathrm{plaus}(M_\text{min})$.
 
-Implikacja: każda bogatsza rekonstrukcja dodająca elementy zgłoszone późno (chwyt za gardło, obronne złapanie, próba uduszenia, podejście z lewej strony) kompresuje każdą pozostałą fazę do krótszego czasu, podnosi szczytowe przyspieszenia i prędkości kątowe, i czyni werdykt ściśle gorszym. Nie istnieje dekompozycja, która uczyniłaby twierdzenie bardziej wiarygodnym niż ta dolna granica.
+Implikacja: każda bogatsza rekonstrukcja dodająca elementy zgłoszone późno (chwyt za gardło, obronny chwyt, próba uduszenia, podejście z lewej strony) kompresuje każdą pozostałą fazę do krótszego czasu, podnosi szczytowe przyspieszenia i prędkości kątowe, i czyni werdykt ściśle gorszym. Nie istnieje dekompozycja, która uczyniłaby twierdzenie bardziej wiarygodnym niż ta dolna granica.
 
 ## 16. Oczekiwane Wyniki Przy Prawdziwości Hipotezy
 
 Jeżeli zdarzenie przebiegło tak, jak opisała Victoria, przewidywane byłyby następujące obserwowalne:
 
-- **Uraz klatki piersiowej**: rozległy krwiak na plecach obejmujący obszar kontaktu tułów-drzwi; wysokie prawdopodobieństwo złamania żeber (1-13 w zależności od zakresu - literatura tylno-tułowiowa plasuje 6.9-10.5 kN w tym zakresie AIS; model oblicza 18 kN); możliwe uszkodzenie więzadeł żebrowo-kręgowych; możliwe stłuczenie płuca (AIS 3+, Viano 1989)
+- **Uraz klatki piersiowej**: rozległy krwiak na plecach obejmujący obszar kontaktu tułów-drzwi; wysokie prawdopodobieństwo złamania żeber (1-13 w zależności od zakresu - literatura dotycząca tylnej części tułowia plasuje 6.9-10.5 kN w tym zakresie AIS; model oblicza 18 kN); możliwe uszkodzenie więzadeł żebrowo-kręgowych; możliwe stłuczenie płuca (AIS 3+, Viano 1989)
 - **Objawy ostre**: silny ból oddechowy, ograniczona ruchomość klatki piersiowej, niemożność natychmiastowego wstania lub koordynacji
-- **Sygnatura akustyczna na nagraniu**: skok przesterowania uderzenia w mikrofonie telefonu (przewidywane 124 dB przy 2 m vs ~120 dB pułapu); dzwonienie stalowego panelu w paśmie 6-24 Hz przez setki ms; możliwy rezonans szyby okiennej w paśmie 273-1093 Hz
+- **Sygnatura akustyczna na nagraniu**: skok od uderzenia przesterowujący mikrofon telefonu (przewidywane 124 dB przy 2 m vs ~120 dB pułapu); dzwonienie stalowego panelu w paśmie 6-24 Hz przez setki ms; możliwy rezonans szyby okiennej w paśmie 273-1093 Hz
 - **Reakcja świadka Cecilia**: słyszalna reakcja w momencie uderzenia (miała bezpośrednią akustyczną linię wzroku, ~1.5 m, przewidywany szczyt 126 dB); odwrócenie w kierunku dźwięku, nie od niego
-- **Zachowanie Victoria po uderzeniu**: upadek zgodny z urazem całociałowego opóźnienia, nie kontrolowane osunięcie
+- **Zachowanie Victoria po uderzeniu**: upadek zgodny z urazem od opóźnienia całego ciała, a nie kontrolowane osunięcie
 
 ## 17. Przewidywane Kontra Rzeczywiste Wyniki Medyczne
 
-Źródła: [`testimony_victim.md`](../references/incident/testimony_victim.md) (badanie lekarskie), [`testimony_3rd_party.md`](../references/incident/testimony_3rd_party.md) (obserwacja Cecilia).
+Źródła: `testimony_victim.md` (badanie lekarskie), `testimony_3rd_party.md` (obserwacja Cecilia).
 
 Legenda statusu: ✅ przewidywany obserwowalny zgadza się z udokumentowanym wynikiem &nbsp; ❌ przewidywany obserwowalny nieobecny lub sprzeczny &nbsp; ⚠️ częściowy lub rozłączony czasowo &nbsp; ❓ oczekuje bezpośredniej weryfikacji
 
@@ -329,7 +331,7 @@ Legenda statusu: ✅ przewidywany obserwowalny zgadza się z udokumentowanym wyn
 | Skok przesterowania audio w momencie uderzenia | Plik nagrania audio zarchiwizowany jako `event_recording.m4a`; bezpośrednia inspekcja przebiegu fali oczekuje | ❓ | Przewidywane 124 dB przy mikrofonie telefonu przekracza ~120 dB pułap przesterowania mikrofonu konsumenckiego - skok przesterowania jest głównym testem kryminalistycznym |
 | Dzwonienie stalowego panelu w paśmie 6-24 Hz | To samo nagranie; analiza spektralna oczekuje | ❓ | Uderzenie całociałowe 70 kg powinno wzbudzić fundamentalne mody panelu; nieobecność w spektrogramie jest drugim testem kryminalistycznym |
 | Reakcja akustyczna Cecilia przy uderzeniu (126 dB SPL przy jej pozycji ~1.5 m) | Cecilia nie zgłasza huku; obserwuje Victoria opierającą się *przodem* o Andrew dopiero po odwróceniu się | ❌ | Bezpośredni obserwator w linii wzroku przy przewidywanym 126 dB szczytowym SPL zareagowałby słyszalnie i widocznie na dźwięk; brak takiej reakcji w nagraniu lub zeznaniu |
-| Victoria obserwowana leżąca / po upadku, plecami przy drzwiach | Cecilia obserwuje Victoria osuwającą się po drzwiach *przodem*, a następnie czołgającą się do przodu na czworakach | ❌ | Kontakt przodem i osunięcie przodem są geometrycznie niezgodne z twierdzoną rzutem tyłem; jest to bezpośrednia obserwacyjna sprzeczność z rzekomym ruchem |
+| Victoria obserwowana leżąca / po upadku, plecami przy drzwiach | Cecilia obserwuje Victoria osuwającą się po drzwiach *przodem*, a następnie czołgającą się do przodu na czworakach | ❌ | Kontakt przodem i osunięcie przodem są geometrycznie niezgodne z twierdzonym rzutem tyłem; jest to bezpośrednia obserwacyjna sprzeczność z rzekomym ruchem |
 
 **Pojedynczy siniak na prawym barku** jest jedynym udokumentowanym wynikiem. Każdy inny przewidywany obserwowalny jest albo nieobecny, albo sprzeczny. Niezgodność obejmuje wszystkie cztery kanały fizyczne: uraz mechaniczny, oddychanie, sygnatura akustyczna i relacja świadka postronnego.
 
@@ -346,7 +348,7 @@ Legenda statusu: ✅ przewidywany obserwowalny zgadza się z udokumentowanym wyn
 
 Według **subiektywnej interpretacji Andrew**, zdarzenie korytarzowe z 13 września było celowo zainscenizowane jako zdarzenie wyzwalające fałszywe oskarżenie o przemoc. Wzorzec, tak jak Andrew go odczytuje (ponownie: subiektywny, nieudowodniony):
 
-- Zabawka na podłodze została celowo umieszczona, a prośba o ustąpienie miejsca przez Andrew i Cecilia była częścią choreografii - kreowanie martwego pola, w którym plecy Cecilia są odwrócone w krytycznym momencie (zgodnie z [`testimony_3rd_party.md`](../references/incident/testimony_3rd_party.md), zrobiła trzy kroki i odwróciła się tuż przed rzekomym aktem)
+- Zabawka na podłodze została celowo umieszczona, a prośba o ustąpienie miejsca przez Andrew i Cecilia była częścią choreografii - kreowanie martwego pola, w którym plecy Cecilia są odwrócone w krytycznym momencie (zgodnie z `testimony_3rd_party.md`, zrobiła trzy kroki i odwróciła się tuż przed rzekomym aktem)
 - Dosłowne twierdzenie zostało skonstruowane wokół tego, co Cecilia *mogłaby* później zeznać widząc po odwróceniu się, nie wokół tego, co musiałoby mechanicznie zadziałać przy prawdziwym uderzeniu w drzwi windy
 - Pojedynczy siniak na prawym barku (nota IMPORTANT w §17) jest, według pozwanego, samodzielnie zadany
 - Dosłowne zeznanie następnie **eskalowało** w pięciu chronologicznych przeróbkach (tabela eskalacji w §4) - wzorzec zgodny z próbami i rewizją, nie z jednym odzyskanym wspomnieniem rzeczywistego zdarzenia
@@ -359,14 +361,14 @@ To jest prawdziwy argument niosący ciężar dowodowy. Łańcuch przyczyn i skut
 
 ## 19. Metodologia i Nauka
 
-Uzasadnienie wyborów modelowania, ram statystycznych, zestawu założeń i doboru bibliotek. Odsyłacze do kodu źródłowego w [`../src/henryk_simulations/corridor/`](../src/henryk_simulations/corridor/), gdzie każdy model jest zaimplementowany.
+Uzasadnienie wyborów modelowania, ram statystycznych, zestawu założeń i doboru bibliotek. Odsyłacze do kodu źródłowego w module `corridor`, gdzie każdy model jest zaimplementowany.
 
 ### Ramy statystyczne
 
-- Odniesienia biomechaniczne modelowane jako rozkłady normalne $\mathcal{N}(\mu, \sigma^2)$ ze średnią populacyjną i odchyleniem standardowym między-osobniczym z literatury; zaimplementowane jako zamrożone RV `scipy.stats.norm` w [`references.py`](../src/henryk_simulations/corridor/references.py)
+- Odniesienia biomechaniczne modelowane jako rozkłady normalne $\mathcal{N}(\mu, \sigma^2)$ ze średnią populacyjną i odchyleniem standardowym między-osobniczym z literatury; zaimplementowane jako zamrożone RV `scipy.stats.norm` w `references.py`
 - Wiarygodność oceniana z-wynikiem względem referencji: $z = (D - \mu) / \sigma$
-- Zakresy werdyktów (w [`plausibility.py`](../src/henryk_simulations/corridor/plausibility.py)): |z| ≤ 1 wiarygodny, 1 < |z| ≤ 2 naciągany, 2 < |z| ≤ 3 niewiarygodny, |z| > 3 ekstremalny
-- Jednostronne ograniczenie w stylu ELBO (§9, formalne w [`events_reconstruction.md`](../references/incident/events_reconstruction.md)): dekompozycja minimum faz daje dolną granicę wymaganego zapotrzebowania, zatem $\mathrm{plaus}(M_\text{true}) \leq \mathrm{plaus}(M_\text{min})$. Naruszenie przy dolnej granicy jest naruszeniem przy każdej bogatszej dekompozycji
+- Zakresy werdyktów (w `plausibility.py`): |z| ≤ 1 wiarygodny, 1 < |z| ≤ 2 naciągany, 2 < |z| ≤ 3 niewiarygodny, |z| > 3 ekstremalny
+- Jednostronne ograniczenie w stylu ELBO (§9, formalne w `events_reconstruction.md`): dekompozycja minimum faz daje dolną granicę wymaganego zapotrzebowania, zatem $\mathrm{plaus}(M_\text{true}) \leq \mathrm{plaus}(M_\text{min})$. Naruszenie przy dolnej granicy jest naruszeniem przy każdej bogatszej dekompozycji
 
 ### Zestaw założeń i kierunek konserwatyzmu
 
@@ -381,10 +383,10 @@ Każde założenie jest skalibrowane, by biasować wynik w znany kierunek:
 
 ### Modele
 
-- **Kinematyka** ([`kinematics.py`](../src/henryk_simulations/corridor/kinematics.py)): trójkątny profil w każdej fazie, $v_\text{peak} = 2s/t$, $a_\text{peak} = 4s/t^2$; przenoszenie ciągłe prędkości między fazami przez śledzony $v_\text{current}$ na ciało; rotacyjny analog $\omega_\text{peak} = 2\theta/t$, $\alpha_\text{peak} = 4\theta/t^2$, $\tau_\text{peak} = I\alpha_\text{peak}$
+- **Kinematyka** (`kinematics.py`): trójkątny profil w każdej fazie, $v_\text{peak} = 2s/t$, $a_\text{peak} = 4s/t^2$; przenoszenie ciągłe prędkości między fazami przez śledzony $v_\text{current}$ na ciało; rotacyjny analog $\omega_\text{peak} = 2\theta/t$, $\alpha_\text{peak} = 4\theta/t^2$, $\tau_\text{peak} = I\alpha_\text{peak}$
 - **Mechanika**: druga zasada Newtona dla siły z przyspieszenia; uderzenie sztywnego ciała przez $a = v^2/(2d)$ i $F = ma$; popęd siły $J = m \Delta v$; ograniczenie tarcia $F_\text{fric,max} = \mu m g$ z $\mu = 0.30$ ze stałej `MU_RESIST`
 - **Biomechanika / obrażenia medyczne**: odwzorowanie AIS klatki piersiowej przy szczytowej sile (Viano 1989, ref 8); tolerancja całego ciała na gwałtowne opóźnienie przez krzywą Eibanda (ref 10, 11); korelacja KE-uraz przez Sturdivan (ref 12); zakresy prędkości wg założenia miękkiego celu Viano & Lau (ref 13). Zaimplementowane jako przeszukiwanie zakresów po `INJURY_THRESHOLDS` w notebooku
-- **Akustyka** ([`acoustics.py`](../src/henryk_simulations/corridor/acoustics.py)): teoria cienkich płyt Kirchhoffa dla modów giętnych drzwi / okna, $f_{mn} = (\pi/2)\sqrt{D/\sigma}\left((m/a)^2 + (n/b)^2\right)$ z $D = Eh^3/(12(1-\nu^2))$ i $\sigma = \rho h$; rezonator półfalowy z uszczelnieniem wnęki dla modu osiowego szczeliny powietrznej, $f = c/(2d)$; SPL z wypromieniowanej mocy akustycznej $P_a = \eta W/t$ i $L_p = 10 \log_{10}(I/I_\text{ref})$
+- **Akustyka** (`acoustics.py`): teoria cienkich płyt Kirchhoffa dla modów giętnych drzwi / okna, $f_{mn} = (\pi/2)\sqrt{D/\sigma}\left((m/a)^2 + (n/b)^2\right)$ z $D = Eh^3/(12(1-\nu^2))$ i $\sigma = \rho h$; rezonator półfalowy z uszczelnieniem wnęki dla modu osiowego szczeliny powietrznej, $f = c/(2d)$; SPL z wypromieniowanej mocy akustycznej $P_a = \eta W/t$ i $L_p = 10 \log_{10}(I/I_\text{ref})$
 
 ### Uzasadnienie bibliotek
 
@@ -396,7 +398,7 @@ Każde założenie jest skalibrowane, by biasować wynik w znany kierunek:
 - **imageio[ffmpeg]** do kodowania MP4 ze strumienia klatek PyBullet
 - **shields.io** badge URLs dla wizualnych wskazówek kolorystycznych w dokumencie bez HTML / CSS (działa w czystym GitHub markdown)
 
-Wszystkie zależności zadeklarowane w [`../pyproject.toml`](../pyproject.toml); środowisko zarządzane przez `uv` (Python 3.11, zarejestrowany kernel `henryk-sim`). Testy w [`../tests/test_corridor.py`](../tests/test_corridor.py) obejmują niezmienniki czasu trwania faz, formuły kinematyczne, kształty rozkładów referencyjnych i progi zakresów werdyktów.
+Wszystkie zależności zadeklarowane w `pyproject.toml`; środowisko zarządzane przez `uv` (Python 3.11, zarejestrowany kernel `henryk-sim`). Testy w `test_corridor.py` obejmują niezmienniki czasu trwania faz, formuły kinematyczne, kształty rozkładów referencyjnych i progi zakresów werdyktów.
 
 ## 20. Odniesienia
 
@@ -486,7 +488,7 @@ Kluczowa wartość: kliniczne wytyczne potwierdzające wielokrotne złamania że
 17. **Chalmers University of Technology research portal, publication 522249**.<br>
 *Rib fracture probability as a function of impact velocity in blunt thoracic trauma.*<br>
 https://research.chalmers.se/publication/522249/file/522249_Fulltext.pdf<br>
-(Bazowy plik PDF binarny; tytuł wywnioskowany z treści opisanej w liście źródłowej [`./impact_analysis.md`](./impact_analysis.md).)<br>
+(Bazowy plik PDF binarny; tytuł wywnioskowany z treści opisanej w liście źródłowej `impact_analysis.md`.)<br>
 Kluczowa wartość: znaczący wzrost prawdopodobieństwa wielokrotnych złamań żeber przy prędkościach uderzenia ~20 km/h.
 
-Rozkłady zaimplementowane jako obiekty `scipy.stats` w [`../src/henryk_simulations/corridor/references.py`](../src/henryk_simulations/corridor/references.py). Rozszerzone opisy w [`./biomechanics-sources.md`](./biomechanics-sources.md). Polska synteza z weryfikacją krzyżową względem eksperymentalnych danych tylno-tułowiowych w [`./impact_analysis.md`](./impact_analysis.md).
+Rozkłady zaimplementowane jako obiekty `scipy.stats` w `references.py`. Rozszerzone opisy w `biomechanics-sources.md`. Polska synteza z weryfikacją krzyżową względem eksperymentalnych danych tylno-tułowiowych w `impact_analysis.md`.
