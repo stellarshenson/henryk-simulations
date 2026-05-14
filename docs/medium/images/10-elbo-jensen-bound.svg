@@ -1,0 +1,274 @@
+<!--
+  10-elbo-jensen-bound.svg - Jensen's inequality as the engine of the ELBO bound
+  Shows: a concave log curve with two sample points A and B on it, a straight
+         chord between A and B (the surrogate average), and the vertical KL gap
+         between the chord midpoint E[log Y] and the curve value log E[Y] sitting
+         above it. A side annotation card pins the geometric picture to the
+         ELBO + KL = log p(x) decomposition: chord = ELBO, curve = log-evidence,
+         gap = KL.
+  Intent: visualise WHY the ELBO undershoots reality and by exactly how much.
+         The chord lives below the curve - that's Jensen. The distance is KL.
+  Theme:  Stellars-Tech derived. accent-1 cyan #0096d1 = the truth side (curve,
+         log-evidence, log E[Y]). accent-2 orange #da8230 = the surrogate side
+         (chord, ELBO, E[log Y]) and the KL gap. Dual-theme via prefers-color-scheme.
+  Background: transparent root rect; renders on the article's dark hero band.
+-->
+<!--
+=== GRID ===
+  viewBox: 800 x 500
+  Margins: L=20  R=20  T=12  B=20
+  Header band:   y=12..50  (TITLE letter-spaced + subtitle)
+  Chart card:    x=20..560,  y=60..480   (w=540, h=420, r=3, accent-1 frame)
+  Side card:     x=580..780, y=60..480   (w=200, h=420, r=3, accent-2 frame)
+  Inter-card gap: 20px
+
+  CHART PLOT REGION (inside chart card):
+    plot x:  70..530   (width 460)
+    plot y:  110..440  (height 330; pixel y grows downward, so 440 = bottom)
+    Data window: x in [0.3, 7.5], y in [-1.5, 2.2]
+
+  KEY POINTS (computed from f(x) = ln(x)):
+    A = (89.2,  351.8)   left sample on curve     (x1=0.6,  ln x1 = -0.51)
+    B = (485.3, 135.2)   right sample on curve    (x2=6.8,  ln x2 =  1.92)
+    M_chord = (287.2, 243.5)  midpoint of chord = E[log Y]
+    M_curve = (287.2, 189.5)  curve at E[Y]      = log E[Y]
+    KL gap  = vertical segment from M_chord up to M_curve (54px on screen)
+
+  AXES:
+    y-axis line:  x=70,  y=110..440
+    x-axis line:  y=440, x=70..530
+    y-axis label "log Y":   x=58,  y=120 (right-anchored, italic)
+    x-axis label "Y":       x=540, y=455 (italic)
+
+  SIDE CARD INTERNAL RHYTHM (offsets from card-top y=60):
+    +0    accent bar
+    +22   eyebrow ALL-CAPS (font 9, accent-2)
+    +44   title "ELBO + KL = log p(x)" (font 14, fg-1, bold)
+    +74   small chip "log p(x)"        (cyan tab, the truth)
+    +112  small chip "ELBO(q)"         (orange tab, the surrogate)
+    +150  small chip "KL(q || p)"      (orange tab, the gap)
+    +192..240  legend mapping (icon swatches + body text)
+    +260..320  Jensen formula card (boxed, fg-1)
+    +345..395  bottom take-away (italic fg-3, two lines)
+
+=== LAYOUT TOPOLOGY ===
+  layers (v-order): background > nodes > connectors > content > callouts
+  h-stack inside nodes: chart-card, side-card
+  contain: chart-card > axes, log-curve, chord, point-A, point-B, midpoint-markers, kl-gap-bar
+  contain: side-card  > eyebrow, title, three swatches, formula card, takeaway
+  decorative: header above both cards (centred title + italic subtitle)
+
+  CHART INTERIOR Z-ORDER:
+    1. axis lines (thin fg-4)
+    2. chord (orange, dashed; under curve)
+    3. log curve (cyan, solid 2px; on top of chord at intersections)
+    4. KL gap rectangle (orange tint backplate behind labels)
+    5. KL gap vertical brace (orange, 2px) - it visually IS the gap
+    6. dotted drop lines from A and B down to x-axis (thin, fg-4)
+    7. point markers A, B (cyan) and midpoint markers M_curve, M_chord
+    8. point and gap labels
+
+  NO routed connectors needed. The chord, axes, drop-lines and KL brace are
+  geometric primitives, not arrows, so the connectors layer stays empty.
+=== -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid meet">
+  <style>
+    .fg-1 { fill: #1a5a6e; }
+    .fg-2 { fill: #24697e; }
+    .fg-3 { fill: #236a74; }
+    .fg-4 { fill: #2b7680; }
+    .accent-1 { fill: #005f7a; }
+    .accent-2 { fill: #7a4a15; }
+    .truth { fill: #005f7a; }
+    .surrogate { fill: #7a4a15; }
+    .on-fill { fill: #f5f7fa; }
+    .s-fg-4 { stroke: #2b7680; }
+    .s-truth { stroke: #0096d1; }
+    .s-surrogate { stroke: #da8230; }
+    @media (prefers-color-scheme: dark) {
+      .fg-1 { fill: #b8e4f0; }
+      .fg-2 { fill: #8fd4e6; }
+      .fg-3 { fill: #5aafc5; }
+      .fg-4 { fill: #4099b3; }
+      .accent-1 { fill: #5cc8e0; }
+      .accent-2 { fill: #d4a04a; }
+      .truth { fill: #5cc8e0; }
+      .surrogate { fill: #e6b262; }
+      .on-fill { fill: #0a1a24; }
+      .s-fg-4 { stroke: #4099b3; }
+      .s-truth { stroke: #5cc8e0; }
+      .s-surrogate { stroke: #d4a04a; }
+    }
+  </style>
+
+  <!-- Transparent backplate -->
+  <rect x="0" y="0" width="800" height="500" fill="transparent"/>
+
+  <!-- === BACKGROUND LAYER === -->
+  <g id="background"></g>
+
+  <!-- === NODES LAYER === -->
+  <g id="nodes">
+
+    <!-- Header band -->
+    <g id="header">
+      <text x="400" y="30" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" class="fg-1" text-anchor="middle" letter-spacing="1">JENSEN&#x2019;S INEQUALITY &#x2014; THE ENGINE UNDER THE ELBO</text>
+      <text x="400" y="45" font-family="Segoe UI, Arial, sans-serif" font-size="9" class="fg-3" text-anchor="middle" font-style="italic">a concave curve, a chord sliding underneath it, and a gap that has a name</text>
+    </g>
+
+    <!-- Chart card (accent-1, the truth side) -->
+    <g id="chart-card">
+      <path d="M20.0,60.0 H560.0 V477.0 Q560.0,480.0 557.0,480.0 H23.0 Q20.0,480.0 20.0,477.0 Z" fill="#0096d1" fill-opacity="0.04"/>
+      <path d="M20.0,60.0 H560.0 V477.0 Q560.0,480.0 557.0,480.0 H23.0 Q20.0,480.0 20.0,477.0 Z" fill="none" stroke="#0096d1" stroke-width="1"/>
+      <rect x="20.0" y="60.0" width="540.0" height="5" fill="#0096d1" opacity="0.6"/>
+    </g>
+
+    <!-- Side card (accent-2, the decomposition / verdict side) -->
+    <g id="side-card">
+      <path d="M580.0,60.0 H780.0 V477.0 Q780.0,480.0 777.0,480.0 H583.0 Q580.0,480.0 580.0,477.0 Z" fill="#da8230" fill-opacity="0.04"/>
+      <path d="M580.0,60.0 H780.0 V477.0 Q780.0,480.0 777.0,480.0 H583.0 Q580.0,480.0 580.0,477.0 Z" fill="none" stroke="#da8230" stroke-width="1"/>
+      <rect x="580.0" y="60.0" width="200.0" height="5" fill="#da8230" opacity="0.6"/>
+    </g>
+  </g>
+
+  <!-- === CONNECTORS LAYER (empty - all lines here are geometric, not routed arrows) === -->
+  <g id="connectors"></g>
+
+  <!-- === CONTENT LAYER === -->
+  <g id="content">
+
+    <!-- ============================================================ -->
+    <!-- CHART CARD INTERIOR                                          -->
+    <!-- ============================================================ -->
+    <g id="chart-content">
+
+      <!-- Eyebrow inside chart card -->
+      <text x="40" y="88" class="accent-1" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="600" letter-spacing="1.2">THE GEOMETRY</text>
+      <text x="540" y="88" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-style="italic" text-anchor="end">log Y on the vertical axis, Y on the horizontal</text>
+
+      <!-- KL gap tint backplate (placed first so it sits behind everything except axes) -->
+      <rect x="262" y="189.5" width="50" height="54" fill="#da8230" fill-opacity="0.10"/>
+
+      <!-- Axes (thin, fg-4 stroke) -->
+      <line x1="70" y1="110" x2="70" y2="440" class="s-fg-4" stroke-width="1" opacity="0.55"/>
+      <line x1="70" y1="440" x2="530" y2="440" class="s-fg-4" stroke-width="1" opacity="0.55"/>
+
+      <!-- Axis arrowheads (small) -->
+      <polygon points="70,104 67,112 73,112" class="fg-4" opacity="0.55"/>
+      <polygon points="536,440 528,437 528,443" class="fg-4" opacity="0.55"/>
+
+      <!-- Axis labels -->
+      <text x="78" y="118" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-style="italic">log Y</text>
+      <text x="525" y="456" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-style="italic" text-anchor="end">Y</text>
+
+      <!-- Drop lines from A and B down to x-axis (dotted, faint) -->
+      <line x1="89.2" y1="351.8" x2="89.2" y2="440" class="s-fg-4" stroke-width="0.8" stroke-dasharray="2,3" opacity="0.55"/>
+      <line x1="485.3" y1="135.2" x2="485.3" y2="440" class="s-fg-4" stroke-width="0.8" stroke-dasharray="2,3" opacity="0.55"/>
+      <line x1="287.2" y1="189.5" x2="287.2" y2="440" class="s-fg-4" stroke-width="0.8" stroke-dasharray="2,3" opacity="0.55"/>
+
+      <!-- X-axis tick labels for the two sample points and their midpoint -->
+      <text x="89.2" y="455" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle" font-style="italic">y&#x2081;</text>
+      <text x="485.3" y="455" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle" font-style="italic">y&#x2082;</text>
+      <text x="287.2" y="455" class="surrogate" font-family="Segoe UI, Arial, sans-serif" font-size="10" text-anchor="middle" font-weight="700" font-style="italic">E[Y]</text>
+
+      <!-- Chord (orange, dashed) from A to B -->
+      <line x1="89.2" y1="351.8" x2="485.3" y2="135.2" class="s-surrogate" stroke-width="1.6" stroke-dasharray="6,4" opacity="0.9"/>
+
+      <!-- Concave log curve (cyan, solid 2px). PCHIP spline over 18 samples of ln(x). -->
+      <path d="M73.2,399.8 L78.9,384.08 L84.6,367.7 L90.3,351.86 L96.01,337.75 L101.71,326.42 L107.41,316.84 L113.11,308.33 L118.81,300.64 L124.51,293.53 L130.21,286.83 L135.91,280.63 L141.62,274.86 L147.32,269.45 L153.02,264.32 L158.72,259.46 L164.42,254.88 L170.12,250.53 L175.82,246.38 L181.52,242.4 L187.23,238.6 L192.93,234.96 L198.63,231.46 L204.33,228.09 L210.03,224.84 L215.73,221.7 L221.43,218.67 L227.13,215.73 L232.84,212.89 L238.54,210.13 L244.24,207.45 L249.94,204.85 L255.64,202.33 L261.34,199.87 L267.04,197.48 L272.74,195.16 L278.45,192.9 L284.15,190.7 L289.85,188.56 L295.55,186.47 L301.25,184.44 L306.95,182.44 L312.65,180.47 L318.35,178.53 L324.06,176.62 L329.76,174.75 L335.46,172.93 L341.16,171.16 L346.86,169.44 L352.56,167.76 L358.26,166.11 L363.96,164.48 L369.67,162.87 L375.37,161.27 L381.07,159.7 L386.77,158.15 L392.47,156.64 L398.17,155.16 L403.87,153.7 L409.57,152.27 L415.28,150.87 L420.98,149.48 L426.68,148.12 L432.38,146.79 L438.08,145.47 L443.78,144.17 L449.48,142.89 L455.18,141.63 L460.89,140.39 L466.59,139.16 L472.29,137.94 L477.99,136.73 L483.69,135.54 L489.39,134.36 L495.09,133.2 L500.79,132.07 L506.5,130.96 L512.2,129.87 L517.9,128.79 L523.6,127.7" fill="none" stroke="#0096d1" stroke-width="2.2" stroke-linecap="round"/>
+
+      <!-- Curve label (offset along top portion of curve) -->
+      <text x="455" y="120" class="truth" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" font-style="italic" text-anchor="end">f(y) = log y</text>
+      <text x="455" y="132" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="8" text-anchor="end">(concave)</text>
+
+      <!-- Chord label (above-left of midpoint of chord, tilted-feeling placement) -->
+      <text x="180" y="262" class="surrogate" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" font-style="italic">chord</text>
+      <text x="180" y="274" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="8">avg of log y&#x2081;, log y&#x2082;</text>
+
+      <!-- Point markers A and B -->
+      <circle cx="89.2" cy="351.8" r="4.5" fill="#0096d1"/>
+      <circle cx="485.3" cy="135.2" r="4.5" fill="#0096d1"/>
+      <text x="76" y="345" class="truth" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" text-anchor="end">A</text>
+      <text x="497" y="138" class="truth" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700">B</text>
+
+      <!-- Midpoint markers: M_chord (on chord, orange) and M_curve (on curve, cyan) -->
+      <circle cx="287.2" cy="243.5" r="4" fill="#da8230"/>
+      <circle cx="287.2" cy="189.5" r="4" fill="#0096d1"/>
+
+      <!-- KL gap brace (orange vertical bar between the two midpoints) -->
+      <line x1="287.2" y1="189.5" x2="287.2" y2="243.5" class="s-surrogate" stroke-width="3" stroke-linecap="round"/>
+      <!-- Brace caps (small tick whiskers, orange) -->
+      <line x1="283" y1="189.5" x2="291.4" y2="189.5" class="s-surrogate" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="283" y1="243.5" x2="291.4" y2="243.5" class="s-surrogate" stroke-width="1.6" stroke-linecap="round"/>
+
+      <!-- Midpoint labels (right of the brace, clear of curve) -->
+      <text x="320" y="186" class="truth" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" font-style="italic">log E[Y]</text>
+      <text x="320" y="197" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="8">curve at the average</text>
+
+      <text x="320" y="248" class="surrogate" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" font-style="italic">E[log Y]</text>
+      <text x="320" y="259" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="8">average of log values</text>
+
+      <!-- KL gap callout (anchored to the right of the brace, well clear) -->
+      <rect x="395" y="206" width="115" height="22" rx="3" fill="#da8230" fill-opacity="0.20"/>
+      <text x="452.5" y="221" class="surrogate" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" text-anchor="middle" letter-spacing="0.4">KL  gap</text>
+
+      <!-- Thin guide leader from gap rect to brace -->
+      <line x1="395" y1="217" x2="295" y2="217" class="s-surrogate" stroke-width="0.8" opacity="0.55"/>
+
+      <!-- Bottom-of-card take-away strip -->
+      <text x="290" y="420" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-style="italic" text-anchor="middle">the chord lives below the curve &#x2014; that&#x2019;s Jensen</text>
+      <text x="290" y="436" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle">the distance between them is exactly the KL divergence</text>
+    </g>
+
+    <!-- ============================================================ -->
+    <!-- SIDE CARD INTERIOR (the decomposition)                       -->
+    <!-- ============================================================ -->
+    <g id="side-content">
+
+      <text x="680" y="82" class="accent-2" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="600" text-anchor="middle" letter-spacing="1.2">DECOMPOSITION</text>
+      <text x="680" y="104" class="fg-1" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" text-anchor="middle">three pieces, one identity</text>
+
+      <!-- Equation strip: log p(x) = ELBO(q) + KL(q || p) -->
+      <text x="680" y="138" class="fg-1" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" text-anchor="middle" font-style="italic">log p(x) = ELBO + KL</text>
+
+      <!-- Truth chip (log p(x)) -->
+      <rect x="600" y="160" width="160" height="28" rx="3" fill="#0096d1" fill-opacity="0.18"/>
+      <circle cx="616" cy="174" r="5" fill="#0096d1"/>
+      <text x="630" y="172" class="truth" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" font-style="italic">log p(x)</text>
+      <text x="630" y="184" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="8">truth &#x2014; what we want</text>
+
+      <!-- Surrogate chip (ELBO) -->
+      <rect x="600" y="196" width="160" height="28" rx="3" fill="#da8230" fill-opacity="0.18"/>
+      <circle cx="616" cy="210" r="5" fill="#da8230"/>
+      <text x="630" y="208" class="surrogate" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" font-style="italic">ELBO(q)</text>
+      <text x="630" y="220" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="8">lower bound &#x2014; the chord</text>
+
+      <!-- KL gap chip -->
+      <rect x="600" y="232" width="160" height="28" rx="3" fill="#da8230" fill-opacity="0.18"/>
+      <line x1="612" y1="240" x2="612" y2="252" class="s-surrogate" stroke-width="2.4" stroke-linecap="round"/>
+      <line x1="608" y1="240" x2="616" y2="240" class="s-surrogate" stroke-width="1.4" stroke-linecap="round"/>
+      <line x1="608" y1="252" x2="616" y2="252" class="s-surrogate" stroke-width="1.4" stroke-linecap="round"/>
+      <text x="630" y="244" class="surrogate" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="700" font-style="italic">KL(q &#x2016; p)</text>
+      <text x="630" y="256" class="fg-2" font-family="Segoe UI, Arial, sans-serif" font-size="8">how much we undershoot</text>
+
+      <!-- Jensen formula card (the engine) -->
+      <text x="680" y="290" class="accent-2" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="600" text-anchor="middle" letter-spacing="1.2">JENSEN</text>
+      <rect x="600" y="298" width="160" height="42" rx="3" fill="#0096d1" fill-opacity="0.06" stroke="#0096d1" stroke-width="0.8" stroke-opacity="0.45"/>
+      <text x="680" y="318" class="fg-1" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" text-anchor="middle" font-style="italic">log E[Y]  &#x2265;  E[log Y]</text>
+      <text x="680" y="332" class="fg-4" font-family="Segoe UI, Arial, sans-serif" font-size="8" text-anchor="middle">curve at the average sits above the chord</text>
+
+      <!-- Take-away (bottom) -->
+      <text x="680" y="370" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle" font-style="italic">tighten the surrogate q</text>
+      <text x="680" y="383" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle" font-style="italic">&#x2192; shrink KL</text>
+      <text x="680" y="396" class="fg-3" font-family="Segoe UI, Arial, sans-serif" font-size="9" text-anchor="middle" font-style="italic">&#x2192; bound climbs to truth</text>
+
+      <!-- Verdict tag -->
+      <rect x="612" y="432" width="136" height="20" rx="3" fill="#da8230" fill-opacity="0.28"/>
+      <text x="680" y="446" class="surrogate" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" text-anchor="middle" letter-spacing="1">BOUND CLIMBS</text>
+    </g>
+  </g>
+
+  <!-- === CALLOUTS LAYER === -->
+  <g id="callouts"></g>
+
+</svg>

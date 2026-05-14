@@ -77,7 +77,29 @@ The decomposition came out to three phases of one second each:
 
 ![3-second time budget](images/02-time-budget-3s.svg)
 
-This is formally an **ELBO-style lower bound** on the required demand. The classical Evidence Lower BOund in variational inference gives a tractable surrogate that bounds an intractable target from one side. Here, $D_{\min}(q^\star)$ is the surrogate, and $D(M_\text{true}) \geq D_{\min}(q^\star)$ by construction. Plausibility goes the other way: $\mathrm{plaus}(M_\text{true}) \leq \mathrm{plaus}(M_\text{min})$. A violation at the lower bound is a violation at every richer decomposition.
+This is formally an **ELBO-style lower bound** on the required demand. The Evidence Lower BOund (ELBO) comes from variational inference: when the true posterior is intractable, you pick a tractable surrogate distribution and lean on **Jensen's inequality** to drop a lower bound underneath the log-evidence. Jensen's says that for a concave function the expectation of the function is at most the function of the expectation:
+
+$$\log \mathbb{E}[Y] \;\geq\; \mathbb{E}[\log Y].$$
+
+Apply that to the log-evidence with surrogate $q(z)$ standing in for the intractable posterior $p(z\mid x)$:
+
+$$\log p(x) \;=\; \log \mathbb{E}_q\!\left[\tfrac{p(x,z)}{q(z)}\right] \;\geq\; \mathbb{E}_q\!\left[\log \tfrac{p(x,z)}{q(z)}\right] \;=\; \text{ELBO}(q).$$
+
+Equivalently the gap is exactly a Kullback-Leibler divergence:
+
+$$\log p(x) \;=\; \text{ELBO}(q) \;+\; \mathrm{KL}\bigl(q \,\Vert\, p(\cdot\mid x)\bigr).$$
+
+KL is the distance between our story and the true one - and our lower bound undershoots reality by exactly that much. Tighten the story, shrink the distance, and the bound climbs toward the truth. Jensen is the engine, the concavity of $\log$ is the chassis.
+
+![Jensen's inequality - the engine under the ELBO](images/10-elbo-jensen-bound.svg)
+
+Here we are doing the same move one storey up. The intractable object is the *true* physical demand $D(M_\text{true})$; the tractable family is the set of minimum-phase reconstructions, optimised within it to give a surrogate $D_{\min}(q^\star)$. By construction:
+
+$$D(M_\text{true}) \;\geq\; D_{\min}(q^\star), \qquad \mathrm{plaus}(M_\text{true}) \;\leq\; \mathrm{plaus}(M_\text{min}).$$
+
+A violation at the lower bound is a violation at every richer decomposition.
+
+![Lower bound vs documented record - the forensic KL gap](images/11-elbo-incident.svg)
 
 That is - I am cheating on the prosecution's behalf. They get the friendliest possible reading of the accusation.
 
@@ -174,6 +196,8 @@ One more thing about that bruise. The defendant's position is that it was **self
 ---
 
 ## The takeaway
+
+![Where this test sits on the forensic spectrum](images/12-takeaway.svg)
 
 I am not the first person to use physics in a courtroom. Crash reconstruction is a recognised forensic discipline, and so is gunshot-residue analysis, and so is blood-pattern analysis. What is unusual here is the level the test runs at: not "did this specific impact pattern occur" but "could this story have happened at all, given Newton's second law and the geometry of a Polish elevator door".
 

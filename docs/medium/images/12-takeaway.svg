@@ -1,0 +1,248 @@
+<!--
+  12-takeaway.svg - The "level of test" spectrum for the takeaway section
+  Shows: a single horizontal spectrum axis running from "did this specific impact happen"
+    (granular, on the left) to "could this story have happened at all" (categorical, on the right).
+    Three established forensic disciplines (crash reconstruction, gunshot residue, blood pattern)
+    sit as dim cyan tick markers on the granular half - they reconstruct *what occurred*.
+    A single starred orange marker sits at the far right - the level this article's argument
+    runs at: "could this have happened at all", a categorical pre-question that subsumes the
+    granular ones. A small caption strip beneath the right marker reinforces the punchline:
+    "Newton's second law + a Polish elevator door".
+  Intent: positions the article's contribution among recognised forensic disciplines without
+    claiming novelty - the test is not novel science, it just runs at a coarser, prior level.
+  Theme: Stellars-Tech. dim cyan fg-3/fg-4 for legacy disciplines; accent-1 cyan + accent-2
+    orange for the focal "this test" marker.
+  Background: transparent root rect; reads against article hero #0a1a24 in dark mode and
+    against #ffffff in light mode.
+-->
+<!--
+=== GRID ===
+  viewBox: 800 x 420
+  Outer margin: 24 left/right, 14 top, 14 bottom
+
+  ~~~ TITLE STRIP ~~~
+  eyebrow (small caps):   y=28      (9pt 600 .fg-3 anchor middle x=400 letter-spacing 3)
+  big title:              y=58      (22pt 700 .fg-1 anchor middle x=400)
+  hairline divider:       y=72      (x1=200 x2=600 stroke #1a5a6e width 0.5 opacity 0.35)
+
+  ~~~ AXIS BAND ~~~
+  axis y baseline:        y=224
+  axis x range:           x=70 .. x=730 (length 660, centred horizontally - both side margins 70)
+  axis stroke: width 1.2, .accent-1 (cyan) with mild gradient ramp via two strokes
+  axis caps: small filled diamonds at both ends (x=70 and x=730) on axis y baseline
+  axis end labels:
+    LEFT end label  (x=70  anchor=start  y=252):  "GRANULAR"   8.5pt 700 .fg-4 letter-spacing 2.5
+    LEFT end gloss  (x=70  anchor=start  y=266):  "did this specific impact happen"   9pt italic .fg-3
+    RIGHT end label (x=730 anchor=end    y=252):  "CATEGORICAL" 8.5pt 700 .accent-2 letter-spacing 2.5
+    RIGHT end gloss (x=730 anchor=end    y=266):  "could this story have happened at all" 9pt italic 700 .accent-2
+
+  ~~~ TICK POSITIONS (on axis baseline y=224) ~~~
+  marker-1 crash reconstruction:    cx=160  (granular, dim)
+  marker-2 gunshot residue:         cx=270  (granular, dim)
+  marker-3 blood pattern:           cx=380  (granular, dim)
+  marker-4 (focal) this article:    cx=640  (categorical, vivid)
+  gap between dim cluster and focal marker = 260px (visual breathing room to encode the level jump)
+
+  Per-marker anatomy (dim cluster, marker-1..3):
+    tick line: small vertical stroke x=cx y=214..234 stroke .fg-4 width 1, opacity 0.7
+    dot:       circle cx=cx cy=224 r=4, .dot-dim, width 0.8, opacity 0.9
+    label L1:  text  cx=cx  y=200  10pt 600 .fg-2 anchor middle  (discipline name)
+    sub-cue:   text  cx=cx  y=252  8pt 500 .fg-4 anchor middle  (one-word: "metal", "powder", "stains")
+
+  Per-marker anatomy (focal, marker-4):
+    outer ring: circle cx=640 cy=224 r=14, fill #da8230 fill-opacity 0.12, stroke #da8230 width 1.2
+    inner star: 5-point star centered at (640, 224), r-outer 9, r-inner 4, fill #da8230 opacity 0.95
+    pillar:     vertical accent line x=640 y=198..240 stroke #da8230 width 1.5 opacity 0.55 (BEHIND ring; pillar terminates 4px above ring + 4 below)
+    eyebrow:    text 640 184  8pt 700 .accent-1 anchor middle letter-spacing 2.5  "THIS TEST"
+    label L1:   text 640 282  12pt 800 .accent-2 anchor middle  "could this story"
+    label L2:   text 640 296  12pt 800 .accent-2 anchor middle  "have happened"
+    label L3:   text 640 310  12pt 800 .accent-2 anchor middle  "at all?"
+    sub-gloss:  text 640 332  9pt 500 italic .fg-2 anchor middle  "Newton's second law + a Polish elevator door"
+
+  ~~~ DIM CLUSTER FOOTER STRIP (under markers 1..3) ~~~
+  enclosing bracket: thin square bracket from (140, 268) under marker-1 to (400, 268) under marker-3
+    stroke .fg-4 width 0.8 opacity 0.5
+  cluster label:    text  cx=270 y=288   8.5pt 700 .fg-4 anchor middle letter-spacing 2  "RECOGNISED FORENSIC DISCIPLINES"
+  cluster gloss:    text  cx=270 y=302   8pt italic .fg-3 anchor middle  "reconstruct what occurred"
+
+  ~~~ TAGLINE RIBBON (bottom) ~~~
+  ribbon: x=24 y=370 w=752 h=24 r=3 - .accent-2 fill-opacity 0.10 stroke .accent-2 width 1 opacity 0.65
+  tagline text y=386 10pt 600 italic .accent-2 anchor middle x=400 letter-spacing 0.5
+    text: "Nothing here is novel science. The test simply asks a coarser question."
+
+  ~~~ COLOUR MAP (light primary; dark via @media) ~~~
+  fg-1 #1a5a6e | dark #b8e4f0   (big title)
+  fg-2 #24697e | dark #8fd4e6   (marker labels)
+  fg-3 #236a74 | dark #5aafc5   (eyebrow, gloss)
+  fg-4 #2b7680 | dark #4099b3   (sub-cue, cluster label)
+  accent-1 #005f7a | dark #5cc8e0  (axis stroke, "THIS TEST" eyebrow)
+  accent-2 #7a4a15 | dark #d4a04a  (focal text colour, ribbon text)
+  raw brand strokes/fills: cyan #0096d1, orange #da8230 (axis ramp, focal star + ring + pillar)
+=== -->
+<!--
+=== LAYOUT TOPOLOGY ===
+  v-stack (root): header-strip, axis-band-with-markers, dim-cluster-footer, tagline-ribbon
+  h-stack (axis-band): axis-cap-L | dim-cluster (m1 m2 m3) | wide-gap | focal-marker-4 | axis-cap-R
+  mirror: none - intentional asymmetry encodes the gap between "granular many" and "categorical one"
+  hierarchy: focal-marker-4 > dim-cluster (size, saturation, ring, star, multi-line label, sub-gloss, pillar)
+  no flow connectors: this is a spectrum diagram, the axis IS the connection
+=== -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" preserveAspectRatio="xMidYMid meet">
+  <style>
+    .fg-1 { fill: #1a5a6e; }
+    .fg-2 { fill: #24697e; }
+    .fg-3 { fill: #236a74; }
+    .fg-4 { fill: #2b7680; }
+    .accent-1 { fill: #005f7a; }
+    .accent-2 { fill: #7a4a15; }
+    .stroke-fg-2 { stroke: #24697e; }
+    .stroke-fg-4 { stroke: #2b7680; }
+    .stroke-accent-1 { stroke: #005f7a; }
+    .stroke-cyan { stroke: #0096d1; }
+    .stroke-orange { stroke: #da8230; }
+    .dot-dim { fill: #236a74; stroke: #24697e; }
+    @media (prefers-color-scheme: dark) {
+      .fg-1 { fill: #b8e4f0; }
+      .fg-2 { fill: #8fd4e6; }
+      .fg-3 { fill: #5aafc5; }
+      .fg-4 { fill: #4099b3; }
+      .accent-1 { fill: #5cc8e0; }
+      .accent-2 { fill: #d4a04a; }
+      .stroke-fg-2 { stroke: #8fd4e6; }
+      .stroke-fg-4 { stroke: #4099b3; }
+      .stroke-accent-1 { stroke: #5cc8e0; }
+      .stroke-cyan { stroke: #5cc8e0; }
+      .stroke-orange { stroke: #d4a04a; }
+      .dot-dim { fill: #5aafc5; stroke: #8fd4e6; }
+    }
+  </style>
+
+  <!-- Transparent backplate -->
+  <rect x="0" y="0" width="800" height="420" fill="transparent"/>
+
+  <!-- === BACKGROUND LAYER === -->
+  <g id="background"></g>
+
+  <!-- === NODES LAYER === -->
+  <g id="nodes">
+
+    <!-- Title strip -->
+    <g id="header">
+      <text x="400" y="28" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="600" class="fg-3" text-anchor="middle" letter-spacing="3">THE LEVEL THE TEST RUNS AT</text>
+      <text x="400" y="58" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" class="fg-1" text-anchor="middle" letter-spacing="0.3">Not what happened. Could it have happened at all.</text>
+      <line x1="200" y1="72" x2="600" y2="72" class="stroke-cyan" stroke-width="0.5" opacity="0.35"/>
+      <text x="400" y="96" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-style="italic" class="fg-3" text-anchor="middle">Where this article's argument sits on the forensic spectrum</text>
+    </g>
+
+    <!-- Axis band: a horizontal line with diamond caps at both ends -->
+    <g id="axis-band">
+      <!-- Axis stroke: dim cyan body + orange ramp at the right end to foreshadow the focal marker -->
+      <line x1="70" y1="224" x2="500" y2="224" class="stroke-fg-4" stroke-width="1.2" opacity="0.7"/>
+      <line x1="500" y1="224" x2="730" y2="224" class="stroke-orange" stroke-width="1.4" opacity="0.65"/>
+      <!-- Left cap: small dim diamond -->
+      <path d="M70,218 L76,224 L70,230 L64,224 Z" class="fg-4" opacity="0.85"/>
+      <!-- Right cap: small orange diamond, slightly larger -->
+      <path d="M730,217 L737,224 L730,231 L723,224 Z" fill="#da8230" opacity="0.95"/>
+
+      <!-- Axis end labels: LEFT (granular) -->
+      <text x="70" y="252" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" font-weight="700" class="fg-4" text-anchor="start" letter-spacing="2.5">GRANULAR</text>
+      <text x="70" y="266" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-style="italic" class="fg-3" text-anchor="start">did this specific impact happen</text>
+
+      <!-- Axis end labels: RIGHT (categorical) -->
+      <text x="730" y="252" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" font-weight="700" class="accent-2" text-anchor="end" letter-spacing="2.5">CATEGORICAL</text>
+      <text x="730" y="266" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" font-style="italic" class="accent-2" text-anchor="end">could this story have happened at all</text>
+    </g>
+
+    <!-- Marker 1: Crash reconstruction (granular, dim) -->
+    <g id="marker-1">
+      <line x1="160" y1="214" x2="160" y2="234" class="stroke-fg-4" stroke-width="1" opacity="0.7"/>
+      <circle cx="160" cy="224" r="4" class="dot-dim" stroke-width="0.8" opacity="0.9"/>
+    </g>
+
+    <!-- Marker 2: Gunshot residue (granular, dim) -->
+    <g id="marker-2">
+      <line x1="270" y1="214" x2="270" y2="234" class="stroke-fg-4" stroke-width="1" opacity="0.7"/>
+      <circle cx="270" cy="224" r="4" class="dot-dim" stroke-width="0.8" opacity="0.9"/>
+    </g>
+
+    <!-- Marker 3: Blood pattern (granular, dim) -->
+    <g id="marker-3">
+      <line x1="380" y1="214" x2="380" y2="234" class="stroke-fg-4" stroke-width="1" opacity="0.7"/>
+      <circle cx="380" cy="224" r="4" class="dot-dim" stroke-width="0.8" opacity="0.9"/>
+    </g>
+
+    <!-- Focal marker 4: This test (categorical, vivid) -->
+    <g id="marker-focal">
+      <!-- Pillar: vertical accent line behind ring, terminates 4px above ring and 4 below -->
+      <line x1="640" y1="198" x2="640" y2="206" stroke="#da8230" stroke-width="1.5" opacity="0.55"/>
+      <line x1="640" y1="242" x2="640" y2="250" stroke="#da8230" stroke-width="1.5" opacity="0.55"/>
+      <!-- Outer ring -->
+      <circle cx="640" cy="224" r="14" fill="#da8230" fill-opacity="0.12" stroke="#da8230" stroke-width="1.2"/>
+      <!-- 5-point star, centered at (640, 224), r-outer=9, r-inner=4 -->
+      <!-- Points at angles -90, -90+72, -90+144, -90+216, -90+288 for outer; midway between for inner -->
+      <!-- Outer points: (640, 215), (648.56, 221.22), (645.29, 231.27), (634.71, 231.27), (631.44, 221.22) -->
+      <!-- Inner points: (642.35, 222.76), (643.80, 227.24), (640, 230.00), (636.20, 227.24), (634.65, 222.76) -->
+      <path d="M640,215 L642.35,222.76 L648.56,221.22 L643.80,227.24 L645.29,231.27 L640,228.50 L634.71,231.27 L636.20,227.24 L631.44,221.22 L637.65,222.76 Z"
+            fill="#da8230" opacity="0.95"/>
+    </g>
+
+    <!-- Dim cluster bracket (under markers 1..3) -->
+    <g id="dim-cluster-bracket">
+      <!-- Square bracket with small downturns on both ends -->
+      <path d="M140,268 L140,272 L400,272 L400,268" class="stroke-fg-4" fill="none" stroke-width="0.8" opacity="0.5"/>
+    </g>
+
+    <!-- Tagline ribbon -->
+    <g id="tagline-ribbon">
+      <path d="M24,370 H776 V391 Q776,394 773,394 H27 Q24,394 24,391 Z" fill="#da8230" fill-opacity="0.12" stroke="#c97520" stroke-width="1.5"/>
+    </g>
+  </g>
+
+  <!-- === CONNECTORS LAYER (empty - spectrum diagram, axis IS the connection) === -->
+  <g id="connectors"></g>
+
+  <!-- === CONTENT LAYER === -->
+  <g id="content">
+
+    <!-- Marker 1: Crash reconstruction labels -->
+    <g id="marker-1-content">
+      <text x="160" y="200" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="600" class="fg-2" text-anchor="middle">crash reconstruction</text>
+      <text x="160" y="252" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="500" class="fg-4" text-anchor="middle" letter-spacing="0.3">metal</text>
+    </g>
+
+    <!-- Marker 2: Gunshot residue labels -->
+    <g id="marker-2-content">
+      <text x="270" y="200" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="600" class="fg-2" text-anchor="middle">gunshot residue</text>
+      <text x="270" y="252" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="500" class="fg-4" text-anchor="middle" letter-spacing="0.3">powder</text>
+    </g>
+
+    <!-- Marker 3: Blood pattern labels -->
+    <g id="marker-3-content">
+      <text x="380" y="200" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="600" class="fg-2" text-anchor="middle">blood pattern</text>
+      <text x="380" y="252" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="500" class="fg-4" text-anchor="middle" letter-spacing="0.3">stains</text>
+    </g>
+
+    <!-- Dim cluster labels (under bracket) -->
+    <g id="dim-cluster-content">
+      <text x="270" y="288" font-family="Segoe UI, Arial, sans-serif" font-size="8.5" font-weight="700" class="fg-4" text-anchor="middle" letter-spacing="2">RECOGNISED FORENSIC DISCIPLINES</text>
+      <text x="270" y="302" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-style="italic" class="fg-3" text-anchor="middle">reconstruct what occurred</text>
+    </g>
+
+    <!-- Focal marker content (eyebrow + headline + gloss) -->
+    <g id="marker-focal-content">
+      <text x="640" y="184" font-family="Segoe UI, Arial, sans-serif" font-size="8" font-weight="700" class="accent-1" text-anchor="middle" letter-spacing="2.5">THIS TEST</text>
+      <text x="640" y="290" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="800" class="accent-2" text-anchor="middle">the prior question</text>
+      <text x="640" y="312" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-style="italic" font-weight="500" class="fg-2" text-anchor="middle">Newton's second law</text>
+      <text x="640" y="326" font-family="Segoe UI, Arial, sans-serif" font-size="9" font-style="italic" font-weight="500" class="fg-2" text-anchor="middle">+ a Polish elevator door</text>
+    </g>
+
+  </g>
+
+  <!-- === CALLOUTS LAYER === -->
+  <g id="callouts">
+    <g id="callout-tagline">
+      <text x="400" y="386" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="600" font-style="italic" class="accent-2" text-anchor="middle" letter-spacing="0.5">Nothing here is novel science. The test simply asks a coarser question.</text>
+    </g>
+  </g>
+
+</svg>

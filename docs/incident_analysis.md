@@ -283,7 +283,7 @@ Motion-side scoring: 4 of 7 (phase, quantity) pairs plausible, 2 implausible, 1 
 
 Outcome-side scoring: 3 of 4 impact quantities in serious / critical / life-threatening bands.
 
-Lower-bound argument (formal in [`events_reconstruction.md`](../references/incident/events_reconstruction.md)): the computed demand $D_\text{min}(q^\star)$ is the *minimum* required by any motion that admits the verbatim claim. The true claimed motion is bounded by $D(M_\text{true}) \geq D_\text{min}(q^\star)$, so its plausibility is bounded $\mathrm{plaus}(M_\text{true}) \leq \mathrm{plaus}(M_\text{min})$.
+Lower-bound argument (formal in `events_reconstruction.md`): the computed demand $D_\text{min}(q^\star)$ is the *minimum* required by any motion that admits the verbatim claim. The true claimed motion is bounded by $D(M_\text{true}) \geq D_\text{min}(q^\star)$, so its plausibility is bounded $\mathrm{plaus}(M_\text{true}) \leq \mathrm{plaus}(M_\text{min})$.
 
 Implication: any richer reconstruction adding the late-filing elements (throat-grab, defensive grab, attempted strangulation, left-side approach) compresses each remaining phase into less time, pushes peak accelerations and angular velocities up, and makes the verdict strictly worse. There is no decomposition that makes the claim more plausible than this lower bound.
 
