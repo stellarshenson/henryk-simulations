@@ -57,7 +57,7 @@ I'll come back to these details. First, the physics.
 
 ## A minimum-phase reconstruction
 
-Another AI I was bouncing ideas off suggested a clean framing early on. Don't try to simulate what happened. Define an impossible-movement test.
+The framing I landed on early was this. Don't try to simulate what happened. Define an impossible-movement test.
 
 The idea is this: decompose the accusation into the **smallest set of phases** that still admits the verbatim claim, and give each phase the **maximum** time the 3 s budget allows. That produces the lowest possible peak velocity, acceleration, and force any motion compatible with the accusation could have.
 
