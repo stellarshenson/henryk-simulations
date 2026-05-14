@@ -2,40 +2,17 @@
 
 This document fixes the directional convention and the positions of all parties and architectural elements for the corridor incident. All other documents in this project (the kinematic reconstruction, the testimonies, the impact analysis) use this convention.
 
+![Corridor overhead geometry](../../reports/figures/01-corridor-geometry.png)
+
+The figure above is the canonical reference. The prose sections below explain each element of it in text, for cases where the rendering is not available.
+
 ## Cardinal directions
 
-The corridor runs **West to East**. North is the side wall that contains the apartment door; South is the side wall that contains the elevator door.
-
-```
-                 N
-                 ^
-                 |
-                 |
-   W <-----------+-----------> E
-                 |
-                 |
-                 v
-                 S
-```
+The corridor runs **West to East**. North is the side wall that contains the apartment door; South is the side wall that contains the elevator door. A compass rosette in the top-right of the rendering above carries the same convention.
 
 ## Topology
 
 The corridor has two segments. The first (entrance) segment runs along the W-to-E axis. At a transition point the corridor opens into the second segment, which is wider and contains both the elevator door (on the S wall) and, slightly further east on the opposite side, the apartment door (on the N wall).
-
-```
-       segment 1                      segment 2     N wall
-   +--------------------+----------###########-------------+
-   |                    .               ▼                  |
-   |  segment 1         .              apartment           |
-   |  (entrance)        .                door              |
-   |                    .                                  |
-   |                    .   elevator                       |
-   +--------------------+     door                         |
-                        |       ▼                          |
-   +--------------------+--###########---------------------+
-                                                    S wall
-   W <----------------------------------------------------> E
-```
 
 - The **elevator door** is set into the **S wall** of segment 2.
 - The **apartment door** is set into the **N wall** of segment 2, slightly further east, on the opposite side of the corridor from the elevator door.
@@ -49,32 +26,18 @@ The corridor has two segments. The first (entrance) segment runs along the W-to-
 - **Victoria**: stands **inside the apartment door envelope, on its W side**, with the open door swung westward beside her. Her body naturally faces **S** to look out across the corridor at Andrew. The open door panel is between Victoria and Cecilia's line of sight from the west.
 - **Cecilia**: stands in segment 1, **west** of both Andrew and Victoria, having just stepped aside as Victoria requested. She is the **westernmost** of the three. Her line of sight eastward into segment 2 is partly broken by the swung-open apartment door.
 - **[B]** (aluminium briefcase, ~50 cm × 30 cm): on the floor at the **east edge of the elevator door**, right where the door panel meets the door frame. It occupies the floor space to Andrew's east, against the elevator-door edge.
+- **[Str]** (baby stroller): on the floor at the **western edge of segment 2**, on the N side at the segment-1 / segment-2 transition. It occupies the western approach to Victoria's position and partially constrains the corridor space Andrew would have to traverse if the alleged motion had pulled Victoria south past the apartment-door envelope.
 
-```
-       segment 1          segment 2  appartment     N wall
-   +--------------------+----------###########-------------+
-   |                    .  [Str]     V↓     D             |
-   |  segment 1         .  [Str]            D              |
-   |  (Cecilia o→)      .                  D               |
-   |                    .                                  |
-   |                    .                                  |
-   +--------------------+            [Box]                 |
-                        |      ↑A    [Box]                 |
-   +--------------------+--###########---------------------+
-                              elevator               S wall
-   W <----------------------------------------------------> E
-```
+Facing arrows on the rendering (and in the prose below) indicate orientation: Victoria faces S, Andrew faces N, Cecilia faces E.
 
-Facing arrows next to each actor indicate orientation (↓ = facing S, ↑ = facing N, → = facing E).
-
-Items and props on the diagram:
+Items and props:
 
 - **V** (Victoria) - inside the apartment door envelope on its W side, N wall of segment 2. ↓ = **faces S** out into the corridor. The open door panel (`D`) sits immediately to her W, between her and Cecilia
 - **A** (Andrew) - in segment 2 with his back pressed flat against the elevator door (S wall). ↑ = **faces N** toward Victoria. He moved here when Victoria asked him to step aside; this is his maximum-retreat position
 - **Cecilia** - in segment 1, west of both. → = **faces E** into segment 2. Her eastward line of sight to V is partly broken by the swung-open apartment door (`D`)
 - **[Box]** - aluminium briefcase, ~50 cm × 30 cm, on the floor at the **east edge** of the elevator door at the door-frame edge. Sits on Andrew's east side
 - **[Str]** - baby stroller, positioned at the western edge of segment 2 (the segment 1 / segment 2 transition), on the N side. Occupies floor space in the western approach to V
-- **D** (column of three) - the **apartment door panel** swung open to the W, projecting from the door envelope westward into the corridor. Blocks part of Cecilia's eastward line of sight to V
+- **Apartment door** - hinged on its east side, opens by swinging W into the corridor; in its open position the panel projects from the door envelope westward into segment 2 and blocks part of Cecilia's eastward line of sight to Victoria
 
 ## Body-relative directions
 

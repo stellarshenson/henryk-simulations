@@ -35,11 +35,26 @@ The setup the lower-bound reconstruction runs against: a two-segment corridor wi
 
 ## What this is
 
-A father was accused of assault that allegedly happened in a hallway: pull the victim back, swap places, throw her into the elevator door, swap places again - all in about three seconds. This repo deconstructs that claim with a physics engine, computes the kinematics the claim implies, and answers one question:
+The accusation is specific: three seconds in a corridor. The father was supposed to have pulled the alleged victim back, swapped places with her, thrown her back-first into the elevator door, and swapped places again. All of this in front of a court-appointed social curator who, by her own testimony, had her back turned at the precise moment of the alleged impact.
 
-**Was the course of events described by the victim plausible?**
+Three seconds. Two doors, two metres apart. A 70 kg adult moving as a rigid object. A 90 kg actor doing the moving.
 
-The answer is in the simulation. Have fun. The reconstruction here cheats on the prosecution's behalf - the accusation gets the friendliest possible reading - and the accusation still fails the physics.
+The father is not a lawyer. He is the kind of person who reaches for `scipy.stats` and `compute_impact()` when faced with an emotional problem. So he built this repo.
+
+At the most charitable possible interpretation of the accusation, the impact would have delivered **18 kilonewtons of peak force**, **26 g of deceleration**, and a peak sound pressure level of **124 dB** at the phone microphone that was recording the entire visit. The medical examination afterwards documented one bruise on the right shoulder. The recording contains neither a clipping spike nor any panel-ringing acoustic signature. The third-party witness reports no loud noise of any kind.
+
+You can decide for yourself what that means. The reconstruction cheats on the prosecution's behalf throughout - the accusation gets the friendliest possible reading - and the accusation still fails the physics.
+
+## What's in here
+
+Four kinds of artefacts bundled together:
+
+- **Forensic record** - corridor topology and dimensions, five chronologically ordered versions of the alleged victim's testimony, the third-party social curator's positional and temporal account, a narrative-escalation log tracking how the story changed across filings, and the EXIF-clean audio recording of the entire visit as the acoustic ground truth
+- **Physics library** - per-phase kinematic and dynamic quantities the claim implies (linear and angular velocities, peak accelerations, forces, impulses, kinetic energies, impact force on the elevator door, peak g-loading on the chest); each quantity scored against a published biomechanical reference distribution drawn from Daams, Mital, Mero, Cross, Hodgson, Plagenhoef, Viano, Cavanaugh, Stapp, Eiband, Sturdivan and Kemper, emitting a z-score and a colour-coded verdict band
+- **Acoustics module** - Kirchhoff plate equation for the elevator door's flexural modes, half-wave resonance of the air gap between the two steel panels, peak sound pressure predicted at three listener positions including the phone microphone that recorded the visit; cross-checked against the actual audio waveform for the expected clipping spike and panel ringing
+- **PyBullet simulation** - rigid-body render of the alleged motion as an MP4 with custom capsule mannequins, plus a dozen matplotlib figures showing per-phase demand bars, force and acceleration timelines, injury-threshold zones, the four-views-of-impact panel, and the audio signature prediction
+
+Every number in the analysis is reproducible by running one notebook against a single nested `PARAMS` dictionary; ruff-clean Python, pytest-covered, managed by `uv`.
 
 ## Aim
 
