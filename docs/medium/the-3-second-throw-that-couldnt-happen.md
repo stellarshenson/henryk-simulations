@@ -95,7 +95,7 @@ The continuous-velocity model treats swap-throw as a continuation of the pull. T
 
 $$v_\text{impact} = \sqrt{v_\text{pull-end}^2 + 2 a_\text{pull} s_\text{swap}} = \sqrt{3.0^2 + 2 \cdot 3.0 \cdot 0.22} \approx 3.21 \text{ m/s}$$
 
-That is 11.6 kph. Modest, against a typical body. But the elevator door is not a typical body. It is a rigid hollow steel panel that deforms about 2 cm before reaction. Plug in $a = v^2/(2d)$ for a 70 kg torso:
+That is 11.6 kph. Modest, against a typical body. But the elevator door is not a typical body. The steel panel is effectively rigid - it barely deforms - so almost all of the deceleration distance comes from the body itself: the ~2 cm of soft-tissue and pre-yield rib-cage compliance before bone fails (Lobdell 1973; Kroell 1971). Plug $d = 2$ cm into $a = v^2/(2d)$ for a 70 kg torso:
 
 $$a_\text{impact} = \frac{3.21^2}{0.04} \approx 258 \text{ m/s}^2 \approx 26.3\,g$$
 
@@ -111,7 +111,7 @@ Eighteen kilonewtons is the kind of load you get from a small SUV nudging a wall
 
 ![Four views of the same impact](images/05-four-views-of-impact.svg)
 
-You will notice an apparent contradiction in that figure. The impact velocity (11.6 kph) reads "moderate, bruising" while the force, acceleration, and kinetic energy all read "serious" or "critical". This is not a contradiction. The published velocity bands assume a **soft target** - chest deformation of 5-10 cm against a compliant surface. A steel door is not a compliant surface. The same 11.6 kph absorbed over 2 cm rigid instead of 10 cm soft multiplies the peak force by roughly five times. The four metrics are four views of the same impact. The velocity is the cause; the force, the g, and the deposited energy are the outcomes.
+You will notice an apparent contradiction in that figure. The impact velocity (11.6 kph) reads "moderate, bruising" while the force, acceleration, and kinetic energy all read "serious" or "critical". This is not a contradiction. The published velocity bands assume a **soft target** - chest deformation of 5-10 cm against a compliant surface like a padded car interior. A steel door is not compliant: the body must absorb almost all of the deceleration itself, and the elastic regime ends around 2 cm before bone yields. Same 11.6 kph absorbed over 2 cm of pre-yield body compliance instead of 10 cm of padded compression multiplies the peak force by roughly five times. The four metrics are four views of the same impact. The velocity is the cause; the force, the g, and the deposited energy are the outcomes.
 
 ---
 

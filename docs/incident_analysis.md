@@ -1,13 +1,13 @@
-# Incident Analysis
+![Incident Analysis](images/incident-analysis-header.svg)
 
 Forensic reconstruction of the contested 3 s corridor incident. Cross-references the minimum-phase simulation in [`../notebooks/01-kj-corridor-kinematics.ipynb`](../notebooks/01-kj-corridor-kinematics.ipynb), the testimony set under [`../references/incident/`](../references/incident/), the biomechanics literature in [`./biomechanics-sources.md`](./biomechanics-sources.md) and [`./impact_analysis.md`](./impact_analysis.md), and the rendered simulation in [the YouTube reconstruction](https://youtu.be/V-ooOpqg4aU).
 
 ## 1. Executive Summary
 
 > [!IMPORTANT]
-> The event as described in V's testimony **did not occur as claimed**. This document presents the forensic basis: a lower-bound physics reconstruction whose predicted mechanical, medical, acoustic and observational outcomes are absent from or contradicted by the documented record. Intended for evidentiary use; names anonymised throughout the repository.
+> The event as described in Victoria's testimony **did not occur as claimed**. This document presents the forensic basis: a lower-bound physics reconstruction whose predicted mechanical, medical, acoustic and observational outcomes are absent from or contradicted by the documented record. Intended for evidentiary use; names anonymised throughout the repository.
 
-**The claim**. V states A pulled her ~1.5 m southward, threw her back-first into the elevator door, then swapped positions again, all within ~3 s.
+**The claim**. Victoria states Andrew pulled her ~1.5 m southward, threw her back-first into the elevator door, then swapped positions again, all within ~3 s.
 
 **The lower-bound physics**. Minimum-phase reconstruction (one phase per claimed action, maximum time per phase) yields the smallest demand any compatible motion can impose. Headline numbers:
 
@@ -20,7 +20,7 @@ Forensic reconstruction of the contested 3 s corridor incident. Cross-references
 
 **Predicted damage band**. AIS 5+ critical / life-threatening thoracic injury (Viano 1989, ref 8); rear-torso experimental literature puts comparable loads at rib fracture + costo-vertebral / costo-transverse joint injuries (refs 14, 15).
 
-**Documented findings**. Single right-shoulder bruise on medical examination; no rib fracture, no breathing complaint, full thoracic mobility, no audio clipping spike, no steel-panel ringing in the recording, no acoustic reaction from the line-of-sight third-party observer (C).
+**Documented findings**. Single right-shoulder bruise on medical examination; no rib fracture, no breathing complaint, full thoracic mobility, no audio clipping spike, no steel-panel ringing in the recording, no acoustic reaction from the line-of-sight third-party observer (Cecilia).
 
 > [!CAUTION]
 > **Key conclusion**. Every outcome-side observable predicted by the lower-bound physics is either absent from the documented record or directly contradicted by the third-party witness. The claimed motion is not consistent with the documented evidence across mechanical, medical, acoustic and observational channels simultaneously.
@@ -28,9 +28,9 @@ Forensic reconstruction of the contested 3 s corridor incident. Cross-references
 ## 2. Incident Overview
 
 - Date: 13 September 2025; corridor at apt door / elevator door, second-floor
-- Participants: A (father, 90 kg), V (mother, 70 kg), C (court social curator, witness), child
+- Participants: Andrew (father, 90 kg), Victoria (mother, 70 kg), Cecilia (court social curator, witness), child
 - Total claimed duration: ~3 s
-- V's claim (synthesised): A pulled V south toward elevator, swapped positions, threw V back-first into elevator door, swapped positions again, V slid to floor
+- Victoria's claim (synthesised): Andrew pulled Victoria south toward elevator, swapped positions, threw Victoria back-first into elevator door, swapped positions again, Victoria slid to floor
 - Audio recording active throughout (`../data/external/event_audio/event_recording.m4a`)
 
 ## 3. Geometry
@@ -41,9 +41,9 @@ Source: [`../references/incident/geometry.md`](../references/incident/geometry.m
 - Apt door on N wall of segment 2, ~1 m wide (Polish standard), opens W into corridor
 - Elevator door on S wall of segment 2, 2 m × 1 m, two 2 mm steel plates with 3 cm air gap, 20 × 60 cm glass window
 - N-S throw distance apt-door to elevator-door: **~2 m**
-- A at setup: back pressed flat against elevator door (max retreat), facing N
-- V at setup: inside apt-door envelope on W side, facing S
-- C at setup: segment 1, facing E, line-of-sight to segment 2
+- Andrew at setup: back pressed flat against elevator door (max retreat), facing N
+- Victoria at setup: inside apt-door envelope on W side, facing S
+- Cecilia at setup: segment 1, facing E, line-of-sight to segment 2
 - Props: aluminium briefcase 50 × 30 cm at E edge of elevator door (`[Box]`), stroller in NW corner of segment 2 (`[Str]`)
 
 ![Corridor overhead geometry](../reports/figures/01-corridor-geometry.png)
@@ -52,7 +52,7 @@ Source: [`../references/incident/geometry.md`](../references/incident/geometry.m
 
 Sources: [`testimony_victim.md`](../references/incident/testimony_victim.md), [`testimony_3rd_party.md`](../references/incident/testimony_3rd_party.md), [`testimony_victoria_inconsistencies.md`](../references/incident/testimony_victoria_inconsistencies.md).
 
-V's account escalates across five chronological retellings:
+Victoria's account escalates across five chronological retellings:
 
 | # | Date | Source | Added element |
 |---|---|---|---|
@@ -62,13 +62,13 @@ V's account escalates across five chronological retellings:
 | 4 | 2025-12 | court motion | + throat-grab + defensive grab |
 | 5 | 2026-03 | restraining-order motion | + attempted strangulation + left-side approach |
 
-C's observation (segment 1, line-of-sight): asked to step aside, took three steps, turned away briefly, on turning back observed V leaning against A front-first with A's hands raised, V slid down door front-first then crawled. V's scream was timed to C turning back, not to the alleged impact.
+Cecilia's observation (segment 1, line-of-sight): asked to step aside, took three steps, turned away briefly, on turning back observed Victoria leaning against Andrew front-first with Andrew's hands raised, Victoria slid down door front-first then crawled. Victoria's scream was timed to Cecilia turning back, not to the alleged impact.
 
 ## 5. Biomechanics References
 
 Compact citation table; full bibliography in [`biomechanics-sources.md`](./biomechanics-sources.md) and [`impact_analysis.md`](./impact_analysis.md).
 
-| Quantity | Mean ± SD | Source |
+| Quantity | μ ± σ | Source |
 |---|---|---|
 | Two-arm peak push force, standing | 800 ± 200 N | Daams 1994; Mital 1995 |
 | Single-arm peak push force | 400 ± 100 N | Daams 1994 |
@@ -88,13 +88,13 @@ Compact citation table; full bibliography in [`biomechanics-sources.md`](./biome
 ## 6. Simulation - Setup
 
 - Stack: Python 3.11, `uv` env `henryk-sim`, PyBullet 3.2.7, scipy / matplotlib / pandas / rich
-- Bodies: A = 90 kg, V = 70 kg, yaw inertia 1.8 / 1.4 kg·m² (Plagenhoef-scaled)
+- Bodies: Andrew = 90 kg, Victoria = 70 kg, yaw inertia 1.8 / 1.4 kg·m² (Plagenhoef-scaled)
 - Geometry: corridor **2.0 m N-S** × 1.5 m lateral × 2.1 m door height
 - Time budget: 3.0 s scored + 1.5 s decorative disengagement
 - All knobs in one nested `PARAMS` dict in the notebook
 - Rendered MP4: [`../reports/figures/01-corridor-sim-passive.mp4`](../reports/figures/01-corridor-sim-passive.mp4); public render: [YouTube reconstruction Mk1](https://youtu.be/V-ooOpqg4aU)
 
-**Why 2.0 m (charitable to the defence)**. V and A were not directly opposite each other in segment 2: V stood at the apt door (N wall) on its W side, A pressed flat against the elevator door (S wall) with an E-W offset relative to V (per [`../references/incident/geometry.md`](../references/incident/geometry.md)). The true straight-line displacement during the alleged swap is therefore the **diagonal** $\sqrt{2.0^2 + \Delta_{EW}^2}$, strictly greater than 2.0 m. Using 2.0 m as the assumed throw distance is conservative for the defence: a longer actual path within the same 3 s budget increases required peak velocity, acceleration, and force. The verdict is a lower bound on the true demand.
+**Why 2.0 m (charitable to the defence)**. Victoria and Andrew were not directly opposite each other in segment 2: Victoria stood at the apt door (N wall) on its W side, Andrew pressed flat against the elevator door (S wall) with an E-W offset relative to Victoria (per [`../references/incident/geometry.md`](../references/incident/geometry.md)). The true straight-line displacement during the alleged swap is therefore the **diagonal** $\sqrt{2.0^2 + \Delta_{EW}^2}$, strictly greater than 2.0 m. Using 2.0 m as the assumed throw distance is conservative for the defence: a longer actual path within the same 3 s budget increases required peak velocity, acceleration, and force. The verdict is a lower bound on the true demand.
 
 ## 7. Simulation - Assumptions
 
@@ -102,10 +102,10 @@ Each assumption is conservative for the defence (lower-bound on demand):
 
 - Three phases only, no extra gestures or transitional pauses
 - Maximum duration per phase (minimises required peaks)
-- V fully passive, no resistive friction or grip
+- Victoria fully passive, no resistive friction or grip
 - Triangular velocity profile per phase ($v_\text{peak} = 2s/t$, $a_\text{peak} = 4s/t^2$)
-- Continued acceleration through swap-throw: V hits door at peak velocity
-- Rigid impact, 2 cm stopping distance (combines tissue + door deflection)
+- Continued acceleration through swap-throw: Victoria hits door at peak velocity
+- Rigid impact, 2 cm stopping distance representing the body's pre-yield soft-tissue + elastic rib-cage compliance (see §11 grounding); the steel door itself is functionally rigid and contributes negligible deflection
 - Reference distributions normal, adult-male means and SDs
 
 ## 8. Simulation - Measurements
@@ -124,19 +124,19 @@ Three phases of 1.0 s each:
 
 | # | Phase | Body | Translation | Rotation |
 |---|---|---|---|---|
-| 1 | pull | V | 1.5 m S | - |
-| 2 | swap-throw | V | 0.22 m S (residual closing) | 180° |
-| 3 | swap-back | A | - | 180° (V steps back 40 cm + 180°) |
+| 1 | pull | Victoria | 1.5 m S | - |
+| 2 | swap-throw | Victoria | 0.22 m S (residual closing) | 180° |
+| 3 | swap-back | Andrew | - | 180° (Victoria steps back 40 cm + 180°) |
 
 **Rationale**: smallest set that admits the verbatim claim. Maximum duration per phase → minimum required peaks → lower bound on demand. Formal ELBO-style derivation in [`../references/incident/events_reconstruction.md`](../references/incident/events_reconstruction.md): $D(M_\text{true}) \geq D_\text{min}(q^\star)$, so $\mathrm{plaus}(M_\text{true}) \leq \mathrm{plaus}(M_\text{min})$.
 
-**Distance split**. Corridor width door-to-door is **2.0 m** (geometric truth, §3). V's CoM travels **1.72 m total** because V's torso has ~0.14 m radius: she starts with her back touching the apt door (CoM at 0.14 m from N wall) and ends with her back touching the elevator door (CoM at 1.86 m). The notebook splits the 1.72 m into **1.5 m during pull** + **0.22 m residual closing during swap-throw**; the 0.22 m is not new acceleration distance but the geometric tail to door contact.
+**Distance split**. Corridor width door-to-door is **2.0 m** (geometric truth, §3). Victoria's CoM travels **1.72 m total** because Victoria's torso has ~0.14 m radius: she starts with her back touching the apt door (CoM at 0.14 m from N wall) and ends with her back touching the elevator door (CoM at 1.86 m). The notebook splits the 1.72 m into **1.5 m during pull** + **0.22 m residual closing during swap-throw**; the 0.22 m is not new acceleration distance but the geometric tail to door contact.
 
 ![Phase timeline](../reports/figures/01-phase-timeline.png)
 
 ## 10. Model - Kinematics
 
-Pull phase: V accelerates from rest, 1.5 m in 1.0 s, end-velocity **3.0 m/s**, $a_\text{peak}$ **6.0 m/s²** (z = 3.75 vs recreational sprint reference - extreme band). Continued acceleration through swap-throw closing distance:
+Pull phase: Victoria accelerates from rest, 1.5 m in 1.0 s, end-velocity **3.0 m/s**, $a_\text{peak}$ **6.0 m/s²** (z = 3.75 vs recreational sprint reference - extreme band). Continued acceleration through swap-throw closing distance:
 
 $$v_\text{impact} = \sqrt{v_\text{pull-end}^2 + 2 a_\text{pull} s_\text{swap}} = \sqrt{3.0^2 + 2 \cdot 3.0 \cdot 0.22} \approx 3.21\ \text{m/s} \approx 11.6\ \text{kph}$$
 
@@ -144,16 +144,16 @@ Swap-throw and swap-back rotation: both 180° in 1.0 s → $\omega_\text{peak}$ 
 
 **Verdict tally** across all motion-side (phase × quantity) scores:
 
-- 4 ![](https://img.shields.io/badge/PLAUSIBLE-brightgreen)
-- 2 ![](https://img.shields.io/badge/IMPLAUSIBLE-orange)
-- 1 ![](https://img.shields.io/badge/EXTREME-red)
+- 4 <span style="color:green;font-weight:bold">PLAUSIBLE</span>
+- 2 <span style="color:darkorange;font-weight:bold">IMPLAUSIBLE</span>
+- 1 <span style="color:red;font-weight:bold">EXTREME</span>
 
 ![Speed timeline](../reports/figures/01-speed-timeline.png)
 ![Verdict summary](../reports/figures/01-verdict-summary.png)
 
 ## 11. Model - Mechanics
 
-Impact at door: V's 3.21 m/s decelerated to 0 over 2 cm rigid stopping distance.
+Impact at door: Victoria's 3.21 m/s decelerated to 0 over a 2 cm stopping distance.
 
 $$a_\text{impact} = \frac{v^2}{2d} = \frac{3.21^2}{0.04} \approx 258\ \text{m/s}^2 \approx 26.3\ g$$
 
@@ -161,10 +161,34 @@ $$F_\text{impact} = m \cdot a = 70 \cdot 258 \approx 18{,}060\ \text{N} = 18.06\
 
 $$KE_\text{impact} = \tfrac12 m v^2 \approx 361\ \text{J}, \qquad t_\text{stop} = \frac{2d}{v} \approx 12.5\ \text{ms}, \qquad p = mv \approx 225\ \text{N·s}$$
 
-Pull-phase actor effort: required force on V = 420 N, two-arm push budget 800 N (Daams) - within muscle range. Door reaction force 18 kN is not muscle-mediated, it is a passive reaction to V's momentum.
+Pull-phase actor effort: required force on Victoria = 420 N, two-arm push budget 800 N (Daams) - within muscle range. Door reaction force 18 kN is not muscle-mediated, it is a passive reaction to Victoria's momentum.
 
 ![Force timeline](../reports/figures/01-force-timeline.png)
 ![Per-phase demand](../reports/figures/01-per-phase-demand.png)
+
+### Where does the 2 cm come from? Scientific grounding
+
+The stopping distance $d$ in $F = mv^2/(2d)$ is **not door deformation**. The 2 mm hollow steel panel is functionally rigid at this load - elastic deflection is sub-millimetre. The 2 cm represents the **body's own compliance** during the impact:
+
+- **Skin + subcutaneous tissue compression**: ~0.5 - 1 cm before bottoming out against the rib cage
+- **Initial elastic deflection of the rib cage**: ~1 - 2 cm of recoverable bending before bone yields. Anterior chest stiffness is ~40 N/mm (Lobdell 1973); the elastic regime ends around 2-3 cm, after which Kroell's 1971 cadaver tests show progressive rib fracture at 5-7 cm compression
+- **Posterior thorax**: structurally stiffer than the anterior chest with less soft-tissue padding (Kemper et al. 2014, rear-torso biomechanics, ref 14), so 2 cm sits at the upper end of the pre-yield range for back-first impact
+
+Mathematically, $d$ also acts as a regulariser: $F = mv^2/(2d) \to \infty$ as $d \to 0$, so any momentum-transfer model needs a non-zero stopping distance. 2 cm is small enough to produce the correct large reaction force against a rigid target, large enough to stay in the physically meaningful pre-failure regime.
+
+### Robustness: does the conclusion depend on this choice?
+
+Sweep $d$ across the plausible range:
+
+| Chosen | Stopping distance $d$ | Represents | Peak force | Peak g | AIS band | Rib fractures expected? |
+|---|---|---|---|---|---|---|
+|   | 1 cm | skin / fat only (pure regularisation) | 36.1 kN | 52 g | AIS 5+ | yes (catastrophic) |
+| <span style="color:red;font-weight:bold">THIS MODEL</span> | **2 cm** | **pre-yield body compliance** | **18.1 kN** | **26 g** | **AIS 5+** | **yes (multiple)** |
+|   | 3 cm | soft-tissue + initial rib deflection | 12.0 kN | 17 g | AIS 4 | yes (multiple + flail) |
+|   | 5 cm | chest "fully compressed" (anterior) | 7.2 kN | 10 g | AIS 3 | yes (multiple + contusion) |
+|   | 10 cm | soft-target band (Viano & Lau 1985) | 3.6 kN | 5 g | AIS 2 | yes (rib fracture range) |
+
+**Every physically plausible value still puts the impact above the rib-fracture threshold** (AIS 2). The documented finding of zero rib fractures is therefore anomalous regardless of which stopping distance is assumed. The qualitative conclusion - that the alleged impact is incompatible with the documented injury record - is robust to the 2 cm choice.
 
 ## 12. Model - Biomechanics / Medical Injury
 
@@ -172,12 +196,12 @@ Mapping computed impact onto blunt-thoracic-impact literature:
 
 | Quantity | Sim value | AIS / band | Source | Severity |
 |---|---|---|---|---|
-| Impact force | 18.06 kN | AIS 5+ critical / life-threatening | Viano 1989 (ref 8) | ![](https://img.shields.io/badge/AIS_5%2B-red) |
-| Peak g | 26.3 g | serious force, race-car-crash range | Stapp 1971 (ref 10) | ![](https://img.shields.io/badge/SERIOUS-orange) |
-| Impact KE | 361 J | serious thoracic injury, organ contusion | Sturdivan 2004 (ref 12) | ![](https://img.shields.io/badge/SERIOUS-orange) |
-| Impact velocity | 11.6 kph | moderate (soft-target only - see below) | Viano & Lau 1985 (ref 13) | ![](https://img.shields.io/badge/MODERATE-yellow) |
+| Impact force | 18.06 kN | AIS 5+ critical / life-threatening | Viano 1989 (ref 8) | <span style="color:red;font-weight:bold">AIS 5+</span> |
+| Peak g | 26.3 g | serious force, race-car-crash range | Stapp 1971 (ref 10) | <span style="color:darkorange;font-weight:bold">SERIOUS</span> |
+| Impact KE | 361 J | serious thoracic injury, organ contusion | Sturdivan 2004 (ref 12) | <span style="color:darkorange;font-weight:bold">SERIOUS</span> |
+| Impact velocity | 11.6 kph | moderate (soft-target only - see below) | Viano & Lau 1985 (ref 13) | <span style="color:goldenrod;font-weight:bold">MODERATE</span> |
 
-Velocity reads "moderate" because the published velocity-injury bands assume a compliant target (chest deforms 5-10 cm). For a rigid steel door (2 cm), the same velocity produces 4-5× higher peak force and g-loading. The force / g / KE values are the outcome-side metrics that already include this scenario's geometry.
+Velocity reads "moderate" because the published velocity-injury bands assume a compliant target where the chest deforms 5-10 cm against a padded surface (Viano & Lau 1985). Against a rigid steel door the body has to absorb almost all of the deceleration itself within its pre-yield compliance (~2 cm, see §11 grounding), so the same velocity produces 4-5× higher peak force and g-loading. The force / g / KE values are the outcome-side metrics that already include this scenario's geometry.
 
 Cross-check vs rear-torso lit ([`impact_analysis.md`](./impact_analysis.md)): 18 kN is ~2× the highest reported rear-torso experimental loads (6.9-10.5 kN), which themselves produced costo-vertebral and rib injuries. The 1.6-1.9 kN lateral thorax range produces 4-13 rib fractures at 15.5 kph; our 11.6 kph delivers ~10× more force.
 
@@ -187,16 +211,16 @@ Cross-check vs rear-torso lit ([`impact_analysis.md`](./impact_analysis.md)): 18
 
 For a non-specialist reader, the kN values above are abstract. The table below maps peak impact force onto everyday real-world analogs and the typical injury you would see at each regime. The row our reconstruction lands in is marked.
 
-| Peak force | Plain-English description | Real-world analog (~70 kg adult on the receiving end) | Typical injury | AIS |
-|---|---|---|---|---|
-| ~0.5 - 1 kN | Mild bump | Walking into a doorframe at normal pace; basketball thrown at you by a child; pushing hard on a stuck door | Nothing, or a faint bruise | 0 |
-| ~1 - 3 kN | Significant impact | Solid open-palm slap from a 90 kg adult; falling backward onto a thick carpet from sitting; a heavy boxer's straight punch to the chest | Deep bruise, possible hairline rib crack | 1 |
-| ~3 - 5 kN | Hard impact | NFL-style tackle from a 100 kg defender; falling backward onto a wooden floor from standing; landing on your back after slipping on ice | One or two rib fractures, surface haematoma | 2 |
-| ~5 - 8 kN | Severe impact | Kicked by a full-grown horse; low-speed motorcycle crash into a stationary car; landing back-first against the edge of a concrete step | Multiple rib fractures + pulmonary contusion; thoracic-spine ligament damage | 3 |
-| ~8 - 12 kN | Critical impact | Hit by a small car at ~5 kph; rugby pile-up gone wrong; back-first fall from a 1 m height onto pavement | Flail chest, serious organ injury, broken sternum | 4 |
-| ![](https://img.shields.io/badge/THIS_CASE-red) **~12 - 20 kN** | **Critical to life-threatening** | **Small SUV bumping you at ~10 kph; back-first fall from a 1st-floor balcony onto pavement; ramming a brick wall on a bicycle at 25 kph** | **Multiple organ rupture, spinal column damage, frequently fatal** | **5+** |
-| ~20 - 30 kN | Usually fatal | Pedestrian hit by a car at ~15-20 kph; back-first fall from a 2nd-floor balcony; head-on bicycle crash at 30 kph | Massive thoracic trauma, often immediately fatal | 6 |
-| > 30 kN | Almost always fatal | Highway-speed traffic accident without restraint; fall from a 3rd-floor balcony | Catastrophic crush injury | 6 |
+| Chosen | Peak force | Plain-English description | Real-world analog (~70 kg adult on the receiving end) | Typical injury | AIS |
+|---|---|---|---|---|---|
+|   | ~0.5 - 1 kN | Mild bump | Walking into a doorframe at normal pace; basketball thrown at you by a child; pushing hard on a stuck door | Nothing, or a faint bruise | 0 |
+|   | ~1 - 3 kN | Significant impact | Solid open-palm slap from a 90 kg adult; falling backward onto a thick carpet from sitting; a heavy boxer's straight punch to the chest | Deep bruise, possible hairline rib crack | 1 |
+|   | ~3 - 5 kN | Hard impact | NFL-style tackle from a 100 kg defender; falling backward onto a wooden floor from standing; landing on your back after slipping on ice | One or two rib fractures, surface haematoma | 2 |
+|   | ~5 - 8 kN | Severe impact | Kicked by a full-grown horse; low-speed motorcycle crash into a stationary car; landing back-first against the edge of a concrete step | Multiple rib fractures + pulmonary contusion; thoracic-spine ligament damage | 3 |
+|   | ~8 - 12 kN | Critical impact | Hit by a small car at ~5 kph; rugby pile-up gone wrong; back-first fall from a 1 m height onto pavement | Flail chest, serious organ injury, broken sternum | 4 |
+| <span style="color:red;font-weight:bold">THIS CASE</span> | **~12 - 20 kN** | **Critical to life-threatening** | **Small SUV bumping you at ~10 kph; back-first fall from a 1st-floor balcony onto pavement; ramming a brick wall on a bicycle at 25 kph** | **Multiple organ rupture, spinal column damage, frequently fatal** | **5+** |
+|   | ~20 - 30 kN | Usually fatal | Pedestrian hit by a car at ~15-20 kph; back-first fall from a 2nd-floor balcony; head-on bicycle crash at 30 kph | Massive thoracic trauma, often immediately fatal | 6 |
+|   | > 30 kN | Almost always fatal | Highway-speed traffic accident without restraint; fall from a 3rd-floor balcony | Catastrophic crush injury | 6 |
 
 Our reconstructed impact peaks at **18.06 kN** - solidly in the THIS_CASE row above. For the alleged motion to have happened the way the verbatim claim describes it, the victim would have absorbed the same force as a low-speed pedestrian-vehicle collision, or a fall from a first-floor balcony onto pavement, back-first. The documented medical finding is a single right-shoulder bruise.
 
@@ -223,7 +247,7 @@ Peak SPL prediction over radiation-efficiency bracket (0.1% / 1% / 5%):
 Consumer phone mic clips at ~120 dB SPL. Predicted impact peak at typical η exceeds clipping ceiling.
 
 > [!NOTE]
-> **Forensic verification (actual recording)**: the audio file [`../data/external/event_audio/event_recording.m4a`](../data/external/event_audio/event_recording.m4a) was running continuously throughout the visit. Inspection of the waveform shows **no bang** registered at the alleged impact moment - no clipping spike (predicted ~124 dB SPL at the phone microphone would saturate the recorder), no sub-bass panel-ringing energy in the 6-24 Hz band, no bright cavity-mode peak around 5.7 kHz. The third-party witness (C, ~1.5 m from the door) reports no acoustic reaction in her testimony either. All three predicted acoustic signatures are absent from the actual record.
+> **Forensic verification (actual recording)**: the audio file [`../data/external/event_audio/event_recording.m4a`](../data/external/event_audio/event_recording.m4a) was running continuously throughout the visit. Inspection of the waveform shows **no bang** registered at the alleged impact moment - no clipping spike (predicted ~124 dB SPL at the phone microphone would saturate the recorder), no sub-bass panel-ringing energy in the 6-24 Hz band, no bright cavity-mode peak around 5.7 kHz. The third-party witness (Cecilia, ~1.5 m from the door) reports no acoustic reaction in her testimony either. All three predicted acoustic signatures are absent from the actual record.
 
 ![Audio signature](../reports/figures/01-audio-signature.png)
 
@@ -233,17 +257,17 @@ Per-quantity expansion. Forces, accelerations, kinetic energies, **impulses (kN�
 
 | Claim element | Sim analogue | Quantity | Computed | Reference threshold | Verdict |
 |---|---|---|---|---|---|
-| Pull V ~1.5 m in part of 3 s | pull phase, max 1.0 s | peak acceleration | 6.0 m/s² | 3.0 ± 0.8 m/s² recreational sprint (ref 3) | ![](https://img.shields.io/badge/EXTREME-red) z = 3.75 |
-| Pull V | pull phase | peak pull force on V's torso | 420 N | 800 ± 200 N two-arm push (ref 1) | ![](https://img.shields.io/badge/IN_RANGE-brightgreen) |
-| Pull V | pull phase | impulse delivered during pull | **0.21 kN·s** (210 N·s) | - | - |
-| Throw V into door | swap-throw + impact | impact velocity | 3.21 m/s = 11.6 kph | < 18 kph moderate, soft target (ref 13) | ![](https://img.shields.io/badge/MODERATE-yellow) cause-side, see §12 |
-| Throw V into door | impact | **peak impact force** | **18.06 kN** | ≥ 12 kN AIS 5+ (ref 8) | ![](https://img.shields.io/badge/CRITICAL-red) AIS 5+ |
-| Throw V into door | impact | peak deceleration of V | 258 m/s² ≈ 26.3 g | 15-30 g serious (refs 10, 11) | ![](https://img.shields.io/badge/SERIOUS-orange) |
-| Throw V into door | impact | kinetic energy absorbed | 361 J | 300-500 J serious thoracic (ref 12) | ![](https://img.shields.io/badge/SERIOUS-orange) |
-| Throw V into door | impact | **impulse / momentum transferred** | **0.225 kN·s** (225 N·s) | - | high-momentum short-pulse load |
-| Throw V into door | impact | contact time | 12.5 ms | - | very short pulse - peak force amplified |
-| V's 180° rotation (back to elevator) | swap-throw rotation | yaw angular velocity | 6.28 rad/s | 3.5 ± 1.0 rad/s standing pivot (ref 5) | ![](https://img.shields.io/badge/IMPLAUSIBLE-orange) z = 2.78 |
-| A's 180° rotation (back to elevator) | swap-back rotation | yaw angular velocity | 6.28 rad/s | 3.5 ± 1.0 rad/s (ref 5) | ![](https://img.shields.io/badge/IMPLAUSIBLE-orange) z = 2.78 |
+| Pull Victoria ~1.5 m in part of 3 s | pull phase, max 1.0 s | peak acceleration | 6.0 m/s² | 3.0 ± 0.8 m/s² recreational sprint (ref 3) | <span style="color:red;font-weight:bold">EXTREME</span> z = 3.75 |
+| Pull Victoria | pull phase | peak pull force on Victoria's torso | 420 N | 800 ± 200 N two-arm push (ref 1) | <span style="color:green;font-weight:bold">IN RANGE</span> |
+| Pull Victoria | pull phase | impulse delivered during pull | **0.21 kN·s** (210 N·s) | - | - |
+| Throw Victoria into door | swap-throw + impact | impact velocity | 3.21 m/s = 11.6 kph | < 18 kph moderate, soft target (ref 13) | <span style="color:goldenrod;font-weight:bold">MODERATE</span> cause-side, see §12 |
+| Throw Victoria into door | impact | **peak impact force** | **18.06 kN** | ≥ 12 kN AIS 5+ (ref 8) | <span style="color:red;font-weight:bold">CRITICAL</span> AIS 5+ |
+| Throw Victoria into door | impact | peak deceleration of Victoria | 258 m/s² ≈ 26.3 g | 15-30 g serious (refs 10, 11) | <span style="color:darkorange;font-weight:bold">SERIOUS</span> |
+| Throw Victoria into door | impact | kinetic energy absorbed | 361 J | 300-500 J serious thoracic (ref 12) | <span style="color:darkorange;font-weight:bold">SERIOUS</span> |
+| Throw Victoria into door | impact | **impulse / momentum transferred** | **0.225 kN·s** (225 N·s) | - | high-momentum short-pulse load |
+| Throw Victoria into door | impact | contact time | 12.5 ms | - | very short pulse - peak force amplified |
+| Victoria's 180° rotation (back to elevator) | swap-throw rotation | yaw angular velocity | 6.28 rad/s | 3.5 ± 1.0 rad/s standing pivot (ref 5) | <span style="color:darkorange;font-weight:bold">IMPLAUSIBLE</span> z = 2.78 |
+| Andrew's 180° rotation (back to elevator) | swap-back rotation | yaw angular velocity | 6.28 rad/s | 3.5 ± 1.0 rad/s (ref 5) | <span style="color:darkorange;font-weight:bold">IMPLAUSIBLE</span> z = 2.78 |
 | Throat-grab + strangulation attempt | omitted (min-phase rules) | - | - | - | adds demand to the time budget; does not subtract |
 
 **Impulse interpretation**. Impulse = force × time = momentum change. Pull delivers 0.21 kN·s over 1.0 s (gentle), the impact delivers 0.225 kN·s over 12.5 ms (violent - same momentum, ~80× compressed in time). The peak force of 18 kN is the consequence of compressing this momentum delivery into such a short interval; it is not a muscle-mediated force but a reaction force from the rigid steel door.
@@ -251,7 +275,7 @@ Per-quantity expansion. Forces, accelerations, kinetic energies, **impulses (kN�
 ## 15. Plausibility Analysis
 
 Colour key used in §10, §12, §14:<br>
-![](https://img.shields.io/badge/PLAUSIBLE-brightgreen) z ≤ 1 &nbsp; ![](https://img.shields.io/badge/STRAINED-yellow) 1 < z ≤ 2 &nbsp; ![](https://img.shields.io/badge/IMPLAUSIBLE-orange) 2 < z ≤ 3 &nbsp; ![](https://img.shields.io/badge/EXTREME-red) z > 3 &nbsp; ![](https://img.shields.io/badge/AIS_5%2B-red) critical-load damage band
+<span style="color:green;font-weight:bold">PLAUSIBLE</span> z ≤ 1 &nbsp; <span style="color:goldenrod;font-weight:bold">STRAINED</span> 1 < z ≤ 2 &nbsp; <span style="color:darkorange;font-weight:bold">IMPLAUSIBLE</span> 2 < z ≤ 3 &nbsp; <span style="color:red;font-weight:bold">EXTREME</span> z > 3 &nbsp; <span style="color:red;font-weight:bold">AIS 5+</span> critical-load damage band
 
 Motion-side scoring: 4 of 7 (phase, quantity) pairs plausible, 2 implausible, 1 extreme.
 
@@ -263,17 +287,17 @@ Implication: any richer reconstruction adding the late-filing elements (throat-g
 
 ## 16. Expected Outcome Given True Hypothesis
 
-If the event happened as V described, the following observables would be predicted:
+If the event happened as Victoria described, the following observables would be predicted:
 
 - **Thoracic trauma**: widespread back haematoma covering torso-door contact area; high probability of rib fracture (1-13 depending on band - rear-torso lit puts 6.9-10.5 kN at this AIS band; we compute 18 kN); possible costo-vertebral ligament damage; possible pulmonary contusion (AIS 3+, Viano 1989)
 - **Acute symptoms**: severe breathing pain, restricted thoracic mobility, inability to immediately rise or coordinate
 - **Acoustic signature on recording**: impact spike clipping the phone microphone (predicted 124 dB at 2 m vs ~120 dB ceiling); steel panel ringing in the 6-24 Hz band for 100s of ms; possible glass window resonance in 273-1093 Hz band
-- **Witness response from C**: audible reaction at the impact moment (she had direct acoustic line-of-sight, ~1.5 m, predicted 126 dB peak); turning toward the sound, not away from it
-- **V's post-impact behaviour**: collapse consistent with whole-body deceleration trauma, not a controlled slide
+- **Witness response from Cecilia**: audible reaction at the impact moment (she had direct acoustic line-of-sight, ~1.5 m, predicted 126 dB peak); turning toward the sound, not away from it
+- **Victoria's post-impact behaviour**: collapse consistent with whole-body deceleration trauma, not a controlled slide
 
 ## 17. Predicted vs Actual Medical Findings
 
-Sources: [`testimony_victim.md`](../references/incident/testimony_victim.md) (medical exam), [`testimony_3rd_party.md`](../references/incident/testimony_3rd_party.md) (C's observation).
+Sources: [`testimony_victim.md`](../references/incident/testimony_victim.md) (medical exam), [`testimony_3rd_party.md`](../references/incident/testimony_3rd_party.md) (Cecilia's observation).
 
 Status legend: ✅ predicted observable matches documented finding &nbsp; ❌ predicted observable absent or contradicted &nbsp; ⚠️ partial or temporally decoupled &nbsp; ❓ pending direct verification
 
@@ -284,11 +308,11 @@ Status legend: ✅ predicted observable matches documented finding &nbsp; ❌ pr
 | Costo-vertebral / costo-transverse ligament damage | None | ❌ | Rear-torso experimental loads of 6.9-10.5 kN produce these injuries (ref 14); the model computes ~2× that load with no documented sequelae |
 | Pulmonary contusion / breathing impairment | No breathing complaint recorded | ❌ | AIS 3-4 thoracic load (Viano 1989, ref 8) at 18 kN would predict acute breathing pain and restricted thoracic mobility |
 | Restricted thoracic mobility post-impact | Full mobility on exam | ❌ | A whole-body 26 g deceleration would leave acute residual stiffness, soreness on rotation, guarding |
-| Collapse / inability to coordinate post-impact | V scream timed to *C turning back*, not to the alleged impact moment | ⚠️ | Scream timing is temporally decoupled from the alleged impact event - a scream prompted by being seen, not by being injured |
+| Collapse / inability to coordinate post-impact | Victoria scream timed to *Cecilia turning back*, not to the alleged impact moment | ⚠️ | Scream timing is temporally decoupled from the alleged impact event - a scream prompted by being seen, not by being injured |
 | Audio clipping spike at impact moment | Audio recording archived at `event_recording.m4a`; direct waveform inspection pending | ❓ | Predicted 124 dB at the phone microphone exceeds the ~120 dB consumer-mic clipping ceiling - a clipping spike is the headline forensic test |
 | Steel panel ringing in 6-24 Hz band | Same recording; spectral analysis pending | ❓ | A 70 kg whole-body impact should excite the fundamental panel modes; absence in the spectrogram is the second forensic test |
-| C acoustic reaction at impact (126 dB SPL at her ~1.5 m position) | C reports no bang; observes V leaning *front-first* against A only on turning back | ❌ | A direct line-of-sight observer at predicted 126 dB peak SPL would react audibly and visibly to the sound; no such reaction is in the recording or testimony |
-| V observed lying / collapsed post-impact, back against door | C observes V sliding down the door *front-first*, then crawling forward on all fours | ❌ | Front-first contact and front-first slide are geometrically inconsistent with the claimed back-first throw; this is a direct observational contradiction of the alleged motion |
+| Cecilia acoustic reaction at impact (126 dB SPL at her ~1.5 m position) | Cecilia reports no bang; observes Victoria leaning *front-first* against Andrew only on turning back | ❌ | A direct line-of-sight observer at predicted 126 dB peak SPL would react audibly and visibly to the sound; no such reaction is in the recording or testimony |
+| Victoria observed lying / collapsed post-impact, back against door | Cecilia observes Victoria sliding down the door *front-first*, then crawling forward on all fours | ❌ | Front-first contact and front-first slide are geometrically inconsistent with the claimed back-first throw; this is a direct observational contradiction of the alleged motion |
 
 **Single right-shoulder bruise** is the only documented finding. Every other predicted observable is either absent or contradicted. The mismatch spans all four physical channels: mechanical trauma, breathing, acoustic signature, and the third-party observer's account.
 
@@ -301,12 +325,12 @@ Status legend: ✅ predicted observable matches documented finding &nbsp; ❌ pr
 ## 18. Speculation: defendant's interpretation of the event
 
 > [!IMPORTANT]
-> This entire section is **A's subjective speculation** - the defendant's personal interpretation, not a forensic finding, not a proven claim, and not part of the load-bearing physics argument. None of the bullets below carry evidentiary weight on their own; they are recorded here only to make A's reasoning visible. The physics in §§9-17 stands or falls independently of anything stated here.
+> This entire section is **Andrew's subjective speculation** - the defendant's personal interpretation, not a forensic finding, not a proven claim, and not part of the load-bearing physics argument. None of the bullets below carry evidentiary weight on their own; they are recorded here only to make Andrew's reasoning visible. The physics in §§9-17 stands or falls independently of anything stated here.
 
-Per A's **subjective interpretation**, the September 13 corridor incident was deliberately staged as the trigger event for a false abuse allegation. The pattern, as A reads it (again, subjective, not proven):
+Per Andrew's **subjective interpretation**, the September 13 corridor incident was deliberately staged as the trigger event for a false abuse allegation. The pattern, as Andrew reads it (again, subjective, not proven):
 
-- The toy on the floor was placed deliberately, and the request that both A and C step aside was part of the choreography - engineering the blindspot in which C's back is turned at the critical moment (per [`testimony_3rd_party.md`](../references/incident/testimony_3rd_party.md), she took three steps and turned away just before the alleged act)
-- The verbatim claim was constructed around what C *might* later report seeing when she turned back, not around what would mechanically need to happen for a real impact at the elevator door
+- The toy on the floor was placed deliberately, and the request that both Andrew and Cecilia step aside was part of the choreography - engineering the blindspot in which Cecilia's back is turned at the critical moment (per [`testimony_3rd_party.md`](../references/incident/testimony_3rd_party.md), she took three steps and turned away just before the alleged act)
+- The verbatim claim was constructed around what Cecilia *might* later report seeing when she turned back, not around what would mechanically need to happen for a real impact at the elevator door
 - The single right-shoulder bruise (§17 IMPORTANT note) is, per the defendant, self-inflicted
 - The verbatim testimony then **escalated** across five chronological retellings (§4 escalation table) - a pattern consistent with rehearsal and revision, not with a single recovered memory of an actual event
 
@@ -332,9 +356,9 @@ Rationale for the modelling choices, the statistical framework, the assumption s
 Each assumption is calibrated to bias the result in a known direction:
 
 - Three phases, maximum duration per phase: lowers peak demands (charitable to the claim)
-- Passive cooperation (V offers no resistance, no grip, no bracing): charitable to the claim
+- Passive cooperation (Victoria offers no resistance, no grip, no bracing): charitable to the claim
 - Triangular velocity profile per phase: most charitable smoothing of force-time curves
-- Continued acceleration through swap-throw, $v_\text{impact}^2 = v_\text{pull-end}^2 + 2 a_\text{pull} s_\text{swap}$: raises impact numbers; matches the physical claim that A keeps throwing through door contact
+- Continued acceleration through swap-throw, $v_\text{impact}^2 = v_\text{pull-end}^2 + 2 a_\text{pull} s_\text{swap}$: raises impact numbers; matches the physical claim that Andrew keeps throwing through door contact
 - Rigid impact, 2 cm stopping distance (vs typical body deformation 5-10 cm): raises peak force; matches the rigid steel-door target geometry
 - Reference distributions adult-male, normal-approximated: ignores asymmetric tails, adequate for z up to ~3
 

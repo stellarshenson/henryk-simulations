@@ -1,0 +1,62 @@
+<!--
+  incident-analysis-pl-header.svg - Document header banner for incident_analysis_pl.md
+  Shows: title (PL), subtitle (PL), version chip, decorative impact motif
+  Theme: Stellars-Tech derived - teal/cyan primary (#0096d1), orange accent (#da8230)
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 100">
+  <style>
+    .fg-1 { fill: #1a5a6e; }
+    .fg-2 { fill: #24697e; }
+    .fg-4 { fill: #2b7680; }
+    .ver-fill { fill: #0096d1; }
+    .ver-text { fill: #ffffff; }
+    .decor-teal   { fill: #0096d1; stroke: #0096d1; }
+    .decor-orange { fill: #da8230; stroke: #da8230; }
+    .decor-dark   { fill: #1a5a6e; stroke: #1a5a6e; }
+    @media (prefers-color-scheme: dark) {
+      .fg-1 { fill: #b8e4f0; }
+      .fg-2 { fill: #8fd4e6; }
+      .fg-4 { fill: #4099b3; }
+      .ver-fill { fill: #5cc8e0; }
+      .ver-text { fill: #0a2a35; }
+      .decor-teal   { fill: #5cc8e0; stroke: #5cc8e0; }
+      .decor-orange { fill: #e8a560; stroke: #e8a560; }
+      .decor-dark   { fill: #b8e4f0; stroke: #b8e4f0; }
+    }
+  </style>
+
+  <defs>
+    <linearGradient id="accent_bar_ia_pl" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0"   stop-color="#0096d1"/>
+      <stop offset="0.6" stop-color="#0096d1"/>
+      <stop offset="1"   stop-color="#da8230"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Bottom accent gradient bar -->
+  <rect x="0" y="92" width="800" height="8" fill="url(#accent_bar_ia_pl)" opacity="0.6"/>
+
+  <!-- Title -->
+  <text x="40" y="42" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" class="fg-1">Analiza Zdarzenia</text>
+
+  <!-- Subtitle with inline version -->
+  <text x="40" y="68" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="600" class="fg-2">Rekonstrukcja Kryminalistyczna Spornego Zdarzenia Korytarzowego<tspan class="fg-4" font-weight="400">  |  v14</tspan></text>
+
+  <!-- Decorative motif: corridor + bodies + velocity vector + shockwave at door -->
+  <g id="decorative-motif">
+    <line x1="640" y1="74" x2="760" y2="74" class="decor-dark" stroke-width="0.8" opacity="0.35"/>
+    <circle class="decor-orange" cx="648" cy="68" r="3.8" opacity="0.85"/>
+    <circle class="decor-teal"   cx="690" cy="68" r="3.3" opacity="0.85"/>
+    <g class="decor-teal" opacity="0.9">
+      <line x1="697" y1="68" x2="748" y2="68" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M 748 68 L 743 65 L 745 68 L 743 71 Z" stroke="none"/>
+    </g>
+    <rect class="decor-dark" x="757" y="50" width="3" height="36" rx="1" opacity="0.55"/>
+    <g fill="none" class="decor-orange" stroke-width="1.3" stroke-linecap="round" opacity="0.85">
+      <path d="M 750 62 A 8 8 0 0 1 750 74"/>
+      <path d="M 744 58 A 14 14 0 0 1 744 78" opacity="0.65"/>
+      <path d="M 738 54 A 20 20 0 0 1 738 82" opacity="0.40"/>
+    </g>
+  </g>
+
+</svg>

@@ -1,13 +1,13 @@
-# Analiza Zdarzenia
+![Analiza Zdarzenia](images/incident-analysis-pl-header.svg)
 
 Rekonstrukcja kryminalistyczna spornego zdarzenia korytarzowego trwającego 3 s. Powiązana z symulacją minimum faz w [`../notebooks/01-kj-corridor-kinematics.ipynb`](../notebooks/01-kj-corridor-kinematics.ipynb), zestawem zeznań w [`../references/incident/`](../references/incident/), literaturą biomechaniczną w [`./biomechanics-sources.md`](./biomechanics-sources.md) i [`./impact_analysis.md`](./impact_analysis.md) oraz wyrenderowaną symulacją w [rekonstrukcji na YouTube](https://youtu.be/V-ooOpqg4aU).
 
 ## 1. Streszczenie
 
 > [!IMPORTANT]
-> Zdarzenie opisane w zeznaniu V **nie miało miejsca w sposób opisany w twierdzeniu**. Niniejszy dokument przedstawia podstawę kryminalistyczną: rekonstrukcję fizyki dolnej granicy, której przewidywane wyniki mechaniczne, medyczne, akustyczne i obserwacyjne są nieobecne w udokumentowanym materiale dowodowym lub stoją z nim w sprzeczności. Przeznaczony do celów dowodowych; imiona zanonimizowane w całym repozytorium.
+> Zdarzenie opisane w zeznaniu Victoria **nie miało miejsca w sposób opisany w twierdzeniu**. Niniejszy dokument przedstawia podstawę kryminalistyczną: rekonstrukcję fizyki dolnej granicy, której przewidywane wyniki mechaniczne, medyczne, akustyczne i obserwacyjne są nieobecne w udokumentowanym materiale dowodowym lub stoją z nim w sprzeczności. Przeznaczony do celów dowodowych; imiona zanonimizowane w całym repozytorium.
 
-**Twierdzenie**. V oświadcza, że A pociągnął ją ~1.5 m na południe, rzucił tyłem w drzwi windy, a następnie ponownie zamienili się miejscami - wszystko w ciągu ~3 s.
+**Twierdzenie**. Victoria oświadcza, że Andrew pociągnął ją ~1.5 m na południe, rzucił tyłem w drzwi windy, a następnie ponownie zamienili się miejscami - wszystko w ciągu ~3 s.
 
 **Fizyka dolnej granicy**. Rekonstrukcja minimum faz (jedna faza na każde twierdzenie, maksymalny czas na fazę) daje najmniejsze możliwe obciążenie, jakie może narzucić jakikolwiek ruch zgodny z twierdzeniem. Główne liczby:
 
@@ -20,7 +20,7 @@ Rekonstrukcja kryminalistyczna spornego zdarzenia korytarzowego trwającego 3 s.
 
 **Przewidywany zakres uszkodzeń**. Uraz klatki piersiowej AIS 5+ (Skrócona Skala Ciężkości Obrażeń, ref 8) w stopniu krytycznym / zagrażającym życiu (Viano 1989, ref 8); literatura eksperymentalna tylno-tułowiowa plasuje porównywalne obciążenia w zakresie złamań żeber + urazów stawów żebrowo-kręgowych / żebrowo-poprzecznych (ref 14, 15).
 
-**Udokumentowane wyniki**. Pojedynczy siniak na prawym barku w badaniu lekarskim; brak złamania żeber, brak dolegliwości oddechowych, pełna ruchomość klatki piersiowej, brak skoku przesterowania audio, brak dzwonienia stalowego panelu w nagraniu, brak akustycznej reakcji postronnego świadka w linii wzroku (C).
+**Udokumentowane wyniki**. Pojedynczy siniak na prawym barku w badaniu lekarskim; brak złamania żeber, brak dolegliwości oddechowych, pełna ruchomość klatki piersiowej, brak skoku przesterowania audio, brak dzwonienia stalowego panelu w nagraniu, brak akustycznej reakcji postronnego świadka w linii wzroku (Cecilia).
 
 > [!CAUTION]
 > **Kluczowy wniosek**. Każdy obserwowalny wynik po stronie skutku, przewidywany przez fizykę dolnej granicy, jest albo nieobecny w udokumentowanym materiale dowodowym, albo wprost mu przeczy. Twierdzony ruch nie jest zgodny z udokumentowanymi dowodami jednocześnie w kanałach: mechanicznym, medycznym, akustycznym i obserwacyjnym.
@@ -28,9 +28,9 @@ Rekonstrukcja kryminalistyczna spornego zdarzenia korytarzowego trwającego 3 s.
 ## 2. Opis Zdarzenia
 
 - Data: 13 września 2025; korytarz przy drzwiach mieszkania / drzwiach windy, drugie piętro
-- Uczestnicy: A (ojciec, 90 kg), V (matka, 70 kg), C (społeczny kurator sądowy, świadek), dziecko
+- Uczestnicy: Andrew (ojciec, 90 kg), Victoria (matka, 70 kg), Cecilia (społeczny kurator sądowy, świadek), dziecko
 - Całkowity czas trwania zdarzenia według twierdzenia: ~3 s
-- Twierdzenie V (zsyntezowane): A pociągnął V na południe w kierunku windy, zamienili się miejscami, rzucił V tyłem w drzwi windy, ponownie zamienili się miejscami, V osunęła się na podłogę
+- Twierdzenie Victoria (zsyntezowane): Andrew pociągnął Victoria na południe w kierunku windy, zamienili się miejscami, rzucił Victoria tyłem w drzwi windy, ponownie zamienili się miejscami, Victoria osunęła się na podłogę
 - Nagranie audio aktywne przez cały czas (`../data/external/event_audio/event_recording.m4a`)
 
 ## 3. Geometria
@@ -41,9 +41,9 @@ Rekonstrukcja kryminalistyczna spornego zdarzenia korytarzowego trwającego 3 s.
 - Drzwi mieszkania na ścianie N segmentu 2, ~1 m szerokości (standard polski), otwierają się na W do korytarza
 - Drzwi windy na ścianie S segmentu 2, 2 m × 1 m, dwa stalowe panele 2 mm z szczeliną powietrzną 3 cm, okno szklane 20 × 60 cm
 - Odległość rzutu N-S od drzwi mieszkania do drzwi windy: **~2 m**
-- Pozycja A na starcie: plecami przyciśnięty płasko do drzwi windy (maksymalne cofnięcie), zwrócony na N
-- Pozycja V na starcie: w zasięgu drzwi mieszkania po stronie W, zwrócona na S
-- Pozycja C na starcie: segment 1, zwrócona na E, w linii wzroku do segmentu 2
+- Pozycja Andrew na starcie: plecami przyciśnięty płasko do drzwi windy (maksymalne cofnięcie), zwrócony na N
+- Pozycja Victoria na starcie: w zasięgu drzwi mieszkania po stronie W, zwrócona na S
+- Pozycja Cecilia na starcie: segment 1, zwrócona na E, w linii wzroku do segmentu 2
 - Rekwizyty: aluminiowa teczka 50 × 30 cm przy wschodniej krawędzi drzwi windy (`[Box]`), wózek w NW rogu segmentu 2 (`[Str]`)
 
 ![Geometria korytarza z lotu ptaka](../reports/figures/01-corridor-geometry.png)
@@ -52,7 +52,7 @@ Rekonstrukcja kryminalistyczna spornego zdarzenia korytarzowego trwającego 3 s.
 
 Źródła: [`testimony_victim.md`](../references/incident/testimony_victim.md), [`testimony_3rd_party.md`](../references/incident/testimony_3rd_party.md), [`testimony_victoria_inconsistencies.md`](../references/incident/testimony_victoria_inconsistencies.md).
 
-Relacja V eskaluje w pięciu chronologicznych przeróbkach:
+Relacja Victoria eskaluje w pięciu chronologicznych przeróbkach:
 
 | # | Data | Źródło | Dodany element |
 |---|---|---|---|
@@ -62,13 +62,13 @@ Relacja V eskaluje w pięciu chronologicznych przeróbkach:
 | 4 | 2025-12 | wniosek sądowy | + chwyt za gardło + obronne złapanie |
 | 5 | 2026-03 | wniosek o zakaz zbliżania się | + próba uduszenia + podejście z lewej strony |
 
-Obserwacja C (segment 1, linia wzroku): poproszona o ustąpienie miejsca, zrobiła trzy kroki, odwróciła się na chwilę, po odwróceniu zaobserwowała V opierającą się o A przodem z uniesionymi rękami A, V osunęła się po drzwiach przodem, a następnie czołgała się. Krzyk V był zsynchronizowany z momentem odwrócenia się C, nie z rzekomym momentem uderzenia.
+Obserwacja Cecilia (segment 1, linia wzroku): poproszona o ustąpienie miejsca, zrobiła trzy kroki, odwróciła się na chwilę, po odwróceniu zaobserwowała Victoria opierającą się o Andrew przodem z uniesionymi rękami Andrew, Victoria osunęła się po drzwiach przodem, a następnie czołgała się. Krzyk Victoria był zsynchronizowany z momentem odwrócenia się Cecilia, nie z rzekomym momentem uderzenia.
 
 ## 5. Odniesienia Biomechaniczne
 
 Zwięzła tabela cytowań; pełna bibliografia w [`biomechanics-sources.md`](./biomechanics-sources.md) i [`impact_analysis.md`](./impact_analysis.md).
 
-| Wielkość | Średnia ± SD | Źródło |
+| Wielkość | μ ± σ | Źródło |
 |---|---|---|
 | Szczytowa siła pchania oburącz, stojąc | 800 ± 200 N | Daams 1994; Mital 1995 |
 | Szczytowa siła pchania jedną ręką | 400 ± 100 N | Daams 1994 |
@@ -88,13 +88,13 @@ Zwięzła tabela cytowań; pełna bibliografia w [`biomechanics-sources.md`](./b
 ## 6. Symulacja - Konfiguracja
 
 - Środowisko: Python 3.11, `uv` env `henryk-sim`, PyBullet 3.2.7, scipy / matplotlib / pandas / rich
-- Ciała: A = 90 kg, V = 70 kg, moment bezwładności względem osi odchylenia 1.8 / 1.4 kg·m² (przeskalowane wg Plagenhoef)
+- Ciała: Andrew = 90 kg, Victoria = 70 kg, moment bezwładności względem osi odchylenia 1.8 / 1.4 kg·m² (przeskalowane wg Plagenhoef)
 - Geometria: korytarz **2.0 m N-S** × 1.5 m boczny × 2.1 m wysokość drzwi
 - Budżet czasu: 3.0 s ocenianych + 1.5 s dekoracyjnego rozejścia
 - Wszystkie parametry w jednym zagnieżdżonym słowniku `PARAMS` w notebooku
 - Wyrenderowany MP4: [`../reports/figures/01-corridor-sim-passive.mp4`](../reports/figures/01-corridor-sim-passive.mp4); publiczny render: [Rekonstrukcja YouTube Mk1](https://youtu.be/V-ooOpqg4aU)
 
-**Dlaczego 2.0 m (korzystne dla obrony)**. V i A nie stali bezpośrednio naprzeciwko siebie w segmencie 2: V stała przy drzwiach mieszkania (ściana N) po stronie zachodniej, A przyciśnięty płasko do drzwi windy (ściana S) z przesunięciem W-E względem V (zgodnie z [`../references/incident/geometry.md`](../references/incident/geometry.md)). Rzeczywiste przemieszczenie w linii prostej podczas rzekomej zamiany miejsc jest zatem **przekątną** $\sqrt{2.0^2 + \Delta_{EW}^2}$, ściśle większą niż 2.0 m. Przyjęcie 2.0 m jako zakładanej odległości rzutu jest konserwatywne dla obrony: dłuższa rzeczywista trasa w tym samym budżecie 3 s zwiększa wymaganą szczytową prędkość, przyspieszenie i siłę. Werdykt stanowi dolną granicę rzeczywistego zapotrzebowania.
+**Dlaczego 2.0 m (korzystne dla obrony)**. Victoria i Andrew nie stali bezpośrednio naprzeciwko siebie w segmencie 2: Victoria stała przy drzwiach mieszkania (ściana N) po stronie zachodniej, Andrew przyciśnięty płasko do drzwi windy (ściana S) z przesunięciem W-E względem Victoria (zgodnie z [`../references/incident/geometry.md`](../references/incident/geometry.md)). Rzeczywiste przemieszczenie w linii prostej podczas rzekomej zamiany miejsc jest zatem **przekątną** $\sqrt{2.0^2 + \Delta_{EW}^2}$, ściśle większą niż 2.0 m. Przyjęcie 2.0 m jako zakładanej odległości rzutu jest konserwatywne dla obrony: dłuższa rzeczywista trasa w tym samym budżecie 3 s zwiększa wymaganą szczytową prędkość, przyspieszenie i siłę. Werdykt stanowi dolną granicę rzeczywistego zapotrzebowania.
 
 ## 7. Symulacja - Założenia
 
@@ -102,10 +102,10 @@ Każde założenie jest konserwatywne dla obrony (dolna granica zapotrzebowania)
 
 - Tylko trzy fazy, bez dodatkowych gestów ani przerw przejściowych
 - Maksymalny czas trwania każdej fazy (minimalizuje wymagane szczyty)
-- V całkowicie bierna, bez opornego tarcia ani chwytu
+- Victoria całkowicie bierna, bez opornego tarcia ani chwytu
 - Trójkątny profil prędkości na fazę ($v_\text{peak} = 2s/t$, $a_\text{peak} = 4s/t^2$)
-- Kontynuacja przyspieszenia przez zamianę-rzut: V uderza w drzwi z prędkością szczytową
-- Sztywne uderzenie, 2 cm droga zatrzymania (łączy odkształcenie tkanki + ugięcie drzwi)
+- Kontynuacja przyspieszenia przez zamianę-rzut: Victoria uderza w drzwi z prędkością szczytową
+- Sztywne uderzenie, 2 cm droga zatrzymania reprezentująca podatność ciała w fazie sprężystej - kompresję tkanek miękkich i sprężyste ugięcie klatki piersiowej przed zniszczeniem kości (uzasadnienie w §11); same stalowe drzwi są funkcjonalnie sztywne i wnoszą pomijalne ugięcie
 - Rozkłady referencyjne normalne, średnie i SD dla dorosłego mężczyzny
 
 ## 8. Symulacja - Pomiary
@@ -124,19 +124,19 @@ Trzy fazy po 1.0 s każda:
 
 | # | Faza | Ciało | Translacja | Rotacja |
 |---|---|---|---|---|
-| 1 | pull | V | 1.5 m S | - |
-| 2 | swap-throw | V | 0.22 m S (resztkowe zamknięcie) | 180° |
-| 3 | swap-back | A | - | 180° (V cofa się 40 cm + 180°) |
+| 1 | pull | Victoria | 1.5 m S | - |
+| 2 | swap-throw | Victoria | 0.22 m S (resztkowe zamknięcie) | 180° |
+| 3 | swap-back | Andrew | - | 180° (Victoria cofa się 40 cm + 180°) |
 
 **Uzasadnienie**: najmniejszy zestaw dopuszczający dosłowne twierdzenie. Maksymalny czas trwania fazy -> minimalne wymagane szczyty -> dolna granica zapotrzebowania. Formalne wyprowadzenie w stylu ELBO w [`../references/incident/events_reconstruction.md`](../references/incident/events_reconstruction.md): $D(M_\text{true}) \geq D_\text{min}(q^\star)$, zatem $\mathrm{plaus}(M_\text{true}) \leq \mathrm{plaus}(M_\text{min})$.
 
-**Podział odległości**. Szerokość korytarza od drzwi do drzwi wynosi **2.0 m** (prawda geometryczna, §3). Środek masy V pokonuje łącznie **1.72 m**, ponieważ tułów V ma promień ~0.14 m: zaczyna z plecami dotykającymi drzwi mieszkania (ŚM w odległości 0.14 m od ściany N) i kończy z plecami dotykającymi drzwi windy (ŚM w odległości 1.86 m). Notebook dzieli 1.72 m na **1.5 m podczas pull** + **0.22 m resztkowego zamknięcia podczas swap-throw**; 0.22 m nie jest nową odległością przyspieszenia, lecz geometrycznym "ogonem" do kontaktu z drzwiami.
+**Podział odległości**. Szerokość korytarza od drzwi do drzwi wynosi **2.0 m** (prawda geometryczna, §3). Środek masy Victoria pokonuje łącznie **1.72 m**, ponieważ tułów Victoria ma promień ~0.14 m: zaczyna z plecami dotykającymi drzwi mieszkania (ŚM w odległości 0.14 m od ściany N) i kończy z plecami dotykającymi drzwi windy (ŚM w odległości 1.86 m). Notebook dzieli 1.72 m na **1.5 m podczas pull** + **0.22 m resztkowego zamknięcia podczas swap-throw**; 0.22 m nie jest nową odległością przyspieszenia, lecz geometrycznym "ogonem" do kontaktu z drzwiami.
 
 ![Oś czasu faz](../reports/figures/01-phase-timeline.png)
 
 ## 10. Model - Kinematyka
 
-Faza pull: V przyspiesza od zera, 1.5 m w 1.0 s, prędkość końcowa **3.0 m/s**, $a_\text{peak}$ **6.0 m/s²** (z = 3.75 względem referencji sprintu rekreacyjnego - zakres ekstremalny). Kontynuacja przyspieszenia przez dystans zamknięcia w swap-throw:
+Faza pull: Victoria przyspiesza od zera, 1.5 m w 1.0 s, prędkość końcowa **3.0 m/s**, $a_\text{peak}$ **6.0 m/s²** (z = 3.75 względem referencji sprintu rekreacyjnego - zakres ekstremalny). Kontynuacja przyspieszenia przez dystans zamknięcia w swap-throw:
 
 $$v_\text{impact} = \sqrt{v_\text{pull-end}^2 + 2 a_\text{pull} s_\text{swap}} = \sqrt{3.0^2 + 2 \cdot 3.0 \cdot 0.22} \approx 3.21\ \text{m/s} \approx 11.6\ \text{kph}$$
 
@@ -144,16 +144,16 @@ Rotacja swap-throw i swap-back: obie 180° w 1.0 s -> $\omega_\text{peak}$ **6.2
 
 **Zestawienie werdyktów** we wszystkich wynikach ruchu (faza × wielkość):
 
-- 4 ![](https://img.shields.io/badge/PLAUSIBLE-brightgreen)
-- 2 ![](https://img.shields.io/badge/IMPLAUSIBLE-orange)
-- 1 ![](https://img.shields.io/badge/EXTREME-red)
+- 4 <span style="color:green;font-weight:bold">WIARYGODNE</span>
+- 2 <span style="color:darkorange;font-weight:bold">NIEWIARYGODNE</span>
+- 1 <span style="color:red;font-weight:bold">SKRAJNE</span>
 
 ![Oś czasu prędkości](../reports/figures/01-speed-timeline.png)
 ![Zestawienie werdyktów](../reports/figures/01-verdict-summary.png)
 
 ## 11. Model - Mechanika
 
-Uderzenie w drzwi: prędkość V 3.21 m/s wyhamowana do 0 na sztywnym dystansie zatrzymania 2 cm.
+Uderzenie w drzwi: prędkość Victoria 3.21 m/s wyhamowana do 0 na dystansie zatrzymania 2 cm.
 
 $$a_\text{impact} = \frac{v^2}{2d} = \frac{3.21^2}{0.04} \approx 258\ \text{m/s}^2 \approx 26.3\ g$$
 
@@ -161,10 +161,34 @@ $$F_\text{impact} = m \cdot a = 70 \cdot 258 \approx 18{,}060\ \text{N} = 18.06\
 
 $$KE_\text{impact} = \tfrac12 m v^2 \approx 361\ \text{J}, \qquad t_\text{stop} = \frac{2d}{v} \approx 12.5\ \text{ms}, \qquad p = mv \approx 225\ \text{N·s}$$
 
-Wysiłek działającego w fazie pull: wymagana siła na V = 420 N, budżet pchania oburącz 800 N (Daams) - w zakresie mięśniowym. Siła reakcji drzwi 18 kN nie jest siłą mięśniową - jest bierną reakcją na pęd V.
+Wysiłek działającego w fazie pull: wymagana siła na Victoria = 420 N, budżet pchania oburącz 800 N (Daams) - w zakresie mięśniowym. Siła reakcji drzwi 18 kN nie jest siłą mięśniową - jest bierną reakcją na pęd Victoria.
 
 ![Oś czasu sił](../reports/figures/01-force-timeline.png)
 ![Zapotrzebowanie na fazę](../reports/figures/01-per-phase-demand.png)
+
+### Skąd bierze się 2 cm? Uzasadnienie naukowe
+
+Droga zatrzymania $d$ we wzorze $F = mv^2/(2d)$ **nie jest odkształceniem drzwi**. Pusty panel ze stali 2 mm jest przy tym obciążeniu funkcjonalnie sztywny - sprężyste ugięcie liczy się w ułamkach milimetra. 2 cm reprezentuje **podatność samego ciała** podczas uderzenia:
+
+- **Kompresja skóry i tkanki podskórnej**: ~0.5 - 1 cm zanim tkanka osiągnie próg twardej oporności klatki piersiowej
+- **Sprężyste ugięcie klatki piersiowej w fazie pre-yield**: ~1 - 2 cm odwracalnego zginania zanim kości żebrowe ulegną deformacji plastycznej. Sztywność przedniej części klatki piersiowej wynosi ~40 N/mm (Lobdell 1973); zakres sprężysty kończy się w okolicach 2-3 cm, po czym testy kadawerów Kroella 1971 pokazują postępujące złamania żeber przy kompresji 5-7 cm
+- **Tylna część klatki piersiowej**: konstrukcyjnie sztywniejsza od przedniej, z mniejszą warstwą tkanek miękkich (Kemper i in. 2014, biomechanika urazów tylno-tułowiowych, ref 14), więc 2 cm plasuje się przy górnej granicy zakresu pre-yield dla uderzenia tyłem
+
+Matematycznie, $d$ pełni również rolę regularyzatora: $F = mv^2/(2d) \to \infty$ przy $d \to 0$, więc każdy model przekazywania pędu wymaga niezerowej drogi zatrzymania. 2 cm jest wystarczająco małe, by dać prawidłowo dużą siłę reakcji przy sztywnym celu, i wystarczająco duże, by pozostać w fizycznie sensownym reżimie pre-yield.
+
+### Stabilność: czy wniosek zależy od tego wyboru?
+
+Wymiatanie $d$ w fizycznie wiarygodnym zakresie:
+
+| Wybór | Droga zatrzymania $d$ | Reprezentuje | Szczytowa siła | Szczytowe g | Pasmo AIS | Spodziewane złamania żeber? |
+|---|---|---|---|---|---|---|
+|   | 1 cm | tylko skóra / tkanka tłuszczowa (czysta regularyzacja) | 36.1 kN | 52 g | AIS 5+ | tak (katastrofalne) |
+| <span style="color:red;font-weight:bold">TEN MODEL</span> | **2 cm** | **podatność pre-yield ciała** | **18.1 kN** | **26 g** | **AIS 5+** | **tak (wielokrotne)** |
+|   | 3 cm | tkanka miękka + początkowe ugięcie żeber | 12.0 kN | 17 g | AIS 4 | tak (wielokrotne + wiotka klatka) |
+|   | 5 cm | klatka piersiowa "całkowicie skompresowana" (przednia) | 7.2 kN | 10 g | AIS 3 | tak (wielokrotne + stłuczenie) |
+|   | 10 cm | zakres podatnego celu (Viano & Lau 1985) | 3.6 kN | 5 g | AIS 2 | tak (zakres złamań żeber) |
+
+**Każda fizycznie wiarygodna wartość plasuje uderzenie powyżej progu złamań żeber** (AIS 2). Udokumentowane zero złamań żeber jest zatem anomalne niezależnie od tego, jaki dystans zatrzymania zostanie przyjęty. Jakościowy wniosek - że twierdzone uderzenie jest niezgodne z udokumentowanym wykazem obrażeń - jest odporny na wybór 2 cm.
 
 ## 12. Model - Biomechanika / Obrażenia Medyczne
 
@@ -172,12 +196,12 @@ Odwzorowanie obliczonego uderzenia na literaturę tępych urazów klatki piersio
 
 | Wielkość | Wartość symulacji | Klasyfikacja AIS / zakres | Źródło | Nasilenie |
 |---|---|---|---|---|
-| Siła uderzenia | 18.06 kN | AIS 5+ krytyczny / zagrażający życiu | Viano 1989 (ref 8) | ![](https://img.shields.io/badge/AIS_5%2B-red) |
-| Szczytowe g | 26.3 g | poważna siła, zakres wypadku wyścigowego | Stapp 1971 (ref 10) | ![](https://img.shields.io/badge/SERIOUS-orange) |
-| KE uderzenia | 361 J | poważny uraz klatki piersiowej, stłuczenie narządów | Sturdivan 2004 (ref 12) | ![](https://img.shields.io/badge/SERIOUS-orange) |
-| Prędkość uderzenia | 11.6 km/h | umiarkowany (tylko miękki cel - patrz poniżej) | Viano & Lau 1985 (ref 13) | ![](https://img.shields.io/badge/MODERATE-yellow) |
+| Siła uderzenia | 18.06 kN | AIS 5+ krytyczny / zagrażający życiu | Viano 1989 (ref 8) | <span style="color:red;font-weight:bold">AIS 5+</span> |
+| Szczytowe g | 26.3 g | poważna siła, zakres wypadku wyścigowego | Stapp 1971 (ref 10) | <span style="color:darkorange;font-weight:bold">POWAŻNE</span> |
+| KE uderzenia | 361 J | poważny uraz klatki piersiowej, stłuczenie narządów | Sturdivan 2004 (ref 12) | <span style="color:darkorange;font-weight:bold">POWAŻNE</span> |
+| Prędkość uderzenia | 11.6 km/h | umiarkowany (tylko miękki cel - patrz poniżej) | Viano & Lau 1985 (ref 13) | <span style="color:goldenrod;font-weight:bold">UMIARKOWANE</span> |
 
-Prędkość jest klasyfikowana jako "umiarkowana", ponieważ opublikowane zakresy prędkość-uraz zakładają podatny cel (klatka piersiowa odkształca się 5-10 cm). Przy sztywnych stalowych drzwiach (2 cm) ta sama prędkość generuje 4-5× wyższą szczytową siłę i przeciążenie g. Wartości siły / g / KE są metrykami po stronie skutku, które już uwzględniają geometrię tego scenariusza.
+Prędkość jest klasyfikowana jako "umiarkowana", ponieważ opublikowane zakresy prędkość-uraz zakładają podatny cel, w którym klatka piersiowa odkształca się 5-10 cm przy podatnym podłożu (Viano & Lau 1985). Przy sztywnych stalowych drzwiach ciało musi pochłonąć niemal całe wyhamowanie w obrębie własnej podatności pre-yield (~2 cm, patrz uzasadnienie w §11), więc ta sama prędkość generuje 4-5× wyższą szczytową siłę i przeciążenie g. Wartości siły / g / KE są metrykami po stronie skutku, które już uwzględniają geometrię tego scenariusza.
 
 Weryfikacja krzyżowa z literaturą tylno-tułowiową ([`impact_analysis.md`](./impact_analysis.md)): 18 kN stanowi ~2× najwyższe odnotowane eksperymentalne obciążenia tylno-tułowiowe (6.9-10.5 kN), które same w sobie powodowały urazy żebrowo-kręgowe i złamania żeber. Zakres 1.6-1.9 kN bocznej klatki piersiowej powoduje 4-13 złamań żeber przy 15.5 km/h; nasze 11.6 km/h dostarcza ~10× większą siłę.
 
@@ -187,16 +211,16 @@ Weryfikacja krzyżowa z literaturą tylno-tułowiową ([`impact_analysis.md`](./
 
 Dla czytelnika niebędącego specjalistą, wartości kN podane powyżej są abstrakcyjne. Poniższa tabela odwzorowuje szczytową siłę uderzenia na codzienne analogi z życia realnego i typowy uraz, jaki obserwuje się w każdym reżimie. Zaznaczony jest wiersz, w którym plasuje się nasza rekonstrukcja.
 
-| Szczytowa siła | Opis potoczny | Analog z życia realnego (~70 kg dorosły po stronie otrzymującej) | Typowy uraz | AIS |
-|---|---|---|---|---|
-| ~0.5 - 1 kN | Łagodne uderzenie | Wejście w framugę drzwi w normalnym tempie; piłka koszykowa rzucona w ciebie przez dziecko; mocne pchanie zablokowanych drzwi | Nic, lub ledwo widoczny siniak | 0 |
-| ~1 - 3 kN | Znaczące uderzenie | Solidny otwarty policzek od dorosłego 90 kg; upadek tyłem na grubą wykładzinę z pozycji siedzącej; prosty cios pięścią ciężkiego boksera w klatkę piersiową | Głęboki siniak, możliwe pęknięcie żebra | 1 |
-| ~3 - 5 kN | Mocne uderzenie | Atak w stylu NFL od obrońcy 100 kg; upadek tyłem na drewnianą podłogę ze stojącej pozycji; lądowanie na plecach po poślizgnięciu na lodzie | Jedno lub dwa złamania żeber, powierzchniowy krwiak | 2 |
-| ~5 - 8 kN | Poważne uderzenie | Kopnięcie przez dorosłego konia; niskoprędkościowe zderzenie motocykla ze stojącym samochodem; lądowanie tyłem o krawędź betonowego stopnia | Wielokrotne złamania żeber + stłuczenie płuca; uszkodzenie więzadeł kręgosłupa piersiowego | 3 |
-| ~8 - 12 kN | Krytyczne uderzenie | Potrącenie przez małe auto przy ~5 km/h; pile-up w rugby zakończony poważnie; upadek tyłem z wysokości 1 m na chodnik | Wiotka klatka piersiowa, poważny uraz narządów, złamanie mostka | 4 |
-| ![](https://img.shields.io/badge/THIS_CASE-red) **~12 - 20 kN** | **Krytyczny do zagrażającego życiu** | **Mały SUV uderzający cię przy ~10 km/h; upadek tyłem z balkonu pierwszego piętra na chodnik; uderzenie w ścianę z cegły na rowerze z prędkością 25 km/h** | **Wielokrotne pęknięcia narządów, uszkodzenie kolumny kręgosłupa, często śmiertelne** | **5+** |
-| ~20 - 30 kN | Zwykle śmiertelne | Pieszy potrącony przez samochód przy ~15-20 km/h; upadek tyłem z balkonu drugiego piętra; czołowe zderzenie na rowerze przy 30 km/h | Masywny uraz klatki piersiowej, często natychmiast śmiertelny | 6 |
-| > 30 kN | Prawie zawsze śmiertelne | Wypadek drogowy z dużą prędkością bez pasów; upadek z balkonu trzeciego piętra | Katastrofalne zmiażdżenie | 6 |
+| Wybór | Szczytowa siła | Opis potoczny | Analog z życia realnego (~70 kg dorosły po stronie otrzymującej) | Typowy uraz | AIS |
+|---|---|---|---|---|---|
+|   | ~0.5 - 1 kN | Łagodne uderzenie | Wejście w framugę drzwi w normalnym tempie; piłka koszykowa rzucona w ciebie przez dziecko; mocne pchanie zablokowanych drzwi | Nic, lub ledwo widoczny siniak | 0 |
+|   | ~1 - 3 kN | Znaczące uderzenie | Solidny otwarty policzek od dorosłego 90 kg; upadek tyłem na grubą wykładzinę z pozycji siedzącej; prosty cios pięścią ciężkiego boksera w klatkę piersiową | Głęboki siniak, możliwe pęknięcie żebra | 1 |
+|   | ~3 - 5 kN | Mocne uderzenie | Atak w stylu NFL od obrońcy 100 kg; upadek tyłem na drewnianą podłogę ze stojącej pozycji; lądowanie na plecach po poślizgnięciu na lodzie | Jedno lub dwa złamania żeber, powierzchniowy krwiak | 2 |
+|   | ~5 - 8 kN | Poważne uderzenie | Kopnięcie przez dorosłego konia; niskoprędkościowe zderzenie motocykla ze stojącym samochodem; lądowanie tyłem o krawędź betonowego stopnia | Wielokrotne złamania żeber + stłuczenie płuca; uszkodzenie więzadeł kręgosłupa piersiowego | 3 |
+|   | ~8 - 12 kN | Krytyczne uderzenie | Potrącenie przez małe auto przy ~5 km/h; pile-up w rugby zakończony poważnie; upadek tyłem z wysokości 1 m na chodnik | Wiotka klatka piersiowa, poważny uraz narządów, złamanie mostka | 4 |
+| <span style="color:red;font-weight:bold">TEN PRZYPADEK</span> | **~12 - 20 kN** | **Krytyczny do zagrażającego życiu** | **Mały SUV uderzający cię przy ~10 km/h; upadek tyłem z balkonu pierwszego piętra na chodnik; uderzenie w ścianę z cegły na rowerze z prędkością 25 km/h** | **Wielokrotne pęknięcia narządów, uszkodzenie kolumny kręgosłupa, często śmiertelne** | **5+** |
+|   | ~20 - 30 kN | Zwykle śmiertelne | Pieszy potrącony przez samochód przy ~15-20 km/h; upadek tyłem z balkonu drugiego piętra; czołowe zderzenie na rowerze przy 30 km/h | Masywny uraz klatki piersiowej, często natychmiast śmiertelny | 6 |
+|   | > 30 kN | Prawie zawsze śmiertelne | Wypadek drogowy z dużą prędkością bez pasów; upadek z balkonu trzeciego piętra | Katastrofalne zmiażdżenie | 6 |
 
 Nasze zrekonstruowane uderzenie osiąga szczyt **18.06 kN** - solidnie w wierszu THIS_CASE powyżej. Aby rzekomy ruch wydarzył się tak, jak opisuje dosłowne twierdzenie, ofiara musiałaby pochłonąć taką samą siłę jak przy niskopredkościowym zderzeniu pieszy-pojazd lub upadku z pierwszego piętra na chodnik - tyłem. Udokumentowanym wynikiem lekarskim jest pojedynczy siniak na prawym barku.
 
@@ -222,8 +246,25 @@ Przewidywany szczyt SPL w nawiasie sprawności promieniowania (0.1% / 1% / 5%):
 
 Mikrofon telefonu konsumenckiego ulega przesterowaniu przy ~120 dB SPL. Przewidywany szczyt uderzenia przy typowym η przekracza pułap przesterowania.
 
+### Kalibracja laika: jak głośne jest 124 dB
+
+Wartości SPL w decybelach są dla nie-specjalisty abstrakcyjne. Poniższa tabela mapuje szczytowy poziom dźwięku na codzienne analogi z życia realnego oraz odpowiadające im skutki dla słuchu i nagrania. Wiersz, w którym plasuje się nasza rekonstrukcja, jest oznaczony.
+
+| Wybór | Szczytowe SPL | Opis potoczny | Analog z życia realnego (~2 m od źródła) | Skutek dla słuchu | Wpływ na mikrofon telefonu |
+|---|---|---|---|---|---|
+|   | ~40 - 60 dB | Cicho | Biblioteka, normalna rozmowa, ciche mieszkanie | Brak | Czyste nagranie |
+|   | ~70 - 80 dB | Głośno | Odkurzacz, ruchliwa ulica, suszarka do włosów | Bezpieczne przy krótkiej ekspozycji | Czyste nagranie |
+|   | ~85 - 95 dB | Bardzo głośno | Kosiarka, motocykl mijający z 5 m, mikser kuchenny | Uszkodzenie słuchu przy długotrwałej ekspozycji | Czyste nagranie |
+|   | ~100 - 110 dB | Bolesnie głośno | Piła łańcuchowa, klakson samochodu z 1 m, koncert rockowy w pobliżu sceny | Uszkodzenie słuchu w ciągu minut | Czyste nagranie, bliskie maksimum |
+|   | ~115 - 120 dB | Próg bólu | Młot pneumatyczny z 1 m, syrena karetki z 1 m, bliski grzmot | Ból, możliwe uszkodzenie w ciągu sekund | Zbliżenie do pułapu przesterowania |
+| <span style="color:red;font-weight:bold">TEN PRZYPADEK</span> | **~120 - 130 dB** | **Powyżej pułapu przesterowania** | **Silnik odrzutowca z 30 m podczas startu; wystrzał pistoletu z 5 m; petarda eksplodująca z 1 m** | **Natychmiastowy ból, ryzyko uszkodzenia w sekundy** | **Mikrofon ulega przesterowaniu - nagranie zostaje nasycone, słychać charakterystyczny "trzask"** |
+|   | ~135 - 145 dB | Ogłuszające | Wystrzał z karabinu z 1 m; silnik odrzutowca z 15 m; wystrzał ze strzelby | Ryzyko pęknięcia błony bębenkowej | Mocne, ciągłe przesterowanie |
+|   | > 150 dB | Uraz fizyczny | Petarda trzymana w ręce; duża eksplozja w pobliżu | Pęknięcie błony bębenkowej, możliwy uraz płuc | Katastrofalne przesterowanie, zniszczenie elektroniki |
+
+Nasza rekonstrukcja przewiduje **~124 dB** przy mikrofonie telefonu - solidnie w wierszu TEN PRZYPADEK powyżej. Dla każdego mikrofonu telefonu konsumenckiego (pułap przesterowania ~120 dB SPL) tak głośny dźwięk pozostawia w nagraniu charakterystyczny, niemożliwy do przeoczenia ślad: nasycenie próbek, "trzaśnięcie", krótka cisza odzyskiwania. Inspekcja `event_recording.m4a` nie pokazuje takiego skoku w rzekomym momencie uderzenia.
+
 > [!NOTE]
-> **Weryfikacja kryminalistyczna (rzeczywiste nagranie)**: plik audio [`../data/external/event_audio/event_recording.m4a`](../data/external/event_audio/event_recording.m4a) działał nieprzerwanie przez cały czas wizyty. Inspekcja przebiegu fali pokazuje **brak huku** zarejestrowanego w rzekomym momencie uderzenia - brak skoku przesterowania (przewidywany ~124 dB SPL przy mikrofonie telefonu przesterowałby rejestrator), brak energii dźwięku dzwonienia panelu w paśmie sub-basowym 6-24 Hz, brak wyraźnego szczytu modu osiowego szczeliny wokół 5.7 kHz. Świadek postronny (C, ~1.5 m od drzwi) również nie zgłasza żadnej reakcji akustycznej w swoim zeznaniu. Wszystkie trzy przewidywane sygnatury akustyczne są nieobecne w rzeczywistym nagraniu.
+> **Weryfikacja kryminalistyczna (rzeczywiste nagranie)**: plik audio [`../data/external/event_audio/event_recording.m4a`](../data/external/event_audio/event_recording.m4a) działał nieprzerwanie przez cały czas wizyty. Inspekcja przebiegu fali pokazuje **brak huku** zarejestrowanego w rzekomym momencie uderzenia - brak skoku przesterowania (przewidywany ~124 dB SPL przy mikrofonie telefonu przesterowałby rejestrator), brak energii dźwięku dzwonienia panelu w paśmie sub-basowym 6-24 Hz, brak wyraźnego szczytu modu osiowego szczeliny wokół 5.7 kHz. Świadek postronny (Cecilia, ~1.5 m od drzwi) również nie zgłasza żadnej reakcji akustycznej w swoim zeznaniu. Wszystkie trzy przewidywane sygnatury akustyczne są nieobecne w rzeczywistym nagraniu.
 
 ![Sygnatura akustyczna](../reports/figures/01-audio-signature.png)
 
@@ -233,17 +274,17 @@ Rozwinięcie na poszczególne wielkości. Uwzględniono siły, przyspieszenia, e
 
 | Element twierdzenia | Analog symulacji | Wielkość | Obliczona | Próg referencyjny | Werdykt |
 |---|---|---|---|---|---|
-| Pociągnięcie V ~1.5 m w części 3 s | faza pull, maks. 1.0 s | szczytowe przyspieszenie | 6.0 m/s² | 3.0 ± 0.8 m/s² sprint rekreacyjny (ref 3) | ![](https://img.shields.io/badge/EXTREME-red) z = 3.75 |
-| Pociągnięcie V | faza pull | szczytowa siła pociągnięcia na tułów V | 420 N | 800 ± 200 N pchanie oburącz (ref 1) | ![](https://img.shields.io/badge/IN_RANGE-brightgreen) |
-| Pociągnięcie V | faza pull | popęd siły dostarczony podczas pull | **0.21 kN·s** (210 N·s) | - | - |
-| Rzucenie V w drzwi | swap-throw + uderzenie | prędkość uderzenia | 3.21 m/s = 11.6 km/h | < 18 km/h umiarkowany, miękki cel (ref 13) | ![](https://img.shields.io/badge/MODERATE-yellow) strona przyczyny, patrz §12 |
-| Rzucenie V w drzwi | uderzenie | **szczytowa siła uderzenia** | **18.06 kN** | ≥ 12 kN AIS 5+ (ref 8) | ![](https://img.shields.io/badge/CRITICAL-red) AIS 5+ |
-| Rzucenie V w drzwi | uderzenie | szczytowe opóźnienie V | 258 m/s² ≈ 26.3 g | 15-30 g poważny (ref 10, 11) | ![](https://img.shields.io/badge/SERIOUS-orange) |
-| Rzucenie V w drzwi | uderzenie | pochłonięta energia kinetyczna | 361 J | 300-500 J poważny uraz klatki piersiowej (ref 12) | ![](https://img.shields.io/badge/SERIOUS-orange) |
-| Rzucenie V w drzwi | uderzenie | **popęd siły / przekazany pęd** | **0.225 kN·s** (225 N·s) | - | obciążenie impulsowe o wysokim pędzie i krótkim czasie |
-| Rzucenie V w drzwi | uderzenie | czas kontaktu | 12.5 ms | - | bardzo krótki czas trwania - szczytowa siła wzmocniona |
-| Obrót V o 180° (tyłem do windy) | rotacja swap-throw | prędkość kątowa odchylenia | 6.28 rad/s | 3.5 ± 1.0 rad/s obrót w miejscu o 180° (ref 5) | ![](https://img.shields.io/badge/IMPLAUSIBLE-orange) z = 2.78 |
-| Obrót A o 180° (tyłem do windy) | rotacja swap-back | prędkość kątowa odchylenia | 6.28 rad/s | 3.5 ± 1.0 rad/s (ref 5) | ![](https://img.shields.io/badge/IMPLAUSIBLE-orange) z = 2.78 |
+| Pociągnięcie Victoria ~1.5 m w części 3 s | faza pull, maks. 1.0 s | szczytowe przyspieszenie | 6.0 m/s² | 3.0 ± 0.8 m/s² sprint rekreacyjny (ref 3) | <span style="color:red;font-weight:bold">SKRAJNE</span> z = 3.75 |
+| Pociągnięcie Victoria | faza pull | szczytowa siła pociągnięcia na tułów Victoria | 420 N | 800 ± 200 N pchanie oburącz (ref 1) | <span style="color:green;font-weight:bold">W ZAKRESIE</span> |
+| Pociągnięcie Victoria | faza pull | popęd siły dostarczony podczas pull | **0.21 kN·s** (210 N·s) | - | - |
+| Rzucenie Victoria w drzwi | swap-throw + uderzenie | prędkość uderzenia | 3.21 m/s = 11.6 km/h | < 18 km/h umiarkowany, miękki cel (ref 13) | <span style="color:goldenrod;font-weight:bold">UMIARKOWANE</span> strona przyczyny, patrz §12 |
+| Rzucenie Victoria w drzwi | uderzenie | **szczytowa siła uderzenia** | **18.06 kN** | ≥ 12 kN AIS 5+ (ref 8) | <span style="color:red;font-weight:bold">KRYTYCZNE</span> AIS 5+ |
+| Rzucenie Victoria w drzwi | uderzenie | szczytowe opóźnienie Victoria | 258 m/s² ≈ 26.3 g | 15-30 g poważny (ref 10, 11) | <span style="color:darkorange;font-weight:bold">POWAŻNE</span> |
+| Rzucenie Victoria w drzwi | uderzenie | pochłonięta energia kinetyczna | 361 J | 300-500 J poważny uraz klatki piersiowej (ref 12) | <span style="color:darkorange;font-weight:bold">POWAŻNE</span> |
+| Rzucenie Victoria w drzwi | uderzenie | **popęd siły / przekazany pęd** | **0.225 kN·s** (225 N·s) | - | obciążenie impulsowe o wysokim pędzie i krótkim czasie |
+| Rzucenie Victoria w drzwi | uderzenie | czas kontaktu | 12.5 ms | - | bardzo krótki czas trwania - szczytowa siła wzmocniona |
+| Obrót Victoria o 180° (tyłem do windy) | rotacja swap-throw | prędkość kątowa odchylenia | 6.28 rad/s | 3.5 ± 1.0 rad/s obrót w miejscu o 180° (ref 5) | <span style="color:darkorange;font-weight:bold">NIEWIARYGODNE</span> z = 2.78 |
+| Obrót Andrew o 180° (tyłem do windy) | rotacja swap-back | prędkość kątowa odchylenia | 6.28 rad/s | 3.5 ± 1.0 rad/s (ref 5) | <span style="color:darkorange;font-weight:bold">NIEWIARYGODNE</span> z = 2.78 |
 | Chwyt za gardło + próba uduszenia | pominięte (zasady minimum faz) | - | - | - | dodaje zapotrzebowanie do budżetu czasu; nie odejmuje |
 
 **Interpretacja popędu siły**. Popęd siły = siła × czas = zmiana pędu. Pull dostarcza 0.21 kN·s przez 1.0 s (łagodnie), uderzenie dostarcza 0.225 kN·s przez 12.5 ms (gwałtownie - ten sam pęd, ~80× skompresowany w czasie). Siła szczytowa 18 kN jest konsekwencją skompresowania tego przekazania pędu do tak krótkiego interwału; nie jest siłą mięśniową, lecz siłą reakcji ze strony sztywnych stalowych drzwi.
@@ -251,7 +292,7 @@ Rozwinięcie na poszczególne wielkości. Uwzględniono siły, przyspieszenia, e
 ## 15. Analiza Wiarygodności
 
 Klucz kolorów stosowany w §10, §12, §14:<br>
-![](https://img.shields.io/badge/PLAUSIBLE-brightgreen) z ≤ 1 &nbsp; ![](https://img.shields.io/badge/STRAINED-yellow) 1 < z ≤ 2 &nbsp; ![](https://img.shields.io/badge/IMPLAUSIBLE-orange) 2 < z ≤ 3 &nbsp; ![](https://img.shields.io/badge/EXTREME-red) z > 3 &nbsp; ![](https://img.shields.io/badge/AIS_5%2B-red) zakres obciążeń krytycznych
+<span style="color:green;font-weight:bold">WIARYGODNE</span> z ≤ 1 &nbsp; <span style="color:goldenrod;font-weight:bold">WYTĘŻONE</span> 1 < z ≤ 2 &nbsp; <span style="color:darkorange;font-weight:bold">NIEWIARYGODNE</span> 2 < z ≤ 3 &nbsp; <span style="color:red;font-weight:bold">SKRAJNE</span> z > 3 &nbsp; <span style="color:red;font-weight:bold">AIS 5+</span> zakres obciążeń krytycznych
 
 Ocena po stronie ruchu: 4 z 7 par (faza, wielkość) wiarygodne, 2 niewiarygodne, 1 ekstremalna.
 
@@ -263,17 +304,17 @@ Implikacja: każda bogatsza rekonstrukcja dodająca elementy zgłoszone późno 
 
 ## 16. Oczekiwane Wyniki Przy Prawdziwości Hipotezy
 
-Jeżeli zdarzenie przebiegło tak, jak opisała V, przewidywane byłyby następujące obserwowalne:
+Jeżeli zdarzenie przebiegło tak, jak opisała Victoria, przewidywane byłyby następujące obserwowalne:
 
 - **Uraz klatki piersiowej**: rozległy krwiak na plecach obejmujący obszar kontaktu tułów-drzwi; wysokie prawdopodobieństwo złamania żeber (1-13 w zależności od zakresu - literatura tylno-tułowiowa plasuje 6.9-10.5 kN w tym zakresie AIS; model oblicza 18 kN); możliwe uszkodzenie więzadeł żebrowo-kręgowych; możliwe stłuczenie płuca (AIS 3+, Viano 1989)
 - **Objawy ostre**: silny ból oddechowy, ograniczona ruchomość klatki piersiowej, niemożność natychmiastowego wstania lub koordynacji
 - **Sygnatura akustyczna na nagraniu**: skok przesterowania uderzenia w mikrofonie telefonu (przewidywane 124 dB przy 2 m vs ~120 dB pułapu); dzwonienie stalowego panelu w paśmie 6-24 Hz przez setki ms; możliwy rezonans szyby okiennej w paśmie 273-1093 Hz
-- **Reakcja świadka C**: słyszalna reakcja w momencie uderzenia (miała bezpośrednią akustyczną linię wzroku, ~1.5 m, przewidywany szczyt 126 dB); odwrócenie w kierunku dźwięku, nie od niego
-- **Zachowanie V po uderzeniu**: upadek zgodny z urazem całociałowego opóźnienia, nie kontrolowane osunięcie
+- **Reakcja świadka Cecilia**: słyszalna reakcja w momencie uderzenia (miała bezpośrednią akustyczną linię wzroku, ~1.5 m, przewidywany szczyt 126 dB); odwrócenie w kierunku dźwięku, nie od niego
+- **Zachowanie Victoria po uderzeniu**: upadek zgodny z urazem całociałowego opóźnienia, nie kontrolowane osunięcie
 
 ## 17. Przewidywane Kontra Rzeczywiste Wyniki Medyczne
 
-Źródła: [`testimony_victim.md`](../references/incident/testimony_victim.md) (badanie lekarskie), [`testimony_3rd_party.md`](../references/incident/testimony_3rd_party.md) (obserwacja C).
+Źródła: [`testimony_victim.md`](../references/incident/testimony_victim.md) (badanie lekarskie), [`testimony_3rd_party.md`](../references/incident/testimony_3rd_party.md) (obserwacja Cecilia).
 
 Legenda statusu: ✅ przewidywany obserwowalny zgadza się z udokumentowanym wynikiem &nbsp; ❌ przewidywany obserwowalny nieobecny lub sprzeczny &nbsp; ⚠️ częściowy lub rozłączony czasowo &nbsp; ❓ oczekuje bezpośredniej weryfikacji
 
@@ -284,11 +325,11 @@ Legenda statusu: ✅ przewidywany obserwowalny zgadza się z udokumentowanym wyn
 | Uszkodzenie więzadeł żebrowo-kręgowych / żebrowo-poprzecznych | Brak | ❌ | Eksperymentalne obciążenia tylno-tułowiowe 6.9-10.5 kN powodują te urazy (ref 14); model oblicza ~2× to obciążenie bez udokumentowanych następstw |
 | Stłuczenie płuca / zaburzenia oddychania | Brak odnotowanej dolegliwości oddechowej | ❌ | Obciążenie klatki piersiowej AIS 3-4 (Viano 1989, ref 8) przy 18 kN przewidywałoby ostry ból oddechowy i ograniczoną ruchomość klatki piersiowej |
 | Ograniczona ruchomość klatki piersiowej po uderzeniu | Pełna ruchomość w badaniu | ❌ | Opóźnienie całego ciała 26 g pozostawiłoby ostrą resztkową sztywność, ból przy rotacji, napięcie ochronne |
-| Upadek / niemożność koordynacji po uderzeniu | Krzyk V zsynchronizowany z *odwróceniem się C*, nie z rzekomym momentem uderzenia | ⚠️ | Czas krzyku jest rozłączony czasowo od rzekomego zdarzenia uderzenia - krzyk wywołany byciem widzianym, nie byciem rannym |
+| Upadek / niemożność koordynacji po uderzeniu | Krzyk Victoria zsynchronizowany z *odwróceniem się Cecilia*, nie z rzekomym momentem uderzenia | ⚠️ | Czas krzyku jest rozłączony czasowo od rzekomego zdarzenia uderzenia - krzyk wywołany byciem widzianym, nie byciem rannym |
 | Skok przesterowania audio w momencie uderzenia | Plik nagrania audio zarchiwizowany jako `event_recording.m4a`; bezpośrednia inspekcja przebiegu fali oczekuje | ❓ | Przewidywane 124 dB przy mikrofonie telefonu przekracza ~120 dB pułap przesterowania mikrofonu konsumenckiego - skok przesterowania jest głównym testem kryminalistycznym |
 | Dzwonienie stalowego panelu w paśmie 6-24 Hz | To samo nagranie; analiza spektralna oczekuje | ❓ | Uderzenie całociałowe 70 kg powinno wzbudzić fundamentalne mody panelu; nieobecność w spektrogramie jest drugim testem kryminalistycznym |
-| Reakcja akustyczna C przy uderzeniu (126 dB SPL przy jej pozycji ~1.5 m) | C nie zgłasza huku; obserwuje V opierającą się *przodem* o A dopiero po odwróceniu się | ❌ | Bezpośredni obserwator w linii wzroku przy przewidywanym 126 dB szczytowym SPL zareagowałby słyszalnie i widocznie na dźwięk; brak takiej reakcji w nagraniu lub zeznaniu |
-| V obserwowana leżąca / po upadku, plecami przy drzwiach | C obserwuje V osuwającą się po drzwiach *przodem*, a następnie czołgającą się do przodu na czworakach | ❌ | Kontakt przodem i osunięcie przodem są geometrycznie niezgodne z twierdzoną rzutem tyłem; jest to bezpośrednia obserwacyjna sprzeczność z rzekomym ruchem |
+| Reakcja akustyczna Cecilia przy uderzeniu (126 dB SPL przy jej pozycji ~1.5 m) | Cecilia nie zgłasza huku; obserwuje Victoria opierającą się *przodem* o Andrew dopiero po odwróceniu się | ❌ | Bezpośredni obserwator w linii wzroku przy przewidywanym 126 dB szczytowym SPL zareagowałby słyszalnie i widocznie na dźwięk; brak takiej reakcji w nagraniu lub zeznaniu |
+| Victoria obserwowana leżąca / po upadku, plecami przy drzwiach | Cecilia obserwuje Victoria osuwającą się po drzwiach *przodem*, a następnie czołgającą się do przodu na czworakach | ❌ | Kontakt przodem i osunięcie przodem są geometrycznie niezgodne z twierdzoną rzutem tyłem; jest to bezpośrednia obserwacyjna sprzeczność z rzekomym ruchem |
 
 **Pojedynczy siniak na prawym barku** jest jedynym udokumentowanym wynikiem. Każdy inny przewidywany obserwowalny jest albo nieobecny, albo sprzeczny. Niezgodność obejmuje wszystkie cztery kanały fizyczne: uraz mechaniczny, oddychanie, sygnatura akustyczna i relacja świadka postronnego.
 
@@ -301,12 +342,12 @@ Legenda statusu: ✅ przewidywany obserwowalny zgadza się z udokumentowanym wyn
 ## 18. Spekulacja: interpretacja zdarzenia przez pozwanego
 
 > [!IMPORTANT]
-> Cała ta sekcja stanowi **subiektywną spekulację A** - osobistą interpretację pozwanego, nie wynik kryminalistyczny, nie udowodnione twierdzenie i nie część argumentu fizyki niosącego ciężar dowodowy. Żaden z poniższych punktów nie ma samodzielnej mocy dowodowej; są tutaj zapisane wyłącznie po to, by uczynić rozumowanie A widocznym. Fizyka w §§9-17 stoi lub upada niezależnie od czegokolwiek tutaj powiedzianego.
+> Cała ta sekcja stanowi **subiektywną spekulację Andrew** - osobistą interpretację pozwanego, nie wynik kryminalistyczny, nie udowodnione twierdzenie i nie część argumentu fizyki niosącego ciężar dowodowy. Żaden z poniższych punktów nie ma samodzielnej mocy dowodowej; są tutaj zapisane wyłącznie po to, by uczynić rozumowanie Andrew widocznym. Fizyka w §§9-17 stoi lub upada niezależnie od czegokolwiek tutaj powiedzianego.
 
-Według **subiektywnej interpretacji A**, zdarzenie korytarzowe z 13 września było celowo zainscenizowane jako zdarzenie wyzwalające fałszywe oskarżenie o przemoc. Wzorzec, tak jak A go odczytuje (ponownie: subiektywny, nieudowodniony):
+Według **subiektywnej interpretacji Andrew**, zdarzenie korytarzowe z 13 września było celowo zainscenizowane jako zdarzenie wyzwalające fałszywe oskarżenie o przemoc. Wzorzec, tak jak Andrew go odczytuje (ponownie: subiektywny, nieudowodniony):
 
-- Zabawka na podłodze została celowo umieszczona, a prośba o ustąpienie miejsca przez A i C była częścią choreografii - kreowanie martwego pola, w którym plecy C są odwrócone w krytycznym momencie (zgodnie z [`testimony_3rd_party.md`](../references/incident/testimony_3rd_party.md), zrobiła trzy kroki i odwróciła się tuż przed rzekomym aktem)
-- Dosłowne twierdzenie zostało skonstruowane wokół tego, co C *mogłaby* później zeznać widząc po odwróceniu się, nie wokół tego, co musiałoby mechanicznie zadziałać przy prawdziwym uderzeniu w drzwi windy
+- Zabawka na podłodze została celowo umieszczona, a prośba o ustąpienie miejsca przez Andrew i Cecilia była częścią choreografii - kreowanie martwego pola, w którym plecy Cecilia są odwrócone w krytycznym momencie (zgodnie z [`testimony_3rd_party.md`](../references/incident/testimony_3rd_party.md), zrobiła trzy kroki i odwróciła się tuż przed rzekomym aktem)
+- Dosłowne twierdzenie zostało skonstruowane wokół tego, co Cecilia *mogłaby* później zeznać widząc po odwróceniu się, nie wokół tego, co musiałoby mechanicznie zadziałać przy prawdziwym uderzeniu w drzwi windy
 - Pojedynczy siniak na prawym barku (nota IMPORTANT w §17) jest, według pozwanego, samodzielnie zadany
 - Dosłowne zeznanie następnie **eskalowało** w pięciu chronologicznych przeróbkach (tabela eskalacji w §4) - wzorzec zgodny z próbami i rewizją, nie z jednym odzyskanym wspomnieniem rzeczywistego zdarzenia
 
@@ -332,10 +373,10 @@ Uzasadnienie wyborów modelowania, ram statystycznych, zestawu założeń i dobo
 Każde założenie jest skalibrowane, by biasować wynik w znany kierunek:
 
 - Trzy fazy, maksymalny czas trwania na fazę: obniża szczytowe zapotrzebowania (korzystne dla twierdzenia)
-- Bierna współpraca (V nie stawia oporu, nie chwyta, nie napina się): korzystne dla twierdzenia
+- Bierna współpraca (Victoria nie stawia oporu, nie chwyta, nie napina się): korzystne dla twierdzenia
 - Trójkątny profil prędkości na fazę: najbardziej korzystne wygładzenie krzywych siła-czas
-- Kontynuacja przyspieszenia przez swap-throw, $v_\text{impact}^2 = v_\text{pull-end}^2 + 2 a_\text{pull} s_\text{swap}$: podnosi liczby uderzenia; odpowiada fizycznemu twierdzeniu, że A kontynuuje rzut przez kontakt z drzwiami
-- Sztywne uderzenie, 2 cm droga zatrzymania (vs typowe odkształcenie ciała 5-10 cm): podnosi szczytową siłę; odpowiada geometrii celu ze sztywnymi stalowymi drzwiami
+- Kontynuacja przyspieszenia przez swap-throw, $v_\text{impact}^2 = v_\text{pull-end}^2 + 2 a_\text{pull} s_\text{swap}$: podnosi liczby uderzenia; odpowiada fizycznemu twierdzeniu, że Andrew kontynuuje rzut przez kontakt z drzwiami
+- Sztywne uderzenie, 2 cm droga zatrzymania (vs typowe odkształcenie podatnego celu 5-10 cm): 2 cm to podatność pre-yield ciała (Lobdell 1973; Kroell 1971; Kemper 2014, patrz §11), nie ugięcie drzwi; podnosi szczytową siłę zgodnie z geometrią sztywnego celu
 - Rozkłady referencyjne dla dorosłego mężczyzny, aproksymacja normalna: ignoruje asymetryczne ogony, odpowiednia dla z do ~3
 
 ### Modele

@@ -284,7 +284,7 @@ def plot_corridor_overhead(
     - [Box] briefcase at E edge of elevator door; [Str] stroller in segment
       2 NW; D apartment-door panel swung W
     """
-    fig, ax = plt.subplots(figsize=(11, 5.8))
+    fig, ax = plt.subplots(figsize=(10, 5.2))
 
     # Geometry (metres). Segment 1 is the western entrance (1.8 m long,
     # narrower); segment 2 is the wider eastern section containing the doors.
@@ -349,7 +349,7 @@ def plot_corridor_overhead(
     ax.text(
         apt_door_x,
         n_wall + 0.15,
-        "apartment door (hinge E, swings into corridor; face looks W)",
+        "apartment door (hinges E, swings into corridor)",
         ha="center",
         fontsize=8,
         color="#1565c0",
@@ -380,7 +380,7 @@ def plot_corridor_overhead(
     # facing S (downward)
     v_xy = (apt_door_x - 0.15, n_wall - 0.18)
     v_circle = mpatches.Circle(
-        v_xy, 0.18, color="#c45a3a", label=f"V Victoria ({bodies.m_mass:.0f} kg)"
+        v_xy, 0.18, color="#c45a3a", label=f"Victoria ({bodies.m_mass:.0f} kg)"
     )
     ax.add_patch(v_circle)
     ax.annotate(
@@ -403,7 +403,7 @@ def plot_corridor_overhead(
     # A (Andrew): pressed flat against the elevator door, facing N (upward)
     a_xy = (elev_door_x, s_seg2 + 0.22)
     a_circle = mpatches.Circle(
-        a_xy, 0.20, color="#5c8da7", label=f"A Andrew ({bodies.h_mass:.0f} kg)"
+        a_xy, 0.20, color="#5c8da7", label=f"Andrew ({bodies.h_mass:.0f} kg)"
     )
     ax.add_patch(a_circle)
     ax.annotate(
@@ -425,7 +425,7 @@ def plot_corridor_overhead(
 
     # Cecilia: in segment 1, facing E (rightward)
     c_xy = (0.5, 0.0)
-    c_circle = mpatches.Circle(c_xy, 0.15, color="#5b8d5b", label="C Cecilia (court curator)")
+    c_circle = mpatches.Circle(c_xy, 0.15, color="#5b8d5b", label="Cecilia (court curator)")
     ax.add_patch(c_circle)
     ax.annotate(
         "",
@@ -454,7 +454,7 @@ def plot_corridor_overhead(
         (box_x, box_y),
         box_w,
         box_h,
-        color="#9e9e9e",
+        facecolor="#9e9e9e",
         edgecolor="#37474f",
         linewidth=1.2,
         label="[Box] aluminium briefcase",
@@ -476,7 +476,7 @@ def plot_corridor_overhead(
         (str_x, str_y),
         0.45,
         0.35,
-        color="#fff59d",
+        facecolor="#fff59d",
         edgecolor="#a98e00",
         linewidth=1.2,
         label="[Str] baby stroller",
@@ -506,40 +506,41 @@ def plot_corridor_overhead(
         alpha=0.7,
     )
 
-    # Cardinal directions compass (top-right corner inset)
-    compass_x, compass_y = total_w + 0.25, n_wall - 0.2
-    ax.annotate(
-        "N",
-        xy=(compass_x, compass_y + 0.3),
-        ha="center",
-        fontsize=10,
-        fontweight="bold",
-        color="#37474f",
-    )
-    ax.annotate(
-        "S",
-        xy=(compass_x, compass_y - 0.5),
-        ha="center",
-        fontsize=10,
-        fontweight="bold",
-        color="#37474f",
-    )
-    ax.annotate(
-        "W",
-        xy=(compass_x - 0.3, compass_y - 0.1),
-        ha="center",
-        fontsize=10,
-        fontweight="bold",
-        color="#37474f",
-    )
-    ax.annotate(
-        "E",
-        xy=(compass_x + 0.3, compass_y - 0.1),
-        ha="center",
-        fontsize=10,
-        fontweight="bold",
-        color="#37474f",
-    )
+    # Cardinal-direction rosette (small inset, top-right corner, clear of walls)
+    rose = ax.inset_axes([0.91, 0.76, 0.085, 0.18])
+    rose.set_xlim(-1.25, 1.25)
+    rose.set_ylim(-1.25, 1.25)
+    rose.set_aspect("equal")
+    rose.axis("off")
+    # Outer circle (subtle)
+    rose.add_patch(mpatches.Circle((0, 0), 1.0, fill=False, color="#37474f",
+                                   linewidth=1.0, alpha=0.45))
+    # Four cardinal points drawn as elongated diamond petals (N/S long axis,
+    # E/W short axis offset by 90 deg). Each petal is a 4-point polygon from
+    # centre -> side -> tip -> side -> centre. N petal in solid colour to mark
+    # primary heading; other three lighter for contrast.
+    petal_long, petal_wide = 0.78, 0.18
+    petals = [
+        ((0,  1), "#37474f", 1.00),  # N (solid)
+        ((0, -1), "#37474f", 0.55),  # S
+        ((1,  0), "#37474f", 0.55),  # E
+        ((-1, 0), "#37474f", 0.55),  # W
+    ]
+    for (ux, uy), color, alpha in petals:
+        # tip at (ux*petal_long, uy*petal_long), sides perpendicular
+        tip   = (ux * petal_long, uy * petal_long)
+        sideL = (-uy * petal_wide,  ux * petal_wide)
+        sideR = ( uy * petal_wide, -ux * petal_wide)
+        rose.add_patch(mpatches.Polygon(
+            [(0, 0), sideL, tip, sideR],
+            closed=True, color=color, alpha=alpha,
+        ))
+    # Centre dot
+    rose.add_patch(mpatches.Circle((0, 0), 0.08, color="#37474f"))
+    # Labels just outside the circle (a touch more spacing for breathing room)
+    for (ux, uy), label in [((0, 1), "N"), ((0, -1), "S"), ((1, 0), "E"), ((-1, 0), "W")]:
+        rose.text(ux * 1.20, uy * 1.20, label, ha="center", va="center",
+                  fontweight="bold", fontsize=8, color="#37474f")
 
     # Distance annotation: 2 m N-S throw distance between doors
     ax.annotate(
@@ -557,14 +558,14 @@ def plot_corridor_overhead(
         va="center",
     )
 
-    ax.set_xlim(-0.4, total_w + 1.0)
-    ax.set_ylim(s_seg2 - 0.6, n_wall + 1.1)  # extra headroom so the apt-door annotation clears the title
+    ax.set_xlim(-0.3, total_w + 0.4)
+    ax.set_ylim(s_seg2 - 0.55, n_wall + 0.95)
     ax.set_aspect("equal")
-    ax.set_xlabel("W ← x (m) → E")
-    ax.set_ylabel("S ← y (m) → N")
+    ax.set_xlabel("x (m)")
+    ax.set_ylabel("y (m)")
     ax.set_title(
-        "Corridor geometry at the contested moment (top view, per references/incident/geometry.md)",
-        pad=14,
+        "Corridor geometry at the contested moment (top view)",
+        pad=10,
     )
     ax.legend(loc="upper left", fontsize=8, framealpha=0.9)
     ax.grid(linestyle=":", alpha=0.3)
