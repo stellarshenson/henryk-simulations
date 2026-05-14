@@ -16,6 +16,9 @@ Current scene: **Mk1 - Corridor Attack Incident Reconstruction**.
 
 > Click the thumbnail for the rendered simulation on YouTube.
 
+> [!TIP]
+> The narrative version of the story - same maths, more jokes - is on Medium: **[The 3-second throw that couldn't happen - a legal science story](https://pub.towardsai.net/the-3-second-throw-that-couldnt-happen-a-legal-science-story-8cd705a99fa1)** (Towards AI). The headline finding, in the article's own words: *the laws of physics would have to take an unscheduled coffee break for the events to unfold as described*.
+
 ![Corridor overhead geometry](reports/figures/01-corridor-geometry.png)
 
 > Overhead corridor geometry used by the reconstruction: two-segment W-to-E layout with the S-side elevator-door elbow, apt door swinging W into segment 2, and the setup positions of Victoria (V) inside the apt-door envelope, Andrew (A) pressed flat against the elevator door, and Cecilia (C) in segment 1. [Box] is the 50x30 cm aluminium briefcase at the E edge of the elevator door; [Str] is the stroller in the NW corner of segment 2.
@@ -127,6 +130,8 @@ Other Makefile targets: `make build`, `make clean`, `make format`, `make help`.
 ## Methodology in one paragraph
 
 Minimum-phase decomposition with maximum time per phase gives the lowest physically achievable demand. If that lower bound already exceeds population biomechanical references, the true motion exceeds them by at least as much. Any richer reconstruction (throat-grab, defensive grab, left-side approach, strangulation attempt - all of which appear in later filings) compresses each remaining phase, pushes peak accelerations and angular velocities up, and makes the verdict strictly worse for the claim. See [`references/incident/events_reconstruction.md`](references/incident/events_reconstruction.md) for the formal lower-bound argument and the ELBO analogy.
+
+Or, in slightly less formal terms: two and a half years of contested family-court litigation, substantially clarified by twenty minutes of biomechanics.
 
 ## Status
 
