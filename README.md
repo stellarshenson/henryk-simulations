@@ -1,5 +1,8 @@
 # henryk-simulations
 
+[![Build](https://github.com/stellarshenson/henryk-simulations/actions/workflows/build.yml/badge.svg)](https://github.com/stellarshenson/henryk-simulations/actions/workflows/build.yml)
+[![Donate PayPal](https://img.shields.io/badge/Donate-PayPal-blue?style=flat)](https://www.paypal.com/donate/?hosted_button_id=B4KPBJDLLXTSA)
+
 Numerical and physics-based reconstructions of contested real-world events. Built to disclose the role of forces, accelerations, momenta and biomechanical limits in things people claim happened in three seconds.
 
 Current scene: **Mk1 - Corridor Attack Incident Reconstruction**.

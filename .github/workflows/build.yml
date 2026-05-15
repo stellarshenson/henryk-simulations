@@ -1,0 +1,141 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "README.md"
+      - "docs/**"
+      - "reports/**"
+      - "references/**"
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - "README.md"
+      - "docs/**"
+      - "reports/**"
+      - "references/**"
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Create venv and install dependencies
+        run: make install
+
+      - name: Lint
+        run: make lint
+
+  test:
+    name: Test
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Create venv and install dependencies
+        run: make install
+
+      - name: Run tests
+        run: make test
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: .coverage
+          if-no-files-found: ignore
+
+  notebook:
+    name: Notebook execution
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Create venv and install dependencies
+        run: make install
+
+      - name: Install nbconvert
+        run: uv pip install --python .venv nbconvert
+
+      - name: Execute notebook
+        run: |
+          .venv/bin/jupyter nbconvert \
+            --to notebook \
+            --execute notebooks/01-kj-corridor-kinematics.ipynb \
+            --output executed-01-kj-corridor-kinematics.ipynb \
+            --ExecutePreprocessor.timeout=600
+
+      - name: Upload executed notebook
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: executed-notebook
+          path: notebooks/executed-01-kj-corridor-kinematics.ipynb
+          if-no-files-found: warn
+
+      - name: Upload generated figures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: figures
+          path: reports/figures/
+          if-no-files-found: ignore
+
+  package:
+    name: Build wheel
+    needs: [test, notebook]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Create venv and install dependencies
+        run: make install
+
+      - name: Build wheel
+        run: .venv/bin/python -m build --wheel
+
+      - name: Upload wheel artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheel
+          path: dist/*.whl
+          if-no-files-found: error
