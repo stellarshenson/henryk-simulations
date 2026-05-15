@@ -94,7 +94,8 @@ jobs:
             --to notebook \
             --execute notebooks/01-kj-corridor-kinematics.ipynb \
             --output executed-01-kj-corridor-kinematics.ipynb \
-            --ExecutePreprocessor.timeout=600
+            --ExecutePreprocessor.timeout=600 \
+            --ExecutePreprocessor.kernel_name=python3
 
       - name: Upload executed notebook
         if: always()
