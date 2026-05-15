@@ -11,8 +11,10 @@ import pandas as pd
 import seaborn as sns
 
 from henryk_simulations.corridor.acoustics import (
-    AcousticPrediction,
     REF_SOUNDS as DEFAULT_REF_SOUNDS,
+)
+from henryk_simulations.corridor.acoustics import (
+    AcousticPrediction,
 )
 from henryk_simulations.corridor.config import Scenario
 from henryk_simulations.corridor.kinematics import G, PhaseResult
@@ -238,15 +240,22 @@ def plot_verdict_summary(
     ax.axvline(0, color="black", linewidth=0.8)
     # Stagger the σ-band annotations vertically so adjacent labels don't
     # overlap, and place them in the headroom above the top data row.
-    for i, (x, label, c) in enumerate([
-        (1, "1σ strained", VERDICT_COLORS[Verdict.STRAINED]),
-        (2, "2σ implausible", VERDICT_COLORS[Verdict.IMPLAUSIBLE]),
-        (3, "3σ extreme", VERDICT_COLORS[Verdict.EXTREME]),
-    ]):
+    for i, (x, label, c) in enumerate(
+        [
+            (1, "1σ strained", VERDICT_COLORS[Verdict.STRAINED]),
+            (2, "2σ implausible", VERDICT_COLORS[Verdict.IMPLAUSIBLE]),
+            (3, "3σ extreme", VERDICT_COLORS[Verdict.EXTREME]),
+        ]
+    ):
         ax.axvline(x, color=c, linestyle="--", linewidth=0.8, alpha=0.7)
         ax.text(
-            x + 0.04, len(df) + 0.15 + (i * 0.30), label,
-            color=c, fontsize=8, ha="left", va="bottom",
+            x + 0.04,
+            len(df) + 0.15 + (i * 0.30),
+            label,
+            color=c,
+            fontsize=8,
+            ha="left",
+            va="bottom",
         )
     ax.set_xlabel("z-score above reference mean")
     ax.set_title("Plausibility z-scores (higher = harder to satisfy)", pad=14)
@@ -513,34 +522,47 @@ def plot_corridor_overhead(
     rose.set_aspect("equal")
     rose.axis("off")
     # Outer circle (subtle)
-    rose.add_patch(mpatches.Circle((0, 0), 1.0, fill=False, color="#37474f",
-                                   linewidth=1.0, alpha=0.45))
+    rose.add_patch(
+        mpatches.Circle((0, 0), 1.0, fill=False, color="#37474f", linewidth=1.0, alpha=0.45)
+    )
     # Four cardinal points drawn as elongated diamond petals (N/S long axis,
     # E/W short axis offset by 90 deg). Each petal is a 4-point polygon from
     # centre -> side -> tip -> side -> centre. N petal in solid colour to mark
     # primary heading; other three lighter for contrast.
     petal_long, petal_wide = 0.78, 0.18
     petals = [
-        ((0,  1), "#37474f", 1.00),  # N (solid)
+        ((0, 1), "#37474f", 1.00),  # N (solid)
         ((0, -1), "#37474f", 0.55),  # S
-        ((1,  0), "#37474f", 0.55),  # E
+        ((1, 0), "#37474f", 0.55),  # E
         ((-1, 0), "#37474f", 0.55),  # W
     ]
     for (ux, uy), color, alpha in petals:
         # tip at (ux*petal_long, uy*petal_long), sides perpendicular
-        tip   = (ux * petal_long, uy * petal_long)
-        sideL = (-uy * petal_wide,  ux * petal_wide)
-        sideR = ( uy * petal_wide, -ux * petal_wide)
-        rose.add_patch(mpatches.Polygon(
-            [(0, 0), sideL, tip, sideR],
-            closed=True, color=color, alpha=alpha,
-        ))
+        tip = (ux * petal_long, uy * petal_long)
+        sideL = (-uy * petal_wide, ux * petal_wide)
+        sideR = (uy * petal_wide, -ux * petal_wide)
+        rose.add_patch(
+            mpatches.Polygon(
+                [(0, 0), sideL, tip, sideR],
+                closed=True,
+                color=color,
+                alpha=alpha,
+            )
+        )
     # Centre dot
     rose.add_patch(mpatches.Circle((0, 0), 0.08, color="#37474f"))
     # Labels just outside the circle (a touch more spacing for breathing room)
     for (ux, uy), label in [((0, 1), "N"), ((0, -1), "S"), ((1, 0), "E"), ((-1, 0), "W")]:
-        rose.text(ux * 1.20, uy * 1.20, label, ha="center", va="center",
-                  fontweight="bold", fontsize=8, color="#37474f")
+        rose.text(
+            ux * 1.20,
+            uy * 1.20,
+            label,
+            ha="center",
+            va="center",
+            fontweight="bold",
+            fontsize=8,
+            color="#37474f",
+        )
 
     # Distance annotation: 2 m N-S throw distance between doors
     ax.annotate(
@@ -895,8 +917,8 @@ def plot_audio_signature(
     conversation, ...) are drawn as vertical tick lines, and the phone-mic
     clipping region above `clip_threshold_db` is shaded.
     """
-    refs    = ref_sounds if ref_sounds is not None else DEFAULT_REF_SOUNDS
-    palette = palette    if palette    is not None else SKILL_MPL_PALETTE
+    refs = ref_sounds if ref_sounds is not None else DEFAULT_REF_SOUNDS
+    palette = palette if palette is not None else SKILL_MPL_PALETTE
 
     fig, ax = plt.subplots(figsize=(12, 5.4))
 
@@ -905,20 +927,29 @@ def plot_audio_signature(
     for db, txt in refs:
         ax.axvline(db, color="gray", alpha=0.35, linewidth=0.8, zorder=0)
         ax.text(
-            db, 1.02, f"{db} dB  {txt}",
-            ha="left", va="center", fontsize=7,
+            db,
+            1.02,
+            f"{db} dB  {txt}",
+            ha="left",
+            va="center",
+            fontsize=7,
             rotation=90,
             transform=ax.get_xaxis_transform(),
             color="dimgray",
         )
 
     # Clipping danger zone
-    ax.axvspan(clip_threshold_db, 200, ymin=0, ymax=1,
-               color=SKILL_MPL_PALETTE[1], alpha=0.07, zorder=0)
+    ax.axvspan(
+        clip_threshold_db, 200, ymin=0, ymax=1, color=SKILL_MPL_PALETTE[1], alpha=0.07, zorder=0
+    )
     ax.text(
-        clip_threshold_db + 1, len(prediction.listeners) - 0.4,
+        clip_threshold_db + 1,
+        len(prediction.listeners) - 0.4,
         f"phone mic clips above ~{clip_threshold_db:.0f} dB SPL",
-        color=SKILL_MPL_PALETTE[1], fontsize=9, fontweight="bold", va="top",
+        color=SKILL_MPL_PALETTE[1],
+        fontsize=9,
+        fontweight="bold",
+        va="top",
     )
 
     # Per-listener bands
@@ -931,17 +962,32 @@ def plot_audio_signature(
         spl_typical = prediction.spl_grid[listener_label][typical_label]
 
         ax.barh(
-            y, spl_high - spl_low, left=spl_low, height=0.55,
-            color=color, alpha=0.5, edgecolor=color, linewidth=2,
+            y,
+            spl_high - spl_low,
+            left=spl_low,
+            height=0.55,
+            color=color,
+            alpha=0.5,
+            edgecolor=color,
+            linewidth=2,
         )
         ax.plot(spl_typical, y, "o", color="black", markersize=8, zorder=5)
         ax.text(
-            spl_low - 1.5, y, listener_label,
-            ha="right", va="center", fontsize=10, fontweight="bold",
+            spl_low - 1.5,
+            y,
+            listener_label,
+            ha="right",
+            va="center",
+            fontsize=10,
+            fontweight="bold",
         )
         ax.text(
-            spl_high + 1.5, y, f"{spl_low:.0f} - {spl_high:.0f} dB SPL",
-            ha="left", va="center", fontsize=9,
+            spl_high + 1.5,
+            y,
+            f"{spl_low:.0f} - {spl_high:.0f} dB SPL",
+            ha="left",
+            va="center",
+            fontsize=9,
         )
 
     ax.set_yticks([])
@@ -950,7 +996,9 @@ def plot_audio_signature(
     ax.set_xlabel("Sound pressure level (dB SPL re 20 µPa)")
     ax.set_title(
         "Predicted peak SPL of the elevator-door impact vs reference sounds",
-        fontsize=12, fontweight="bold", pad=70,
+        fontsize=12,
+        fontweight="bold",
+        pad=70,
     )
     for side in ("top", "right", "left"):
         ax.spines[side].set_visible(False)

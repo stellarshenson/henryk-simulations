@@ -304,12 +304,15 @@ def compute_scenario(
             #
             # v_impact^2 = v_at_pull_end^2 + 2 * a_pull * s_swap
             pull_phase = next(
-                (p for p in scenario.phases
-                 if p.name == "pull" and p.translation > 0 and p.duration > 0),
+                (
+                    p
+                    for p in scenario.phases
+                    if p.name == "pull" and p.translation > 0 and p.duration > 0
+                ),
                 None,
             )
             if pull_phase is not None:
-                a_pull = 2.0 * pull_phase.translation / (pull_phase.duration ** 2)
+                a_pull = 2.0 * pull_phase.translation / (pull_phase.duration**2)
                 v_impact_peak = math.sqrt(
                     v_current_m * v_current_m + 2.0 * a_pull * phase.translation,
                 )

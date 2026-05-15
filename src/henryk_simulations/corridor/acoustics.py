@@ -10,26 +10,27 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 import math
 
-
 # === Material constants ===
+
 
 @dataclass(frozen=True)
 class MaterialProps:
     """Isotropic linear-elastic material."""
 
-    E: float    # Young's modulus, Pa
-    nu: float   # Poisson's ratio
+    E: float  # Young's modulus, Pa
+    nu: float  # Poisson's ratio
     rho: float  # density, kg/m^3
 
 
 STEEL = MaterialProps(E=200e9, nu=0.30, rho=7850)
 GLASS = MaterialProps(E=70e9, nu=0.22, rho=2500)
 
-C_AIR = 343.0   # speed of sound in air, m/s
-I_REF = 1e-12   # reference intensity for SPL, W/m^2 (threshold of hearing)
+C_AIR = 343.0  # speed of sound in air, m/s
+I_REF = 1e-12  # reference intensity for SPL, W/m^2 (threshold of hearing)
 
 
 # === Geometry ===
+
 
 @dataclass(frozen=True)
 class PlatePanel:
@@ -59,6 +60,7 @@ DEFAULT_ELEVATOR_DOOR = DoorGeometry(
 
 # === Source ===
 
+
 @dataclass(frozen=True)
 class AcousticSource:
     """Mechanical impact pulse that excites the panel."""
@@ -74,6 +76,7 @@ class AcousticSource:
 
 
 # === Modal frequencies ===
+
 
 @dataclass(frozen=True)
 class PlateMode:
@@ -95,7 +98,8 @@ def plate_modes(panel: PlatePanel, n_max: int = 4) -> list[PlateMode]:
     coeff = (math.pi / 2.0) * math.sqrt(D / sigma)
     modes = [
         PlateMode(
-            m=m, n=n,
+            m=m,
+            n=n,
             frequency_hz=coeff * ((m / panel.a_m) ** 2 + (n / panel.b_m) ** 2),
         )
         for m in range(1, n_max + 1)
@@ -114,6 +118,7 @@ def cavity_axial_frequency(gap_m: float, c_air: float = C_AIR) -> float:
 
 
 # === Sound-pressure-level prediction ===
+
 
 def spl_at_distance(
     eta: float,
@@ -136,16 +141,16 @@ def spl_at_distance(
 # Radiation-efficiency bracket for a struck steel plate.
 DEFAULT_ETA_RANGE: dict[str, float] = {
     "low (lossy mounting)": 0.001,
-    "typical":              0.01,
-    "high (well-coupled)":  0.05,
+    "typical": 0.01,
+    "high (well-coupled)": 0.05,
 }
 
 # Listener label + distance (m). Defaults pin Cecilia and the phone microphone
 # in their reconstructed positions during the contested incident.
 DEFAULT_LISTENERS: list[tuple[str, float]] = [
     ("door surface (~10 cm)", 0.10),
-    ("Cecilia at ~1.5 m",     1.50),
-    ("phone mic at ~2 m",     2.00),
+    ("Cecilia at ~1.5 m", 1.50),
+    ("phone mic at ~2 m", 2.00),
 ]
 
 
@@ -174,18 +179,20 @@ def predict_signature(
 ) -> AcousticPrediction:
     """Compute the full acoustic prediction for a door/source pair."""
     etas = dict(eta_range) if eta_range is not None else dict(DEFAULT_ETA_RANGE)
-    lst  = list(listeners)  if listeners  is not None else list(DEFAULT_LISTENERS)
+    lst = list(listeners) if listeners is not None else list(DEFAULT_LISTENERS)
 
-    door_modes   = plate_modes(door.panel, n_max=4)[:n_modes]
-    window_modes = (plate_modes(door.window, n_max=4)[:n_modes]
-                    if door.window is not None else [])
+    door_modes = plate_modes(door.panel, n_max=4)[:n_modes]
+    window_modes = plate_modes(door.window, n_max=4)[:n_modes] if door.window is not None else []
     cavity_hz = cavity_axial_frequency(door.cavity_gap_m)
 
     spl_grid: dict[str, dict[str, float]] = {}
     for listener_label, distance_m in lst:
         spl_grid[listener_label] = {
             eta_label: spl_at_distance(
-                eta, source.work_deposited_J, source.contact_time_s, distance_m,
+                eta,
+                source.work_deposited_J,
+                source.contact_time_s,
+                distance_m,
             )
             for eta_label, eta in etas.items()
         }
@@ -205,8 +212,8 @@ def predict_signature(
 # === Reference SPL benchmarks for axis annotation ===
 
 REF_SOUNDS: list[tuple[int, str]] = [
-    (60,  "normal conversation at 1 m"),
-    (90,  "lawn mower at 1 m"),
+    (60, "normal conversation at 1 m"),
+    (90, "lawn mower at 1 m"),
     (110, "rock concert, front row"),
     (120, "pain threshold; phone-mic clipping"),
     (130, "jackhammer at 1 m"),
