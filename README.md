@@ -44,7 +44,7 @@ Three seconds. Two doors, two metres apart. A 70 kg adult moving as a rigid obje
 
 The father is not a lawyer. He is the kind of person who reaches for `scipy.stats` and `compute_impact()` when faced with an emotional problem. So he built this repo.
 
-At the most charitable possible interpretation of the accusation, the impact would have delivered **18 kilonewtons of peak force**, **26 g of deceleration**, and a peak sound pressure level of **124 dB** at the phone microphone that was recording the entire visit. The medical examination afterwards documented one bruise on the right shoulder. The recording contains neither a clipping spike nor any panel-ringing acoustic signature. The third-party witness reports no loud noise of any kind.
+At the most charitable possible interpretation of the accusation, the impact would have delivered **16 to 22 kilonewtons of peak force** and **tens of g of deceleration**, with a peak sound pressure level of **124 dB** at the phone microphone that was recording the entire visit. The medical examination afterwards documented one bruise on the right shoulder. The recording contains neither a clipping spike nor any panel-ringing acoustic signature. The third-party witness reports no loud noise of any kind.
 
 You can decide for yourself what that means. The reconstruction cheats on the prosecution's behalf throughout - the accusation gets the friendliest possible reading - and the accusation still fails the physics.
 
@@ -57,7 +57,7 @@ Four kinds of artefacts bundled together:
 - **Acoustics module** - Kirchhoff plate equation for the elevator door's flexural modes, half-wave resonance of the air gap between the two steel panels, peak sound pressure predicted at three listener positions including the phone microphone that recorded the visit; cross-checked against the actual audio waveform for the expected clipping spike and panel ringing
 - **PyBullet simulation** - rigid-body render of the alleged motion as an MP4 with custom capsule mannequins, plus a dozen matplotlib figures showing per-phase demand bars, force and acceleration timelines, injury-threshold zones, the four-views-of-impact panel, and the audio signature prediction
 
-Every number in the analysis is reproducible by running one notebook against a single nested `PARAMS` dictionary; ruff-clean Python, pytest-covered, managed by `uv`.
+Every number in the analysis is reproducible by running the notebook against a single `ChoreographyConfig` object; ruff-clean Python, pytest-covered, managed by `uv`.
 
 ## Aim
 
@@ -80,12 +80,14 @@ Stress-test the contested 3 s claim against the laws of physics and against popu
 - [`events_reconstruction.md`](references/incident/events_reconstruction.md) - minimum-viable stage decomposition (Setup / Approach / Pull / Swap+Throw / Swap-Again / Disengage), formal ELBO-style lower-bound formulation with LaTeX, side-by-side analogy table with variational inference
 - [`data/external/event_audio/event_recording.m4a`](data/external/event_audio/event_recording.m4a) - full audio recording of the visit and the contested moment; the source for both the third-party testimony and the victim's verbatim live exclamation
 
-### Kinematic computations ([`src/henryk_simulations/corridor/`](src/henryk_simulations/corridor/))
+### Kinematic computations ([`choreography.py`](src/henryk_simulations/corridor/choreography.py))
 
-- Per-phase: triangular velocity profile (v_peak = 2s/t, a_peak = 4s/t²), continuous-velocity model with carry-over momentum across phases, peak force (F = m·a), impulse (J = m·Δv), kinetic energy (KE = ½mv²), angular velocity, angular acceleration, torque, angular momentum
-- Impact analysis: F_impact = m·v²/2d with configurable stopping distance, peak g-loading, post-impact deceleration
-- All knobs (per-phase durations, stopping distance, body masses, geometry, resistance model) parameterised via dataclasses in [`config.py`](src/henryk_simulations/corridor/config.py)
-- Resistance model: `passive` (worst-case-for-defence: victim as cooperating mass, no resistive force subtracted from the attacker's demand)
+- Structural decoupled-singularity model of the body's centre-of-mass trajectory: phase 1 (approach to the door), a decoupled impact singularity, phase 2 (return)
+- Tangential acceleration is a smooth C2 trapezoid - give ramp, plateau, let-go ramp, coast - parameterised by its structural durations, not by spline knots; the give and let-go ramps are literature-pinned to the rate-of-force-development band
+- Decoupled impact singularity: phase 1 ends at the closing velocity, the collision is resolved on its own millisecond timeline against five body-yield models (rigid-plastic, half-sine, smootherstep, linear spring, Hertzian)
+- Kinematics envelope: `solve_envelope` returns two bracketing solutions - no-coast propels the body to the door, with-coast releases it two torso depths back to coast in; the real motion lies between them
+- Seven structural free parameters, each constrained to a literature-sourced permissible range (exclusion zone) - the constraints bound the search space, they do not eliminate parameters
+- Phase-2 duration floored by the 180 degree yaw rotation against a human moment of inertia and the Hodgson pivot-rate band; timeline, geometry and literature bands parameterised via `ChoreographyConfig`
 
 ### Plausibility scoring ([`plausibility.py`](src/henryk_simulations/corridor/plausibility.py), [`references.py`](src/henryk_simulations/corridor/references.py))
 
@@ -99,38 +101,42 @@ Stress-test the contested 3 s claim against the laws of physics and against popu
 - Impact frame: elevator wall flashes yellow at the impact tick for visual confirmation
 - 4.5 s MP4 output (3 s scored + 1.5 s tail), encoded with `imageio[ffmpeg]`, fixed external camera, no GUI window required
 
-### Figures ([`plots.py`](src/henryk_simulations/corridor/plots.py), output to [`reports/figures/`](reports/figures/))
+### Figures (generated inline by [`notebooks/01-kj-corridor-kinematics.ipynb`](notebooks/01-kj-corridor-kinematics.ipynb), output to [`reports/figures/`](reports/figures/))
 
-- `01-corridor-geometry.png` - overhead corridor topology with two-segment W-to-E layout, S-elbow, apt door swing, actor setup positions (V, A, C), [Box] briefcase, [Str] stroller
-- `01-phase-timeline.png` - gantt of the three scored phases over the 3 s budget
-- `01-speed-timeline.png`, `01-acceleration-timeline.png`, `01-force-timeline.png`, `01-impulse-timeline.png` - per-actor continuous timelines across the full reconstruction
-- `01-per-phase-demand.png` - per-phase bar chart of peak demands
-- `01-reference-overlay.png` - reference distribution overlay with the per-phase required value marked, one panel per biomechanical quantity
-- `01-verdict-summary.png` - headline plausibility verdict per phase per quantity
-- `01-arm-conflict.png` - same-arms conflict figure for the throat-grab variant
+- `01-linear-reference-model.png` - the linear prototype: piecewise-linear acceleration integrated once to velocity and again to position, three stacked panels
+- `01-path-curve.png` - the curved centre-of-mass path, a 2 m arc-length Bezier carrying the corridor's diagonal offset
+- `01-phase2-rotation.png` - the 180 degree yaw rotation: peak yaw rate and the phase-2 duration floor against the Hodgson standing-pivot band
+- `01-kinematics-envelope.png` - the solved envelope: acceleration, velocity and position for the no-coast and with-coast bracketing solutions
 - `01-corridor-sim-passive.mp4` - rendered PyBullet simulation
 
-### Analytical notebook ([`notebooks/01-kj-corridor-kinematics.ipynb`](notebooks/01-kj-corridor-kinematics.ipynb))
+### Kinematics notebook ([`notebooks/01-kj-corridor-kinematics.ipynb`](notebooks/01-kj-corridor-kinematics.ipynb))
 
-- Cross-references the incident folder and the methodology section in the header
-- Configuration cell with `PHASE_DURATIONS` and `STOPPING_DISTANCE_CM` knobs
-- Rich `box.ROUNDED` tables with cyan headers for per-phase deconstruction (continuous-velocity, triangular peaks, rotation, impact)
-- All figures generated in-line; CSV tables written to [`reports/01-phase-kinematics.csv`](reports/01-phase-kinematics.csv) and [`reports/01-phase-scores.csv`](reports/01-phase-scores.csv)
+- Thin client over the `choreography` library - presents the linear prototype, the configuration, the phase-2 rotation constraint, the free parameters and constraints, and the solved kinematics envelope
+- Phase-2 duration constraint settled first: the 180 degree yaw turn, with a human yaw moment of inertia, floors the phase-2 duration against the Hodgson pivot-rate band before any trajectory is solved
+- Rich tables with cyan headers for the configuration, the free parameters with their exclusion zones, the constraints with their literature sources, and the envelope comparison
+- Four figures generated inline; the model is exercised by 30 test guards in [`tests/test_choreography.py`](tests/test_choreography.py)
 
-### Tabular outputs ([`reports/`](reports/))
+### Impact dynamics ([`impact.py`](src/henryk_simulations/corridor/impact.py), [`notebooks/02-kj-corridor-impact-dynamics.ipynb`](notebooks/02-kj-corridor-impact-dynamics.ipynb))
 
-- `01-phase-kinematics.csv` - per-phase numerical results
-- `01-phase-scores.csv` - per-phase z-scores and verdict bands
+- Lumped-parameter back-impact model: notebook 01's closing velocity drives a 5-DOF Lobdell-style posterior-thorax chain (skin, scapula, ribcage, organ, spine) into the rigid elevator door through a Hertzian contact with an elastic-plastic yield plateau
+- de Leva (1996) body-segment inertia separates the mass directly behind the back from the limbs that whip on their joints - the effective impacting mass
+- Posterior contact patches: the scapulae strike first, the contact area builds up over the impact and sets the per-rib load and the contact pressure
+- Computed peaks scored against literature fracture corridors - rib three-point bending, the Kemper rear-torso tolerance, vertebral compression, the AIS 3+ thoracic deflection
+- Across the kinematics envelope the peak contact force is 5.5-6.4 kN against the rigid door - below the Kemper posterior-thorax injury band (6.9-10.5 kN), the per-rib load ~1 kN well under the rib-fracture force; four figures generated inline, the model exercised by 27 test guards in [`tests/test_impact.py`](tests/test_impact.py)
 
-## Headline numbers (Mk1, no-resistance / worst case for the defence)
+## Headline numbers (Mk1, kinematics envelope)
 
-| Stage | v_end | a_peak | ω_peak | Verdict |
-|---|---|---|---|---|
-| Pull | 3.0 m/s | 6.0 m/s² | - | a_peak extreme (z = 3.75) |
-| Swap + throw | 0 (impact) | 2.0 m/s² | 6.28 rad/s | ω implausible (z = 2.78); impact F = 15.75 kN, 22.9 g over 2 cm stopping distance |
-| Swap-back | 0 | 2.0 m/s² | 6.28 rad/s | ω implausible (z = 2.78) |
+The kinematics is reported as an envelope - two bracketing solutions parametrised by the release standoff. The no-coast solution propels the body all the way to the door; the with-coast solution releases it two torso depths back and lets it coast in. The real motion lies between them.
 
-Configurable knobs (phase durations, stopping distance) live in the notebook config cell.
+| Quantity | No coast | With coast |
+|---|---|---|
+| Closing velocity | 2.74 m/s | 2.36 m/s |
+| Phase-1 peak acceleration | 0.21 g | 0.22 g |
+| Impact kinetic energy | 262 J | 194 J |
+| Impact force (Hertzian yield) | 21.9 kN | 16.2 kN |
+| Impact force (rigid-plastic floor) | 8.7 kN | 6.5 kN |
+
+The translation itself is biomechanically gentle - about a fifth of a g, well inside the population sprint-acceleration limit. The load-bearing argument is the rotation timeline: each phase needs a 180 degree rest-to-rest yaw turn, and bounded by the Hodgson standing-pivot rates the two turns alone consume 2.9 s of the 3 s budget at the elite rate and 3.6 s at the population rate - leaving almost nothing for the translation.
 
 What the lower bound predicts the impact would have produced, set against what the actual medical, acoustic and witness record shows - the gap between the two is the forensic equivalent of a KL divergence between model and reality.
 
@@ -143,17 +149,18 @@ make install                                                                    
 make test                                                                                    # pytest
 make lint                                                                                    # ruff
 jupyter nbconvert --to notebook --execute notebooks/01-kj-corridor-kinematics.ipynb --inplace
+jupyter nbconvert --to notebook --execute notebooks/02-kj-corridor-impact-dynamics.ipynb --inplace
 python -m henryk_simulations.corridor.sim                                                    # render the MP4
 ```
 
-Outputs land under `reports/figures/` (PNG figures, MP4 simulation) and `reports/` (per-phase CSV tables).
+Outputs land under `reports/figures/` (PNG figures, MP4 simulation).
 
 ## Repo layout
 
 ```
 references/incident/                  geometry, testimonies, inconsistency log, methodology
-notebooks/01-kj-corridor-kinematics   per-phase kinematics, scoring, plots
-src/henryk_simulations/corridor/      config, kinematics, sim (PyBullet), plots
+notebooks/                            01 kinematics, 02 impact dynamics
+src/henryk_simulations/corridor/      choreography, impact, acoustics, sim (PyBullet), plots
 reports/figures/                      generated figures and the MP4
 ```
 
