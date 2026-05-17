@@ -124,6 +124,15 @@ Stress-test the contested 3 s claim against the laws of physics and against popu
 - Computed peaks scored against literature fracture corridors - rib three-point bending, the Kemper rear-torso tolerance, vertebral compression, the AIS 3+ thoracic deflection
 - Across the kinematics envelope the peak contact force is 5.5-6.4 kN against the rigid door - below the Kemper posterior-thorax injury band (6.9-10.5 kN), the per-rib load ~1 kN well under the rib-fracture force; four figures generated inline, the model exercised by 27 test guards in [`tests/test_impact.py`](tests/test_impact.py)
 
+### Body impact sound ([`bodyfem.py`](src/henryk_simulations/corridor/bodyfem.py), [`notebooks/03-kj-body-impact-sound.ipynb`](notebooks/03-kj-body-impact-sound.ipynb))
+
+- The acoustic signature of the impact - the thump of the body striking the rigid door, at a microphone 1 m away - computed by a finite-element model of the deforming torso
+- Real 3D body mesh: the BodyParts3D skin model (decimated), with the upper torso isolated and voxelised into a tetrahedral solid of about 2,950 nodes and 13,700 tetrahedra
+- scikit-fem assembles the torso's 3D linear-elastic stiffness and mass; an eigensolve gives its soft-tissue deformation modes, in the 18-36 Hz band
+- The body is not a sound source - it is a moving boundary; the thorax is compressible (the air-filled lungs), so the impact squash works the chest wall as a bellows and only the air it pushes radiates
+- The microphone hears two summed components - the low thump of the pushed air, and a brief broadband burst of air squeezed out of the closing wall-body gap; the uneven body surface textures both
+- Peak SPL at 1 m is about 100 dB flat, about 80 dBA A-weighted - the surface texture is what lifts it into the band a meter and the ear register; six figures and a WAV generated inline, the model exercised by 22 test guards in [`tests/test_bodyfem.py`](tests/test_bodyfem.py)
+
 ## Headline numbers (Mk1, kinematics envelope)
 
 The kinematics is reported as an envelope - two bracketing solutions parametrised by the release standoff. The no-coast solution propels the body all the way to the door; the with-coast solution releases it two torso depths back and lets it coast in. The real motion lies between them.
@@ -150,6 +159,7 @@ make test                                                                       
 make lint                                                                                    # ruff
 jupyter nbconvert --to notebook --execute notebooks/01-kj-corridor-kinematics.ipynb --inplace
 jupyter nbconvert --to notebook --execute notebooks/02-kj-corridor-impact-dynamics.ipynb --inplace
+jupyter nbconvert --to notebook --execute notebooks/03-kj-body-impact-sound.ipynb --inplace
 python -m henryk_simulations.corridor.sim                                                    # render the MP4
 ```
 
@@ -159,9 +169,10 @@ Outputs land under `reports/figures/` (PNG figures, MP4 simulation).
 
 ```
 references/incident/                  geometry, testimonies, inconsistency log, methodology
-notebooks/                            01 kinematics, 02 impact dynamics
-src/henryk_simulations/corridor/      choreography, impact, acoustics, sim (PyBullet), plots
-reports/figures/                      generated figures and the MP4
+notebooks/                            01 kinematics, 02 impact dynamics, 03 body impact sound
+src/henryk_simulations/corridor/      choreography, impact, injuries, bodyfem, acoustics, sim
+reports/figures/                      generated figures, the MP4 and the impact-sound WAV
+data/external/body_mesh/              the body skin mesh and the isolated upper torso
 ```
 
 Other Makefile targets: `make build`, `make clean`, `make format`, `make help`.
