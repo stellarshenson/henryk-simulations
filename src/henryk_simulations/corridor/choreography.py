@@ -51,6 +51,7 @@ class ChoreographyConfig:
     body_compression: float = 0.030  # m, nominal rigid-door impact compression
     body_compression_min: float = 0.020  # m, literature lower bound
     body_compression_max: float = 0.050  # m, literature upper bound
+    body_thickness: float = 0.28  # m, torso front-to-back depth (2x the 0.14 m torso radius)
     # Ramp times, literature-pinned from the rate-of-force-development band -
     # explosive voluntary force develops and releases over 50-250 ms
     # (Maffiuletti et al. 2016; Aagaard et al. 2002).
@@ -162,27 +163,39 @@ def _integrate(a: np.ndarray, te: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     return v, s
 
 
-def _solve_phase1(cfg: ChoreographyConfig) -> PhaseTrajectory:
-    """Phase 1 - structural trapezoid. Give and let-go are literature-pinned;
-    the plateau/coast split and a_max are derived to fit the timeline and
-    the arc length, taking the lowest peak acceleration."""
+def _solve_phase1(cfg: ChoreographyConfig, release_standoff: float) -> PhaseTrajectory:
+    """Phase 1 - structural trapezoid. Give and let-go are literature-pinned.
+
+    The body is released ``release_standoff`` before the door and then
+    coasts that distance. The propulsion (give + plateau + let-go) must
+    therefore cover ``arc_length - release_standoff``; the coast covers the
+    standoff. The plateau/coast split, a_max and t_coast follow - no
+    optimisation, the solution is determined by the standoff.
+    """
     t1 = cfg.phase1_duration
     te = np.linspace(0.0, t1, cfg.n_eval)
     t_free = t1 - cfg.t_give - cfg.t_letgo  # plateau + coast budget
+    d_contact = cfg.arc_length - release_standoff  # propulsion must cover this
 
-    # degenerate freedom = the plateau/coast split; scan it, take min a_max
-    best = None
-    for t_plateau in np.linspace(0.0, t_free, 60):
-        a_unit = _trapezoid(te, cfg.t_give, t_plateau, cfg.t_letgo, 1.0)
+    # propulsion distance decreases as the coast lengthens; find the coast
+    # at which the propulsion covers exactly d_contact
+    coasts = np.linspace(0.0, t_free, 160)
+    s_props = np.zeros_like(coasts)
+    for i, tc in enumerate(coasts):
+        tp = t_free - tc
+        a_unit = _trapezoid(te, cfg.t_give, tp, cfg.t_letgo, 1.0)
         _, s_unit = _integrate(a_unit, te)
-        if s_unit[-1] <= 0:
-            continue
-        a_max = cfg.arc_length / s_unit[-1]
-        if best is None or a_max < best[0]:
-            best = (a_max, t_plateau)
-    a_max, t_plateau = best
-    t_coast = t_free - t_plateau
+        a_unit_max = cfg.arc_length / s_unit[-1]
+        t_prop_end = cfg.t_give + tp + cfg.t_letgo
+        s_props[i] = a_unit_max * float(np.interp(t_prop_end, te, s_unit))
+    # s_props is decreasing in the coast - reverse for the interpolation
+    t_coast = float(np.interp(d_contact, s_props[::-1], coasts[::-1]))
+    t_coast = float(np.clip(t_coast, 0.0, t_free))
+    t_plateau = t_free - t_coast
 
+    a_unit = _trapezoid(te, cfg.t_give, t_plateau, cfg.t_letgo, 1.0)
+    _, s_unit = _integrate(a_unit, te)
+    a_max = cfg.arc_length / s_unit[-1]
     a = _trapezoid(te, cfg.t_give, t_plateau, cfg.t_letgo, a_max)
     v, s = _integrate(a, te)
     jerk = np.gradient(a, te)
@@ -266,13 +279,14 @@ def impact_singularity(
 def solve_choreography(
     cfg: ChoreographyConfig | None = None,
     *,
+    release_standoff: float = 0.0,
     tau_imp: float | None = None,
     yield_model: str = "Hertzian (n=1.5)",
 ) -> ChoreographyResult:
     """Solve the full structural decoupled-singularity choreography."""
     if cfg is None:
         cfg = ChoreographyConfig()
-    phase1 = _solve_phase1(cfg)
+    phase1 = _solve_phase1(cfg, release_standoff)
     phase2 = _solve_phase2(cfg)
     v_close = phase1.v_terminal
     if tau_imp is None:
@@ -292,6 +306,27 @@ def solve_choreography(
         singularity=sing,
         feasible=feasible,
     )
+
+
+def solve_envelope(
+    cfg: ChoreographyConfig | None = None,
+    *,
+    yield_model: str = "Hertzian (n=1.5)",
+) -> tuple[ChoreographyResult, ChoreographyResult]:
+    """The kinematics envelope - two bracketing solutions.
+
+    The **no-coast** solution propels the body all the way to the door
+    (release_standoff = 0). The **with-coast** solution releases it two
+    torso depths back (2 x body_thickness) and lets it coast in. The actual
+    motion lies between these two; the pair is the envelope.
+    """
+    if cfg is None:
+        cfg = ChoreographyConfig()
+    no_coast = solve_choreography(cfg, release_standoff=0.0, yield_model=yield_model)
+    with_coast = solve_choreography(
+        cfg, release_standoff=2.0 * cfg.body_thickness, yield_model=yield_model
+    )
+    return no_coast, with_coast
 
 
 def free_parameters(cfg: ChoreographyConfig | None = None) -> list[FreeParameter]:
@@ -324,9 +359,18 @@ def free_parameters(cfg: ChoreographyConfig | None = None) -> list[FreeParameter
             "s",
         ),
         FreeParameter(
+            "release standoff",
+            "d_standoff",
+            "distance from the door at which the body is released; the "
+            "envelope variable - swept 0 (no coast) to 2x body thickness",
+            "envelope",
+            f"0 - {2.0 * cfg.body_thickness:.2f}",
+            "m",
+        ),
+        FreeParameter(
             "plateau / coast split",
             "t_plateau, t_coast",
-            "structural durations within phase 1, derived for minimum a_max",
+            "structural durations within phase 1, determined by the release standoff",
             "derived",
             "see run",
             "s",
@@ -357,6 +401,14 @@ def constraints(cfg: ChoreographyConfig | None = None) -> list[Constraint]:
     bc = "scenario boundary condition"
     rfd = "Maffiuletti et al. 2016; Aagaard et al. 2002 - rate of force development"
     return [
+        Constraint(
+            "release standoff (coasting)",
+            "equality",
+            f"with-coast solution: body released 2x body thickness "
+            f"({2.0 * cfg.body_thickness * 1e2:.0f} cm) before the door",
+            "body geometry - the actor cannot release at the door; two "
+            "torso depths of standoff (torso depth ~28 cm)",
+        ),
         Constraint("give ramp pinned", "equality", f"t_give = {cfg.t_give * 1e3:.0f} ms", rfd),
         Constraint("let-go ramp pinned", "equality", f"t_letgo = {cfg.t_letgo * 1e3:.0f} ms", rfd),
         Constraint(
@@ -407,4 +459,5 @@ __all__ = [
     "free_parameters",
     "impact_singularity",
     "solve_choreography",
+    "solve_envelope",
 ]

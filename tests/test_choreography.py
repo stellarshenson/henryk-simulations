@@ -182,7 +182,9 @@ def test_free_parameters_have_role_and_unit(cfg) -> None:
     params = free_parameters(cfg)
     assert params
     for p in params:
-        assert p.role in ("literature-pinned", "derived", "hypothesis")
+        assert p.role in (
+            "literature-pinned", "hypothesis", "envelope", "optimised", "derived"
+        )
         assert p.unit
         assert p.symbol
 
@@ -200,3 +202,38 @@ def test_production_limits_cite_literature(cfg) -> None:
     assert len(inequality) >= 3
     for c in inequality:
         assert "boundary condition" not in c.source
+
+
+# ---------------------------------------------------------------------------
+# Kinematics envelope - the two bracketing solutions
+# ---------------------------------------------------------------------------
+
+
+@pytest.fixture(scope="module")
+def with_coast(cfg):
+    return solve_choreography(cfg, release_standoff=2.0 * cfg.body_thickness)
+
+
+def test_no_coast_solution_has_zero_coast(result) -> None:
+    # the default solve is the no-coast envelope endpoint
+    assert result.phase1.t_coast < 1e-2
+
+
+def test_with_coast_solution_has_nonzero_coast(with_coast) -> None:
+    assert with_coast.phase1.t_coast > 0.05
+
+
+def test_envelope_brackets_closing_velocity(result, with_coast) -> None:
+    # no-coast propels furthest -> highest v_close; with-coast releases
+    # early -> lower v_close. The real motion lies between them.
+    assert result.v_close > with_coast.v_close
+
+
+def test_with_coast_coast_distance_matches_standoff(with_coast, cfg) -> None:
+    # the body coasts the last 2x body thickness at constant v_close
+    coast_distance = with_coast.v_close * with_coast.phase1.t_coast
+    assert coast_distance == pytest.approx(2.0 * cfg.body_thickness, rel=0.1)
+
+
+def test_with_coast_still_reaches_the_door(with_coast, cfg) -> None:
+    assert with_coast.phase1.s[-1] == pytest.approx(cfg.arc_length, abs=1e-3)

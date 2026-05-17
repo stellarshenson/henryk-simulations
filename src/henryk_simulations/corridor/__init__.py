@@ -41,6 +41,7 @@ from henryk_simulations.corridor.choreography import (
     free_parameters,
     impact_singularity,
     solve_choreography,
+    solve_envelope,
 )
 from henryk_simulations.corridor.config import (
     DEFAULT_PHASE_DURATIONS,
@@ -110,5 +111,6 @@ __all__ = [
     "predict_signature",
     "score_phase",
     "solve_choreography",
+    "solve_envelope",
     "spl_at_distance",
 ]
