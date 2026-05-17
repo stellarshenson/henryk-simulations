@@ -68,6 +68,13 @@ from henryk_simulations.corridor.impact import (
     solve_impact,
     solve_impact_envelope,
 )
+from henryk_simulations.corridor.injuries import (
+    INJURY_TABLE,
+    InjuryPrediction,
+    InjuryThreshold,
+    injury_table,
+    predict_injuries,
+)
 from henryk_simulations.corridor.kinematics import (
     ImpactResult,
     PhaseResult,
@@ -91,6 +98,7 @@ __all__ = [
     "DEFAULT_ETA_RANGE",
     "DEFAULT_LISTENERS",
     "DEFAULT_PHASE_DURATIONS",
+    "INJURY_TABLE",
     "REF_SOUNDS",
     "AcousticPrediction",
     "AcousticSource",
@@ -110,6 +118,8 @@ __all__ = [
     "ImpactDynamicsResult",
     "ImpactResult",
     "ImpactSingularity",
+    "InjuryPrediction",
+    "InjuryThreshold",
     "MaterialProps",
     "Phase",
     "PhaseResult",
@@ -136,7 +146,9 @@ __all__ = [
     "free_parameters",
     "frequency_band",
     "impact_singularity",
+    "injury_table",
     "plate_modes",
+    "predict_injuries",
     "predict_signature",
     "ribs_engaged",
     "score_phase",
