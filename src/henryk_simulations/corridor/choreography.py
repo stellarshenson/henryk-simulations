@@ -44,6 +44,7 @@ class ChoreographyConfig:
     phase1_duration: float = 1.5  # s, equal-split hypothesis
     phase2_duration: float = 1.5  # s, equal-split hypothesis
     arc_length: float = 2.0  # m, phase-1 curved CoM path
+    lateral_offset: float = 0.25  # m, diagonal sag of the curved CoM path
     return_translation: float = 0.50  # m, phase-2 return
     rotation: float = math.pi  # rad, per-phase yaw turn
     body_mass: float = 70.0  # kg
@@ -52,11 +53,15 @@ class ChoreographyConfig:
     body_compression_min: float = 0.020  # m, literature lower bound
     body_compression_max: float = 0.050  # m, literature upper bound
     body_thickness: float = 0.28  # m, torso front-to-back depth (2x the 0.14 m torso radius)
-    # Ramp times, literature-pinned from the rate-of-force-development band -
-    # explosive voluntary force develops and releases over 50-250 ms
-    # (Maffiuletti et al. 2016; Aagaard et al. 2002).
-    t_give: float = 0.20  # s, start ramp a: 0 -> a_max
-    t_letgo: float = 0.12  # s, release ramp a: a_max -> 0
+    # Ramp times: representative values within the rate-of-force-development
+    # band [ramp_min, ramp_max], the literature exclusion zone - explosive
+    # voluntary force develops/releases over 50-250 ms (Maffiuletti et al.
+    # 2016; Aagaard et al. 2002). The ramps are constrained to the band, not
+    # pinned to a single value.
+    t_give: float = 0.20  # s, start-ramp representative value
+    t_letgo: float = 0.12  # s, release-ramp representative value
+    ramp_min: float = 0.05  # s, RFD band lower bound
+    ramp_max: float = 0.25  # s, RFD band upper bound
     a_max_ceiling: float = 5.5  # m/s^2, production limit (Mero 1992, elite + 1 SD)
     a_max_typical: float = 3.0  # m/s^2, recreational (Mero 1992)
     jerk_ceiling: float = 50.0  # m/s^3, production limit (RFD-derived)
@@ -65,13 +70,18 @@ class ChoreographyConfig:
 
 @dataclass(frozen=True)
 class FreeParameter:
-    """One parameter of the structural choreography model."""
+    """One parameter of the structural choreography model.
+
+    Every parameter is retained. Literature and the scenario constrain
+    each parameter's permissible range - the exclusion zone bounds the
+    search space, it does not eliminate the parameter.
+    """
 
     name: str
     symbol: str
     description: str
-    role: str  # "literature-pinned", "derived", or "hypothesis"
-    value: str  # value or "see run"
+    permissible_range: str
+    bounded_by: str
     unit: str
 
 
@@ -330,65 +340,72 @@ def solve_envelope(
 
 
 def free_parameters(cfg: ChoreographyConfig | None = None) -> list[FreeParameter]:
-    """The parameters of the structural choreography model."""
+    """The parameters of the structural choreography model.
+
+    None is eliminated; each is constrained to a permissible range. The
+    re-parametrisation from the quintic-spline predecessor cut the count
+    from 37 spline knots to these few structural parameters - literature
+    then bounds them, it does not remove them.
+    """
     if cfg is None:
         cfg = ChoreographyConfig()
+    rfd = "RFD exclusion zone (Maffiuletti 2016, Aagaard 2002)"
+    band = f"{cfg.ramp_min * 1e3:.0f} - {cfg.ramp_max * 1e3:.0f}"
     return [
         FreeParameter(
             "start ramp (give)",
             "t_give",
             "time for acceleration to rise from 0 to a_max",
-            "literature-pinned",
-            f"{cfg.t_give * 1e3:.0f}",
+            band,
+            rfd,
             "ms",
         ),
         FreeParameter(
             "release ramp (let-go)",
             "t_letgo",
             "time for acceleration to fall from a_max to 0",
-            "literature-pinned",
-            f"{cfg.t_letgo * 1e3:.0f}",
+            band,
+            rfd,
             "ms",
         ),
         FreeParameter(
             "phase durations",
             "t1, t2",
-            "phase-1 and phase-2 durations, equal-split hypothesis",
-            "hypothesis",
+            "phase-1 and phase-2 durations",
             f"{cfg.phase1_duration:.2f} / {cfg.phase2_duration:.2f}",
+            "equal-split hypothesis",
             "s",
         ),
         FreeParameter(
             "release standoff",
             "d_standoff",
-            "distance from the door at which the body is released; the "
-            "envelope variable - swept 0 (no coast) to 2x body thickness",
-            "envelope",
+            "distance from the door at which the body is released",
             f"0 - {2.0 * cfg.body_thickness:.2f}",
+            "envelope variable - body geometry",
             "m",
         ),
         FreeParameter(
             "plateau / coast split",
             "t_plateau, t_coast",
-            "structural durations within phase 1, determined by the release standoff",
-            "derived",
+            "structural durations within phase 1",
             "see run",
+            "coupled: timeline + distance + standoff",
             "s",
         ),
         FreeParameter(
             "peak acceleration",
             "a_max",
-            "plateau acceleration, derived from the arc-length fit",
-            "derived",
-            "see run",
+            "plateau acceleration",
+            f"<= {cfg.a_max_ceiling}",
+            "Mero 1992 production limit",
             "m/s^2",
         ),
         FreeParameter(
             "impact-singularity duration",
             "tau_imp",
             "decoupled impact duration; d = v_close * tau / 2",
-            "derived",
-            "see run",
+            "body compression 2-5 cm",
+            "body-compression exclusion zone",
             "s",
         ),
     ]
@@ -409,8 +426,18 @@ def constraints(cfg: ChoreographyConfig | None = None) -> list[Constraint]:
             "body geometry - the actor cannot release at the door; two "
             "torso depths of standoff (torso depth ~28 cm)",
         ),
-        Constraint("give ramp pinned", "equality", f"t_give = {cfg.t_give * 1e3:.0f} ms", rfd),
-        Constraint("let-go ramp pinned", "equality", f"t_letgo = {cfg.t_letgo * 1e3:.0f} ms", rfd),
+        Constraint(
+            "give ramp within RFD band",
+            "inequality",
+            f"{cfg.ramp_min * 1e3:.0f} <= t_give <= {cfg.ramp_max * 1e3:.0f} ms",
+            rfd,
+        ),
+        Constraint(
+            "let-go ramp within RFD band",
+            "inequality",
+            f"{cfg.ramp_min * 1e3:.0f} <= t_letgo <= {cfg.ramp_max * 1e3:.0f} ms",
+            rfd,
+        ),
         Constraint(
             "phase-1 timeline",
             "equality",

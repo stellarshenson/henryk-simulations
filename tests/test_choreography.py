@@ -178,13 +178,14 @@ def test_impact_peak_monotonic_in_yield_stiffness(result, cfg) -> None:
 # ---------------------------------------------------------------------------
 
 
-def test_free_parameters_have_role_and_unit(cfg) -> None:
+def test_free_parameters_are_constrained_not_eliminated(cfg) -> None:
+    # every parameter is retained, each with a permissible range and a
+    # stated source for that bound - literature does not remove parameters
     params = free_parameters(cfg)
     assert params
     for p in params:
-        assert p.role in (
-            "literature-pinned", "hypothesis", "envelope", "optimised", "derived"
-        )
+        assert p.permissible_range
+        assert p.bounded_by
         assert p.unit
         assert p.symbol
 
