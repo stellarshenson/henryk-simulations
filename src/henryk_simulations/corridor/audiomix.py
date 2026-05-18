@@ -45,10 +45,10 @@ class AudioMixConfig:
     # the moment the toy is released
     toy_release_time: float = 12.5  # s, the toy is released - the timeline reference
     scream_time: float = 16.5  # s, the scream heard in the recording
-    thump_gain: float = 5.0  # linear gain on the body thump - boosted 5x, the
+    thump_gain: float = 5.0  # linear gain on the body thump - boosted, the
     #                          low-frequency thump otherwise reads quiet (the
     #                          recording microphone's auto-gain lifts it too)
-    clang_gain: float = 1.0  # linear gain on the door clang before mixing
+    clang_gain: float = 2.0  # linear gain on the door clang
     sample_rate: int = 44100  # Hz, working sample rate
     output_bitrate: str = "192k"  # AAC bitrate of the augmented m4a
     headroom: float = 0.97  # peak the mix is normalised down to if it would clip

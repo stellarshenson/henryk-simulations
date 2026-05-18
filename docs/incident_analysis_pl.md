@@ -40,7 +40,14 @@ Zdarzenie zaczyna się krótko po wypuszczeniu zabawki, gdy mija ona kuratora. Z
 rozpocznie pociągnięcie, musi pokonać 1,5-2 m korytarza, wyhamować i zmienić kierunek -
 na to wszystko musi wystarczyć czasu.
 
-Dwie fazy choreografii, za notatnikiem 01:
+![Przebieg nagrania zdarzenia](../reports/figures/05-event-waveform.png)
+
+Przebieg nagrania zdarzenia, z osią czasu odniesioną do momentu wypuszczenia zabawki -
+czasy nagrania są bowiem dowolne. Zacieniony obszar to region
+zdarzenia, od wypuszczenia zabawki po krzyk; znaczniki wskazują wypuszczenie zabawki
+(0 s), uderzenie (+2,5 s) i krzyk (+4,0 s).
+
+Dwie fazy choreografii:
 
 | Faza | Czas | Modelowany ruch |
 |---|---|---|
@@ -322,7 +329,7 @@ trafiają w skrzydło.
 ![Huk drzwi](../reports/figures/04-door-clang.png)
 
 Uderzenie ciała daje niski, głuchy odgłos (pasmo modów 18-36 Hz), a huk drzwi jest
-jasny i metaliczny (146-1381 Hz). Notatniki 03 i 04 liczą oba dźwięki dla obu wariantów
+jasny i metaliczny (146-1381 Hz). Oba dźwięki policzono dla obu wariantów
 obwiedni kinematycznej - bez ruchu swobodnego i z ruchem swobodnym:
 
 | Dźwięk | Bez ruchu swobodnego | Z ruchem swobodnym |
@@ -362,10 +369,10 @@ przewidywałby następstwa cięższe, nie łagodniejsze.
 
 <b><span style="color:#c0392b">Pewne (4)</span></b>
 
-| Przewidywane następstwo | Obserwacja / relacja | Zgodność |
-|---|---|---|
-| Stłuczenie skóry tylnej ściany klatki piersiowej | udokumentowano zasinienie skóry prawego barku, ok. 12×6 cm, z obrzękiem | <span style="color:#27ae60">zgodne</span> |
-| Głębokie stłuczenie mięśni przykręgosłupowych | nie udokumentowano | <span style="color:#e67e22">możliwe (brak potwierdzenia)</span> |
+| Przewidywane następstwo | AIS | Obserwacja / relacja | Zgodność |
+|---|---|---|---|
+| Stłuczenie skóry tylnej ściany klatki piersiowej | 1 | udokumentowano zasinienie skóry prawego barku, ok. 12×6 cm, z obrzękiem | <span style="color:#27ae60">zgodne</span> |
+| Głębokie stłuczenie mięśni przykręgosłupowych | 1 | nie udokumentowano | <span style="color:#e67e22">możliwe (brak potwierdzenia)</span> |
 
 Profil akustyczny zaliczono do następstw pewnych - powstanie dźwięku jest
 nieuniknioną fizyczną konsekwencją uderzenia i zachodzi w każdym możliwym
@@ -378,29 +385,29 @@ scenariuszu.
 
 <b><span style="color:#d4380d">Wysoce prawdopodobne (8)</span></b>
 
-| Przewidywane następstwo | Obserwacja / relacja | Zgodność |
-|---|---|---|
-| Otarcie naskórka | nie udokumentowano | <span style="color:#e67e22">możliwe (brak potwierdzenia)</span> |
-| Krwiak tkanki miękkiej | udokumentowano obrzęk barku; nie udokumentowano krwiaka | <span style="color:#e67e22">możliwe (brak potwierdzenia)</span> |
-| Stłuczenie łopatki (okostnej) | udokumentowano zasinienie prawego barku ok. 12×6 cm z obrzękiem | <span style="color:#e67e22">możliwe (brak potwierdzenia)</span> |
-| Złamanie tylnego żebra (pojedyncze) | nie udokumentowano | <span style="color:#c0392b">brak</span> |
-| Skręcenie stawu żebrowo-kręgowego | nie udokumentowano | <span style="color:#c0392b">brak</span> |
-| Naderwanie mięśni międzyżebrowych | nie udokumentowano | <span style="color:#c0392b">brak</span> |
-| Oddzielenie żebrowo-chrzęstne | nie udokumentowano | <span style="color:#c0392b">brak</span> |
-| Hiperekstensja szyi (smaganie) | rotacja i zgięcie szyi pełne, z niewielką bolesnością odcinka szyjnego - objaw niespecyficzny | <span style="color:#e67e22">możliwe (brak potwierdzenia)</span> |
+| Przewidywane następstwo | AIS | Obserwacja / relacja | Zgodność |
+|---|---|---|---|
+| Otarcie naskórka | 1 | nie udokumentowano | <span style="color:#e67e22">możliwe (brak potwierdzenia)</span> |
+| Krwiak tkanki miękkiej | 1 | udokumentowano obrzęk barku; nie udokumentowano krwiaka | <span style="color:#e67e22">możliwe (brak potwierdzenia)</span> |
+| Stłuczenie łopatki (okostnej) | 1 | udokumentowano zasinienie prawego barku ok. 12×6 cm z obrzękiem | <span style="color:#e67e22">możliwe (brak potwierdzenia)</span> |
+| Złamanie tylnego żebra (pojedyncze) | 2 | nie udokumentowano | <span style="color:#c0392b">brak</span> |
+| Skręcenie stawu żebrowo-kręgowego | 1 | nie udokumentowano | <span style="color:#c0392b">brak</span> |
+| Naderwanie mięśni międzyżebrowych | 2 | nie udokumentowano | <span style="color:#c0392b">brak</span> |
+| Oddzielenie żebrowo-chrzęstne | 2 | nie udokumentowano | <span style="color:#c0392b">brak</span> |
+| Hiperekstensja szyi (smaganie) | 1 | rotacja i zgięcie szyi pełne, z niewielką bolesnością odcinka szyjnego - objaw niespecyficzny | <span style="color:#e67e22">możliwe (brak potwierdzenia)</span> |
 
 <b><span style="color:#e67e22">Umiarkowanie prawdopodobne (8)</span></b>
 
-| Przewidywane następstwo | Obserwacja / relacja | Zgodność |
-|---|---|---|
-| Złamanie wielu żeber | nie udokumentowano | <span style="color:#c0392b">brak</span> |
-| Złamanie wyrostka kolczystego lub poprzecznego | nie udokumentowano | <span style="color:#c0392b">brak</span> |
-| Złamanie kompresyjne kręgu (T1-T8) | nie udokumentowano | <span style="color:#c0392b">brak</span> |
-| Stłuczenie płuca | nie udokumentowano | <span style="color:#c0392b">brak</span> |
-| Uszkodzenie krążka międzykręgowego | nie udokumentowano | <span style="color:#c0392b">brak</span> |
-| Zerwanie więzadła międzykolczystego | nie udokumentowano | <span style="color:#c0392b">brak</span> |
-| Uszkodzenie stawu międzywyrostkowego | nie udokumentowano | <span style="color:#c0392b">brak</span> |
-| Uszkodzenie (rozerwanie) tkanki płuca | nie udokumentowano | <span style="color:#c0392b">brak</span> |
+| Przewidywane następstwo | AIS | Obserwacja / relacja | Zgodność |
+|---|---|---|---|
+| Złamanie wielu żeber | 3 | nie udokumentowano | <span style="color:#c0392b">brak</span> |
+| Złamanie wyrostka kolczystego lub poprzecznego | 2 | nie udokumentowano | <span style="color:#c0392b">brak</span> |
+| Złamanie kompresyjne kręgu (T1-T8) | 2 | nie udokumentowano | <span style="color:#c0392b">brak</span> |
+| Stłuczenie płuca | 3 | nie udokumentowano | <span style="color:#c0392b">brak</span> |
+| Uszkodzenie krążka międzykręgowego | 2 | nie udokumentowano | <span style="color:#c0392b">brak</span> |
+| Zerwanie więzadła międzykolczystego | 2 | nie udokumentowano | <span style="color:#c0392b">brak</span> |
+| Uszkodzenie stawu międzywyrostkowego | 2 | nie udokumentowano | <span style="color:#c0392b">brak</span> |
+| Uszkodzenie (rozerwanie) tkanki płuca | 4 | nie udokumentowano | <span style="color:#c0392b">brak</span> |
 
 Legenda zgodności: <span style="color:#27ae60">zgodne</span> - przewidywanie potwierdzone w obserwacji; <span style="color:#e67e22">możliwe (brak potwierdzenia)</span> - następstwo prawdopodobne, lecz nie potwierdzone w dostępnej dokumentacji; <span style="color:#c0392b">brak</span> - przewidywanego następstwa nie odnotowano.
 
@@ -450,7 +457,7 @@ plecami w drzwi windy.
 - Aagaard i in. 2002 - tempo narastania siły (podstawa ograniczenia zrywu)
 - Maffiuletti i in. 2016 - tempo narastania siły
 
-### Źródła kliniczne katalogu obrażeń (notatnik 02)
+### Źródła kliniczne katalogu obrażeń
 
 Progi i oceny 30 obrażeń pochodzą z literatury klinicznej i biomechanicznej: StatPearls
 (Blunt Force Trauma NBK470338, haematoma NBK519551, cervical sprain NBK541016, disc
