@@ -28,6 +28,7 @@ door is left to a later notebook.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Literal
 
 import numpy as np
 from scipy.integrate import solve_ivp
@@ -58,6 +59,11 @@ class ImpactConfig:
 
     body_mass: float = 70.0  # kg
     body_height: float = 1.68  # m
+    # subject demographics - sex and age shift the injury thresholds in
+    # injuries.py through tolerance_factor. Sex is "F" or "M"; age in years,
+    # None - assume a standard adult (the mixed-cadaver reference age).
+    subject_gender: Literal["F", "M"] = "F"  # subject sex - F or M
+    subject_age: float | None = None  # years; None - standard adult
     # 5-DOF posterior-thorax chain (Lobdell-style anatomical layers). The
     # masses sum to body_mass - the chain lumps the whole body, the rigid
     # worst case; the effective-mass analysis shows the real backing mass.

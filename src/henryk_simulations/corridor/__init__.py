@@ -90,10 +90,13 @@ from henryk_simulations.corridor.impact import (
 )
 from henryk_simulations.corridor.injuries import (
     INJURY_TABLE,
+    REFERENCE_AGE,
+    TISSUE_CLASSES,
     InjuryPrediction,
     InjuryThreshold,
     injury_table,
     predict_injuries,
+    tolerance_factor,
 )
 from henryk_simulations.corridor.kinematics import (
     ImpactResult,
@@ -119,7 +122,9 @@ __all__ = [
     "DEFAULT_LISTENERS",
     "DEFAULT_PHASE_DURATIONS",
     "INJURY_TABLE",
+    "REFERENCE_AGE",
     "REF_SOUNDS",
+    "TISSUE_CLASSES",
     "AcousticPrediction",
     "AcousticSource",
     "Bodies",
@@ -194,5 +199,6 @@ __all__ = [
     "solve_modes",
     "sound_levels",
     "spl_at_distance",
+    "tolerance_factor",
     "voxelise_torso",
 ]

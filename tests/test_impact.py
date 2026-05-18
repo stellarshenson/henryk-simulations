@@ -225,3 +225,13 @@ def test_verdict_escalates_with_velocity(cfg) -> None:
     env_force = next(v for v in assess_fracture(envelope) if v.quantity == "peak contact force")
     vio_force = next(v for v in assess_fracture(violent) if v.quantity == "peak contact force")
     assert rank[vio_force.verdict] >= rank[env_force.verdict]
+
+
+def test_config_carries_subject_demographics(cfg) -> None:
+    # sex and age are configuration parameters; the corridor subject is a
+    # young-adult woman, so the default sex is "F" and the age unset
+    assert cfg.subject_gender in ("F", "M")
+    assert cfg.subject_gender == "F"
+    assert cfg.subject_age is None  # None - assume a standard adult
+    victoria = ImpactConfig(subject_gender="F", subject_age=28.0)
+    assert victoria.subject_age == 28.0

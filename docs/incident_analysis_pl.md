@@ -414,6 +414,15 @@ PMC3861829, PMC3705911, PMC7296362, PMC4111950, PMC4899989), Kroell 1971 i Viano
 (urazy chrząstki i klatki piersiowej), a także przeglądy urazów aorty i kręgosłupa
 piersiowo-lędźwiowego.
 
+### Wpływ płci i wieku na tolerancję obrażeń
+
+Progi obrażeń skalowano demograficznie w oparciu o literaturę biomechaniczną. Wiek jest
+czynnikiem dominującym i działa na kość - kora żebra traci około 12% odkształcenia
+granicznego na dekadę (Frontiers 2021, PMC8181138). Różnica między płciami ma charakter
+geometryczny, nie materiałowy: żebra kobiet są cieńsze i szybciej się ścieńczają
+(Holcombe i in. 2022). Tolerancja ugięcia klatki piersiowej maleje z wiekiem
+(Kent i in. 2005).
+
 ### Źródła danych
 
 - Siatka anatomiczna BodyParts3D (FMA7163), licencja CC BY-SA 2.1 JP - siatka skóry
