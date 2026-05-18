@@ -125,6 +125,12 @@ from henryk_simulations.corridor.references import (
     ReferenceLibrary,
     default_library,
 )
+from henryk_simulations.corridor.reverb import (
+    CorridorImpulseResponse,
+    CorridorReverbConfig,
+    apply_corridor_reverb,
+    corridor_impulse_response,
+)
 
 __all__ = [
     "DEFAULT_ELEVATOR_DOOR",
@@ -147,6 +153,8 @@ __all__ = [
     "ChoreographyResult",
     "Constraint",
     "ContactPatch",
+    "CorridorImpulseResponse",
+    "CorridorReverbConfig",
     "DoorGeometry",
     "EffectiveMass",
     "FractureThreshold",
@@ -174,6 +182,7 @@ __all__ = [
     "Verdict",
     "air_escape",
     "align_peak",
+    "apply_corridor_reverb",
     "assemble_fem",
     "assess_fracture",
     "augment_event",
@@ -184,6 +193,7 @@ __all__ = [
     "compute_scenario",
     "constraints",
     "contact_area",
+    "corridor_impulse_response",
     "deceleration_pulse",
     "decimate_mesh",
     "decode_audio",

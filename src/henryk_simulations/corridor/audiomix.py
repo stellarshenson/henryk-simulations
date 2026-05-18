@@ -8,8 +8,8 @@ being tested against.
 
 The loudest sample of each synthesized sound is aligned to a configurable
 instant in the event timeline (default 0.15 s). The event recording and the
-two synthesized tracks are summed, the result peak-limited to stay within
-headroom, and encoded back to ``augmented_event_recording.m4a``.
+two synthesized tracks are summed, the result tanh soft-limited, and
+encoded back to ``augmented_event_recording.m4a``.
 
 The m4a decode and encode use the ffmpeg binary bundled with
 ``imageio-ffmpeg`` - no system ffmpeg is required.
@@ -41,7 +41,11 @@ class AudioMixConfig:
     clang_path: str = "reports/figures/04-door-clang.wav"  # notebook 04 door clang
     output_path: str = "reports/figures/augmented_event_recording.m4a"
     peak_time: float = 15.0  # s, event-timeline instant the synthesized peaks land on
-    thump_gain: float = 2.0  # linear gain on the body thump - boosted 2x, the
+    # recording timestamps are arbitrary - the event timeline is referenced to
+    # the moment the toy is released
+    toy_release_time: float = 12.5  # s, the toy is released - the timeline reference
+    scream_time: float = 16.5  # s, the scream heard in the recording
+    thump_gain: float = 5.0  # linear gain on the body thump - boosted 5x, the
     #                          low-frequency thump otherwise reads quiet (the
     #                          recording microphone's auto-gain lifts it too)
     clang_gain: float = 1.0  # linear gain on the door clang before mixing
@@ -59,9 +63,9 @@ class AudioMixResult:
     event: np.ndarray  # the decoded event recording
     thump_track: np.ndarray  # the body thump, aligned to the event timeline
     clang_track: np.ndarray  # the door clang, aligned to the event timeline
-    mixed: np.ndarray  # event + thump + clang, peak-limited
+    mixed: np.ndarray  # event + thump + clang, tanh soft-limited
     peak_index: int  # sample index the synthesized peaks land on
-    clip_scale: float  # gain applied to hold the mix within headroom (1.0 - none)
+    peak_raw: float  # peak of the raw event+thump+clang sum, before the soft limiter
 
 
 def _ffmpeg() -> str:
@@ -133,8 +137,11 @@ def mix_event(cfg: AudioMixConfig | None = None) -> AudioMixResult:
 
     The event recording is decoded; the body thump and door clang are loaded,
     gained, and laid onto the event timeline with their peaks on
-    ``cfg.peak_time``; the three are summed. If the sum would clip it is
-    scaled down to ``cfg.headroom``.
+    ``cfg.peak_time``; the three are summed and passed through a tanh soft
+    limiter scaled to ``cfg.headroom``. The soft limiter is deliberate - a
+    linear rescale of the sum to a fixed peak exactly cancels any gain
+    applied to the loudest element, so the per-sound gains would have no
+    audible effect; tanh saturation keeps them monotonic and audible.
     """
     if cfg is None:
         cfg = AudioMixConfig()
@@ -147,10 +154,12 @@ def mix_event(cfg: AudioMixConfig | None = None) -> AudioMixResult:
     thump_track = align_peak(thump, peak_index, n)
     clang_track = align_peak(clang, peak_index, n)
 
-    mixed = event + thump_track + clang_track
-    peak = float(np.abs(mixed).max())
-    clip_scale = cfg.headroom / peak if peak > cfg.headroom else 1.0
-    mixed = mixed * clip_scale
+    raw = event + thump_track + clang_track
+    peak_raw = float(np.abs(raw).max())
+    # tanh soft limiter - keeps the per-sound gains audible (a linear rescale
+    # to a fixed peak would cancel them), and its harmonics lift the
+    # low-frequency thump into a more audible band.
+    mixed = cfg.headroom * np.tanh(raw)
     return AudioMixResult(
         config=cfg,
         sample_rate=cfg.sample_rate,
@@ -159,7 +168,7 @@ def mix_event(cfg: AudioMixConfig | None = None) -> AudioMixResult:
         clang_track=clang_track,
         mixed=mixed,
         peak_index=peak_index,
-        clip_scale=clip_scale,
+        peak_raw=peak_raw,
     )
 
 

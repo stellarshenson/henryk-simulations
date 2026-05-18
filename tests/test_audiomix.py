@@ -31,6 +31,8 @@ def mixed() -> AudioMixResult:
 def test_config_defaults() -> None:
     cfg = AudioMixConfig()
     assert cfg.peak_time == 15.0
+    assert cfg.toy_release_time == 12.5
+    assert cfg.scream_time == 16.5
     assert cfg.sample_rate == 44100
     assert cfg.output_path.endswith("augmented_event_recording.m4a")
 
@@ -118,7 +120,18 @@ def test_synth_tracks_peak_on_the_aligned_moment(mixed: AudioMixResult) -> None:
 
 def test_mix_stays_within_headroom(mixed: AudioMixResult) -> None:
     assert np.abs(mixed.mixed).max() <= mixed.config.headroom + 1e-9
-    assert 0.0 < mixed.clip_scale <= 1.0
+    assert mixed.peak_raw > 0.0
+
+
+def test_thump_gain_changes_the_mix() -> None:
+    # the tanh soft limiter keeps the per-sound gains audible - a louder
+    # thump_gain must raise the energy of the mix at the impact
+    soft = mix_event(dataclasses.replace(AudioMixConfig(), thump_gain=1.0))
+    loud = mix_event(dataclasses.replace(AudioMixConfig(), thump_gain=4.0))
+    window = slice(soft.peak_index, soft.peak_index + soft.sample_rate)
+    soft_rms = float(np.sqrt(np.mean(soft.mixed[window] ** 2)))
+    loud_rms = float(np.sqrt(np.mean(loud.mixed[window] ** 2)))
+    assert loud_rms > soft_rms
 
 
 # ---------------------------------------------------------------------------

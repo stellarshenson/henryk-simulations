@@ -36,6 +36,10 @@ względem osi pionowej 1,4 kg m^2 i grubością 0,28 m.
 
 ![Geometria korytarza](../reports/figures/01-corridor-geometry.png)
 
+Zdarzenie zaczyna się krótko po wypuszczeniu zabawki, gdy mija ona kuratora. Zanim Andrew
+rozpocznie pociągnięcie, musi pokonać 1,5-2 m korytarza, wyhamować i zmienić kierunek -
+na to wszystko musi wystarczyć czasu.
+
 Dwie fazy choreografii, za notatnikiem 01:
 
 | Faza | Czas | Modelowany ruch |

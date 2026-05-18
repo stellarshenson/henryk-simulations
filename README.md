@@ -132,6 +132,7 @@ Stress-test the contested 3 s claim against the laws of physics and against popu
 - The body is not a sound source - it is a moving boundary; the thorax is compressible (the air-filled lungs), so the impact squash works the chest wall as a bellows and only the air it pushes radiates
 - The microphone hears two summed components - the low thump of the pushed air, and a brief broadband burst of air squeezed out of the closing wall-body gap; the uneven body surface textures both
 - Peak SPL at 1 m is about 100 dB flat, about 80 dBA A-weighted - the surface texture is what lifts it into the band a meter and the ear register; six figures and a WAV generated inline, the model exercised by 22 test guards in [`tests/test_bodyfem.py`](tests/test_bodyfem.py)
+- A corridor-reflection post-processing filter ([`reverb.py`](src/henryk_simulations/corridor/reverb.py), an image-source model of the 2 m x 10 m corridor) adds the wall reflections and the reverberant tail to the dry 1 m signal - the corridor-filtered thump is the WAV that is written
 
 ### Door impact sound ([`doorfem.py`](src/henryk_simulations/corridor/doorfem.py), [`notebooks/04-kj-sound-reconstruction-door-clang.ipynb`](notebooks/04-kj-sound-reconstruction-door-clang.ipynb))
 
@@ -140,6 +141,7 @@ Stress-test the contested 3 s claim against the laws of physics and against popu
 - scikit-fem assembles the box's 3D linear-elastic stiffness and mass; an eigensolve gives the leaf's flexural modes, from about 85 Hz upward - the welded box is stiff, which is what makes the door clang rather than boom
 - The impact excites the modes; modal damping settles the ring; the room-side skin radiates as a baffled panel, sub-critically (every mode is below the steel coincidence frequency)
 - Peak SPL at 1 m is about 89 dB flat, ~71 dBA - a brief metallic clang in the door's mode band, distinct from and quieter than the body thump; four figures and a WAV generated inline, the model exercised by 14 test guards in [`tests/test_doorfem.py`](tests/test_doorfem.py)
+- A corridor-reflection post-processing filter ([`reverb.py`](src/henryk_simulations/corridor/reverb.py), an image-source model of the 2 m x 10 m corridor) adds the wall reflections and the reverberant tail to the dry 1 m signal - the corridor-filtered clang is the WAV that is written
 
 ### Event audio augmentation ([`audiomix.py`](src/henryk_simulations/corridor/audiomix.py), [`notebooks/05-kj-event-audio-augmentation.ipynb`](notebooks/05-kj-event-audio-augmentation.ipynb))
 
