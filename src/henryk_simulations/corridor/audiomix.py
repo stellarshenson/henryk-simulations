@@ -41,7 +41,9 @@ class AudioMixConfig:
     clang_path: str = "reports/figures/04-door-clang.wav"  # notebook 04 door clang
     output_path: str = "reports/figures/augmented_event_recording.m4a"
     peak_time: float = 15.0  # s, event-timeline instant the synthesized peaks land on
-    thump_gain: float = 1.0  # linear gain on the body thump before mixing
+    thump_gain: float = 2.0  # linear gain on the body thump - boosted 2x, the
+    #                          low-frequency thump otherwise reads quiet (the
+    #                          recording microphone's auto-gain lifts it too)
     clang_gain: float = 1.0  # linear gain on the door clang before mixing
     sample_rate: int = 44100  # Hz, working sample rate
     output_bitrate: str = "192k"  # AAC bitrate of the augmented m4a
