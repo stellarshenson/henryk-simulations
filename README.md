@@ -141,6 +141,13 @@ Stress-test the contested 3 s claim against the laws of physics and against popu
 - The impact excites the modes; modal damping settles the ring; the room-side skin radiates as a baffled panel, sub-critically (every mode is below the steel coincidence frequency)
 - Peak SPL at 1 m is about 89 dB flat, ~71 dBA - a brief metallic clang in the door's mode band, distinct from and quieter than the body thump; four figures and a WAV generated inline, the model exercised by 14 test guards in [`tests/test_doorfem.py`](tests/test_doorfem.py)
 
+### Event audio augmentation ([`audiomix.py`](src/henryk_simulations/corridor/audiomix.py), [`notebooks/05-kj-event-audio-augmentation.ipynb`](notebooks/05-kj-event-audio-augmentation.ipynb))
+
+- The two synthesized impact sounds - the body thump (notebook 03) and the door clang (notebook 04) - mixed into the real event recording, producing an augmented track that carries the impact the original capture is being tested against
+- Each synthesized sound's loudest sample is aligned to a configurable moment in the event timeline (default the 15th second); the event recording and the two sounds are summed and peak-limited to stay within headroom
+- m4a decode and encode use the ffmpeg binary bundled with `imageio-ffmpeg` - no system ffmpeg required
+- The augmented recording is written to `reports/figures/augmented_event_recording.m4a`; the model is exercised by 13 test guards in [`tests/test_audiomix.py`](tests/test_audiomix.py)
+
 ## Headline numbers (Mk1, kinematics envelope)
 
 The kinematics is reported as an envelope - two bracketing solutions parametrised by the release standoff. The no-coast solution propels the body all the way to the door; the with-coast solution releases it two torso depths back and lets it coast in. The real motion lies between them.
@@ -165,11 +172,12 @@ What the lower bound predicts the impact would have produced, set against what t
 make install                                                                                 # uv venv + deps
 make test                                                                                    # pytest
 make lint                                                                                    # ruff
-jupyter nbconvert --to notebook --execute notebooks/01-kj-corridor-kinematics.ipynb --inplace
-jupyter nbconvert --to notebook --execute notebooks/02-kj-corridor-impact-dynamics.ipynb --inplace
-jupyter nbconvert --to notebook --execute notebooks/03-kj-sound-reconstruction-body-thump.ipynb --inplace
-jupyter nbconvert --to notebook --execute notebooks/04-kj-sound-reconstruction-door-clang.ipynb --inplace
-python -m henryk_simulations.corridor.sim                                                    # render the MP4
+uv run jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.kernel_name=python3 notebooks/01-kj-corridor-kinematics.ipynb
+uv run jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.kernel_name=python3 notebooks/02-kj-corridor-impact-dynamics.ipynb
+uv run jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.kernel_name=python3 notebooks/03-kj-sound-reconstruction-body-thump.ipynb
+uv run jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.kernel_name=python3 notebooks/04-kj-sound-reconstruction-door-clang.ipynb
+uv run jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.kernel_name=python3 notebooks/05-kj-event-audio-augmentation.ipynb
+uv run python -m henryk_simulations.corridor.sim                                              # render the MP4
 ```
 
 Outputs land under `reports/figures/` (PNG figures, MP4 simulation).

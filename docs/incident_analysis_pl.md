@@ -77,8 +77,8 @@ tylnego żebra. Huk drzwi to głośne, metaliczne zdarzenie o poziomie 120 dB.
 | Liczba zaangażowanych żeber | 6,5 | 6,5 | żebra przenoszące obciążenie |
 | Kompresja klatki piersiowej | 15,7 mm | 13,4 mm | ugięcie żeber, model MES |
 | Siła na styku z kręgosłupem | 4,3 kN | 3,7 kN | obciążenie przekazane do kręgosłupa |
-| Huk drzwi | 120,2 dB SPL (107,5 dBA) | 120,2 dB SPL (107,5 dBA) | przy mikrofonie 1 m |
-| Uderzenie ciała | 99,9 dB SPL (80,0 dBA) | 99,9 dB SPL (80,0 dBA) | przy mikrofonie 1 m |
+| Huk drzwi | 120,2 dB SPL (107,5 dBA) | 118,7 dB SPL (105,4 dBA) | przy mikrofonie 1 m |
+| Uderzenie ciała | 99,9 dB SPL (80,0 dBA) | 98,0 dB SPL (82,3 dBA) | przy mikrofonie 1 m |
 
 ## Metodologia
 
@@ -317,10 +317,32 @@ trafiają w skrzydło.
 
 ![Huk drzwi](../reports/figures/04-door-clang.png)
 
-Uderzenie ciała daje niski, głuchy odgłos (pasmo modów 18-36 Hz; 99,9 dB SPL,
-80,0 dBA). Huk drzwi jest jasny i metaliczny (146-1381 Hz; 120,2 dB SPL, 107,5 dBA).
+Uderzenie ciała daje niski, głuchy odgłos (pasmo modów 18-36 Hz), a huk drzwi jest
+jasny i metaliczny (146-1381 Hz). Notatniki 03 i 04 liczą oba dźwięki dla obu wariantów
+obwiedni kinematycznej - bez ruchu swobodnego i z ruchem swobodnym:
+
+| Dźwięk | Bez ruchu swobodnego | Z ruchem swobodnym |
+|---|---|---|
+| Uderzenie ciała | 99,9 dB SPL (80,0 dBA) | 98,0 dB SPL (82,3 dBA) |
+| Huk drzwi | 120,2 dB SPL (107,5 dBA) | 118,7 dB SPL (105,4 dBA) |
+
 Oba dźwięki nakładają się w czasie, lecz zajmują różne pasma, więc są fizycznie
 rozdzielne.
+
+Dla porównania - typowe poziomy głośności, pomocne w usytuowaniu powyższych wartości
+przez czytelnika nietechnicznego:
+
+| Poziom (dB SPL) | Źródło odniesienia |
+|---|---|
+| 60 | zwykła rozmowa |
+| 80 | ruchliwa ulica, odkurzacz |
+| 100 | młot pneumatyczny słyszany z kilku metrów |
+| 110 | piła łańcuchowa, koncert rockowy |
+| 120 | silnik odrzutowy z oddali, próg bólu |
+
+Uderzenie ciała (98-100 dB SPL) odpowiada zatem młotowi pneumatycznemu słyszanemu
+z kilku metrów, a huk drzwi (119-120 dB SPL) sięga progu bólu - poziomu zbliżonego do
+silnika odrzutowego słyszanego z pewnej odległości.
 
 ## Wnioski
 
@@ -347,15 +369,15 @@ scenariuszu.
 
 | Przewidywane następstwo | Obserwacja / relacja | Zgodność |
 |---|---|---|
-| Uderzenie ciała - głuchy huk ok. 100 dB | dwa niezależne nagrania zdarzenia nie zawierają takiego dźwięku; relacje świadków go nie wspominają | <span style="color:#c0392b">brak</span> |
-| Huk drzwi - metaliczny huk ok. 120 dB | dwa niezależne nagrania zdarzenia nie zawierają takiego dźwięku; relacje świadków go nie wspominają | <span style="color:#c0392b">brak</span> |
+| Uderzenie ciała - głuchy huk 98-100 dB SPL | dwa niezależne nagrania zdarzenia nie zawierają takiego dźwięku; relacje świadków go nie wspominają | <span style="color:#c0392b">brak</span> |
+| Huk drzwi - metaliczny huk 119-120 dB SPL | dwa niezależne nagrania zdarzenia nie zawierają takiego dźwięku; relacje świadków go nie wspominają | <span style="color:#c0392b">brak</span> |
 
 <b><span style="color:#d4380d">Wysoce prawdopodobne (8)</span></b>
 
 | Przewidywane następstwo | Obserwacja / relacja | Zgodność |
 |---|---|---|
 | Otarcie naskórka | nie udokumentowano | <span style="color:#e67e22">możliwe (brak potwierdzenia)</span> |
-| Krwiak tkanki miękkiej | udokumentowano obrzęk barku; krwiaka nie opisano wprost | <span style="color:#e67e22">możliwe (brak potwierdzenia)</span> |
+| Krwiak tkanki miękkiej | udokumentowano obrzęk barku; nie udokumentowano krwiaka | <span style="color:#e67e22">możliwe (brak potwierdzenia)</span> |
 | Stłuczenie łopatki (okostnej) | udokumentowano zasinienie prawego barku ok. 12×6 cm z obrzękiem | <span style="color:#e67e22">możliwe (brak potwierdzenia)</span> |
 | Złamanie tylnego żebra (pojedyncze) | nie udokumentowano | <span style="color:#c0392b">brak</span> |
 | Skręcenie stawu żebrowo-kręgowego | nie udokumentowano | <span style="color:#c0392b">brak</span> |
