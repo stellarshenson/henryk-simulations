@@ -49,7 +49,7 @@ class DoorFEMConfig:
     panel_width: float = 1.0  # m
     panel_height: float = 2.0  # m
     skin_thickness: float = 0.002  # m, steel plate (skin) thickness
-    cavity_gap: float = 0.047  # m, the air cavity between the two steel skins
+    cavity_gap: float = 0.025  # m, the air cavity between the two steel skins
     frame_width: float = 0.04  # m, welded perimeter/window frame rail
     # window cutout - the wired-glass vision panel (a hole in the steel)
     window_width: float = 0.15  # m
