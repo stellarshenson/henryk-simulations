@@ -17,6 +17,16 @@ z geometrią i czasem, więc każda rzeczywista choreografia może dodać tylko 
 wymagań kinetycznych, coraz trudniejszych do zrealizowania w zakładanym czasie
 i geometrii.
 
+### Uczestnicy
+
+Zdarzenie dotyczy dwóch osób, w obecności świadka:
+
+- **Andrew** - mężczyzna, 46 lat, 90 kg, 184 cm wzrostu, budowa normalna; osoba
+  wykonująca zarzucany ruch
+- **Victoria** - kobieta, 38 lat, około 70 kg, około 175 cm wzrostu, budowa normalna;
+  potencjalna ofiara
+- **Cecilia** - kobieta w wieku około 50-65 lat, kurator sądowy; świadek zdarzenia
+
 ### Zdarzenie i geometria
 
 Korytarz ma długość łuku 2,0 m. Całkowity czas ruchu to 3,0 s, podzielony na dwie fazy
@@ -211,7 +221,8 @@ scenariusz zadaje trzy metryki napędzające przewidywanie:
 | Bez ruchu swobodnego (cięższy) | 2,74 m/s | 262 J | 6,42 kN | 207 kPa |
 | Z ruchem swobodnym (lżejszy) | 2,35 m/s | 194 J | 5,51 kN | 164 kPa |
 
-Próg każdego z 30 obrażeń, zaczerpnięty z literatury klinicznej, porównywany jest
+Próg każdego z 30 obrażeń - wartość literaturowa skorygowana demograficznie dla
+Victorii (kobieta, 38 lat) współczynnikiem tolerancji tkanki - porównywany jest
 z metryką uderzenia w odpowiadającej mu jednostce.
 
 **Oba scenariusze dają tę samą
@@ -220,60 +231,71 @@ obwiedni, a różnica między wariantem cięższym a lżejszym nie przesuwa żad
 do innego poziomu prawdopodobieństwa. AIS to skala ciężkości obrażeń (1 lekkie,
 6 krytyczne).
 
+Katalog obrażeń odczytano dla konkretnej osoby - Victorii, kobiety w wieku 38 lat. Progi
+obrażeń różnicowane są płcią i wiekiem: tolerancja kości maleje z wiekiem, a żebra kobiet
+pękają przy nieco niższej sile ze względu na geometrię - cieńszy przekrój - nie zaś
+słabszy materiał kostny. **W obrębie obwiedni policzonej kinematyki i biomechaniki
+przewidywane obrażenia nie różnią się między płciami** - dla 38-letniej osoby zarówno
+wariant żeński, jak i męski pozostają w tych samych poziomach prawdopodobieństwa. Wiek
+38 lat obniża tolerancję kości o około 13% względem młodego dorosłego; nie przesuwa to
+jeszcze żadnego obrażenia do wyższego poziomu, lecz mieści się blisko progu przesunięcia
+- osoba o dekadę starsza zaczęłaby przesuwać klasyfikację obrażeń kostnych ku wyższemu
+prawdopodobieństwu.
+
 <b><span style="color:#c0392b">Pewne (2)</span></b>
 
-| Obrażenie | AIS | Próg |
+| Obrażenie | AIS | Próg (kobieta, 38 lat) |
 |---|---|---|
-| Stłuczenie skóry i tkanki miękkiej | 1 | 50 kPa |
-| Głębokie stłuczenie mięśni przykręgosłupowych | 1 | 1,7 kN |
+| Stłuczenie skóry i tkanki miękkiej | 1 | 48,6 kPa |
+| Głębokie stłuczenie mięśni przykręgosłupowych | 1 | 1,63 kN |
 
 <b><span style="color:#d4380d">Wysoce prawdopodobne (8)</span></b>
 
-| Obrażenie | AIS | Próg |
+| Obrażenie | AIS | Próg (kobieta, 38 lat) |
 |---|---|---|
-| Otarcie naskórka | 1 | 60 kPa |
-| Krwiak tkanki miękkiej | 1 | 90 kPa |
-| Stłuczenie łopatki (okostnej) | 1 | 80 kPa |
-| Złamanie tylnego żebra (pojedyncze) | 2 | 60 J |
-| Skręcenie stawu żebrowo-kręgowego | 1 | 1,5 kN |
-| Naderwanie mięśni międzyżebrowych | 2 | 2,2 kN |
-| Oddzielenie żebrowo-chrzęstne | 2 | 2,5 kN |
-| Hiperekstensja szyi (smaganie) | 1 | 40 J |
+| Otarcie naskórka | 1 | 58,3 kPa |
+| Krwiak tkanki miękkiej | 1 | 87,4 kPa |
+| Stłuczenie łopatki (okostnej) | 1 | 77,7 kPa |
+| Złamanie tylnego żebra (pojedyncze) | 2 | 52 J |
+| Skręcenie stawu żebrowo-kręgowego | 1 | 1,42 kN |
+| Naderwanie mięśni międzyżebrowych | 2 | 2,11 kN |
+| Oddzielenie żebrowo-chrzęstne | 2 | 2,33 kN |
+| Hiperekstensja szyi (smaganie) | 1 | 38 J |
 
 <b><span style="color:#e67e22">Umiarkowanie prawdopodobne (8)</span></b>
 
-| Obrażenie | AIS | Próg |
+| Obrażenie | AIS | Próg (kobieta, 38 lat) |
 |---|---|---|
-| Złamanie wielu żeber (dwa lub więcej) | 3 | 3,4 kN |
-| Złamanie wyrostka kolczystego lub poprzecznego | 2 | 3,0 kN |
-| Złamanie kompresyjne kręgu (T1-T8) | 2 | 3,4 kN |
-| Stłuczenie płuca | 3 | 3,4 kN |
-| Uszkodzenie krążka międzykręgowego | 2 | 3,8 kN |
-| Zerwanie więzadła międzykolczystego | 2 | 3,5 kN |
-| Uszkodzenie stawu międzywyrostkowego | 2 | 3,2 kN |
-| Uszkodzenie (rozerwanie) tkanki płuca | 4 | 4,0 kN |
+| Złamanie wielu żeber (dwa lub więcej) | 3 | 2,96 kN |
+| Złamanie wyrostka kolczystego lub poprzecznego | 2 | 2,61 kN |
+| Złamanie kompresyjne kręgu (T1-T8) | 2 | 2,96 kN |
+| Stłuczenie płuca | 3 | 3,35 kN |
+| Uszkodzenie krążka międzykręgowego | 2 | 3,55 kN |
+| Zerwanie więzadła międzykolczystego | 2 | 3,32 kN |
+| Uszkodzenie stawu międzywyrostkowego | 2 | 3,04 kN |
+| Uszkodzenie (rozerwanie) tkanki płuca | 4 | 3,94 kN |
 
 <b><span style="color:#2980b9">Niskie prawdopodobieństwo (9)</span></b>
 
-| Obrażenie | AIS | Próg |
+| Obrażenie | AIS | Próg (kobieta, 38 lat) |
 |---|---|---|
-| Klatka cepowata (trzy żebra lub więcej) | 4 | 5,5 kN |
-| Odma lub krwiak opłucnej | 3 | 4,5 kN |
-| Złamanie wybuchowe kręgu | 3 | 6,0 kN |
-| Uszkodzenie rdzenia kręgowego | 4 | 6,5 kN |
-| Zwichnięcie stawu żebrowo-kręgowego | 2 | 5,0 kN |
-| Stłuczenie serca | 3 | 6,0 kN |
-| Naderwanie mięśnia czworobocznego lub równoległobocznego | 2 | 5,0 kN |
-| Krwiak podłopatkowy | 2 | 5,0 kN |
-| Krwiak nadtwardówkowy kręgosłupa | 3 | 6,0 kN |
+| Klatka cepowata (trzy żebra lub więcej) | 4 | 4,79 kN |
+| Odma lub krwiak opłucnej | 3 | 4,43 kN |
+| Złamanie wybuchowe kręgu | 3 | 5,22 kN |
+| Uszkodzenie rdzenia kręgowego | 4 | 6,34 kN |
+| Zwichnięcie stawu żebrowo-kręgowego | 2 | 4,74 kN |
+| Stłuczenie serca | 3 | 5,91 kN |
+| Naderwanie mięśnia czworobocznego lub równoległobocznego | 2 | 4,81 kN |
+| Krwiak podłopatkowy | 2 | 4,86 kN |
+| Krwiak nadtwardówkowy kręgosłupa | 3 | 5,86 kN |
 
 <b><span style="color:#27ae60">Niemożliwe (3)</span></b>
 
-| Obrażenie | AIS | Próg |
+| Obrażenie | AIS | Próg (kobieta, 38 lat) |
 |---|---|---|
-| Złamanie łopatki | 2 | 15 kN |
-| Rozerwanie aorty | 5 | 5000 J |
-| Złamanie-zwichnięcie kręgosłupa (niestabilne) | 4 | 12 kN |
+| Złamanie łopatki | 2 | 13,05 kN |
+| Rozerwanie aorty | 5 | 4881 J |
+| Złamanie-zwichnięcie kręgosłupa (niestabilne) | 4 | 10,44 kN |
 
 ## Akustyka
 
@@ -356,11 +378,12 @@ scenariuszu.
 
 Legenda zgodności: <span style="color:#27ae60">zgodne</span> - przewidywanie potwierdzone w obserwacji; <span style="color:#e67e22">możliwe (brak potwierdzenia)</span> - następstwo prawdopodobne, lecz nie potwierdzone w dostępnej dokumentacji; <span style="color:#c0392b">brak</span> - przewidywanego następstwa nie odnotowano.
 
-Pozostałych przewidywanych obrażeń nie zidentyfikowano w badaniu lekarskim ani nie
-zgłosiła ich Victoria w swoich zeznaniach. Udokumentowane następstwa - pojedyncze
-zasinienie barku, RTG barku bez zmian kostnych i pełna ruchomość szyi z niewielką
-bolesnością - oraz brak metalicznego huku w nagraniach nie odtwarzają zespołu
-następstw, jaki model przewiduje dla gwałtownego rzutu plecami w drzwi windy.
+Pozostałych przewidywanych obrażeń nie zidentyfikowano w badaniu lekarskim ani
+nie zgłosiła ich Victoria w swoich zeznaniach. Udokumentowane następstwa -
+pojedyncze zasinienie barku, RTG barku bez zmian kostnych i pełna ruchomość
+szyi z niewielką bolesnością - oraz brak metalicznego huku w nagraniach nie
+odtwarzają zespołu następstw, jaki model przewiduje dla gwałtownego rzutu
+plecami w drzwi windy.
 
 ## Odniesienia
 

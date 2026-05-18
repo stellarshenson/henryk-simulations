@@ -189,10 +189,18 @@ single condition - the same energy, force and pressure - set against every row. 
 catalogue also carries a curated probability band per injury; that assessment is applied
 in the incident analysis document, not here.
 
-The reference table below is the catalogue itself - the 30 injuries with their region,
-AIS grade and onset threshold. No impact is applied here, so there is neither a
-this-impact column nor a probability assessment; the incident analysis document
-positions the delivered metrics against each onset.
+`predict_injuries` also accepts the subject's sex and age. Each onset is a mixed-cadaver
+literature value; before comparison it is scaled by a tissue-specific tolerance factor.
+Bone tolerance falls steeply with age and is moderately lower for the female ribcage on
+geometric grounds (thinner, smaller-section ribs); muscle, soft tissue, viscera and
+ligament are far less sensitive. With sex unspecified and no age the factor is one. The
+incident analysis document reads the table for the specific subject; the reference table
+below is the un-adjusted literature catalogue.
+
+The reference table below is the literature catalogue itself - the 30 injuries with
+their region, AIS grade and un-adjusted onset threshold. No impact is applied here, so
+there is neither a this-impact column nor a probability assessment; the incident
+analysis document positions the delivered metrics against each onset.
 
 | Injury | Region | AIS | Onset |
 |---|---|---|---|
