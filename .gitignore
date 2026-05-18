@@ -10,6 +10,7 @@
 !/data/external/body_mesh/README.md
 !/data/external/body_mesh/body-skin.obj
 !/data/external/body_mesh/upper-torso.obj
+!/data/external/body_mesh/FMA7163-skin.stl
 !/data/interim/
 /data/interim/*
 !/data/interim/.gitkeep

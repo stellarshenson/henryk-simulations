@@ -133,6 +133,14 @@ Stress-test the contested 3 s claim against the laws of physics and against popu
 - The microphone hears two summed components - the low thump of the pushed air, and a brief broadband burst of air squeezed out of the closing wall-body gap; the uneven body surface textures both
 - Peak SPL at 1 m is about 100 dB flat, about 80 dBA A-weighted - the surface texture is what lifts it into the band a meter and the ear register; six figures and a WAV generated inline, the model exercised by 22 test guards in [`tests/test_bodyfem.py`](tests/test_bodyfem.py)
 
+### Door impact sound ([`doorfem.py`](src/henryk_simulations/corridor/doorfem.py), [`notebooks/04-kj-sound-reconstruction-door-clang.ipynb`](notebooks/04-kj-sound-reconstruction-door-clang.ipynb))
+
+- The metallic clang of the steel door itself when the body strikes it, at the 1 m microphone - the door is the only source here, separate from the body thump
+- The actual ZREMB DT37/1 leaf is tessellated as a solid: two 2 mm steel skins 51 mm apart, the welded perimeter frame, the wired-glass window as a cutout - voxelised into a tetrahedral solid of about 12,300 nodes and 39,100 tetrahedra, ~220 kg of steel
+- scikit-fem assembles the box's 3D linear-elastic stiffness and mass; an eigensolve gives the leaf's flexural modes, from about 85 Hz upward - the welded box is stiff, which is what makes the door clang rather than boom
+- The impact excites the modes; modal damping settles the ring; the room-side skin radiates as a baffled panel, sub-critically (every mode is below the steel coincidence frequency)
+- Peak SPL at 1 m is about 89 dB flat, ~71 dBA - a brief metallic clang in the door's mode band, distinct from and quieter than the body thump; four figures and a WAV generated inline, the model exercised by 14 test guards in [`tests/test_doorfem.py`](tests/test_doorfem.py)
+
 ## Headline numbers (Mk1, kinematics envelope)
 
 The kinematics is reported as an envelope - two bracketing solutions parametrised by the release standoff. The no-coast solution propels the body all the way to the door; the with-coast solution releases it two torso depths back and lets it coast in. The real motion lies between them.
@@ -160,6 +168,7 @@ make lint                                                                       
 jupyter nbconvert --to notebook --execute notebooks/01-kj-corridor-kinematics.ipynb --inplace
 jupyter nbconvert --to notebook --execute notebooks/02-kj-corridor-impact-dynamics.ipynb --inplace
 jupyter nbconvert --to notebook --execute notebooks/03-kj-sound-reconstruction-body-thump.ipynb --inplace
+jupyter nbconvert --to notebook --execute notebooks/04-kj-sound-reconstruction-door-clang.ipynb --inplace
 python -m henryk_simulations.corridor.sim                                                    # render the MP4
 ```
 
@@ -169,8 +178,8 @@ Outputs land under `reports/figures/` (PNG figures, MP4 simulation).
 
 ```
 references/incident/                  geometry, testimonies, inconsistency log, methodology
-notebooks/                            01 kinematics, 02 impact dynamics, 03 sound reconstruction
-src/henryk_simulations/corridor/      choreography, impact, injuries, bodyfem, acoustics, sim
+notebooks/                            01 kinematics, 02 impact dynamics, 03 body thump, 04 door clang
+src/henryk_simulations/corridor/      choreography, impact, injuries, bodyfem, doorfem, acoustics, sim
 reports/figures/                      generated figures, the MP4 and the impact-sound WAV
 data/external/body_mesh/              the body skin mesh and the isolated upper torso
 ```
