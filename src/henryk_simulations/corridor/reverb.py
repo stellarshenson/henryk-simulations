@@ -27,26 +27,33 @@ from dataclasses import dataclass
 import numpy as np
 from scipy.signal import fftconvolve
 
+from henryk_simulations.corridor.simconfig import section_field
+
+_param = section_field("reverb")
+_acoustics = section_field("acoustics")
+
 
 @dataclass(frozen=True)
 class CorridorReverbConfig:
     """Configuration for the corridor reflection filter."""
 
     # corridor box - the two reflective wall pairs
-    corridor_width: float = 2.0  # m, between the two side walls
-    corridor_length: float = 10.0  # m, between the E and W end walls
+    corridor_width: float = _param("corridor_width")  # m, between the two side walls
+    corridor_length: float = _param("corridor_length")  # m, between the E and W end walls
     # impact source and microphone, in corridor coordinates (x across the
     # width, y along the length)
-    source_x: float = 1.0  # m, impact source across the width (corridor centre)
-    source_y: float = 1.0  # m, impact source along the length (near one end)
-    mic_x: float = 1.0  # m, microphone across the width
-    mic_y: float = 2.0  # m, microphone along the length - 1 m from the source
+    source_x: float = _param("source_x")  # m, impact source across the width (corridor centre)
+    source_y: float = _param("source_y")  # m, impact source along the length (near one end)
+    mic_x: float = _param("mic_x")  # m, microphone across the width
+    mic_y: float = _param("mic_y")  # m, microphone along the length - 1 m from the source
     # reflection
-    wall_reflection: float = 0.85  # amplitude reflection coefficient per bounce
+    wall_reflection: float = _param(
+        "wall_reflection"
+    )  # amplitude reflection coefficient per bounce
     max_order: int = 12  # image-source order per wall pair
     # acoustics
-    air_c: float = 343.0  # m/s
-    sample_rate: int = 44100  # Hz
+    air_c: float = _acoustics("air_c")  # m/s
+    sample_rate: int = _acoustics("sample_rate")  # Hz
 
 
 @dataclass(frozen=True)

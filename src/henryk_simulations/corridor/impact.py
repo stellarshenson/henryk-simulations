@@ -34,6 +34,7 @@ import numpy as np
 from scipy.integrate import solve_ivp
 
 from henryk_simulations.corridor.choreography import ChoreographyConfig, solve_envelope
+from henryk_simulations.corridor.simconfig import section_field
 
 G = 9.80665  # m/s^2
 
@@ -53,47 +54,89 @@ DE_LEVA_MALE: dict[str, tuple[str, int, float]] = {
 }
 
 
+_param = section_field("impact")
+_body = section_field("body")
+
+
 @dataclass(frozen=True)
 class ImpactConfig:
     """Configuration for the back-impact dynamics model."""
 
-    body_mass: float = 70.0  # kg
-    body_height: float = 1.68  # m
+    body_mass: float = _body("body_mass")  # kg
+    body_height: float = _body("body_height")  # m
     # subject demographics - sex and age shift the injury thresholds in
     # injuries.py through tolerance_factor. Sex is "F" or "M"; age in years,
     # None - assume a standard adult (the mixed-cadaver reference age).
-    subject_gender: Literal["F", "M"] = "F"  # subject sex - F or M
-    subject_age: float | None = None  # years; None - standard adult
+    subject_gender: Literal["F", "M"] = _param("subject_gender")  # subject sex - F or M
+    subject_age: float | None = _param("subject_age")  # years; None - standard adult
     # 5-DOF posterior-thorax chain (Lobdell-style anatomical layers). The
-    # masses sum to body_mass - the chain lumps the whole body, the rigid
-    # worst case; the effective-mass analysis shows the real backing mass.
-    m_skin: float = 1.5  # kg, outer skin and posterior flesh
-    m_scapula: float = 3.0  # kg, scapula and immediate bone
-    m_ribcage: float = 10.0  # kg, rib cage
-    m_organ: float = 15.0  # kg, thoracic and abdominal organs
-    m_spine: float = 40.5  # kg, spine and the rest of the body bulk
+    # layers are stored as relative shares; the m_* properties scale them by
+    # body_mass so the chain always sums to body_mass - the rigid worst case.
+    m_skin_share: float = _body("m_skin_share")  # relative share, skin and posterior flesh
+    m_scapula_share: float = _body("m_scapula_share")  # relative share, scapula and bone
+    m_ribcage_share: float = _body("m_ribcage_share")  # relative share, rib cage
+    m_organ_share: float = _body("m_organ_share")  # relative share, thoracic/abdominal organs
+    m_spine_share: float = _body("m_spine_share")  # relative share, spine and body bulk
     # interface stiffness, N/m (notebook 06 anatomical chain)
-    k_skin: float = 2.0e5  # 200 N/mm, posterior skin and fat
-    k_scapula: float = 8.0e5  # 800 N/mm, scapula-rib articulation
-    k_rib: float = 3.5e5  # 350 N/mm, rib cage - the injury interface
-    k_spine: float = 6.0e5  # 600 N/mm, organ-spine
+    k_skin: float = _param("k_skin")  # 200 N/mm, posterior skin and fat
+    k_scapula: float = _param("k_scapula")  # 800 N/mm, scapula-rib articulation
+    k_rib: float = _param("k_rib")  # 350 N/mm, rib cage - the injury interface
+    k_spine: float = _param("k_spine")  # 600 N/mm, organ-spine
     # interface damping, N s/m
-    c_skin: float = 800.0
-    c_scapula: float = 1500.0
-    c_rib: float = 1200.0
-    c_spine: float = 2000.0
+    c_skin: float = _param("c_skin")
+    c_scapula: float = _param("c_scapula")
+    c_rib: float = _param("c_rib")
+    c_spine: float = _param("c_spine")
     # skin-to-door contact: Hunt-Crossley Hertzian contact, the door rigid
-    k_contact: float = 5.0e6  # N/m^n, contact stiffness (scapular patch)
-    n_contact: float = 1.5  # Hertzian exponent
-    lambda_hc: float = 1.5  # s/m, Hunt-Crossley damping
-    yield_force: float = 9000.0  # N, elastic-plastic yield plateau (plastic body deformation)
+    k_contact: float = _param("k_contact")  # N/m^n, contact stiffness (scapular patch)
+    n_contact: float = _param("n_contact")  # Hertzian exponent
+    lambda_hc: float = _param("lambda_hc")  # s/m, Hunt-Crossley damping
+    yield_force: float = _param(
+        "yield_force"
+    )  # N, elastic-plastic yield plateau (plastic body deformation)
     # posterior contact patches - exponential area build-up A(t)
-    area_initial: float = 0.010  # m^2, first contact (scapula tips), ~100 cm^2
-    area_final: float = 0.060  # m^2, full posterior thorax, ~600 cm^2
-    area_tau: float = 0.015  # s, contact-area build-up time constant
-    n_ribs_span: int = 7  # ribs spanned by the full-area back contact
+    area_initial: float = _param("area_initial")  # m^2, first contact (scapula tips), ~100 cm^2
+    area_final: float = _param("area_final")  # m^2, full posterior thorax, ~600 cm^2
+    area_tau: float = _param("area_tau")  # s, contact-area build-up time constant
+    n_ribs_span: int = _param("n_ribs_span")  # ribs spanned by the full-area back contact
     t_max: float = 0.15  # s, impact integration window
     n_eval: int = 1500  # output samples
+
+    @property
+    def _chain_total(self) -> float:
+        """Sum of the chain mass shares - the normalisation denominator."""
+        return (
+            self.m_skin_share
+            + self.m_scapula_share
+            + self.m_ribcage_share
+            + self.m_organ_share
+            + self.m_spine_share
+        )
+
+    @property
+    def m_skin(self) -> float:
+        """Skin-layer mass - body mass times the skin share."""
+        return self.body_mass * self.m_skin_share / self._chain_total
+
+    @property
+    def m_scapula(self) -> float:
+        """Scapula-layer mass - body mass times the scapula share."""
+        return self.body_mass * self.m_scapula_share / self._chain_total
+
+    @property
+    def m_ribcage(self) -> float:
+        """Ribcage-layer mass - body mass times the ribcage share."""
+        return self.body_mass * self.m_ribcage_share / self._chain_total
+
+    @property
+    def m_organ(self) -> float:
+        """Organ-layer mass - body mass times the organ share."""
+        return self.body_mass * self.m_organ_share / self._chain_total
+
+    @property
+    def m_spine(self) -> float:
+        """Spine-layer mass - body mass times the spine share."""
+        return self.body_mass * self.m_spine_share / self._chain_total
 
 
 @dataclass(frozen=True)

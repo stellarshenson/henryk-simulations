@@ -40,11 +40,15 @@ from skfem.models.elasticity import lame_parameters, linear_elasticity
 
 from henryk_simulations.corridor.bodyfem import BodyFEMConfig, _surface_roughness, peak_spl
 from henryk_simulations.corridor.impact import ImpactConfig, solve_impact
+from henryk_simulations.corridor.simconfig import section_field
 
 # the six tetrahedra of a voxel cube, sharing the 0-7 space diagonal
 _TET6 = ((0, 7, 1, 3), (0, 7, 3, 2), (0, 7, 2, 6), (0, 7, 6, 4), (0, 7, 4, 5), (0, 7, 5, 1))
-_CORNERS = ((0, 0, 0), (1, 0, 0), (0, 1, 0), (1, 1, 0),
-            (0, 0, 1), (1, 0, 1), (0, 1, 1), (1, 1, 1))
+_CORNERS = ((0, 0, 0), (1, 0, 0), (0, 1, 0), (1, 1, 0), (0, 0, 1), (1, 0, 1), (0, 1, 1), (1, 1, 1))
+
+
+_param = section_field("doorfem")
+_acoustics = section_field("acoustics")
 
 
 @dataclass(frozen=True)
@@ -52,35 +56,37 @@ class DoorFEMConfig:
     """Configuration for the FEM door-impact sound model (ZREMB DT37/1)."""
 
     # door box geometry - the welded steel leaf
-    panel_width: float = 1.0  # m
-    panel_height: float = 2.0  # m
-    skin_thickness: float = 0.002  # m, steel plate (skin) thickness
-    cavity_gap: float = 0.025  # m, the air cavity between the two steel skins
-    frame_width: float = 0.04  # m, welded perimeter/window frame rail
+    panel_width: float = _param("panel_width")  # m
+    panel_height: float = _param("panel_height")  # m
+    skin_thickness: float = _param("skin_thickness")  # m, steel plate (skin) thickness
+    cavity_gap: float = _param("cavity_gap")  # m, the air cavity between the two steel skins
+    frame_width: float = _param("frame_width")  # m, welded perimeter/window frame rail
     # window cutout - the wired-glass vision panel (a hole in the steel)
-    window_width: float = 0.15  # m
-    window_height: float = 1.2  # m
-    window_cx: float = 0.5  # m, window centre, width axis
-    window_cy: float = 1.1  # m, window centre, height axis
+    window_width: float = _param("window_width")  # m
+    window_height: float = _param("window_height")  # m
+    window_cx: float = _param("window_cx")  # m, window centre, width axis
+    window_cy: float = _param("window_cy")  # m, window centre, height axis
     # steel
-    youngs_modulus: float = 200e9  # Pa
-    poisson: float = 0.30
-    density: float = 7850.0  # kg/m^3
+    youngs_modulus: float = _param("youngs_modulus")  # Pa
+    poisson: float = _param("poisson")
+    density: float = _param("density")  # kg/m^3
     # finite-element model
     voxel_size: float = 0.025  # m, in-plane voxel edge
     n_modes: int = 30  # elastic flexural modes retained
-    modal_damping: float = 0.02  # framed-steel-leaf loss factor (the sound dampening)
+    modal_damping: float = _param(
+        "modal_damping"
+    )  # framed-steel-leaf loss factor (the sound dampening)
     # impact - the body-door contact force comes from notebook 02's 5-DOF
     # posterior-thorax impact at this closing velocity, grained by the
     # uneven-surface texture of notebook 03; it is not a guessed pulse
-    v_close: float = 2.74  # m/s, closing velocity (notebook 01 no-coast bound)
-    strike_x: float = 0.65  # m, strike point, width axis - right of the door centre
-    strike_y: float = 1.3  # m, strike point - the upper-back contact height
+    v_close: float = _acoustics("v_close")  # m/s, closing velocity (notebook 01 no-coast bound)
+    strike_x: float = _param("strike_x")  # m, strike point, width axis - right of the door centre
+    strike_y: float = _param("strike_y")  # m, strike point - the upper-back contact height
     # acoustics
-    air_rho: float = 1.2  # kg/m^3
-    air_c: float = 343.0  # m/s
-    mic_distance: float = 1.0  # m
-    sample_rate: int = 44100  # Hz
+    air_rho: float = _acoustics("air_rho")  # kg/m^3
+    air_c: float = _acoustics("air_c")  # m/s
+    mic_distance: float = _acoustics("mic_distance")  # m
+    sample_rate: int = _acoustics("sample_rate")  # Hz
     t_max: float = 0.60  # s, output window - the steel rings on
 
     @property
@@ -155,9 +161,7 @@ def voxelise_door(cfg: DoorFEMConfig) -> tuple[np.ndarray, np.ndarray]:
                 abs(cx - cfg.window_cx) < cfg.window_width / 2.0 + frame
                 and abs(cy - cfg.window_cy) < cfg.window_height / 2.0 + frame
             ) and not in_hole
-            in_frame = (
-                cx < frame or cx > width - frame or cy < frame or cy > height - frame
-            )
+            in_frame = cx < frame or cx > width - frame or cy < frame or cy > height - frame
             for k in range(nz):
                 steel = (not in_hole) if k in (0, 2) else (in_frame or in_surround)
                 if not steel:

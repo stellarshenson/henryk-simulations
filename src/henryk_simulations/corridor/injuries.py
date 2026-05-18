@@ -601,9 +601,7 @@ INJURY_TABLE: tuple[InjuryThreshold, ...] = (
 )
 
 
-def tolerance_factor(
-    tissue: str, gender: str = "unspecified", age: float | None = None
-) -> float:
+def tolerance_factor(tissue: str, gender: str = "unspecified", age: float | None = None) -> float:
     """Demographic multiplier on an injury onset for a given sex and age.
 
     The onset thresholds in :data:`INJURY_TABLE` are a mixed-cadaver
@@ -648,9 +646,7 @@ def tolerance_factor(
     elif g in ("unspecified", "unknown", ""):
         sex_part = 1.0
     else:
-        raise ValueError(
-            f"gender must be 'male', 'female' or 'unspecified', got {gender!r}"
-        )
+        raise ValueError(f"gender must be 'male', 'female' or 'unspecified', got {gender!r}")
     return age_part * sex_part
 
 

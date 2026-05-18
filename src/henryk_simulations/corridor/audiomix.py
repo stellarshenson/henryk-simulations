@@ -30,6 +30,10 @@ import numpy as np
 from scipy.io import wavfile
 
 from henryk_simulations.config import PROJ_ROOT
+from henryk_simulations.corridor.simconfig import section_field
+
+_param = section_field("audiomix")
+_acoustics = section_field("acoustics")
 
 
 @dataclass(frozen=True)
@@ -40,18 +44,22 @@ class AudioMixConfig:
     thump_path: str = "reports/figures/03-body-thump.wav"  # notebook 03 body thump
     clang_path: str = "reports/figures/04-door-clang.wav"  # notebook 04 door clang
     output_path: str = "reports/figures/augmented_event_recording.m4a"
-    peak_time: float = 15.0  # s, event-timeline instant the synthesized peaks land on
+    peak_time: float = _param(
+        "peak_time"
+    )  # s, event-timeline instant the synthesized peaks land on
     # recording timestamps are arbitrary - the event timeline is referenced to
     # the moment the toy is released
-    toy_release_time: float = 12.5  # s, the toy is released - the timeline reference
-    scream_time: float = 16.5  # s, the scream heard in the recording
-    thump_gain: float = 5.0  # linear gain on the body thump - boosted, the
+    toy_release_time: float = _param(
+        "toy_release_time"
+    )  # s, the toy is released - the timeline reference
+    scream_time: float = _param("scream_time")  # s, the scream heard in the recording
+    thump_gain: float = _param("thump_gain")  # linear gain on the body thump - boosted, the
     #                          low-frequency thump otherwise reads quiet (the
     #                          recording microphone's auto-gain lifts it too)
-    clang_gain: float = 2.0  # linear gain on the door clang
-    sample_rate: int = 44100  # Hz, working sample rate
+    clang_gain: float = _param("clang_gain")  # linear gain on the door clang
+    sample_rate: int = _acoustics("sample_rate")  # Hz, working sample rate
     output_bitrate: str = "192k"  # AAC bitrate of the augmented m4a
-    headroom: float = 0.97  # peak the mix is normalised down to if it would clip
+    headroom: float = _param("headroom")  # peak the mix is normalised down to if it would clip
 
 
 @dataclass(frozen=True)
@@ -86,8 +94,18 @@ def decode_audio(path: str, sample_rate: int) -> np.ndarray:
     PCM at the requested rate; the raw stream is read straight into numpy.
     """
     cmd = [
-        _ffmpeg(), "-v", "error", "-i", str(_resolve(path)),
-        "-ac", "1", "-ar", str(sample_rate), "-f", "f32le", "-",
+        _ffmpeg(),
+        "-v",
+        "error",
+        "-i",
+        str(_resolve(path)),
+        "-ac",
+        "1",
+        "-ar",
+        str(sample_rate),
+        "-f",
+        "f32le",
+        "-",
     ]
     raw = subprocess.run(cmd, capture_output=True, check=True).stdout
     return np.frombuffer(raw, dtype="<f4").astype(np.float64)
@@ -128,7 +146,7 @@ def align_peak(sound: np.ndarray, peak_index: int, total_len: int) -> np.ndarray
     lo = max(0, start)
     hi = min(total_len, start + len(sound))
     if lo < hi:
-        track[lo:hi] = sound[lo - start:hi - start]
+        track[lo:hi] = sound[lo - start : hi - start]
     return track
 
 
@@ -172,17 +190,29 @@ def mix_event(cfg: AudioMixConfig | None = None) -> AudioMixResult:
     )
 
 
-def encode_m4a(
-    signal: np.ndarray, path: str, sample_rate: int, bitrate: str = "192k"
-) -> Path:
+def encode_m4a(signal: np.ndarray, path: str, sample_rate: int, bitrate: str = "192k") -> Path:
     """Encode a mono float signal to an AAC ``.m4a`` file via ffmpeg."""
     pcm = np.clip(signal, -1.0, 1.0).astype("<f4").tobytes()
     out = _resolve(path)
     out.parent.mkdir(parents=True, exist_ok=True)
     cmd = [
-        _ffmpeg(), "-v", "error", "-y",
-        "-f", "f32le", "-ar", str(sample_rate), "-ac", "1", "-i", "pipe:0",
-        "-c:a", "aac", "-b:a", bitrate, str(out),
+        _ffmpeg(),
+        "-v",
+        "error",
+        "-y",
+        "-f",
+        "f32le",
+        "-ar",
+        str(sample_rate),
+        "-ac",
+        "1",
+        "-i",
+        "pipe:0",
+        "-c:a",
+        "aac",
+        "-b:a",
+        bitrate,
+        str(out),
     ]
     subprocess.run(cmd, input=pcm, check=True)
     return out

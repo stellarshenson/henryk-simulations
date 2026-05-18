@@ -21,11 +21,12 @@ them - constraints carry an explicit ``source``.
 from __future__ import annotations
 
 from dataclasses import dataclass
-import math
 from typing import Literal
 
 import numpy as np
 from scipy.integrate import cumulative_trapezoid
+
+from henryk_simulations.corridor.simconfig import section_field
 
 G = 9.80665  # m/s^2
 
@@ -36,36 +37,55 @@ def _smoothstep(x: np.ndarray) -> np.ndarray:
     return x * x * x * (x * (x * 6.0 - 15.0) + 10.0)
 
 
+_param = section_field("choreography")
+_body = section_field("body")
+
+
 @dataclass(frozen=True)
 class ChoreographyConfig:
     """Configuration for the structural decoupled-singularity choreography."""
 
-    total_time: float = 3.0  # s
-    phase1_duration: float = 1.5  # s, equal-split hypothesis
-    phase2_duration: float = 1.5  # s, equal-split hypothesis
-    arc_length: float = 2.0  # m, phase-1 curved CoM path
-    lateral_offset: float = 0.25  # m, diagonal sag of the curved CoM path
-    return_translation: float = 0.50  # m, phase-2 return
-    rotation: float = math.pi  # rad, per-phase yaw turn
-    body_mass: float = 70.0  # kg
-    yaw_inertia: float = 1.4  # kg m^2, Plagenhoef 1983 scaled to 70 kg
-    body_compression: float = 0.030  # m, nominal rigid-door impact compression
-    body_compression_min: float = 0.020  # m, literature lower bound
-    body_compression_max: float = 0.050  # m, literature upper bound
-    body_thickness: float = 0.28  # m, torso front-to-back depth (2x the 0.14 m torso radius)
+    phase1_duration: float = _param("phase1_duration")  # s, equal-split hypothesis
+    phase2_duration: float = _param("phase2_duration")  # s, equal-split hypothesis
+    arc_length: float = _param("arc_length")  # m, phase-1 curved CoM path
+    lateral_offset: float = _param("lateral_offset")  # m, diagonal sag of the curved CoM path
+    return_translation: float = _param("return_translation")  # m, phase-2 return
+    rotation: float = _param("rotation")  # rad, per-phase yaw turn
+    body_mass: float = _body("body_mass")  # kg
+    yaw_inertia_per_kg: float = _body("yaw_inertia_per_kg")  # m^2, yaw radius of gyration squared
+    body_compression: float = _param(
+        "body_compression"
+    )  # m, nominal rigid-door impact compression
+    body_compression_min: float = _param("body_compression_min")  # m, literature lower bound
+    body_compression_max: float = _param("body_compression_max")  # m, literature upper bound
+    body_thickness: float = _param(
+        "body_thickness"
+    )  # m, torso front-to-back depth (2x the 0.14 m torso radius)
     # Ramp times: representative values within the rate-of-force-development
     # band [ramp_min, ramp_max], the literature exclusion zone - explosive
     # voluntary force develops/releases over 50-250 ms (Maffiuletti et al.
     # 2016; Aagaard et al. 2002). The ramps are constrained to the band, not
     # pinned to a single value.
-    t_give: float = 0.20  # s, start-ramp representative value
-    t_letgo: float = 0.12  # s, release-ramp representative value
-    ramp_min: float = 0.05  # s, RFD band lower bound
-    ramp_max: float = 0.25  # s, RFD band upper bound
-    a_max_ceiling: float = 5.5  # m/s^2, production limit (Mero 1992, elite + 1 SD)
-    a_max_typical: float = 3.0  # m/s^2, recreational (Mero 1992)
-    jerk_ceiling: float = 50.0  # m/s^3, production limit (RFD-derived)
+    t_give: float = _param("t_give")  # s, start-ramp representative value
+    t_letgo: float = _param("t_letgo")  # s, release-ramp representative value
+    ramp_min: float = _param("ramp_min")  # s, RFD band lower bound
+    ramp_max: float = _param("ramp_max")  # s, RFD band upper bound
+    a_max_ceiling: float = _param(
+        "a_max_ceiling"
+    )  # m/s^2, production limit (Mero 1992, elite + 1 SD)
+    a_max_typical: float = _param("a_max_typical")  # m/s^2, recreational (Mero 1992)
+    jerk_ceiling: float = _param("jerk_ceiling")  # m/s^3, production limit (RFD-derived)
     n_eval: int = 2000  # samples per phase
+
+    @property
+    def total_time(self) -> float:
+        """Total choreography time - the two phase durations summed."""
+        return self.phase1_duration + self.phase2_duration
+
+    @property
+    def yaw_inertia(self) -> float:
+        """Yaw moment of inertia - body mass times the per-kg coefficient."""
+        return self.body_mass * self.yaw_inertia_per_kg
 
 
 @dataclass(frozen=True)

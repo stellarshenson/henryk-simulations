@@ -48,13 +48,18 @@ from skfem.helpers import dot
 from skfem.models.elasticity import lame_parameters, linear_elasticity
 
 from henryk_simulations.config import PROJ_ROOT
+from henryk_simulations.corridor.simconfig import section_field
 
 P_REF = 20e-6  # Pa, reference sound pressure
 
 # the six tetrahedra of a voxel cube, sharing the 0-7 space diagonal
 _TET6 = ((0, 7, 1, 3), (0, 7, 3, 2), (0, 7, 2, 6), (0, 7, 6, 4), (0, 7, 4, 5), (0, 7, 5, 1))
-_CORNERS = ((0, 0, 0), (1, 0, 0), (0, 1, 0), (1, 1, 0),
-            (0, 0, 1), (1, 0, 1), (0, 1, 1), (1, 1, 1))
+_CORNERS = ((0, 0, 0), (1, 0, 0), (0, 1, 0), (1, 1, 0), (0, 0, 1), (1, 0, 1), (0, 1, 1), (1, 1, 1))
+
+
+_param = section_field("bodyfem")
+_body = section_field("body")
+_acoustics = section_field("acoustics")
 
 
 @dataclass(frozen=True)
@@ -70,37 +75,51 @@ class BodyFEMConfig:
     )
     stl_unit_scale: float = 1.0e-3  # BodyParts3D STL is in mm; scale to metres
     decimate_voxel: float = 0.032  # m, vertex-clustering grid for the working mesh
-    torso_z_lo_frac: float = 0.62  # fraction of body height, lower cut
-    torso_z_hi_frac: float = 0.84  # fraction of body height, upper cut
-    torso_x_halfwidth: float = 0.20  # m, half-width kept about the body axis (trims the arms)
+    torso_z_lo_frac: float = _param("torso_z_lo_frac")  # fraction of body height, lower cut
+    torso_z_hi_frac: float = _param("torso_z_hi_frac")  # fraction of body height, upper cut
+    torso_x_halfwidth: float = _param(
+        "torso_x_halfwidth"
+    )  # m, half-width kept about the body axis (trims the arms)
     # impact - the body delivered to the door by notebook 01's envelope
-    m_eff: float = 30.0  # kg, effective upper-torso impacting mass (for the contact force)
-    v_close: float = 2.74  # m/s, closing velocity (notebook 01 no-coast)
-    restitution: float = 0.25  # rebound coefficient off the rigid door
-    contact_time: float = 0.030  # s, contact duration
+    body_mass: float = _body("body_mass")  # kg, full body mass
+    m_eff_fraction: float = _body("m_eff_fraction")  # effective torso mass / body mass
+    v_close: float = _acoustics("v_close")  # m/s, closing velocity (notebook 01 no-coast)
+    restitution: float = _param("restitution")  # rebound coefficient off the rigid door
+    contact_time: float = _param("contact_time")  # s, contact duration
     # finite-element model
     voxel_size: float = 0.022  # m, FEM voxel edge
-    youngs_modulus: float = 5.0e5  # Pa, soft-tissue elastic modulus
-    poisson: float = 0.35  # effective - the air-filled thorax (lungs) compresses
-    density: float = 1000.0  # kg/m^3
-    modal_damping: float = 0.20  # heavily damped soft tissue - the modes do not ring long
+    youngs_modulus: float = _param("youngs_modulus")  # Pa, soft-tissue elastic modulus
+    poisson: float = _param("poisson")  # effective - the air-filled thorax (lungs) compresses
+    density: float = _param("density")  # kg/m^3
+    modal_damping: float = _param(
+        "modal_damping"
+    )  # heavily damped soft tissue - the modes do not ring long
     n_modes: int = 12  # elastic deformation modes retained
     # acoustics
-    air_rho: float = 1.2  # kg/m^3
-    air_c: float = 343.0  # m/s
-    mic_distance: float = 1.0  # m, microphone distance
-    sample_rate: int = 44100  # Hz
+    air_rho: float = _acoustics("air_rho")  # kg/m^3
+    air_c: float = _acoustics("air_c")  # m/s
+    mic_distance: float = _acoustics("mic_distance")  # m, microphone distance
+    sample_rate: int = _acoustics("sample_rate")  # Hz
     t_max: float = 0.30  # s, output window
     # air escape - the air squeezed out of the closing wall-body gap
-    contact_patch_area: float = 0.035  # m^2, back contact patch area
-    gap_squeeze_start: float = 0.006  # m, gap where the trapped air film starts to matter
-    gap_seal: float = 0.0015  # m, residual gap left by the uneven body surface
-    escape_band_lo: float = 300.0  # Hz, lower edge of the escape-noise band
-    escape_band_hi: float = 6000.0  # Hz, upper edge of the escape-noise band
+    contact_patch_area: float = _param("contact_patch_area")  # m^2, back contact patch area
+    gap_squeeze_start: float = _param(
+        "gap_squeeze_start"
+    )  # m, gap where the trapped air film starts to matter
+    gap_seal: float = _param("gap_seal")  # m, residual gap left by the uneven body surface
+    escape_band_lo: float = _param("escape_band_lo")  # Hz, lower edge of the escape-noise band
+    escape_band_hi: float = _param("escape_band_hi")  # Hz, upper edge of the escape-noise band
     escape_seed: int = 0  # rng seed for the squeezed-air texture noise
     # surface texture - the uneven body surface graining the contact
-    surface_roughness: float = 0.25  # uneven-surface modulation depth of the contact force
+    surface_roughness: float = _param(
+        "surface_roughness"
+    )  # uneven-surface modulation depth of the contact force
     roughness_seed: int = 1  # rng seed for the surface-roughness noise
+
+    @property
+    def m_eff(self) -> float:
+        """Effective upper-torso impacting mass - body mass times the fraction."""
+        return self.body_mass * self.m_eff_fraction
 
 
 @dataclass(frozen=True)
@@ -176,11 +195,7 @@ def decimate_mesh(
     centroid /= np.bincount(inverse, minlength=n_clusters)[:, None]
 
     tris = inverse[triangles]
-    keep = (
-        (tris[:, 0] != tris[:, 1])
-        & (tris[:, 1] != tris[:, 2])
-        & (tris[:, 0] != tris[:, 2])
-    )
+    keep = (tris[:, 0] != tris[:, 1]) & (tris[:, 1] != tris[:, 2]) & (tris[:, 0] != tris[:, 2])
     tris = np.unique(tris[keep], axis=0)  # drop degenerate, then duplicate triangles
     used = np.unique(tris)
     remap = np.full(n_clusters, -1, dtype=np.int64)
@@ -284,9 +299,7 @@ def _a_weighting(freq: np.ndarray) -> np.ndarray:
     """A-weighting gain (linear) at each frequency - IEC 61672."""
     f2 = freq.astype(float) ** 2
     ra = (12194.0**2 * f2**2) / (
-        (f2 + 20.6**2)
-        * np.sqrt((f2 + 107.7**2) * (f2 + 737.9**2))
-        * (f2 + 12194.0**2)
+        (f2 + 20.6**2) * np.sqrt((f2 + 107.7**2) * (f2 + 737.9**2)) * (f2 + 12194.0**2)
     )
     return ra * 10.0 ** (2.0 / 20.0)  # +2 dB normalisation at 1 kHz
 
@@ -330,10 +343,14 @@ def voxelise_torso(torso: TorsoMesh, cfg: BodyFEMConfig) -> tuple[np.ndarray, np
     gx, gy, gz = (np.arange(lo[d], hi[d] + h, h) for d in range(3))
     nx, ny, nz = len(gx) - 1, len(gy) - 1, len(gz) - 1
 
-    centres = np.array([
-        [(gx[i] + gx[i + 1]) / 2, (gy[j] + gy[j + 1]) / 2, (gz[k] + gz[k + 1]) / 2]
-        for i in range(nx) for j in range(ny) for k in range(nz)
-    ])
+    centres = np.array(
+        [
+            [(gx[i] + gx[i + 1]) / 2, (gy[j] + gy[j + 1]) / 2, (gz[k] + gz[k + 1]) / 2]
+            for i in range(nx)
+            for j in range(ny)
+            for k in range(nz)
+        ]
+    )
     inside = (hull.find_simplex(centres) >= 0).reshape(nx, ny, nz)
 
     node_id: dict[tuple[int, int, int], int] = {}
@@ -371,14 +388,17 @@ def voxelise_torso(torso: TorsoMesh, cfg: BodyFEMConfig) -> tuple[np.ndarray, np
 def _tet_volumes(nodes: np.ndarray, tets: np.ndarray) -> np.ndarray:
     """Volume of every tetrahedron."""
     v = nodes[tets]
-    return np.abs(np.einsum(
-        "ij,ij->i", v[:, 1] - v[:, 0], np.cross(v[:, 2] - v[:, 0], v[:, 3] - v[:, 0])
-    )) / 6.0
+    return (
+        np.abs(
+            np.einsum(
+                "ij,ij->i", v[:, 1] - v[:, 0], np.cross(v[:, 2] - v[:, 0], v[:, 3] - v[:, 0])
+            )
+        )
+        / 6.0
+    )
 
 
-def _modal_volume_velocity(
-    nodes: np.ndarray, tets: np.ndarray, shape: np.ndarray
-) -> float:
+def _modal_volume_velocity(nodes: np.ndarray, tets: np.ndarray, shape: np.ndarray) -> float:
     """Net volume velocity of one mode - the air its deforming surface
     pushes. The divergence of the displacement field integrated over the
     torso; the divergence theorem makes it the surface flux ``oint phi.n dA``,
@@ -390,9 +410,7 @@ def _modal_volume_velocity(
     return float(np.sum(_tet_volumes(nodes, tets) * divergence))
 
 
-def assemble_fem(
-    nodes: np.ndarray, tets: np.ndarray, cfg: BodyFEMConfig
-):
+def assemble_fem(nodes: np.ndarray, tets: np.ndarray, cfg: BodyFEMConfig):
     """Assemble the 3D linear-elastic stiffness and consistent mass matrix."""
     mesh = MeshTet(nodes.T, tets.T)
     basis = Basis(mesh, ElementVector(ElementTetP1()))
@@ -437,9 +455,12 @@ def _impact_patch(nodes: np.ndarray, tets: np.ndarray) -> np.ndarray:
     low-y face. The patch is the boundary band there, the scapular region
     that met the wall.
     """
-    faces = np.sort(np.concatenate([
-        tets[:, [0, 1, 2]], tets[:, [0, 1, 3]], tets[:, [0, 2, 3]], tets[:, [1, 2, 3]]
-    ]), axis=1)
+    faces = np.sort(
+        np.concatenate(
+            [tets[:, [0, 1, 2]], tets[:, [0, 1, 3]], tets[:, [0, 2, 3]], tets[:, [1, 2, 3]]]
+        ),
+        axis=1,
+    )
     uniq, counts = np.unique(faces, axis=0, return_counts=True)
     boundary_nodes = np.unique(uniq[counts == 1])
     y = nodes[:, 1]
@@ -564,14 +585,18 @@ def air_escape(cfg: BodyFEMConfig) -> tuple[np.ndarray, np.ndarray]:
     rng = np.random.default_rng(cfg.escape_seed)
     nyquist = 0.5 * cfg.sample_rate
     sos = butter(
-        4, [cfg.escape_band_lo / nyquist, cfg.escape_band_hi / nyquist],
-        btype="band", output="sos",
+        4,
+        [cfg.escape_band_lo / nyquist, cfg.escape_band_hi / nyquist],
+        btype="band",
+        output="sos",
     )
     texture = sosfiltfilt(sos, rng.standard_normal(n))
     texture /= texture.std()  # unit RMS - the v_esc^2 envelope sets the level
 
     prefactor = (
-        cfg.air_rho * cfg.contact_patch_area * cfg.v_close
+        cfg.air_rho
+        * cfg.contact_patch_area
+        * cfg.v_close
         / (4.0 * np.pi * cfg.mic_distance**2 * cfg.air_c)
     )
     pressure = prefactor * v_esc**2 * texture
