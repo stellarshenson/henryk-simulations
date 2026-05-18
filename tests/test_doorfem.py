@@ -7,7 +7,7 @@ import pytest
 
 from henryk_simulations.corridor.doorfem import (
     DoorFEMConfig,
-    contact_pulse,
+    body_contact_force,
     solve_door_sound,
     voxelise_door,
 )
@@ -114,12 +114,14 @@ def test_volume_velocity_finite(result, cfg) -> None:
 # ---------------------------------------------------------------------------
 
 
-def test_contact_pulse_non_negative_and_bounded(cfg) -> None:
-    t, force = contact_pulse(cfg)
+def test_body_contact_force_non_negative(cfg) -> None:
+    t, force = body_contact_force(cfg)
+    assert force.shape == t.shape
     assert np.all(force >= 0.0)
     assert np.all(np.isfinite(force))
-    assert np.all(force[t >= cfg.contact_time] == 0.0)
-    assert force.max() == pytest.approx(cfg.peak_force, rel=0.01)
+    assert force.max() > 0.0
+    # the body-door contact is over well before the output window ends
+    assert np.all(force[t > 0.2] == 0.0)
 
 
 def test_modal_amplitude_finite(result, cfg) -> None:

@@ -2,24 +2,29 @@
 
 Notebook 04's model. When the body strikes the elevator door the steel
 leaf is set ringing, and its flexural vibration radiates to a microphone
-1 m away as the metallic "clang". This module models the door alone - not
-the body, not the air the body pushes (that is notebook 03).
+in the room as the metallic "clang". This module models the door alone -
+not the body, not the air the body pushes (that is notebook 03).
 
 The ZREMB DT37/1 leaf is not a flat sheet: it is a welded steel box - two
-2 mm skins spaced 51 mm apart, tied by a perimeter frame, with a tall
+skins spaced by an air cavity, tied by a perimeter frame, with a tall
 narrow wired-glass vision window. That box is what makes the door stiff,
 so it *clangs* rather than booms. The actual box is built and tessellated:
 the steel volume (the two skins, the frame, the window surround) is
 voxelised into a tetrahedral solid the same way the torso was, scikit-fem
-assembles its 3D linear-elastic stiffness and mass, and an eigensolve
-gives the leaf's flexural modes - hundreds of hertz upward.
+assembles its 3D linear-elastic stiffness and mass, and an eigensolve of
+the leaf clamped at its perimeter frame gives the flexural modes.
 
-The impact excites the modes at the strike point; modal damping settles
-the ring (the sound dampening); and the room-side skin, the door's
-radiating face, pushes air to the microphone.
+The clang is the steel's own ring. The body-door contact force is not a
+guessed pulse - it is taken from the other notebooks: notebook 02's 5-DOF
+posterior-thorax impact gives the contact-force history, and notebook
+03's uneven-surface texture grains it. That force excites the modes at
+the strike point; modal damping settles the ring (the sound dampening);
+and the room-side skin, the door's radiating face, pushes air to the
+microphone.
 
 Pipeline: ``voxelise_door`` -> ``assemble_fem`` -> ``solve_door_modes`` ->
-``impact_response`` -> ``radiate``. ``solve_door_sound`` runs the chain.
+``body_contact_force`` -> ``impact_response`` -> ``radiate``.
+``solve_door_sound`` runs the chain.
 """
 
 from __future__ import annotations
@@ -33,7 +38,8 @@ from skfem import Basis, BilinearForm, ElementTetP1, ElementVector, MeshTet
 from skfem.helpers import dot
 from skfem.models.elasticity import lame_parameters, linear_elasticity
 
-from henryk_simulations.corridor.bodyfem import peak_spl
+from henryk_simulations.corridor.bodyfem import BodyFEMConfig, _surface_roughness, peak_spl
+from henryk_simulations.corridor.impact import ImpactConfig, solve_impact
 
 # the six tetrahedra of a voxel cube, sharing the 0-7 space diagonal
 _TET6 = ((0, 7, 1, 3), (0, 7, 3, 2), (0, 7, 2, 6), (0, 7, 6, 4), (0, 7, 4, 5), (0, 7, 5, 1))
@@ -64,9 +70,10 @@ class DoorFEMConfig:
     voxel_size: float = 0.025  # m, in-plane voxel edge
     n_modes: int = 30  # elastic flexural modes retained
     modal_damping: float = 0.02  # framed-steel-leaf loss factor (the sound dampening)
-    # impact - the body delivered to the door by notebook 02's corridor model
-    peak_force: float = 6000.0  # N, peak contact force
-    contact_time: float = 0.030  # s
+    # impact - the body-door contact force comes from notebook 02's 5-DOF
+    # posterior-thorax impact at this closing velocity, grained by the
+    # uneven-surface texture of notebook 03; it is not a guessed pulse
+    v_close: float = 2.74  # m/s, closing velocity (notebook 01 no-coast bound)
     strike_x: float = 0.65  # m, strike point, width axis - right of the door centre
     strike_y: float = 1.3  # m, strike point - the upper-back contact height
     # acoustics
@@ -197,32 +204,50 @@ def assemble_fem(nodes: np.ndarray, tets: np.ndarray, cfg: DoorFEMConfig):
 def solve_door_modes(cfg: DoorFEMConfig) -> DoorFEM:
     """Solve the steel door box's flexural modes.
 
-    The leaf is free-free: the six rigid-body modes are discarded and the
-    next ``n_modes`` elastic modes returned. Each mode carries its
-    volume-velocity coefficient - the air the room-side skin pushes - and
-    its participation at the strike point.
+    The leaf is rigidly mounted: every DOF on the outer perimeter is
+    clamped through the full leaf depth, an encastre boundary, the way the
+    door is welded into the wall opening. The eigensolve of the clamped
+    box returns the lowest ``n_modes`` flexural modes - a clamped leaf has
+    no rigid-body modes. Each mode carries its volume-velocity coefficient
+    - the air the room-side skin pushes - and its participation at the
+    strike point.
     """
     nodes, tets = voxelise_door(cfg)
     k, m = assemble_fem(nodes, tets, cfg)
-    vals, vecs = eigsh(k, M=m, k=cfg.n_modes + 6, sigma=1.0, which="LM")
+
+    # the leaf is welded into the wall frame: clamp every DOF of the
+    # outer-perimeter nodes, through the full leaf depth - a genuine
+    # encastre boundary, no translation and no rotation. A clamped leaf
+    # struck off-centre bulges net-inward, so its room-side face sweeps a
+    # real volume of air; a free leaf's modal lobes would cancel instead.
+    clamped = (
+        np.isclose(nodes[:, 0], 0.0)
+        | np.isclose(nodes[:, 0], cfg.panel_width)
+        | np.isclose(nodes[:, 1], 0.0)
+        | np.isclose(nodes[:, 1], cfg.panel_height)
+    )
+    fixed = (3 * np.where(clamped)[0][:, None] + np.array([0, 1, 2])).ravel()
+    free = np.setdiff1d(np.arange(3 * len(nodes)), fixed)
+    k_ff = k.tocsr()[free, :][:, free]
+    m_ff = m.tocsr()[free, :][:, free]
+
+    vals, vecs_ff = eigsh(k_ff, M=m_ff, k=cfg.n_modes, sigma=1.0, which="LM")
     order = np.argsort(vals)
-    vals, vecs = vals[order][6:], vecs[:, order][:, 6:]
+    vals, vecs_ff = vals[order], vecs_ff[:, order]
     freqs = np.sqrt(np.abs(vals)) / (2.0 * np.pi)
+    vecs = np.zeros((3 * len(nodes), cfg.n_modes))
+    vecs[free] = vecs_ff
     shapes = np.array([vecs[:, i].reshape(-1, 3) for i in range(cfg.n_modes)])
 
-    # the room-side skin radiates. A flexing panel's net volume velocity
-    # nearly cancels (the modal lobes are +/-), but the panel still radiates
-    # through sub-critical edge radiation: each mode carries an efficiency
-    # sigma < 1 below the steel coincidence frequency, and its effective
-    # volume velocity is the RMS of the face's normal motion (which does not
-    # cancel) times the face area, weighted by sqrt(sigma).
+    # the room-side skin radiates as a baffled monopole. The clamped leaf
+    # bulges one way when struck, so the signed volume its room-side face
+    # sweeps does not cancel for the low modes: each mode's volume velocity
+    # is that face's mean normal displacement times the radiating area.
     back = np.isclose(nodes[:, 2], cfg.leaf_depth)
     face_area = cfg.panel_width * cfg.panel_height - cfg.window_width * cfg.window_height
+    face_mean = np.array([np.mean(shapes[i][back, 2]) for i in range(cfg.n_modes)])
+    vol_vel = face_mean * face_area
     efficiency = np.minimum(1.0, np.sqrt(freqs / _critical_frequency(cfg)))
-    face_rms = np.array([
-        np.sqrt(np.mean(shapes[i][back, 2] ** 2)) for i in range(cfg.n_modes)
-    ])
-    vol_vel = np.sqrt(efficiency) * face_area * face_rms
 
     # the impact lands on the front skin at the strike point
     front = np.isclose(nodes[:, 2], 0.0)
@@ -242,14 +267,25 @@ def solve_door_modes(cfg: DoorFEMConfig) -> DoorFEM:
     )
 
 
-def contact_pulse(cfg: DoorFEMConfig) -> tuple[np.ndarray, np.ndarray]:
-    """The impact contact force - a smooth sine-squared pulse on the door."""
+def body_contact_force(cfg: DoorFEMConfig) -> tuple[np.ndarray, np.ndarray]:
+    """The contact force the body delivers to the door.
+
+    The door is not driven by a guessed pulse. The force is the actual
+    body-door contact force, estimated from the other notebooks: notebook
+    02's 5-DOF posterior-thorax impact (``solve_impact``) gives the
+    contact-force history of the body striking the door at the closing
+    velocity, and notebook 03's uneven-surface texture
+    (``_surface_roughness``) grains it - the ribs and spine engaging the
+    steel bump by bump. The grained force is resampled onto the door's
+    time base. By Newton's third law the same contact force acts on the
+    body and on the door, so this is the door's excitation.
+    """
+    impact = solve_impact(ImpactConfig(), v_close=cfg.v_close)
     n = int(cfg.t_max * cfg.sample_rate)
     t = np.arange(n) / cfg.sample_rate
-    force = np.zeros(n)
-    inside = t < cfg.contact_time
-    force[inside] = cfg.peak_force * np.sin(np.pi * t[inside] / cfg.contact_time) ** 2
-    return t, force
+    force = np.interp(t, impact.t, impact.f_contact, left=0.0, right=0.0)
+    texture = _surface_roughness(t, BodyFEMConfig(v_close=cfg.v_close))
+    return t, force * np.clip(1.0 + texture, 0.0, None)
 
 
 def impact_response(
@@ -262,7 +298,7 @@ def impact_response(
     base, the modal displacement and acceleration histories, and the
     contact force.
     """
-    t, force = contact_pulse(cfg)
+    t, force = body_contact_force(cfg)
     omega = 2.0 * np.pi * fem.frequencies
     modal_q = np.zeros((cfg.n_modes, len(t)))
     modal_a = np.zeros((cfg.n_modes, len(t)))
@@ -322,7 +358,7 @@ __all__ = [
     "DoorFEMConfig",
     "DoorFEMResult",
     "assemble_fem",
-    "contact_pulse",
+    "body_contact_force",
     "impact_response",
     "radiate",
     "solve_door_modes",
