@@ -25,7 +25,7 @@ trapped in the closing wall-body gap is squeezed out through the irregular
 gap as the body lands - a brief broadband burst, far higher in pitch than
 the thump. The microphone hears the two summed.
 
-The pipeline: ``load_body_mesh`` -> ``isolate_upper_torso`` ->
+The pipeline: ``ensure_body_mesh`` -> ``load_body_mesh`` -> ``isolate_upper_torso`` ->
 ``voxelise_torso`` -> ``assemble_fem`` -> ``solve_modes`` -> the textured
 contact pulse drives ``impact_response`` -> ``radiate_modes`` for the thump
 and ``air_escape`` for the squeezed-air burst -> their sum at the
@@ -36,6 +36,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+import urllib.request
 
 import meshio
 import numpy as np
@@ -61,7 +62,14 @@ class BodyFEMConfig:
     """Configuration for the FEM body-impact sound model."""
 
     # body mesh and upper-torso isolation
-    mesh_path: str = "data/external/body_mesh/body-skin.obj"
+    mesh_path: str = "data/external/body_mesh/body-skin.obj"  # working (decimated) mesh
+    stl_path: str = "data/external/body_mesh/FMA7163-skin.stl"  # raw BodyParts3D skin STL
+    mesh_url: str = (  # raw STL, downloaded if absent (BodyParts3D, CC BY-SA 2.1 JP)
+        "https://raw.githubusercontent.com/Kevin-Mattheus-Moerman/BodyParts3D"
+        "/main/assets/BodyParts3D_data/stl/FMA7163.stl"
+    )
+    stl_unit_scale: float = 1.0e-3  # BodyParts3D STL is in mm; scale to metres
+    decimate_voxel: float = 0.032  # m, vertex-clustering grid for the working mesh
     torso_z_lo_frac: float = 0.62  # fraction of body height, lower cut
     torso_z_hi_frac: float = 0.84  # fraction of body height, upper cut
     torso_x_halfwidth: float = 0.20  # m, half-width kept about the body axis (trims the arms)
@@ -133,17 +141,81 @@ class BodyFEMResult:
     peak_spl: float  # dB SPL of the total
 
 
+def _resolve(path_str: str) -> Path:
+    """Resolve a possibly-relative path against the project root."""
+    path = Path(path_str)
+    return path if path.is_absolute() else PROJ_ROOT / path
+
+
 def load_body_mesh(cfg: BodyFEMConfig | None = None) -> tuple[np.ndarray, np.ndarray]:
     """Load the decimated 3D body-skin surface mesh (points in metres)."""
     if cfg is None:
         cfg = BodyFEMConfig()
-    path = Path(cfg.mesh_path)
-    if not path.is_absolute():
-        path = PROJ_ROOT / path
-    mesh = meshio.read(path)
+    mesh = meshio.read(_resolve(cfg.mesh_path))
     points = np.asarray(mesh.points, dtype=float)
     triangles = np.asarray(mesh.cells_dict["triangle"], dtype=np.int64)
     return points, triangles
+
+
+def decimate_mesh(
+    points: np.ndarray, triangles: np.ndarray, voxel_size: float
+) -> tuple[np.ndarray, np.ndarray]:
+    """Decimate a surface mesh by vertex clustering.
+
+    Vertices are snapped to a regular voxel grid; every vertex in a cell
+    collapses to that cell's centroid, the triangles are re-indexed onto
+    the survivors, and triangles that collapse to an edge or a point are
+    dropped. A coarse mesh, enough for the convex-hull geometry downstream.
+    """
+    cell = np.floor(points / voxel_size).astype(np.int64)
+    _, inverse = np.unique(cell, axis=0, return_inverse=True)
+    inverse = inverse.reshape(-1)
+    n_clusters = int(inverse.max()) + 1
+    centroid = np.zeros((n_clusters, 3))
+    np.add.at(centroid, inverse, points)
+    centroid /= np.bincount(inverse, minlength=n_clusters)[:, None]
+
+    tris = inverse[triangles]
+    keep = (
+        (tris[:, 0] != tris[:, 1])
+        & (tris[:, 1] != tris[:, 2])
+        & (tris[:, 0] != tris[:, 2])
+    )
+    tris = np.unique(tris[keep], axis=0)  # drop degenerate, then duplicate triangles
+    used = np.unique(tris)
+    remap = np.full(n_clusters, -1, dtype=np.int64)
+    remap[used] = np.arange(len(used))
+    return centroid[used], remap[tris]
+
+
+def ensure_body_mesh(cfg: BodyFEMConfig | None = None) -> Path:
+    """Ensure the decimated working body mesh is on disk, bootstrapping it.
+
+    When the working mesh (``cfg.mesh_path``) is missing, the raw
+    BodyParts3D skin STL is fetched - downloaded from ``cfg.mesh_url`` if it
+    is not already on disk - scaled to metres and decimated by vertex
+    clustering to the working mesh. A no-op when the working mesh is
+    already present. Returns the working-mesh path.
+    """
+    if cfg is None:
+        cfg = BodyFEMConfig()
+    obj_path = _resolve(cfg.mesh_path)
+    if obj_path.exists():
+        return obj_path
+
+    stl_path = _resolve(cfg.stl_path)
+    if not stl_path.exists():
+        stl_path.parent.mkdir(parents=True, exist_ok=True)
+        urllib.request.urlretrieve(cfg.mesh_url, stl_path)
+
+    raw = meshio.read(stl_path)
+    points = np.asarray(raw.points, dtype=float) * cfg.stl_unit_scale
+    triangles = np.asarray(raw.cells_dict["triangle"], dtype=np.int64)
+    points, triangles = decimate_mesh(points, triangles, cfg.decimate_voxel)
+
+    obj_path.parent.mkdir(parents=True, exist_ok=True)
+    meshio.write_points_cells(str(obj_path), points, [("triangle", triangles)])
+    return obj_path
 
 
 def isolate_upper_torso(
@@ -550,6 +622,8 @@ __all__ = [
     "air_escape",
     "assemble_fem",
     "deceleration_pulse",
+    "decimate_mesh",
+    "ensure_body_mesh",
     "impact_response",
     "isolate_upper_torso",
     "load_body_mesh",

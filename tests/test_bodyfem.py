@@ -10,6 +10,8 @@ from henryk_simulations.corridor.bodyfem import (
     _surface_roughness,
     air_escape,
     deceleration_pulse,
+    decimate_mesh,
+    ensure_body_mesh,
     isolate_upper_torso,
     load_body_mesh,
     peak_spl,
@@ -91,6 +93,23 @@ def test_torso_lies_in_the_isolation_band(cfg, body, torso) -> None:
 def test_torso_volume_is_physical(torso) -> None:
     # an adult upper torso - roughly 10-40 L
     assert 0.010 < torso.volume < 0.040
+
+
+def test_decimate_mesh_reduces_and_stays_valid(body) -> None:
+    # vertex clustering at a coarser grid reduces the mesh, indices stay valid
+    points, triangles = body
+    dp, dt = decimate_mesh(points, triangles, 0.08)
+    assert 0 < len(dp) < len(points)
+    assert len(dt) > 0
+    assert int(dt.max()) < len(dp)
+    assert np.all(np.isfinite(dp))
+
+
+def test_ensure_body_mesh_returns_the_working_mesh(cfg) -> None:
+    # the working mesh is committed - ensure_body_mesh is a no-op, returns it
+    path = ensure_body_mesh(cfg)
+    assert path.exists()
+    assert path.suffix == ".obj"
 
 
 # ---------------------------------------------------------------------------

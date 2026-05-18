@@ -7,6 +7,7 @@
 !/data/external/event_audio/event_recording.m4a
 !/data/external/body_mesh/
 /data/external/body_mesh/*
+!/data/external/body_mesh/README.md
 !/data/external/body_mesh/body-skin.obj
 !/data/external/body_mesh/upper-torso.obj
 !/data/interim/
