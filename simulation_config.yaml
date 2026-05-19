@@ -3,8 +3,8 @@
 # This file holds the SCENARIO parameters: the subject, the geometry, the
 # run conditions, the mix - the values particular to this case. The
 # literature/model-derived defaults live inside the library at
-# src/henryk_simulations/corridor/simulation_config.yml; simconfig.py
-# merges the library defaults under this file (values here win).
+# src/henryk_simulations/simulation_config.yml; simconfig.py merges
+# the library defaults under this file (values here win).
 #
 # To override a standardised default, add its key to the matching section
 # below. Physics-linked quantities (total_time, yaw_inertia, m_eff, the

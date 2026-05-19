@@ -47,6 +47,7 @@ from henryk_simulations.corridor.bodyfem import (
     TorsoMesh,
     air_escape,
     assemble_fem,
+    boundary_facets,
     deceleration_pulse,
     decimate_mesh,
     ensure_body_mesh,
@@ -58,7 +59,9 @@ from henryk_simulations.corridor.bodyfem import (
     solve_body_fem,
     solve_modes,
     sound_levels,
+    tet_mesh_volume,
     voxelise_torso,
+    write_listening_wav,
 )
 from henryk_simulations.corridor.choreography import (
     ChoreographyConfig,
@@ -187,6 +190,7 @@ __all__ = [
     "assess_fracture",
     "augment_event",
     "body_segments",
+    "boundary_facets",
     "cavity_axial_frequency",
     "compute_impact",
     "compute_phase_kinematics",
@@ -227,6 +231,8 @@ __all__ = [
     "solve_modes",
     "sound_levels",
     "spl_at_distance",
+    "tet_mesh_volume",
     "tolerance_factor",
     "voxelise_torso",
+    "write_listening_wav",
 ]

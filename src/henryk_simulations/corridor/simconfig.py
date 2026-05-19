@@ -33,8 +33,8 @@ import yaml
 from henryk_simulations.config import PROJ_ROOT
 from henryk_simulations.corridor.validation import validate
 
-# the library defaults ship next to this module
-LIBRARY_CONFIG_PATH = Path(__file__).with_name("simulation_config.yml")
+# the library defaults ship at the package root, one level above this module
+LIBRARY_CONFIG_PATH = Path(__file__).parent.parent / "simulation_config.yml"
 
 # the user file - simulation_config.yaml at the project root, unless
 # SIMULATION_CONFIG_PATH (loaded from .env) points elsewhere

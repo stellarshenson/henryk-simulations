@@ -40,6 +40,7 @@ import urllib.request
 
 import meshio
 import numpy as np
+from scipy.io import wavfile
 from scipy.signal import butter, lsim, sosfiltfilt
 from scipy.sparse.linalg import eigsh
 from scipy.spatial import ConvexHull, Delaunay
@@ -329,6 +330,31 @@ def sound_levels(pressure: np.ndarray, sample_rate: int) -> dict[str, float]:
     }
 
 
+def write_listening_wav(
+    signal: np.ndarray,
+    path: str | Path,
+    sample_rate: int,
+    *,
+    lead_in: float = 0.5,
+    drive: float = 3.0,
+    peak: float = 0.97,
+) -> Path:
+    """Write a pressure signal to a 16-bit WAV for listening.
+
+    A silent ``lead_in`` is prepended, the signal is tanh soft-clipped at
+    ``drive`` and normalised to the ``peak`` headroom. The shaping is a
+    listening aid only - it lifts a faint physical signal to an audible
+    level and does not alter the simulated pressure. Returns the path.
+    """
+    lead = np.zeros(int(lead_in * sample_rate))
+    sound = np.concatenate([lead, signal])
+    shaped = np.tanh(drive * sound / np.abs(sound).max())
+    shaped = shaped / np.abs(shaped).max() * peak
+    out = Path(path)
+    wavfile.write(str(out), sample_rate, (shaped * 32767).astype(np.int16))
+    return out
+
+
 def voxelise_torso(torso: TorsoMesh, cfg: BodyFEMConfig) -> tuple[np.ndarray, np.ndarray]:
     """Voxelise the torso volume into a tetrahedral mesh.
 
@@ -385,6 +411,24 @@ def voxelise_torso(torso: TorsoMesh, cfg: BodyFEMConfig) -> tuple[np.ndarray, np
     return nodes_arr, tets_arr
 
 
+def boundary_facets(tets: np.ndarray) -> np.ndarray:
+    """Boundary triangles of a tetrahedral mesh.
+
+    Every tetrahedron contributes four triangular faces; an interior face
+    is shared by two tetrahedra and a boundary face by exactly one.
+    Returns the ``(M, 3)`` array of boundary-face node indices, each row
+    sorted ascending.
+    """
+    faces = np.sort(
+        np.concatenate(
+            [tets[:, [0, 1, 2]], tets[:, [0, 1, 3]], tets[:, [0, 2, 3]], tets[:, [1, 2, 3]]]
+        ),
+        axis=1,
+    )
+    uniq, counts = np.unique(faces, axis=0, return_counts=True)
+    return uniq[counts == 1]
+
+
 def _tet_volumes(nodes: np.ndarray, tets: np.ndarray) -> np.ndarray:
     """Volume of every tetrahedron."""
     v = nodes[tets]
@@ -396,6 +440,11 @@ def _tet_volumes(nodes: np.ndarray, tets: np.ndarray) -> np.ndarray:
         )
         / 6.0
     )
+
+
+def tet_mesh_volume(nodes: np.ndarray, tets: np.ndarray) -> float:
+    """Total volume of a tetrahedral mesh - the sum of its tet volumes."""
+    return float(_tet_volumes(nodes, tets).sum())
 
 
 def _modal_volume_velocity(nodes: np.ndarray, tets: np.ndarray, shape: np.ndarray) -> float:
@@ -455,14 +504,7 @@ def _impact_patch(nodes: np.ndarray, tets: np.ndarray) -> np.ndarray:
     low-y face. The patch is the boundary band there, the scapular region
     that met the wall.
     """
-    faces = np.sort(
-        np.concatenate(
-            [tets[:, [0, 1, 2]], tets[:, [0, 1, 3]], tets[:, [0, 2, 3]], tets[:, [1, 2, 3]]]
-        ),
-        axis=1,
-    )
-    uniq, counts = np.unique(faces, axis=0, return_counts=True)
-    boundary_nodes = np.unique(uniq[counts == 1])
+    boundary_nodes = np.unique(boundary_facets(tets))
     y = nodes[:, 1]
     z = nodes[:, 2]
     back = y[boundary_nodes] <= y.min() + 0.05
@@ -646,6 +688,7 @@ __all__ = [
     "TorsoMesh",
     "air_escape",
     "assemble_fem",
+    "boundary_facets",
     "deceleration_pulse",
     "decimate_mesh",
     "ensure_body_mesh",
@@ -657,5 +700,7 @@ __all__ = [
     "solve_body_fem",
     "solve_modes",
     "sound_levels",
+    "tet_mesh_volume",
     "voxelise_torso",
+    "write_listening_wav",
 ]

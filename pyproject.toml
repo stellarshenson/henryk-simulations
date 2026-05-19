@@ -52,7 +52,7 @@ dev = [
 include-package-data = true
 
 [tool.setuptools.package-data]
-henryk_simulations = ["corridor/*.yml"]
+henryk_simulations = ["simulation_config.yml"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

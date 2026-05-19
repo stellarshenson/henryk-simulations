@@ -9,6 +9,7 @@ from henryk_simulations.corridor.bodyfem import (
     BodyFEMConfig,
     _surface_roughness,
     air_escape,
+    boundary_facets,
     deceleration_pulse,
     decimate_mesh,
     ensure_body_mesh,
@@ -18,7 +19,9 @@ from henryk_simulations.corridor.bodyfem import (
     solve_body_fem,
     solve_modes,
     sound_levels,
+    tet_mesh_volume,
     voxelise_torso,
+    write_listening_wav,
 )
 
 
@@ -265,3 +268,65 @@ def test_sound_levels_finite_and_a_weighting_cuts_the_thump(result, cfg) -> None
 
 def test_peak_spl_zero_for_silence() -> None:
     assert peak_spl(np.zeros(100)) == 0.0
+
+
+# ---------------------------------------------------------------------------
+# Tet-mesh helpers - boundary facets and mesh volume
+# ---------------------------------------------------------------------------
+
+
+def test_boundary_facets_of_a_lone_tet() -> None:
+    # a single tetrahedron has all four of its faces on the boundary
+    facets = boundary_facets(np.array([[0, 1, 2, 3]]))
+    assert facets.shape == (4, 3)
+
+
+def test_boundary_facets_drop_a_shared_face() -> None:
+    # two tets sharing the (0, 1, 2) face - that face is interior, six remain
+    facets = boundary_facets(np.array([[0, 1, 2, 3], [0, 1, 2, 4]]))
+    assert facets.shape == (6, 3)
+    assert not any(tuple(f) == (0, 1, 2) for f in facets)
+
+
+def test_boundary_facets_of_the_torso_are_valid(voxel) -> None:
+    nodes, tets = voxel
+    facets = boundary_facets(tets)
+    assert facets.shape[1] == 3
+    assert len(facets) > 0
+    assert int(facets.min()) >= 0
+    assert int(facets.max()) < len(nodes)
+    assert np.all(np.diff(facets, axis=1) > 0)  # every row sorted ascending
+
+
+def test_tet_mesh_volume_of_a_unit_tet() -> None:
+    nodes = np.array([[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]])
+    assert tet_mesh_volume(nodes, np.array([[0, 1, 2, 3]])) == pytest.approx(1.0 / 6.0)
+
+
+def test_tet_mesh_volume_of_the_torso_is_physical(voxel) -> None:
+    nodes, tets = voxel
+    vol = tet_mesh_volume(nodes, tets)
+    assert np.isfinite(vol)
+    assert 0.005 < vol < 0.080  # the voxelised upper torso, a few tens of litres
+
+
+# ---------------------------------------------------------------------------
+# Listening WAV export
+# ---------------------------------------------------------------------------
+
+
+def test_write_listening_wav_roundtrips(tmp_path) -> None:
+    from scipy.io import wavfile
+
+    sample_rate = 44100
+    signal = np.sin(2.0 * np.pi * 200.0 * np.arange(sample_rate) / sample_rate)
+    out = write_listening_wav(signal, tmp_path / "tone.wav", sample_rate, lead_in=0.5)
+    assert out.exists()
+    assert out.suffix == ".wav"
+    rate, data = wavfile.read(out)
+    assert rate == sample_rate
+    assert data.dtype == np.int16
+    # the silent lead-in is prepended to the signal
+    assert len(data) == len(signal) + int(0.5 * sample_rate)
+    # the tanh soft-clip holds the peak within the 0.97 headroom
+    assert np.abs(data).max() <= int(0.97 * 32767) + 1
