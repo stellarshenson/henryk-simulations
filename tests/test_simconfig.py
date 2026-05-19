@@ -1,10 +1,12 @@
 """Tests for the externalized simulation configuration.
 
 The corridor config dataclasses read their physical/scenario field
-defaults from simulation_config.yaml. These guards keep the YAML and the
-dataclasses in lockstep, and check that the physics-linked quantities
-(total_time, yaw_inertia, m_eff, the 5-DOF chain) derive correctly rather
-than being free parameters that could drift out of sync.
+defaults from two merged YAML files - the library `simulation_config.yml`
+(literature defaults) and the user `simulation_config.yaml` (scenario).
+These guards keep the merged config and the dataclasses in lockstep, and
+check that the physics-linked quantities (total_time, yaw_inertia, m_eff,
+the 5-DOF chain) derive correctly rather than being free parameters that
+could drift out of sync.
 """
 
 from __future__ import annotations
@@ -12,17 +14,16 @@ from __future__ import annotations
 import dataclasses
 
 import pytest
-import yaml
 
+from henryk_simulations.corridor import simconfig
 from henryk_simulations.corridor.audiomix import AudioMixConfig
 from henryk_simulations.corridor.bodyfem import BodyFEMConfig
 from henryk_simulations.corridor.choreography import ChoreographyConfig
 from henryk_simulations.corridor.doorfem import DoorFEMConfig
 from henryk_simulations.corridor.impact import ImpactConfig
 from henryk_simulations.corridor.reverb import CorridorReverbConfig
-from henryk_simulations.corridor.simconfig import CONFIG_PATH, param
 
-# config dataclass keyed by the YAML section it owns
+# config dataclass keyed by the config section it owns
 OWN_SECTION = {
     "choreography": ChoreographyConfig,
     "impact": ImpactConfig,
@@ -37,13 +38,12 @@ ALL_SECTIONS = set(OWN_SECTION) | set(SHARED_SECTIONS)
 
 
 def _config() -> dict:
-    """Load simulation_config.yaml fresh."""
-    with open(CONFIG_PATH, encoding="utf-8") as handle:
-        return yaml.safe_load(handle)
+    """The merged, validated simulation config (library defaults + user file)."""
+    return simconfig._PARAMS
 
 
 def _factory_fields(config_cls: type) -> set[str]:
-    """Field names whose default is read from the YAML."""
+    """Field names whose default is read from the config."""
     return {
         f.name
         for f in dataclasses.fields(config_cls)
@@ -51,13 +51,20 @@ def _factory_fields(config_cls: type) -> set[str]:
     }
 
 
-def test_config_file_has_expected_sections() -> None:
+def test_config_has_expected_sections() -> None:
     assert set(_config()) == ALL_SECTIONS
+
+
+def test_library_and_user_files_both_merged() -> None:
+    """The merged config carries both a library default and a user value."""
+    body = _config()["body"]
+    assert "yaw_inertia_per_kg" in body  # from the library simulation_config.yml
+    assert "body_mass" in body  # from the user simulation_config.yaml
 
 
 @pytest.mark.parametrize("section", sorted(OWN_SECTION))
 def test_every_field_resolves_to_exactly_one_key(section: str) -> None:
-    """Each YAML-backed field reads from exactly one section, value matching."""
+    """Each config-backed field reads from exactly one section, value matching."""
     data = _config()
     cfg = OWN_SECTION[section]()
     for name in _factory_fields(OWN_SECTION[section]):
@@ -67,7 +74,7 @@ def test_every_field_resolves_to_exactly_one_key(section: str) -> None:
 
 
 def test_no_orphan_keys() -> None:
-    """Every YAML key is consumed by some config field."""
+    """Every merged config key is consumed by some config field."""
     consumed: set[str] = set()
     for config_cls in OWN_SECTION.values():
         consumed |= _factory_fields(config_cls)
@@ -98,25 +105,25 @@ def test_chain_masses_scale_and_sum_to_body_mass() -> None:
 
 
 def test_baseline_70kg_values() -> None:
-    """The shipped YAML reproduces the canonical 70 kg baseline."""
+    """The shipped config reproduces the 70 kg baseline (chain as fractions)."""
     choreo = ChoreographyConfig()
     assert choreo.body_mass == 70.0
     assert choreo.total_time == pytest.approx(3.0)
     assert choreo.yaw_inertia == pytest.approx(1.4)
-    assert BodyFEMConfig().m_eff == pytest.approx(30.0)
+    assert BodyFEMConfig().m_eff == pytest.approx(30.03)
     impact = ImpactConfig()
     for got, expected in (
-        (impact.m_skin, 1.5),
-        (impact.m_scapula, 3.0),
-        (impact.m_ribcage, 10.0),
-        (impact.m_organ, 15.0),
-        (impact.m_spine, 40.5),
+        (impact.m_skin, 1.4),
+        (impact.m_scapula, 2.8),
+        (impact.m_ribcage, 9.8),
+        (impact.m_organ, 15.4),
+        (impact.m_spine, 40.6),
     ):
         assert got == pytest.approx(expected)
 
 
 def test_param_raises_for_missing_section_or_key() -> None:
     with pytest.raises(KeyError):
-        param("no_such_section", "body_mass")
+        simconfig.param("no_such_section", "body_mass")
     with pytest.raises(KeyError):
-        param("body", "no_such_key")
+        simconfig.param("body", "no_such_key")

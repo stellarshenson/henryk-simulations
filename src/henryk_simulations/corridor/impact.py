@@ -70,13 +70,13 @@ class ImpactConfig:
     subject_gender: Literal["F", "M"] = _param("subject_gender")  # subject sex - F or M
     subject_age: float | None = _param("subject_age")  # years; None - standard adult
     # 5-DOF posterior-thorax chain (Lobdell-style anatomical layers). The
-    # layers are stored as relative shares; the m_* properties scale them by
-    # body_mass so the chain always sums to body_mass - the rigid worst case.
-    m_skin_share: float = _body("m_skin_share")  # relative share, skin and posterior flesh
-    m_scapula_share: float = _body("m_scapula_share")  # relative share, scapula and bone
-    m_ribcage_share: float = _body("m_ribcage_share")  # relative share, rib cage
-    m_organ_share: float = _body("m_organ_share")  # relative share, thoracic/abdominal organs
-    m_spine_share: float = _body("m_spine_share")  # relative share, spine and body bulk
+    # layers are stored as fractions of body mass (summing to 1); the m_*
+    # properties scale them by body_mass so the chain sums to body_mass.
+    m_skin_fraction: float = _body("m_skin_fraction")  # fraction, skin and posterior flesh
+    m_scapula_fraction: float = _body("m_scapula_fraction")  # fraction, scapula and bone
+    m_ribcage_fraction: float = _body("m_ribcage_fraction")  # fraction, rib cage
+    m_organ_fraction: float = _body("m_organ_fraction")  # fraction, thoracic/abdominal organs
+    m_spine_fraction: float = _body("m_spine_fraction")  # fraction, spine and body bulk
     # interface stiffness, N/m (notebook 06 anatomical chain)
     k_skin: float = _param("k_skin")  # 200 N/mm, posterior skin and fat
     k_scapula: float = _param("k_scapula")  # 800 N/mm, scapula-rib articulation
@@ -104,39 +104,39 @@ class ImpactConfig:
 
     @property
     def _chain_total(self) -> float:
-        """Sum of the chain mass shares - the normalisation denominator."""
+        """Sum of the chain mass fractions - the normalisation denominator."""
         return (
-            self.m_skin_share
-            + self.m_scapula_share
-            + self.m_ribcage_share
-            + self.m_organ_share
-            + self.m_spine_share
+            self.m_skin_fraction
+            + self.m_scapula_fraction
+            + self.m_ribcage_fraction
+            + self.m_organ_fraction
+            + self.m_spine_fraction
         )
 
     @property
     def m_skin(self) -> float:
-        """Skin-layer mass - body mass times the skin share."""
-        return self.body_mass * self.m_skin_share / self._chain_total
+        """Skin-layer mass - body mass times the skin fraction."""
+        return self.body_mass * self.m_skin_fraction / self._chain_total
 
     @property
     def m_scapula(self) -> float:
-        """Scapula-layer mass - body mass times the scapula share."""
-        return self.body_mass * self.m_scapula_share / self._chain_total
+        """Scapula-layer mass - body mass times the scapula fraction."""
+        return self.body_mass * self.m_scapula_fraction / self._chain_total
 
     @property
     def m_ribcage(self) -> float:
-        """Ribcage-layer mass - body mass times the ribcage share."""
-        return self.body_mass * self.m_ribcage_share / self._chain_total
+        """Ribcage-layer mass - body mass times the ribcage fraction."""
+        return self.body_mass * self.m_ribcage_fraction / self._chain_total
 
     @property
     def m_organ(self) -> float:
-        """Organ-layer mass - body mass times the organ share."""
-        return self.body_mass * self.m_organ_share / self._chain_total
+        """Organ-layer mass - body mass times the organ fraction."""
+        return self.body_mass * self.m_organ_fraction / self._chain_total
 
     @property
     def m_spine(self) -> float:
-        """Spine-layer mass - body mass times the spine share."""
-        return self.body_mass * self.m_spine_share / self._chain_total
+        """Spine-layer mass - body mass times the spine fraction."""
+        return self.body_mass * self.m_spine_fraction / self._chain_total
 
 
 @dataclass(frozen=True)

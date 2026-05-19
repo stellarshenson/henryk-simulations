@@ -1,0 +1,95 @@
+# Library default simulation parameters - the standardised set.
+#
+# These are the parameters fixed from published literature, a cited paper,
+# or an established model. They ship inside the package as defaults. The
+# project-root simulation_config.yaml carries the scenario parameters and
+# may override any value here. simconfig.py merges the two (user wins).
+#
+# Every value names its source. Full citations: docs/biomechanics-sources.md
+
+# --- the subject - body shape and composition --------------------------
+body:
+  yaw_inertia_per_kg: 0.02    # m^2, squared yaw radius of gyration; yaw_inertia = body_mass * this [Plagenhoef et al. 1983]
+  m_eff_fraction: 0.429       # effective upper-torso impacting mass / body mass [de Leva 1996, segment inertia]
+  # 5-DOF posterior-thorax chain - layer masses as a fraction of body mass, summing to 1.0 [Lobdell et al. 1973]
+  m_skin_fraction: 0.02       # skin and posterior flesh
+  m_scapula_fraction: 0.04    # scapula and immediate bone
+  m_ribcage_fraction: 0.14    # rib cage
+  m_organ_fraction: 0.22      # thoracic and abdominal organs
+  m_spine_fraction: 0.58      # spine and body bulk
+
+# --- the acoustic medium -----------------------------------------------
+acoustics:
+  air_rho: 1.2                # kg/m^3, air density at ~20 C [standard physical constant]
+  air_c: 343.0                # m/s, speed of sound in air at ~20 C [standard physical constant]
+
+# --- choreography -------------------------------------------------------
+choreography:
+  body_compression: 0.03      # m, nominal rigid-door impact compression [Kroell et al. 1971, chest-compression corridor]
+  body_compression_min: 0.02  # m, lower bound of impact compression [Kroell et al. 1971]
+  body_compression_max: 0.05  # m, upper bound of impact compression [Kroell et al. 1971, 5-7 cm corridor]
+  body_thickness: 0.28        # m, torso front-to-back depth [anthropometric, de Leva 1996]
+  t_give: 0.2                 # s, start-ramp ("give") duration [Maffiuletti et al. 2016; Aagaard et al. 2002, RFD 50-250 ms]
+  t_letgo: 0.12               # s, release-ramp ("let-go") duration [Maffiuletti et al. 2016; Aagaard et al. 2002]
+  ramp_min: 0.05              # s, lower bound of the rate-of-force-development ramp band [Maffiuletti et al. 2016]
+  ramp_max: 0.25              # s, upper bound of the RFD ramp band [Maffiuletti et al. 2016]
+  a_max_ceiling: 5.5          # m/s^2, production acceleration limit, elite + 1 SD [Mero et al. 1992]
+  a_max_typical: 3.0          # m/s^2, recreational acceleration [Mero et al. 1992]
+  jerk_ceiling: 50.0          # m/s^3, production jerk limit, derived from the RFD bound [Maffiuletti et al. 2016]
+
+# --- impact dynamics ----------------------------------------------------
+impact:
+  k_skin: 200000.0            # N/m, posterior skin-and-fat stiffness [Lobdell et al. 1973; Stalnaker et al. 1973, tensed scaling]
+  k_scapula: 800000.0         # N/m, scapula-rib articulation stiffness [Lobdell et al. 1973; Stalnaker et al. 1973]
+  k_rib: 350000.0             # N/m, rib-cage interface stiffness, the injury interface [Lobdell et al. 1973; Stalnaker et al. 1973]
+  k_spine: 600000.0           # N/m, organ-spine interface stiffness [Lobdell et al. 1973; Stalnaker et al. 1973]
+  c_skin: 800.0               # N s/m, skin interface damping [Lobdell et al. 1973]
+  c_scapula: 1500.0           # N s/m, scapula interface damping [Lobdell et al. 1973]
+  c_rib: 1200.0               # N s/m, rib interface damping [Lobdell et al. 1973]
+  c_spine: 2000.0             # N s/m, spine interface damping [Lobdell et al. 1973]
+  k_contact: 5000000.0        # N/m^n, skin-to-door contact stiffness [Hertz 1882, nonlinear contact]
+  n_contact: 1.5              # Hertzian contact exponent [Hertz 1882]
+  lambda_hc: 1.5              # s/m, Hunt-Crossley contact damping coefficient [Hunt & Crossley 1975]
+  yield_force: 9000.0         # N, elastic-plastic yield plateau, plastic-deformation onset [Kroell et al. 1971]
+  area_initial: 0.01          # m^2, first-contact patch area, scapula tips [posterior-thorax anatomy]
+  area_final: 0.06            # m^2, full posterior-thorax contact area [posterior-thorax anatomy]
+  area_tau: 0.015             # s, contact-area build-up time constant [posterior-thorax anatomy]
+  n_ribs_span: 7              # ribs spanned by the full-area back contact [thoracic anatomy]
+
+# --- body-thump FEM -----------------------------------------------------
+bodyfem:
+  torso_z_lo_frac: 0.62       # fraction of body height, lower cut of the isolated torso [FEM torso-isolation model]
+  torso_z_hi_frac: 0.84       # fraction of body height, upper cut of the isolated torso [FEM torso-isolation model]
+  torso_x_halfwidth: 0.2      # m, half-width kept about the body axis, trims the arms [FEM torso-isolation model]
+  restitution: 0.25           # rebound coefficient off the rigid door [blunt-impact literature]
+  contact_time: 0.03          # s, body-door contact duration [Kroell et al. 1971]
+  youngs_modulus: 500000.0    # Pa, soft-tissue elastic modulus [Stalnaker et al. 1973, soft-tissue response]
+  poisson: 0.35               # soft-tissue effective Poisson ratio, air-filled thorax compresses [soft-tissue literature]
+  density: 1000.0             # kg/m^3, soft-tissue density [soft-tissue literature]
+  modal_damping: 0.2          # soft-tissue modal damping ratio [Stalnaker et al. 1973]
+  contact_patch_area: 0.035   # m^2, back contact patch area [posterior-thorax anatomy]
+  gap_squeeze_start: 0.006    # m, wall-body gap where the trapped-air film starts to matter [squeeze-film aeroacoustic model]
+  gap_seal: 0.0015            # m, residual gap left by the uneven body surface [squeeze-film aeroacoustic model]
+  escape_band_lo: 300.0       # Hz, lower edge of the squeezed-air escape-noise band [aeroacoustic escape model]
+  escape_band_hi: 6000.0      # Hz, upper edge of the escape-noise band [aeroacoustic escape model]
+  surface_roughness: 0.25     # uneven-surface modulation depth of the contact force [surface-texture model]
+
+# --- door-clang FEM -----------------------------------------------------
+doorfem:
+  panel_width: 1.0            # m, door leaf width [ZREMB DT37/1 elevator-door specification]
+  panel_height: 2.0           # m, door leaf height [ZREMB DT37/1 specification]
+  skin_thickness: 0.002       # m, steel skin-plate thickness [ZREMB DT37/1 specification]
+  cavity_gap: 0.025           # m, air cavity between the two steel skins [ZREMB DT37/1 specification]
+  frame_width: 0.04           # m, welded perimeter/window frame rail width [ZREMB DT37/1 specification]
+  window_width: 0.15          # m, wired-glass vision-panel width [ZREMB DT37/1 specification]
+  window_height: 1.2          # m, vision-panel height [ZREMB DT37/1 specification]
+  window_cx: 0.5              # m, vision-panel centre, width axis [ZREMB DT37/1 specification]
+  window_cy: 1.1              # m, vision-panel centre, height axis [ZREMB DT37/1 specification]
+  youngs_modulus: 200000000000.0  # Pa, steel elastic modulus, 200 GPa [structural steel, standard]
+  poisson: 0.3                # steel Poisson ratio [structural steel, standard]
+  density: 7850.0             # kg/m^3, steel density [structural steel, standard]
+  modal_damping: 0.02         # framed-steel-leaf loss factor [framed-panel acoustics literature]
+
+# --- corridor reverb ----------------------------------------------------
+reverb:
+  wall_reflection: 0.85       # amplitude reflection coefficient per wall bounce [architectural-acoustics literature]

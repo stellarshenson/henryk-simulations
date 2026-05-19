@@ -229,9 +229,9 @@ def test_verdict_escalates_with_velocity(cfg) -> None:
 
 def test_config_carries_subject_demographics(cfg) -> None:
     # sex and age are configuration parameters; the corridor subject is a
-    # young-adult woman, so the default sex is "F" and the age unset
+    # 38-year-old woman, so the config default sex is "F" and age 38
     assert cfg.subject_gender in ("F", "M")
     assert cfg.subject_gender == "F"
-    assert cfg.subject_age is None  # None - assume a standard adult
+    assert cfg.subject_age == 38  # the corridor subject's age
     victoria = ImpactConfig(subject_gender="F", subject_age=28.0)
     assert victoria.subject_age == 28.0
