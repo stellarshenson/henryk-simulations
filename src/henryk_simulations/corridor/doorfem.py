@@ -73,6 +73,7 @@ class DoorFEMConfig:
     # finite-element model
     voxel_size: float = 0.025  # m, in-plane voxel edge
     n_modes: int = 30  # elastic flexural modes retained
+    modal_seed: int = 0  # rng seed for the eigensolver start vector - pins the modal solve
     modal_damping: float = _param(
         "modal_damping"
     )  # framed-steel-leaf loss factor (the sound dampening)
@@ -235,7 +236,10 @@ def solve_door_modes(cfg: DoorFEMConfig) -> DoorFEM:
     k_ff = k.tocsr()[free, :][:, free]
     m_ff = m.tocsr()[free, :][:, free]
 
-    vals, vecs_ff = eigsh(k_ff, M=m_ff, k=cfg.n_modes, sigma=1.0, which="LM")
+    # a fixed start vector pins the ARPACK iteration - the modal solve is
+    # then bit-reproducible run to run
+    v0 = np.random.default_rng(cfg.modal_seed).standard_normal(k_ff.shape[0])
+    vals, vecs_ff = eigsh(k_ff, M=m_ff, k=cfg.n_modes, sigma=1.0, which="LM", v0=v0)
     order = np.argsort(vals)
     vals, vecs_ff = vals[order], vecs_ff[:, order]
     freqs = np.sqrt(np.abs(vals)) / (2.0 * np.pi)

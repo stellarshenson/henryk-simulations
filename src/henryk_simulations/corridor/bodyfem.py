@@ -96,6 +96,7 @@ class BodyFEMConfig:
         "modal_damping"
     )  # heavily damped soft tissue - the modes do not ring long
     n_modes: int = 12  # elastic deformation modes retained
+    modal_seed: int = 2  # rng seed for the eigensolver start vector - pins the modal solve
     # acoustics
     air_rho: float = _acoustics("air_rho")  # kg/m^3
     air_c: float = _acoustics("air_c")  # m/s
@@ -482,7 +483,10 @@ def solve_modes(nodes: np.ndarray, tets: np.ndarray, cfg: BodyFEMConfig) -> Tors
     their nodal mode shapes and volume-velocity coefficients.
     """
     k, m = assemble_fem(nodes, tets, cfg)
-    vals, vecs = eigsh(k, M=m, k=cfg.n_modes + 6, sigma=1e-3, which="LM")
+    # a fixed start vector pins the ARPACK iteration - the modal solve is
+    # then bit-reproducible run to run
+    v0 = np.random.default_rng(cfg.modal_seed).standard_normal(k.shape[0])
+    vals, vecs = eigsh(k, M=m, k=cfg.n_modes + 6, sigma=1e-3, which="LM", v0=v0)
     order = np.argsort(vals)
     vals, vecs = vals[order][6:], vecs[:, order][:, 6:]
     freqs = np.sqrt(np.abs(vals)) / (2.0 * np.pi)
