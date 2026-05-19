@@ -32,6 +32,7 @@ dependencies = [
     "imageio[ffmpeg]",
     "scikit-fem",
     "meshio",
+    "pyyaml",
 ]
 
 [project.optional-dependencies]

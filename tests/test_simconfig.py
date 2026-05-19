@@ -1,7 +1,7 @@
 """Tests for the externalized simulation configuration.
 
 The corridor config dataclasses read their physical/scenario field
-defaults from simulation_config.json. These guards keep the JSON and the
+defaults from simulation_config.yaml. These guards keep the YAML and the
 dataclasses in lockstep, and check that the physics-linked quantities
 (total_time, yaw_inertia, m_eff, the 5-DOF chain) derive correctly rather
 than being free parameters that could drift out of sync.
@@ -10,9 +10,9 @@ than being free parameters that could drift out of sync.
 from __future__ import annotations
 
 import dataclasses
-import json
 
 import pytest
+import yaml
 
 from henryk_simulations.corridor.audiomix import AudioMixConfig
 from henryk_simulations.corridor.bodyfem import BodyFEMConfig
@@ -22,7 +22,7 @@ from henryk_simulations.corridor.impact import ImpactConfig
 from henryk_simulations.corridor.reverb import CorridorReverbConfig
 from henryk_simulations.corridor.simconfig import CONFIG_PATH, param
 
-# config dataclass keyed by the JSON section it owns
+# config dataclass keyed by the YAML section it owns
 OWN_SECTION = {
     "choreography": ChoreographyConfig,
     "impact": ImpactConfig,
@@ -36,14 +36,14 @@ SHARED_SECTIONS = ("body", "acoustics")
 ALL_SECTIONS = set(OWN_SECTION) | set(SHARED_SECTIONS)
 
 
-def _json() -> dict:
-    """Load simulation_config.json fresh."""
+def _config() -> dict:
+    """Load simulation_config.yaml fresh."""
     with open(CONFIG_PATH, encoding="utf-8") as handle:
-        return json.load(handle)
+        return yaml.safe_load(handle)
 
 
 def _factory_fields(config_cls: type) -> set[str]:
-    """Field names whose default is read from the JSON."""
+    """Field names whose default is read from the YAML."""
     return {
         f.name
         for f in dataclasses.fields(config_cls)
@@ -52,13 +52,13 @@ def _factory_fields(config_cls: type) -> set[str]:
 
 
 def test_config_file_has_expected_sections() -> None:
-    assert set(_json()) == ALL_SECTIONS
+    assert set(_config()) == ALL_SECTIONS
 
 
 @pytest.mark.parametrize("section", sorted(OWN_SECTION))
-def test_every_field_resolves_to_exactly_one_json_key(section: str) -> None:
-    """Each JSON-backed field reads from exactly one section, value matching."""
-    data = _json()
+def test_every_field_resolves_to_exactly_one_key(section: str) -> None:
+    """Each YAML-backed field reads from exactly one section, value matching."""
+    data = _config()
     cfg = OWN_SECTION[section]()
     for name in _factory_fields(OWN_SECTION[section]):
         hits = [s for s in (section, *SHARED_SECTIONS) if name in data[s]]
@@ -66,12 +66,12 @@ def test_every_field_resolves_to_exactly_one_json_key(section: str) -> None:
         assert getattr(cfg, name) == data[hits[0]][name]
 
 
-def test_no_orphan_json_keys() -> None:
-    """Every JSON key is consumed by some config field."""
+def test_no_orphan_keys() -> None:
+    """Every YAML key is consumed by some config field."""
     consumed: set[str] = set()
     for config_cls in OWN_SECTION.values():
         consumed |= _factory_fields(config_cls)
-    for section, keys in _json().items():
+    for section, keys in _config().items():
         for key in keys:
             assert key in consumed, f"{section}.{key} is unused"
 
@@ -98,7 +98,7 @@ def test_chain_masses_scale_and_sum_to_body_mass() -> None:
 
 
 def test_baseline_70kg_values() -> None:
-    """The shipped JSON reproduces the canonical 70 kg baseline."""
+    """The shipped YAML reproduces the canonical 70 kg baseline."""
     choreo = ChoreographyConfig()
     assert choreo.body_mass == 70.0
     assert choreo.total_time == pytest.approx(3.0)

@@ -1,0 +1,136 @@
+# Simulation parameters for the corridor-incident model.
+#
+# The corridor config dataclasses read these values at import via
+# henryk_simulations.corridor.simconfig. A what-if run is an edit here -
+# no source change. Physics-linked quantities (total_time, yaw_inertia,
+# m_eff, the 5-DOF chain masses) are NOT listed: they derive in code from
+# the values below. Numerical/discretization parameters, RNG seeds and
+# file paths stay as source literals, by design.
+
+# --- the subject -------------------------------------------------------
+# Everything intrinsic to the thrown body. A what-if on mass is a one-line
+# edit of body_mass; yaw inertia, effective impacting mass and the 5-DOF
+# chain all scale from it.
+body:
+  body_mass: 70.0             # kg, full body mass of the thrown subject
+  body_height: 1.68           # m, standing height
+  yaw_inertia_per_kg: 0.02    # m^2, squared yaw radius of gyration; yaw_inertia = body_mass * this
+  m_eff_fraction: 0.42857142857142855  # effective upper-torso impacting mass as a fraction of body mass
+  m_skin_share: 1.5           # relative mass share, skin and posterior flesh (5-DOF chain layer)
+  m_scapula_share: 3.0        # relative mass share, scapula and immediate bone
+  m_ribcage_share: 10.0       # relative mass share, rib cage
+  m_organ_share: 15.0         # relative mass share, thoracic and abdominal organs
+  m_spine_share: 40.5         # relative mass share, spine and body bulk; the five shares are normalised to sum to body_mass
+
+# --- the acoustic scene ------------------------------------------------
+# Shared by the body-thump, door-clang and corridor-reverb models, so each
+# value is defined exactly once here.
+acoustics:
+  v_close: 2.74               # m/s, closing velocity the body strikes the door at (notebook 01 no-coast bound)
+  mic_distance: 1.0           # m, microphone distance from the impact
+  air_rho: 1.2                # kg/m^3, air density
+  air_c: 343.0                # m/s, speed of sound in air
+  sample_rate: 44100          # Hz, working audio sample rate
+
+# --- choreography (notebook 01) ----------------------------------------
+# The two-phase corridor movement. total_time derives as phase1 + phase2.
+choreography:
+  phase1_duration: 1.5        # s, duration of phase 1 (the pull)
+  phase2_duration: 1.5        # s, duration of phase 2 (the departure)
+  arc_length: 2.0             # m, phase-1 curved centre-of-mass path length
+  lateral_offset: 0.25        # m, diagonal sag of the curved CoM path
+  return_translation: 0.5     # m, phase-2 return translation
+  rotation: 3.141592653589793 # rad, per-phase yaw turn (a half-turn)
+  body_compression: 0.03      # m, nominal rigid-door impact compression
+  body_compression_min: 0.02  # m, literature lower bound of impact compression
+  body_compression_max: 0.05  # m, literature upper bound of impact compression
+  body_thickness: 0.28        # m, torso front-to-back depth
+  t_give: 0.2                 # s, start-ramp ("give") representative duration
+  t_letgo: 0.12               # s, release-ramp ("let-go") representative duration
+  ramp_min: 0.05              # s, lower bound of the rate-of-force-development ramp band
+  ramp_max: 0.25              # s, upper bound of the RFD ramp band
+  a_max_ceiling: 5.5          # m/s^2, production acceleration limit (Mero 1992, elite + 1 SD)
+  a_max_typical: 3.0          # m/s^2, recreational acceleration (Mero 1992)
+  jerk_ceiling: 50.0          # m/s^3, production jerk limit
+
+# --- impact dynamics (notebook 02) -------------------------------------
+# The 5-DOF posterior-thorax chain and the contact model. Layer masses
+# derive from body.*; only the stiffness, damping and contact params are here.
+impact:
+  subject_gender: "F"         # subject sex, "F" or "M" - shifts the injury thresholds
+  subject_age: null           # subject age in years; null assumes a standard adult
+  k_skin: 200000.0            # N/m, posterior skin-and-fat interface stiffness
+  k_scapula: 800000.0         # N/m, scapula-rib articulation stiffness
+  k_rib: 350000.0             # N/m, rib-cage interface stiffness (the injury interface)
+  k_spine: 600000.0           # N/m, organ-spine interface stiffness
+  c_skin: 800.0               # N s/m, skin interface damping
+  c_scapula: 1500.0           # N s/m, scapula interface damping
+  c_rib: 1200.0               # N s/m, rib interface damping
+  c_spine: 2000.0             # N s/m, spine interface damping
+  k_contact: 5000000.0        # N/m^n, skin-to-door Hertzian contact stiffness
+  n_contact: 1.5              # Hertzian contact exponent
+  lambda_hc: 1.5              # s/m, Hunt-Crossley contact damping coefficient
+  yield_force: 9000.0         # N, elastic-plastic yield plateau (plastic-deformation onset)
+  area_initial: 0.01          # m^2, first-contact patch area (scapula tips)
+  area_final: 0.06            # m^2, full posterior-thorax contact area
+  area_tau: 0.015             # s, contact-area build-up time constant
+  n_ribs_span: 7              # ribs spanned by the full-area back contact
+
+# --- body-thump FEM (notebook 03) --------------------------------------
+# The deforming-torso FEM sound model and the squeezed-air burst.
+bodyfem:
+  torso_z_lo_frac: 0.62       # fraction of body height, lower cut of the isolated torso
+  torso_z_hi_frac: 0.84       # fraction of body height, upper cut of the isolated torso
+  torso_x_halfwidth: 0.2      # m, half-width kept about the body axis (trims the arms)
+  restitution: 0.25           # rebound coefficient off the rigid door
+  contact_time: 0.03          # s, body-door contact duration
+  youngs_modulus: 500000.0    # Pa, soft-tissue elastic modulus
+  poisson: 0.35               # soft-tissue effective Poisson ratio (air-filled thorax compresses)
+  density: 1000.0             # kg/m^3, soft-tissue density
+  modal_damping: 0.2          # soft-tissue modal damping ratio
+  contact_patch_area: 0.035   # m^2, back contact patch area
+  gap_squeeze_start: 0.006    # m, wall-body gap where the trapped-air film starts to matter
+  gap_seal: 0.0015            # m, residual gap left by the uneven body surface
+  escape_band_lo: 300.0       # Hz, lower edge of the squeezed-air escape-noise band
+  escape_band_hi: 6000.0      # Hz, upper edge of the escape-noise band
+  surface_roughness: 0.25     # uneven-surface modulation depth of the contact force
+
+# --- door-clang FEM (notebook 04) --------------------------------------
+# The ZREMB DT37/1 steel elevator-door leaf and where the body strikes it.
+doorfem:
+  panel_width: 1.0            # m, door leaf width
+  panel_height: 2.0           # m, door leaf height
+  skin_thickness: 0.002       # m, steel skin-plate thickness
+  cavity_gap: 0.025           # m, air cavity between the two steel skins
+  frame_width: 0.04           # m, welded perimeter/window frame rail width
+  window_width: 0.15          # m, wired-glass vision-panel width
+  window_height: 1.2          # m, vision-panel height
+  window_cx: 0.5              # m, vision-panel centre, width axis
+  window_cy: 1.1              # m, vision-panel centre, height axis
+  youngs_modulus: 200000000000.0  # Pa, steel elastic modulus (200 GPa)
+  poisson: 0.3                # steel Poisson ratio
+  density: 7850.0             # kg/m^3, steel density
+  modal_damping: 0.02         # framed-steel-leaf loss factor
+  strike_x: 0.65              # m, strike point on the door, width axis
+  strike_y: 1.3               # m, strike point, height axis (upper-back contact height)
+
+# --- corridor reverb (notebooks 03/04) ---------------------------------
+# The image-source reflection filter - the corridor as a reflective box.
+reverb:
+  corridor_width: 2.0         # m, distance between the two side walls
+  corridor_length: 10.0       # m, distance between the E and W end walls
+  source_x: 1.0               # m, impact source across the corridor width
+  source_y: 1.0               # m, impact source along the corridor length
+  mic_x: 1.0                  # m, microphone across the width
+  mic_y: 2.0                  # m, microphone along the length
+  wall_reflection: 0.85       # amplitude reflection coefficient per wall bounce
+
+# --- event-audio augmentation (notebook 05) ----------------------------
+# Mixing the synthesized impact sounds into the real event recording.
+audiomix:
+  peak_time: 15.0             # s, event-timeline instant the synthesized peaks land on
+  toy_release_time: 12.5      # s, the toy is released - the event-timeline reference
+  scream_time: 16.5           # s, the scream heard in the recording
+  thump_gain: 5.0             # linear gain on the body thump in the mix
+  clang_gain: 2.0             # linear gain on the door clang in the mix
+  headroom: 0.97              # peak the mix is soft-limited toward
